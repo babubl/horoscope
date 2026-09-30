@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jothidam · ஜோதிடம்</title>
+<meta name="description" content="South Indian Vedic horoscope (Rasi, Navamsa, Dasa) and 10 Porutham marriage matching, with AI readings in English and Tamil.">
+<meta property="og:title" content="Jothidam · ஜோதிடம் — Tamil horoscope &amp; marriage matching">
+<meta property="og:description" content="Free South Indian Vedic horoscope (Rasi, Navamsa, Dasa, Tamil panchangam) and 10 Porutham matching, in English and Tamil.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#a3361f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect x='2' y='2' width='32' height='32' rx='4' fill='%23fffdf8' stroke='%23b8872f' stroke-width='2'/%3E%3Cpath d='M2 10h32M2 26h32M10 2v32M26 2v32' stroke='%23b8872f' stroke-width='1.2'/%3E%3Ccircle cx='18' cy='18' r='5' fill='%23a3361f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf5ec; --paper:#fffdf8; --ink:#2b1d14; --muted:#7a6553; --line:#e6d8c3;
+  --accent:#a3361f; --accent-2:#c9822b; --accent-soft:#f6e3cf; --gold:#b8872f;
+  --good:#2f7d4a; --good-bg:#e3f2e6; --mid:#a36b00; --mid-bg:#fbefd6; --bad:#b3261e; --bad-bg:#fbe3e0;
+  --shadow:0 1px 2px rgba(60,30,10,.06),0 8px 24px rgba(60,30,10,.06);
+  --radius:14px;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:'Inter','Noto Sans Tamil',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17120e; --paper:#211a14; --ink:#f1e6d8; --muted:#b39d86; --line:#3a2e24;
+    --accent:#e0714f; --accent-2:#e3a24e; --accent-soft:#3a2419; --gold:#d8aa55;
+    --good:#7fcf95; --good-bg:#1d3325; --mid:#f0c060; --mid-bg:#3a2e14; --bad:#f08a80; --bad-bg:#3d1c19;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17120e; --paper:#211a14; --ink:#f1e6d8; --muted:#b39d86; --line:#3a2e24;
+  --accent:#e0714f; --accent-2:#e3a24e; --accent-soft:#3a2419; --gold:#d8aa55;
+  --good:#7fcf95; --good-bg:#1d3325; --mid:#f0c060; --mid-bg:#3a2e14; --bad:#f08a80; --bad-bg:#3d1c19;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--body)}
+body.ta{--body:'Noto Sans Tamil','Inter',system-ui,sans-serif}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--line);background:var(--paper)}
+.bar{display:flex;align-items:center;gap:12px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand svg{flex:none}
+.brand h1{font:700 26px/1 var(--display);margin:0;letter-spacing:.3px}
+.brand small{display:block;font:500 12px/1.2 var(--body);color:var(--muted);margin-top:3px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--bg)}
+.seg button{border:0;background:none;padding:5px 12px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--accent);color:#fff}
+.iconbtn{border:1px solid var(--line);background:var(--bg);border-radius:10px;width:38px;height:38px;display:grid;place-items:center;cursor:pointer;position:relative}
+.iconbtn .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--accent-2)}
+.tabs{display:flex;gap:4px;margin-top:4px}
+.tabs button{border:0;background:none;padding:12px 14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent}
+.tabs button.on{color:var(--accent);border-color:var(--accent)}
+main{padding:24px 0 48px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.card+.card{margin-top:18px}
+h2{font:700 24px/1.2 var(--display);margin:0 0 4px}
+h3{font:700 19px/1.25 var(--display);margin:0 0 12px;color:var(--accent)}
+.sub{color:var(--muted);margin:0 0 16px;font-size:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){.g2,.g3{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.field input,.field select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);outline:none;min-height:42px}
+.field input:focus,.field select:focus{border-color:var(--accent-2);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent-2) 20%,transparent)}
+.place{position:relative}
+.suggest{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);z-index:20;overflow:hidden;display:none}
+.suggest button{display:block;width:100%;text-align:left;border:0;background:none;padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--line)}
+.suggest button:last-child{border-bottom:0}
+.suggest button:hover,.suggest button:focus{background:var(--accent-soft)}
+.suggest small{color:var(--muted)}
+.geo{font-size:12.5px;color:var(--muted);margin-top:6px;min-height:18px}
+details.adv{margin-top:10px}
+details.adv summary{cursor:pointer;font-size:12.5px;color:var(--muted);font-weight:600}
+details.adv .grid{margin-top:10px}
+.person{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--bg)}
+.person h4{margin:0 0 12px;font:700 18px/1 var(--display);display:flex;align-items:center;gap:8px}
+.person h4 .pill{font:600 11px/1 var(--body);padding:4px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.btn{border:0;border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer;background:var(--accent);color:#fff;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.err{color:var(--bad);font-size:13.5px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.stat span{display:block;font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+body.ta .stat span{text-transform:none;letter-spacing:0}
+.stat b{display:block;font-size:15.5px;margin-top:2px}
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:760px){.charts{grid-template-columns:1fr}}
+.chart-t{font:700 16px/1 var(--display);text-align:center;margin:0 0 8px;color:var(--muted)}
+.si{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);aspect-ratio:1;border:2px solid var(--gold);background:var(--paper);max-width:440px;margin:0 auto}
+.si .c{border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);padding:4px 5px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.si .c .sn{font-size:10px;color:var(--muted);line-height:1.1}
+.si .c .pl{font-size:12.5px;font-weight:600;line-height:1.3;margin-top:2px;display:flex;flex-wrap:wrap;gap:0 6px}
+.si .c .pl i{font-style:normal}
+.si .c .pl .asc{color:var(--accent)}
+.si .c.lg{background:var(--accent-soft)}
+.si .c.lg::before{content:"";position:absolute;left:0;top:0;width:18px;height:18px;background:linear-gradient(135deg,var(--accent) 0 50%,transparent 50%);opacity:.9}
+.si .c.lg .sn{padding-left:14px}
+.si .ctr{grid-column:2/4;grid-row:2/4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent)}
+.si .ctr b{font:700 20px/1.1 var(--display)}
+.si .ctr small{color:var(--muted);font-size:11.5px;margin-top:4px}
+@media (max-width:420px){.si .c .pl{font-size:11px}.si .c .sn{font-size:9px}}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:12px;color:var(--muted);font-weight:600}
+tr.now td{background:var(--accent-soft)}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;background:var(--bg);border:1px solid var(--line);margin-left:4px}
+.tag.ex{color:var(--good);border-color:currentColor}
+.tag.db{color:var(--bad);border-color:currentColor}
+.tag.ow{color:var(--gold);border-color:currentColor}
+.tag.rt{color:var(--accent-2);border-color:currentColor}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.medium{background:var(--mid-bg);color:var(--mid)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.dosha{display:grid;gap:10px}
+.dosha .row{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.dosha .row b{display:block}
+.dosha .row p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.ai{border:1px dashed var(--accent-2);border-radius:12px;padding:16px;background:color-mix(in srgb,var(--accent-soft) 45%,var(--paper))}
+.ai .md h2,.ai .md h3,.ai .md h4{font-family:var(--display);color:var(--accent);margin:18px 0 6px}
+.ai .md h2{font-size:21px}.ai .md h3{font-size:19px}.ai .md h4{font-size:17px}
+body.ta .ai .md h2,body.ta .ai .md h3,body.ta .ai .md h4{font-family:'Noto Sans Tamil',sans-serif;font-size:16.5px}
+.ai .md p{margin:6px 0}
+.ai .md ul{margin:6px 0;padding-left:20px}
+.ai .md > :first-child{margin-top:0}
+.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(1turn)}}
+.score{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.dial{--p:0;width:132px;height:132px;border-radius:50%;background:conic-gradient(var(--c,var(--accent)) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:none}
+.dial div{width:104px;height:104px;border-radius:50%;background:var(--paper);display:grid;place-items:center;text-align:center}
+.dial b{font:700 34px/1 var(--display)}
+.dial small{display:block;color:var(--muted);font-size:12px}
+.verdict{flex:1;min-width:220px}
+.verdict .big{font:700 26px/1.15 var(--display)}
+.verdict p{margin:6px 0 0;color:var(--muted)}
+.ptbl td:first-child{font-weight:600}
+.ptbl td.why{white-space:normal;color:var(--muted);font-size:13px;min-width:220px}
+.ptbl .msub{display:none;font-weight:400;font-size:12.5px;color:var(--muted);white-space:normal;margin-top:3px}
+@media (max-width:560px){.ptbl th:nth-child(n+3),.ptbl td.det,.ptbl td.why{display:none}.ptbl .msub{display:block}.ptbl td:first-child{white-space:normal}}
+.dtbl td{white-space:normal}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.pair{grid-template-columns:1fr}}
+.pair .stat b small{font-weight:500;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px}
+footer{border-top:1px solid var(--line);padding:18px 0 28px;color:var(--muted);font-size:12.5px}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--paper);color:var(--ink);padding:22px;width:min(520px,calc(100vw - 32px));box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(20,10,5,.45)}
+dialog h3{margin-bottom:6px}
+.check{display:flex;gap:8px;align-items:center;font-size:13.5px;margin-top:12px}
+.check input{width:16px;height:16px}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+a{color:var(--accent)}
+@media print{
+  header .seg,header .iconbtn,.tabs,.actions,form,footer,.no-print{display:none!important}
+  body{background:#fff}
+  .card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="bar">
+      <div class="brand">
+        <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><rect x="2" y="2" width="32" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="2"/><path d="M2 10h32M2 26h32M10 2v32M26 2v32" stroke="var(--gold)" stroke-width="1.2"/><circle cx="18" cy="18" r="5" fill="var(--accent)"/></svg>
+        <div><h1 data-t="appName">Jothidam</h1><small data-t="tagline">South Indian Vedic horoscope &amp; matching</small></div>
+      </div>
+      <div class="seg" role="group" aria-label="Language">
+        <button id="lang-en" class="on">EN</button><button id="lang-ta">தமிழ்</button>
+      </div>
+      <button class="iconbtn" id="openSettings" title="AI settings" aria-label="AI settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="dot hidden" id="keyDot"></span>
+      </button>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="on" data-tab="horo" data-t="tabHoro">Horoscope</button>
+      <button data-tab="match" data-t="tabMatch">Marriage Match</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- HOROSCOPE -->
+  <section id="tab-horo">
+    <form class="card" id="horoForm" autocomplete="off">
+      <h2 data-t="horoTitle">Birth chart</h2>
+      <p class="sub" data-t="horoSub">Enter birth details. Charts use Lahiri ayanamsa and South Indian style.</p>
+      <div class="person" id="p-single"></div>
+      <div class="actions">
+        <button class="btn" type="submit" data-t="makeChart">Build horoscope</button>
+        <span class="err" id="horoErr"></span>
+      </div>
+    </form>
+    <div id="horoOut"></div>
+  </section>
+
+  <!-- MATCHING -->
+  <section id="tab-match" class="hidden">
+    <form class="card" id="matchForm" autocomplete="off">
+      <h2 data-t="matchTitle">Marriage matching (10 Porutham)</h2>
+      <p class="sub" data-t="matchSub">Enter both birth details. Matching counts from the girl's star to the boy's star, as in Tamil tradition.</p>
+      <div class="grid g2">
+        <div class="person" id="p-boy"></div>
+        <div class="person" id="p-girl"></div>
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit" data-t="doMatch">Check match</button>
+        <span class="err" id="matchErr"></span>
+      </div>
+    </form>
+    <div id="matchOut"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
+  </div>
+</footer>
+
+<dialog id="settings">
+  <form method="dialog" id="settingsForm">
+    <h3 data-t="aiSettings">AI reading settings</h3>
+    <p class="sub" data-t="aiSettingsSub">Readings are written by Google Gemini using your own API key. The key is sent only to Google from your browser.</p>
+    <div class="field"><label for="apiKey" data-t="apiKey">Gemini API key</label><input id="apiKey" type="password" placeholder="AIza…" autocomplete="off"></div>
+    <p class="note"><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" data-t="getKey">Get a free key from Google AI Studio ↗</a></p>
+    <div class="field" style="margin-top:12px"><label for="model" data-t="model">Model</label><input id="model" list="models" value="gemini-3.5-flash"><datalist id="models"><option value="gemini-3.5-flash"><option value="gemini-3.5-flash-lite"><option value="gemini-2.5-flash"></datalist></div>
+    <div class="field" style="margin-top:12px"><label for="nodeType" data-t="nodeType">Rahu / Ketu</label><select id="nodeType"><option value="mean" data-t="nodeMean">Mean node</option><option value="true" data-t="nodeTrue">True node</option></select></div>
+    <label class="check"><input type="checkbox" id="remember" checked> <span data-t="remember">Remember key in this browser</span></label>
+    <div class="actions">
+      <button class="btn" value="save" data-t="save">Save</button>
+      <button class="btn ghost" value="cancel" formnovalidate data-t="cancel">Cancel</button>
+      <button class="btn ghost" type="button" id="clearKey" data-t="clearKey">Forget key</button>
+    </div>
+  </form>
+</dialog>
+
+<script>/*ASTRONOMY*/</script>
+<script>/*ENGINE*/</script>
+<script>
+(() => {
+'use strict';
+const J = window.Jothidam;
+
+// ================= i18n =================
+const I = {
+  en: {
+    appName:'Jothidam', tagline:'South Indian Vedic horoscope & matching', tabHoro:'Horoscope', tabMatch:'Marriage Match',
+    horoTitle:'Birth chart', horoSub:'Enter birth details. Charts use Lahiri ayanamsa and South Indian style.',
+    matchTitle:'Marriage matching (10 Porutham)', matchSub:"Enter both birth details. Matching counts from the girl's star to the boy's star, as in Tamil tradition.",
+    makeChart:'Build horoscope', doMatch:'Check match', name:'Name', gender:'Gender', male:'Male', female:'Female', dob:'Date of birth', tob:'Time of birth', pob:'Place of birth',
+    placeHint:'Type a town or city, then pick from the list', advanced:'Coordinates & time zone', lat:'Latitude', lon:'Longitude', tz:'UTC offset (e.g. +05:30)',
+    boy:'Boy', girl:'Girl', searching:'Searching…', noPlace:'No places found — enter coordinates below.', pickPlace:'Please choose a place from the list, or enter coordinates.',
+    fillAll:'Please fill in date, time and place.', footer:'Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.',
+    aiSettings:'AI reading settings', aiSettingsSub:'Readings are written by Google Gemini using your own API key. The key is sent only to Google from your browser.',
+    apiKey:'Gemini API key', getKey:'Get a free key from Google AI Studio ↗', model:'Model', remember:'Remember key in this browser', save:'Save', cancel:'Cancel', clearKey:'Forget key',
+    summary:'Key details', lagna:'Lagna', rasi:'Rasi (Moon sign)', star:'Nakshatra', tamilMonth:'Tamil month', tithi:'Tithi', yoga:'Yoga', karana:'Karana', weekday:'Weekday', ayan:'Ayanamsa',
+    rasiChart:'Rasi chart', navChart:'Navamsa chart', planets:'Planetary positions', planet:'Planet', sign:'Sign', degree:'Degree', house:'House', starPada:'Star · Pada', navamsa:'Navamsa', status:'Status',
+    exalted:'Exalted', debilitated:'Debilitated', own:'Own sign', retro:'Retro', combust:'Combust',
+    dasa:'Vimshottari dasa', dasaBal:'Dasa balance at birth', mahadasa:'Mahadasa', from:'From', to:'To', current:'Current', bhuktis:'Bhuktis in current mahadasa', bhukti:'Bhukti',
+    doshas:'Dosha check', chevvai:'Chevvai (Mars) dosham', rahuKetu:'Rahu–Ketu (Naga) dosham', kalaSarpa:'Kala Sarpa yoga',
+    present:'Present', absent:'Not present', cancelled:'Present but cancelled',
+    chevDet:'Mars is in house {h} from {ref}.', chevNone:'Mars is not in houses 2, 4, 7, 8 or 12 from Lagna or Moon.', chevCancel:' Mars’ sign placement cancels it.',
+    fromLagna:'Lagna', fromMoon:'Moon',
+    rkDet:'Rahu in house {r}, Ketu in house {k}.', rkRule:'Counted when Rahu or Ketu sits in houses 1, 2, 7 or 8 from Lagna.', ksDet:'All seven planets lie on one side of the Rahu–Ketu axis.', ksNone:'Planets are spread on both sides of the Rahu–Ketu axis.',
+    aiTitle:'Astrologer’s reading', aiBtn:'Write my reading', aiMatchBtn:'Write match analysis', aiNeedKey:'Add your Gemini API key in settings (gear icon) to get a written reading.', aiWorking:'Writing…', aiRetry:'Try again',
+    print:'Print / Save PDF', years:'years', yrs:'y', mos:'m',
+    matchScore:'Porutham score', outOf:'out of 10', poruthams:'The 10 Poruthams', porutham:'Porutham', result:'Result', meaning:'What it indicates',
+    good:'Matching', medium:'Average', bad:'Not matching',
+    v_excellent:'Excellent match', v_good:'Good match', v_average:'Average match', v_weak:'Weak match', v_notRecommended:'Not recommended by tradition',
+    vd_excellent:'Most poruthams agree, including Rajju and Vedhai.', vd_good:'A workable match; Rajju and Vedhai are clear.', vd_average:'Several poruthams are weak; look at the full charts before deciding.', vd_weak:'Few poruthams agree.', vd_notRecommended:'Rajju or Vedhai does not match. Tamil tradition treats this as a serious concern regardless of the total score.',
+    doshaCompat:'Dosha compatibility', balanced:'Balanced', unbalanced:'Not balanced', chevBoth:'Chevvai dosham', rkBoth:'Rahu–Ketu dosham', yes:'Yes', no:'No',
+    compatNote:'Tradition prefers that both partners either have or do not have the same dosha.',
+    bothCharts:'Both charts',
+    p_dinam:'Dinam', p_ganam:'Ganam', p_mahendram:'Mahendram', p_streeDeergham:'Stree Deergham', p_yoni:'Yoni', p_rasi:'Rasi', p_rasiAdhipathi:'Rasi Adhipathi', p_vasyam:'Vasyam', p_rajju:'Rajju', p_vedhai:'Vedhai',
+    m_dinam:'Day-to-day health and harmony', m_ganam:'Temperament (Deva / Manushya / Rakshasa)', m_mahendram:'Progeny and prosperity', m_streeDeergham:'Well-being and prosperity of the wife', m_yoni:'Physical and intimate compatibility', m_rasi:'Family harmony and lineage', m_rasiAdhipathi:'Friendship between the Moon-sign lords', m_vasyam:'Mutual attraction and affection', m_rajju:'Longevity of the marriage (most important)', m_vedhai:'Freedom from obstacles and affliction',
+    critical:'critical', countLbl:'count {n}',
+    gana:['Deva','Manushya','Rakshasa'], rajjuN:['Siro (head)','Kanta (neck)','Udara (navel)','Kati (waist)','Pada (feet)'],
+    yoniN:['Horse','Elephant','Goat','Serpent','Dog','Cat','Rat','Cow','Buffalo','Tiger','Deer','Monkey','Mongoose','Lion'],
+    rasis:['Mesha','Rishabha','Mithuna','Kataka','Simha','Kanya','Tula','Vrischika','Dhanus','Makara','Kumbha','Meena'],
+    rasisEn:['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'],
+    naks:['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishta','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'],
+    pl:{Sun:'Sun',Moon:'Moon',Mars:'Mars',Mercury:'Mercury',Jupiter:'Jupiter',Venus:'Venus',Saturn:'Saturn',Rahu:'Rahu',Ketu:'Ketu'},
+    ab:{Sun:'Su',Moon:'Mo',Mars:'Ma',Mercury:'Me',Jupiter:'Ju',Venus:'Ve',Saturn:'Sa',Rahu:'Ra',Ketu:'Ke',Asc:'Lg'}, rAb:'R',
+    months:['Chithirai','Vaikasi','Aani','Aadi','Aavani','Purattasi','Aippasi','Karthigai','Margazhi','Thai','Maasi','Panguni'],
+    tithis:['Prathamai','Dwitiyai','Tritiyai','Chathurthi','Panchami','Shashti','Saptami','Ashtami','Navami','Dasami','Ekadasi','Dwadasi','Trayodasi','Chathurdasi'],
+    pournami:'Pournami', amavasai:'Amavasai', shukla:'Shukla (waxing)', krishna:'Krishna (waning)',
+    yogas:['Vishkambha','Priti','Ayushman','Saubhagya','Shobhana','Atiganda','Sukarma','Dhriti','Shula','Ganda','Vriddhi','Dhruva','Vyaghata','Harshana','Vajra','Siddhi','Vyatipata','Variyan','Parigha','Shiva','Siddha','Sadhya','Shubha','Shukla','Brahma','Indra','Vaidhriti'],
+    karanas:['Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti','Shakuni','Chatushpada','Naga','Kimstughna'],
+    days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    center:'Rasi', centerNav:'Navamsa', weekdayNote:'Tamil date, weekday and panchangam follow the sunrise-to-sunrise day at the birth place.',
+    tamilDate:'Tamil date', starLord:'Star lord', sunrise:'Sunrise', sunset:'Sunset', nazhigai:'Janma nazhigai', beforeSunriseNote:'Born before sunrise, so the Tamil day is the previous calendar day.',
+    varusham:'year', transits:'Current transits (Gochara)', transitSub:'Positions today, counted from your Moon sign ({r}).', fromMoonH:'From Moon', fromLagnaH:'From Lagna',
+    sadeSati:'Ezharai Sani (Sade Sati)', sadePart:['','phase 1 of 3','phase 2 of 3 (Janma Sani)','phase 3 of 3'], ashtama:'Ashtama Sani', ardhashtama:'Ardhashtama Sani', kandaka:'Kandaka Sani', saturnClear:'Saturn is not in a Sade Sati, Ashtama, Ardhashtama or Kandaka position from your Moon.',
+    guruGood:'Jupiter transits a favourable house from the Moon (2, 5, 7, 9 or 11).', guruNeutral:'Jupiter is in a less supportive house from the Moon this period.',
+    share:'Copy share link', copied:'Link copied', nodeType:'Rahu / Ketu', nodeMean:'Mean node (Drik default)', nodeTrue:'True node',
+    rulesNote:'Rules follow the common Tamil (Thirukanitha) practice: star counted from the girl to the boy; Dinam good at 2, 4, 6, 8, 9, 11, 13, 15, 18, 20, 24, 26; Rajju and Vedhai are decisive. Families and astrologers differ on some rules.',
+    years60:['Prabhava','Vibhava','Shukla','Pramoduta','Prajotpatti','Angirasa','Shrimukha','Bhava','Yuva','Dhatu','Ishvara','Bahudhanya','Pramathi','Vikrama','Vishu','Chitrabhanu','Subhanu','Tarana','Parthiva','Vyaya','Sarvajit','Sarvadhari','Virodhi','Vikruti','Khara','Nandana','Vijaya','Jaya','Manmatha','Durmukhi','Hevilambi','Vilambi','Vikari','Sharvari','Plava','Shubhakrut','Shobhakrut','Krodhi','Vishvavasu','Parabhava','Plavanga','Kilaka','Saumya','Sadharana','Virodhikrut','Paridhavi','Pramadicha','Ananda','Rakshasa','Nala','Pingala','Kalayukti','Siddharthi','Raudri','Durmati','Dundubhi','Rudhirodgari','Raktakshi','Krodhana','Akshaya']
+  },
+  ta: {
+    appName:'ஜோதிடம்', tagline:'தென்னிந்திய ஜாதகம் & திருமணப் பொருத்தம்', tabHoro:'ஜாதகம்', tabMatch:'திருமணப் பொருத்தம்',
+    horoTitle:'ஜனன ஜாதகம்', horoSub:'பிறப்பு விவரங்களை உள்ளிடவும். லஹிரி அயனாம்சம், தென்னிந்திய கட்ட முறை.',
+    matchTitle:'திருமணப் பொருத்தம் (10 பொருத்தங்கள்)', matchSub:'இருவரின் பிறப்பு விவரங்களையும் உள்ளிடவும். பெண்ணின் நட்சத்திரத்திலிருந்து ஆணின் நட்சத்திரம் வரை எண்ணப்படுகிறது.',
+    makeChart:'ஜாதகம் கணி', doMatch:'பொருத்தம் பார்', name:'பெயர்', gender:'பாலினம்', male:'ஆண்', female:'பெண்', dob:'பிறந்த தேதி', tob:'பிறந்த நேரம்', pob:'பிறந்த ஊர்',
+    placeHint:'ஊர் பெயரை தட்டச்சு செய்து பட்டியலில் தேர்வு செய்யவும்', advanced:'அட்சரேகை, தீர்க்கரேகை & நேர மண்டலம்', lat:'அட்சரேகை', lon:'தீர்க்கரேகை', tz:'UTC வேறுபாடு (எ.கா. +05:30)',
+    boy:'ஆண் (வரன்)', girl:'பெண் (வது)', searching:'தேடுகிறது…', noPlace:'ஊர் கிடைக்கவில்லை — கீழே அட்சரேகை/தீர்க்கரேகை உள்ளிடவும்.', pickPlace:'பட்டியலில் இருந்து ஊரைத் தேர்வு செய்யவும் அல்லது அட்சரேகை உள்ளிடவும்.',
+    fillAll:'தேதி, நேரம், ஊர் அனைத்தையும் நிரப்பவும்.', footer:'கணிப்பு: லஹிரி அயனாம்சம், சராசரி ராகு/கேது, ராசி வீட்டு முறை, விம்சோத்தரி தசை. ஜோதிடம் ஒரு பாரம்பரிய நம்பிக்கை; மருத்துவ, சட்ட, நிதி முடிவுகளுக்கு இதை மட்டும் சார்ந்திருக்க வேண்டாம்.',
+    aiSettings:'AI பலன் அமைப்புகள்', aiSettingsSub:'பலன்களை Google Gemini உங்கள் சொந்த API key மூலம் எழுதுகிறது. Key உங்கள் உலாவியிலிருந்து Google-க்கு மட்டுமே அனுப்பப்படும்.',
+    apiKey:'Gemini API key', getKey:'Google AI Studio-வில் இலவச key பெறுக ↗', model:'மாடல்', remember:'இந்த உலாவியில் key-ஐ நினைவில் வை', save:'சேமி', cancel:'ரத்து', clearKey:'Key-ஐ நீக்கு',
+    summary:'முக்கிய விவரங்கள்', lagna:'லக்னம்', rasi:'ராசி', star:'நட்சத்திரம்', tamilMonth:'தமிழ் மாதம்', tithi:'திதி', yoga:'யோகம்', karana:'கரணம்', weekday:'கிழமை', ayan:'அயனாம்சம்',
+    rasiChart:'ராசி கட்டம்', navChart:'நவாம்ச கட்டம்', planets:'கிரக நிலைகள்', planet:'கிரகம்', sign:'ராசி', degree:'பாகை', house:'பாவம்', starPada:'நட்சத்திரம் · பாதம்', navamsa:'நவாம்சம்', status:'நிலை',
+    exalted:'உச்சம்', debilitated:'நீசம்', own:'ஆட்சி', retro:'வக்ரம்', combust:'அஸ்தமனம்',
+    dasa:'விம்சோத்தரி தசை', dasaBal:'பிறப்பில் தசா இருப்பு', mahadasa:'மகா தசை', from:'தொடக்கம்', to:'முடிவு', current:'நடப்பு', bhuktis:'நடப்பு தசையின் புக்திகள்', bhukti:'புக்தி',
+    doshas:'தோஷ பரிசோதனை', chevvai:'செவ்வாய் தோஷம்', rahuKetu:'ராகு–கேது (நாக) தோஷம்', kalaSarpa:'கால சர்ப்ப யோகம்',
+    present:'உள்ளது', absent:'இல்லை', cancelled:'உள்ளது, ஆனால் நிவர்த்தி',
+    chevDet:'{ref}-லிருந்து {h}-ஆம் வீட்டில் செவ்வாய்.', chevNone:'லக்னம் அல்லது சந்திரனிலிருந்து 2, 4, 7, 8, 12 வீடுகளில் செவ்வாய் இல்லை.', chevCancel:' செவ்வாய் இருக்கும் ராசியால் தோஷ நிவர்த்தி.',
+    fromLagna:'லக்னம்', fromMoon:'சந்திரன்',
+    rkDet:'ராகு {r}-ஆம் வீடு, கேது {k}-ஆம் வீடு.', rkRule:'லக்னத்திலிருந்து 1, 2, 7, 8-ல் ராகு அல்லது கேது இருந்தால் கணக்கிடப்படும்.', ksDet:'ஏழு கிரகங்களும் ராகு–கேது அச்சின் ஒரே பக்கம் உள்ளன.', ksNone:'கிரகங்கள் ராகு–கேது அச்சின் இரு பக்கமும் உள்ளன.',
+    aiTitle:'ஜோதிடரின் பலன்', aiBtn:'பலன் எழுது', aiMatchBtn:'பொருத்த ஆய்வு எழுது', aiNeedKey:'எழுத்துப் பலன் பெற, அமைப்புகளில் (கியர் ஐகான்) Gemini API key-ஐ சேர்க்கவும்.', aiWorking:'எழுதுகிறது…', aiRetry:'மீண்டும் முயல்க',
+    print:'அச்சிடு / PDF', years:'ஆண்டுகள்', yrs:'வ', mos:'மா',
+    matchScore:'பொருத்த மதிப்பெண்', outOf:'10-க்கு', poruthams:'10 பொருத்தங்கள்', porutham:'பொருத்தம்', result:'முடிவு', meaning:'குறிப்பது',
+    good:'உத்தமம்', medium:'மத்திமம்', bad:'பொருத்தம் இல்லை',
+    v_excellent:'மிகச் சிறந்த பொருத்தம்', v_good:'நல்ல பொருத்தம்', v_average:'சராசரி பொருத்தம்', v_weak:'குறைந்த பொருத்தம்', v_notRecommended:'பாரம்பரியப்படி பரிந்துரைக்கப்படவில்லை',
+    vd_excellent:'ரஜ்ஜு, வேதை உட்பட பெரும்பாலான பொருத்தங்கள் உள்ளன.', vd_good:'ஏற்கத்தக்க பொருத்தம்; ரஜ்ஜு, வேதை சரியாக உள்ளன.', vd_average:'சில பொருத்தங்கள் குறைவு; முடிவுக்கு முன் முழு ஜாதகத்தையும் பார்க்கவும்.', vd_weak:'மிகக் குறைவான பொருத்தங்களே உள்ளன.', vd_notRecommended:'ரஜ்ஜு அல்லது வேதை பொருந்தவில்லை. மொத்த மதிப்பெண் எதுவாயினும் தமிழ் மரபு இதை முக்கியக் குறையாகக் கருதுகிறது.',
+    doshaCompat:'தோஷ சாம்யம்', balanced:'சமம்', unbalanced:'சமமில்லை', chevBoth:'செவ்வாய் தோஷம்', rkBoth:'ராகு–கேது தோஷம்', yes:'உண்டு', no:'இல்லை',
+    compatNote:'இருவருக்கும் ஒரே தோஷம் இருப்பது அல்லது இருவருக்கும் இல்லாதது நல்லது என மரபு கூறுகிறது.',
+    bothCharts:'இருவரின் ஜாதகம்',
+    p_dinam:'தினப் பொருத்தம்', p_ganam:'கணப் பொருத்தம்', p_mahendram:'மகேந்திரப் பொருத்தம்', p_streeDeergham:'ஸ்திரீ தீர்க்கம்', p_yoni:'யோனிப் பொருத்தம்', p_rasi:'ராசிப் பொருத்தம்', p_rasiAdhipathi:'ராசி அதிபதி பொருத்தம்', p_vasyam:'வசியப் பொருத்தம்', p_rajju:'ரஜ்ஜுப் பொருத்தம்', p_vedhai:'வேதைப் பொருத்தம்',
+    m_dinam:'அன்றாட ஆரோக்கியம், ஒற்றுமை', m_ganam:'குணம் (தேவ / மனுஷ / ராட்சச)', m_mahendram:'சந்ததி, செல்வ வளம்', m_streeDeergham:'மனைவியின் நலம், செழிப்பு', m_yoni:'உடல், தாம்பத்திய ஒற்றுமை', m_rasi:'குடும்ப ஒற்றுமை, வம்ச விருத்தி', m_rasiAdhipathi:'ராசி அதிபதிகளின் நட்பு', m_vasyam:'பரஸ்பர ஈர்ப்பு, அன்பு', m_rajju:'மாங்கல்ய பலம் (மிக முக்கியம்)', m_vedhai:'தடைகள், துன்பங்களிலிருந்து விடுதலை',
+    critical:'முக்கியம்', countLbl:'எண்ணிக்கை {n}',
+    gana:['தேவ','மனுஷ','ராட்சச'], rajjuN:['சிரசு ரஜ்ஜு','கண்ட ரஜ்ஜு','உதர ரஜ்ஜு','கடி ரஜ்ஜு','பாத ரஜ்ஜு'],
+    yoniN:['குதிரை','யானை','ஆடு','பாம்பு','நாய்','பூனை','எலி','பசு','எருமை','புலி','மான்','குரங்கு','கீரி','சிங்கம்'],
+    rasis:['மேஷம்','ரிஷபம்','மிதுனம்','கடகம்','சிம்மம்','கன்னி','துலாம்','விருச்சிகம்','தனுசு','மகரம்','கும்பம்','மீனம்'],
+    rasisEn:['மேஷம்','ரிஷபம்','மிதுனம்','கடகம்','சிம்மம்','கன்னி','துலாம்','விருச்சிகம்','தனுசு','மகரம்','கும்பம்','மீனம்'],
+    naks:['அஸ்வினி','பரணி','கிருத்திகை','ரோகிணி','மிருகசீரிடம்','திருவாதிரை','புனர்பூசம்','பூசம்','ஆயில்யம்','மகம்','பூரம்','உத்திரம்','அஸ்தம்','சித்திரை','சுவாதி','விசாகம்','அனுஷம்','கேட்டை','மூலம்','பூராடம்','உத்திராடம்','திருவோணம்','அவிட்டம்','சதயம்','பூரட்டாதி','உத்திரட்டாதி','ரேவதி'],
+    pl:{Sun:'சூரியன்',Moon:'சந்திரன்',Mars:'செவ்வாய்',Mercury:'புதன்',Jupiter:'குரு',Venus:'சுக்கிரன்',Saturn:'சனி',Rahu:'ராகு',Ketu:'கேது'},
+    ab:{Sun:'சூரி',Moon:'சந்',Mars:'செவ்',Mercury:'புத',Jupiter:'குரு',Venus:'சுக்',Saturn:'சனி',Rahu:'ராகு',Ketu:'கேது',Asc:'ல'}, rAb:'வ',
+    months:['சித்திரை','வைகாசி','ஆனி','ஆடி','ஆவணி','புரட்டாசி','ஐப்பசி','கார்த்திகை','மார்கழி','தை','மாசி','பங்குனி'],
+    tithis:['பிரதமை','துவிதியை','திருதியை','சதுர்த்தி','பஞ்சமி','சஷ்டி','சப்தமி','அஷ்டமி','நவமி','தசமி','ஏகாதசி','துவாதசி','திரயோதசி','சதுர்த்தசி'],
+    pournami:'பௌர்ணமி', amavasai:'அமாவாசை', shukla:'வளர்பிறை', krishna:'தேய்பிறை',
+    yogas:['விஷ்கம்பம்','ப்ரீதி','ஆயுஷ்மான்','சௌபாக்யம்','சோபனம்','அதிகண்டம்','சுகர்மம்','திருதி','சூலம்','கண்டம்','விருத்தி','துருவம்','வியாகாதம்','ஹர்ஷணம்','வஜ்ரம்','சித்தி','வியதீபாதம்','வரியான்','பரிகம்','சிவம்','சித்தம்','சாத்தியம்','சுபம்','சுக்லம்','பிரம்மம்','ஐந்திரம்','வைதிருதி'],
+    karanas:['பவம்','பாலவம்','கௌலவம்','தைதுலம்','கரசை','வணிசை','பத்திரை','சகுனி','சதுஷ்பாதம்','நாகவம்','கிம்ஸ்துக்னம்'],
+    days:['ஞாயிறு','திங்கள்','செவ்வாய்','புதன்','வியாழன்','வெள்ளி','சனி'],
+    center:'ராசி', centerNav:'நவாம்சம்', weekdayNote:'தமிழ் தேதி, கிழமை, பஞ்சாங்கம் ஆகியவை பிறந்த ஊரின் சூரிய உதயம் முதல் அடுத்த உதயம் வரையிலான நாளின்படி.',
+    tamilDate:'தமிழ் தேதி', starLord:'நட்சத்திர அதிபதி', sunrise:'சூரிய உதயம்', sunset:'சூரிய அஸ்தமனம்', nazhigai:'ஜனன நாழிகை', beforeSunriseNote:'சூரிய உதயத்திற்கு முன் பிறந்ததால், தமிழ் நாள் முந்தைய தேதியாகும்.',
+    varusham:'வருடம்', transits:'தற்போதைய கோசாரம்', transitSub:'இன்றைய கிரக நிலை, உங்கள் ராசியிலிருந்து ({r}).', fromMoonH:'ராசியிலிருந்து', fromLagnaH:'லக்னத்திலிருந்து',
+    sadeSati:'ஏழரைச் சனி', sadePart:['','முதல் சுற்று (விரயச் சனி)','இரண்டாம் சுற்று (ஜென்மச் சனி)','மூன்றாம் சுற்று (பாதச் சனி)'], ashtama:'அஷ்டமச் சனி', ardhashtama:'அர்த்தாஷ்டமச் சனி', kandaka:'கண்டகச் சனி', saturnClear:'ஏழரை, அஷ்டம, அர்த்தாஷ்டம, கண்டகச் சனி எதுவும் தற்போது இல்லை.',
+    guruGood:'குரு ராசிக்கு 2, 5, 7, 9, 11-ல் சஞ்சரிக்கிறார் — சாதகமான காலம்.', guruNeutral:'இந்த காலத்தில் குருவின் சஞ்சாரம் அவ்வளவு சாதகமில்லை.',
+    share:'பகிர்வு இணைப்பை நகலெடு', copied:'இணைப்பு நகலெடுக்கப்பட்டது', nodeType:'ராகு / கேது', nodeMean:'சராசரி (Mean)', nodeTrue:'உண்மை (True)',
+    rulesNote:'தமிழ் (திருக்கணித) முறை: பெண் நட்சத்திரத்திலிருந்து ஆண் நட்சத்திரம் வரை எண்ணப்படுகிறது; தினம் 2, 4, 6, 8, 9, 11, 13, 15, 18, 20, 24, 26 உத்தமம்; ரஜ்ஜு, வேதை முக்கியமானவை. சில விதிகளில் ஜோதிடர்களிடையே வேறுபாடு உண்டு.',
+    years60:['பிரபவ','விபவ','சுக்ல','பிரமோதூத','பிரஜோத்பத்தி','ஆங்கீரச','ஸ்ரீமுக','பவ','யுவ','தாது','ஈஸ்வர','வெகுதான்ய','பிரமாதி','விக்கிரம','விஷு','சித்திரபானு','சுபானு','தாரண','பார்த்திப','விய','சர்வசித்து','சர்வதாரி','விரோதி','விக்ருதி','கர','நந்தன','விஜய','ஜய','மன்மத','துன்முகி','ஹேவிளம்பி','விளம்பி','விகாரி','சார்வரி','பிலவ','சுபகிருது','சோபகிருது','குரோதி','விசுவாவசு','பராபவ','பிலவங்க','கீலக','சௌமிய','சாதாரண','விரோதிகிருது','பரிதாபி','பிரமாதீச','ஆனந்த','ராட்சச','நள','பிங்கள','காளயுக்தி','சித்தார்த்தி','ரௌத்திரி','துன்மதி','துந்துபி','ருத்ரோத்காரி','ரக்தாட்சி','குரோதன','அட்சய']
+  }
+};
+let lang = 'en';
+const t = (k, vars) => { let s = (I[lang][k] ?? I.en[k] ?? k); if (vars) for (const v in vars) s = s.replace('{' + v + '}', vars[v]); return s; };
+const L = () => I[lang];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+// ================= storage (guarded) =================
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+  del(k) { try { localStorage.removeItem(k); } catch {} }
+};
+let apiKey = store.get('jothidam.key') || '';
+let model = store.get('jothidam.model') || 'gemini-3.5-flash';
+let nodeType = store.get('jothidam.node') === 'true' ? 'true' : 'mean';
+
+// ================= person form =================
+function personForm(host, id, opts) {
+  host.innerHTML = `
+    ${opts.title ? `<h4><span data-t="${opts.title}">${t(opts.title)}</span></h4>` : ''}
+    <div class="grid g2">
+      <div class="field"><label for="${id}-name" data-t="name">${t('name')}</label><input id="${id}-name" maxlength="60"></div>
+      ${opts.gender ? `<div class="field"><label for="${id}-gender" data-t="gender">${t('gender')}</label>
+        <select id="${id}-gender"><option value="male" data-t="male">${t('male')}</option><option value="female" data-t="female">${t('female')}</option></select></div>` : '<div></div>'}
+      <div class="field"><label for="${id}-date" data-t="dob">${t('dob')}</label><input id="${id}-date" type="date" required min="1800-01-01" max="2100-12-31"></div>
+      <div class="field"><label for="${id}-time" data-t="tob">${t('tob')}</label><input id="${id}-time" type="time" required></div>
+    </div>
+    <div class="field place" style="margin-top:14px"><label for="${id}-place" data-t="pob">${t('pob')}</label>
+      <input id="${id}-place" placeholder="Chennai" data-tp="placeHint" aria-autocomplete="list">
+      <div class="suggest" id="${id}-sug" role="listbox"></div>
+      <div class="geo" id="${id}-geo"></div>
+    </div>
+    <details class="adv"><summary data-t="advanced">${t('advanced')}</summary>
+      <div class="grid g3">
+        <div class="field"><label for="${id}-lat" data-t="lat">${t('lat')}</label><input id="${id}-lat" inputmode="decimal" placeholder="13.0827"></div>
+        <div class="field"><label for="${id}-lon" data-t="lon">${t('lon')}</label><input id="${id}-lon" inputmode="decimal" placeholder="80.2707"></div>
+        <div class="field"><label for="${id}-tz" data-t="tz">${t('tz')}</label><input id="${id}-tz" placeholder="+05:30"></div>
+      </div>
+    </details>`;
+  const $ = s => host.querySelector(s);
+  const place = $(`#${id}-place`), sug = $(`#${id}-sug`), geo = $(`#${id}-geo`);
+  const state = { zone: null, label: '' };
+  let timer, seq = 0;
+  place.addEventListener('input', () => {
+    state.zone = null; clearTimeout(timer);
+    const q = place.value.trim();
+    if (q.length < 2) { sug.style.display = 'none'; return; }
+    timer = setTimeout(async () => {
+      const my = ++seq; geo.textContent = t('searching');
+      try {
+        const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=7&language=en&format=json`);
+        const j = await r.json(); if (my !== seq) return;
+        const res = j.results || [];
+        geo.textContent = res.length ? '' : t('noPlace');
+        sug.innerHTML = res.map((p, i) => `<button type="button" data-i="${i}">${esc(p.name)} <small>${esc([p.admin1, p.country].filter(Boolean).join(', '))}</small></button>`).join('');
+        sug.style.display = res.length ? 'block' : 'none';
+        sug.querySelectorAll('button').forEach(b => b.onclick = () => {
+          const p = res[+b.dataset.i];
+          place.value = [p.name, p.admin1, p.country].filter(Boolean).join(', ');
+          $(`#${id}-lat`).value = p.latitude.toFixed(4); $(`#${id}-lon`).value = p.longitude.toFixed(4);
+          $(`#${id}-tz`).value = ''; state.zone = p.timezone; state.label = place.value;
+          geo.textContent = `${p.latitude.toFixed(2)}°, ${p.longitude.toFixed(2)}° · ${p.timezone}`;
+          sug.style.display = 'none';
+        });
+      } catch { if (my === seq) geo.textContent = t('noPlace'); }
+    }, 300);
+  });
+  place.addEventListener('blur', () => setTimeout(() => sug.style.display = 'none', 200));
+  return {
+    write(pd) {
+      $(`#${id}-name`).value = pd.name || ''; if (opts.gender && pd.gender) $(`#${id}-gender`).value = pd.gender;
+      $(`#${id}-date`).value = pd.date; $(`#${id}-time`).value = pd.time; place.value = pd.place || '';
+      $(`#${id}-lat`).value = pd.calc.lat; $(`#${id}-lon`).value = pd.calc.lon;
+      state.zone = pd.calc.zone || null;
+      $(`#${id}-tz`).value = pd.calc.zone ? '' : fmtOff(pd.calc.offsetMinutes).replace('UTC', '').replace('−', '-');
+      geo.textContent = `${(+pd.calc.lat).toFixed(2)}°, ${(+pd.calc.lon).toFixed(2)}°${pd.calc.zone ? ' · ' + pd.calc.zone : ''}`;
+    },
+    read() {
+      const date = $(`#${id}-date`).value, time = $(`#${id}-time`).value;
+      const lat = parseFloat($(`#${id}-lat`).value), lon = parseFloat($(`#${id}-lon`).value);
+      const tzs = $(`#${id}-tz`).value.trim();
+      if (!date || !time) throw new Error(t('fillAll'));
+      if (!isFinite(lat) || !isFinite(lon)) throw new Error(t('pickPlace'));
+      let offsetMinutes = null, zone = state.zone;
+      if (tzs) {
+        const m = tzs.match(/^([+-])?(\d{1,2})(?::?(\d{2}))?$/);
+        if (!m) throw new Error(t('tz'));
+        offsetMinutes = (m[1] === '-' ? -1 : 1) * (+m[2] * 60 + +(m[3] || 0));
+      } else if (!zone) zone = 'Asia/Kolkata';
+      const [y, mo, d] = date.split('-').map(Number), [h, mi] = time.split(':').map(Number);
+      return {
+        name: $(`#${id}-name`).value.trim(), gender: opts.gender ? $(`#${id}-gender`).value : opts.fixedGender,
+        place: place.value.trim() || `${lat.toFixed(2)}, ${lon.toFixed(2)}`, date, time,
+        calc: { y, m: mo, d, h, mi, lat, lon, zone, offsetMinutes }
+      };
+    }
+  };
+}
+
+// ================= formatting =================
+const fmtDate = ms => new Date(ms).toLocaleDateString(lang === 'ta' ? 'ta-IN' : 'en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const fmtDeg = x => { const d = Math.floor(x), m = Math.floor((x - d) * 60); return `${d}°${String(m).padStart(2, '0')}′`; };
+const fmtOff = m => `UTC${m < 0 ? '−' : '+'}${String(Math.floor(Math.abs(m) / 60)).padStart(2, '0')}:${String(Math.abs(m) % 60).padStart(2, '0')}`;
+const tithiName = (i) => { const n = i % 15; if (i === 14) return L().pournami; if (i === 29) return L().amavasai; return L().tithis[n]; };
+const signName = i => lang === 'ta' ? L().rasis[i] : `${L().rasis[i]} <span class="muted">(${L().rasisEn[i]})</span>`;
+const signPlain = i => lang === 'ta' ? L().rasis[i] : L().rasis[i];
+const yrsFmt = y => { const Y = Math.floor(y), M = Math.floor((y - Y) * 12); return `${Y}${t('yrs')} ${M}${t('mos')}`; };
+
+// ================= South Indian chart =================
+// grid positions (row, col) for signs 0..11
+const POS = [[0, 1], [0, 2], [0, 3], [1, 3], [2, 3], [3, 3], [3, 2], [3, 1], [3, 0], [2, 0], [1, 0], [0, 0]];
+function siChart(chart, useNavamsa, title) {
+  const cells = Array.from({ length: 12 }, () => []);
+  const lg = useNavamsa ? chart.lagna.navamsa : chart.lagna.sign;
+  cells[lg].push(`<i class="asc">${L().ab.Asc}</i>`);
+  chart.planets.forEach(p => {
+    const s = useNavamsa ? p.navamsa : p.sign;
+    const r = p.retro && p.name !== 'Rahu' && p.name !== 'Ketu' ? `<sup>${L().rAb}</sup>` : '';
+    cells[s].push(`<i title="${esc(L().pl[p.name])}">${L().ab[p.name]}${r}</i>`);
+  });
+  let html = `<div class="si" role="img" aria-label="${esc(title)}">`;
+  for (let s = 0; s < 12; s++) {
+    const [r, c] = POS[s];
+    html += `<div class="c${s === lg ? ' lg' : ''}" style="grid-row:${r + 1};grid-column:${c + 1}"><div class="sn">${L().rasis[s]}</div><div class="pl">${cells[s].join('')}</div></div>`;
+  }
+  html += `<div class="ctr"><b>${useNavamsa ? t('centerNav') : t('center')}</b><small>${esc(chart._name || '')}</small><small>${chart._when || ''}</small></div></div>`;
+  return html;
+}
+
+// ================= Horoscope render =================
+function statusTags(p) {
+  const tags = [];
+  if (p.dignity === 'exalted') tags.push(`<span class="tag ex">${t('exalted')}</span>`);
+  if (p.dignity === 'debilitated') tags.push(`<span class="tag db">${t('debilitated')}</span>`);
+  if (p.dignity === 'own') tags.push(`<span class="tag ow">${t('own')}</span>`);
+  if (p.retro && p.name !== 'Rahu' && p.name !== 'Ketu') tags.push(`<span class="tag rt">${t('retro')}</span>`);
+  if (p.combust) tags.push(`<span class="tag">${t('combust')}</span>`);
+  return tags.join('');
+}
+function doshaBlock(c) {
+  const ch = c.doshas.chevvai;
+  let chevState, chevText;
+  if (!ch.present) { chevState = 'good'; chevText = t('chevNone'); }
+  else {
+    chevText = ch.refs.map(r => t('chevDet', { h: r.house, ref: t(r.from === 'lagna' ? 'fromLagna' : 'fromMoon') }) + (r.cancelled ? t('chevCancel') : '')).join(' ');
+    chevState = ch.effective ? 'bad' : 'medium';
+  }
+  const chevLbl = !ch.present ? t('absent') : ch.effective ? t('present') : t('cancelled');
+  const rk = c.doshas.rahuKetu;
+  const ks = c.doshas.kalaSarpa;
+  const row = (title, state, lbl, text) => `<div class="row"><span class="pill ${state}">${lbl}</span><div><b>${title}</b><p>${text}</p></div></div>`;
+  return `<div class="dosha">
+    ${row(t('chevvai'), chevState, chevLbl, chevText)}
+    ${row(t('rahuKetu'), rk.present ? 'bad' : 'good', rk.present ? t('present') : t('absent'), t('rkDet', { r: rk.rahuHouse, k: rk.ketuHouse }) + ' ' + t('rkRule'))}
+    ${row(t('kalaSarpa'), ks ? 'medium' : 'good', ks ? t('present') : t('absent'), ks ? t('ksDet') : t('ksNone'))}
+  </div>`;
+}
+function dasaBlock(c) {
+  const now = Date.now();
+  const cur = J.currentDasa(c.dasa, now);
+  const rows = c.dasa.periods.filter(p => p.end > c.utc).map(p => {
+    const isNow = cur && cur.md === p;
+    return `<tr class="${isNow ? 'now' : ''}"><td>${L().pl[p.lord]}${isNow ? ` <span class="tag ex">${t('current')}</span>` : ''}</td><td>${fmtDate(Math.max(p.start, c.utc))}</td><td>${fmtDate(p.end)}</td></tr>`;
+  }).join('');
+  let bh = '';
+  if (cur) {
+    bh = `<h3 style="margin-top:18px">${t('bhuktis')} — ${L().pl[cur.md.lord]}</h3><div class="tbl-wrap"><table><thead><tr><th>${t('bhukti')}</th><th>${t('from')}</th><th>${t('to')}</th></tr></thead><tbody>` +
+      cur.md.bhuktis.map(b => `<tr class="${b === cur.bh ? 'now' : ''}"><td>${L().pl[cur.md.lord]} – ${L().pl[b.lord]}${b === cur.bh ? ` <span class="tag ex">${t('current')}</span>` : ''}</td><td>${fmtDate(b.start)}</td><td>${fmtDate(b.end)}</td></tr>`).join('') + '</tbody></table></div>';
+  }
+  return `<p class="sub">${t('dasaBal')}: <b>${L().pl[c.dasa.balance.lord]}</b> ${yrsFmt(c.dasa.balance.years)}</p>
+    <div class="tbl-wrap"><table><thead><tr><th>${t('mahadasa')}</th><th>${t('from')}</th><th>${t('to')}</th></tr></thead><tbody>${rows}</tbody></table></div>${bh}`;
+}
+const DASA_LORDS = ['Ketu', 'Venus', 'Sun', 'Moon', 'Mars', 'Rahu', 'Jupiter', 'Saturn', 'Mercury'];
+const fmtClock = (ms, off) => { const d = new Date(Math.round((ms + off * 60000) / 60000) * 60000); return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`; };
+function tamilDateText(c) { const tm = c.tamil; return `${L().years60[tm.year]} ${t('varusham')}, ${L().months[tm.month]} ${tm.date}`; }
+function statsBlock(c) {
+  const pn = c.panchang, tm = c.tamil, off = c.input.offsetMinutes;
+  const items = [
+    [t('tamilDate'), tamilDateText(c)],
+    [t('lagna'), signPlain(c.lagna.sign) + ` <small class="muted">${fmtDeg(c.lagna.deg)}</small>`],
+    [t('rasi'), signPlain(c.rasi)],
+    [t('star'), `${L().naks[c.nakshatra]} · ${c.pada}`],
+    [t('starLord'), L().pl[DASA_LORDS[c.nakshatra % 9]]],
+    [t('tithi'), `${tithiName(pn.tithi)} <small class="muted">${pn.tithi === 14 || pn.tithi === 29 ? '' : t(pn.paksha)}</small>`],
+    [t('yoga'), L().yogas[pn.yoga]],
+    [t('karana'), L().karanas[pn.karana]],
+    [t('weekday'), L().days[pn.weekday]],
+    [t('sunrise'), tm.sunriseOk ? fmtClock(tm.sunrise, off) : '—'],
+    [t('sunset'), tm.sunriseOk ? fmtClock(tm.sunset, off) : '—'],
+    [t('nazhigai'), tm.sunriseOk ? `${tm.nazhigai} : ${String(tm.vinadi).padStart(2, '0')}` : '—']
+  ];
+  return `<div class="stats">${items.map(([k, v]) => `<div class="stat"><span>${k}</span><b>${v}</b></div>`).join('')}</div>`;
+}
+function transitBlock(c) {
+  const tr = J.transits(c, Date.now());
+  const sat = tr[0], jup = tr[1], ph = J.saturnPhase(sat.fromMoon);
+  const satLine = ph ? `<span class="pill ${ph.key === 'kandaka' || ph.key === 'ardhashtama' ? 'medium' : 'bad'}">${t(ph.key)}${ph.part ? ' · ' + L().sadePart[ph.part] : ''}</span>` : `<span class="pill good">${t('saturnClear')}</span>`;
+  const jupGood = [2, 5, 7, 9, 11].includes(jup.fromMoon);
+  return `<p class="sub">${t('transitSub', { r: signPlain(c.rasi) })}</p>
+    <div class="tbl-wrap"><table><thead><tr><th>${t('planet')}</th><th>${t('sign')}</th><th>${t('fromMoonH')}</th><th>${t('fromLagnaH')}</th></tr></thead><tbody>
+    ${tr.map(x => `<tr><td>${L().pl[x.name]}</td><td>${signPlain(x.sign)}</td><td>${x.fromMoon}</td><td>${x.fromLagna}</td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="dosha" style="margin-top:12px">
+      <div class="row"><div><b>${L().pl.Saturn}</b><p style="margin-top:6px">${satLine}</p></div></div>
+      <div class="row"><span class="pill ${jupGood ? 'good' : 'medium'}">${L().pl.Jupiter}</span><div><p>${jupGood ? t('guruGood') : t('guruNeutral')}</p></div></div>
+    </div>`;
+}
+function planetTable(c) {
+  const lg = c.lagna;
+  const row = (name, s, deg, house, nk, pada, nav, tags) => `<tr><td>${name}</td><td>${signPlain(s)}</td><td>${fmtDeg(deg)}</td><td>${house}</td><td>${L().naks[nk]} · ${pada}</td><td>${signPlain(nav)}</td><td>${tags}</td></tr>`;
+  return `<div class="tbl-wrap"><table><thead><tr><th>${t('planet')}</th><th>${t('sign')}</th><th>${t('degree')}</th><th>${t('house')}</th><th>${t('starPada')}</th><th>${t('navamsa')}</th><th>${t('status')}</th></tr></thead><tbody>
+    ${row(`<b>${t('lagna')}</b>`, lg.sign, lg.deg, 1, lg.nakshatra, lg.pada, lg.navamsa, '')}
+    ${c.planets.map(p => row(L().pl[p.name], p.sign, p.deg, p.house, p.nakshatra, p.pada, p.navamsa, statusTags(p))).join('')}
+  </tbody></table></div>`;
+}
+function birthLine(pd, c) {
+  return `${esc(pd.place)} · ${fmtDateInput(pd.date)} ${esc(pd.time)} · ${fmtOff(c.input.offsetMinutes)} · ${t('ayan')} ${fmtDeg(c.ayanamsa)}`;
+}
+function fmtDateInput(s) { const [y, m, d] = s.split('-').map(Number); return fmtDate(Date.UTC(y, m - 1, d)); }
+
+let horoState = null, matchState = null;
+const aiCache = { horo: {}, match: {} };
+
+function renderHoro() {
+  const out = document.getElementById('horoOut');
+  if (!horoState) { out.innerHTML = ''; return; }
+  const { pd, c } = horoState;
+  c._name = pd.name; c._when = `${fmtDateInput(pd.date)} ${esc(pd.time)}`;
+  out.innerHTML = `
+    <div class="card">
+      <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+        <div style="margin-right:auto"><h2>${esc(pd.name) || t('rasiChart')}</h2><p class="sub" style="margin:0">${birthLine(pd, c)}</p></div>
+        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" type="button" data-share="horo">${t('share')}</button><button class="btn ghost" type="button" onclick="window.print()">${t('print')}</button></div>
+      </div>
+      <div style="margin-top:16px">${statsBlock(c)}</div>
+      <p class="note">${t('weekdayNote')}${c.tamil.beforeSunrise ? ' ' + t('beforeSunriseNote') : ''}</p>
+    </div>
+    <div class="card"><div class="charts">
+      <div><p class="chart-t">${t('rasiChart')}</p>${siChart(c, false, t('rasiChart'))}</div>
+      <div><p class="chart-t">${t('navChart')}</p>${siChart(c, true, t('navChart'))}</div>
+    </div></div>
+    <div class="card"><h3>${t('planets')}</h3>${planetTable(c)}</div>
+    <div class="card"><h3>${t('dasa')}</h3>${dasaBlock(c)}</div>
+    <div class="card"><h3>${t('doshas')}</h3>${doshaBlock(c)}</div>
+    <div class="card"><h3>${t('transits')}</h3>${transitBlock(c)}</div>
+    <div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="horoAi"></div></div>`;
+  renderAi('horo');
+}
+
+// ================= Match render =================
+function matchDetail(item, g, b) {
+  const d = item.detail;
+  switch (item.key) {
+    case 'ganam': return `${L().gana[d.girl]} → ${L().gana[d.boy]}`;
+    case 'yoni': return `${L().yoniN[d.girl]} → ${L().yoniN[d.boy]}`;
+    case 'rajju': return `${L().rajjuN[d.girl]} · ${L().rajjuN[d.boy]}`;
+    case 'rasiAdhipathi': return `${L().pl[d.girl]} → ${L().pl[d.boy]}`;
+    case 'rasi': return `${signPlain(g.rasi)} → ${signPlain(b.rasi)} (${t('countLbl', { n: d.count })})`;
+    case 'dinam': case 'mahendram': case 'streeDeergham': return t('countLbl', { n: d.count });
+    case 'vasyam': return `${signPlain(g.rasi)} ↔ ${signPlain(b.rasi)}`;
+    case 'vedhai': return `${L().naks[g.nakshatra]} ↔ ${L().naks[b.nakshatra]}`;
+  }
+  return '';
+}
+function renderMatch() {
+  const out = document.getElementById('matchOut');
+  if (!matchState) { out.innerHTML = ''; return; }
+  const { boy, girl, bc, gc, pr, dc } = matchState;
+  bc._name = boy.name || t('boy'); gc._name = girl.name || t('girl');
+  bc._when = `${fmtDateInput(boy.date)} ${esc(boy.time)}`; gc._when = `${fmtDateInput(girl.date)} ${esc(girl.time)}`;
+  const color = pr.verdict === 'notRecommended' || pr.verdict === 'weak' ? 'var(--bad)' : pr.verdict === 'average' ? 'var(--mid)' : 'var(--good)';
+  const person = (pd, c, lbl) => `<div class="stat"><span>${lbl}</span><b>${esc(pd.name) || lbl}</b>
+      <div class="muted" style="font-size:13px;margin-top:4px">${L().naks[c.nakshatra]} ${c.pada} · ${signPlain(c.rasi)} · ${t('lagna')}: ${signPlain(c.lagna.sign)}</div>
+      <div class="muted" style="font-size:12px">${birthLine(pd, c)}</div></div>`;
+  const yn = v => v ? t('yes') : t('no');
+  out.innerHTML = `
+    <div class="card">
+      <div class="pair">${person(boy, bc, t('boy'))}${person(girl, gc, t('girl'))}</div>
+      <div class="score" style="margin-top:18px">
+        <div class="dial" style="--p:${pr.score * 10};--c:${color}"><div><div><b>${pr.score}</b><small>${t('outOf')}</small></div></div></div>
+        <div class="verdict"><div class="big" style="color:${color}">${t('v_' + pr.verdict)}</div><p>${t('vd_' + pr.verdict)}</p></div>
+        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" type="button" data-share="match">${t('share')}</button><button class="btn ghost" type="button" onclick="window.print()">${t('print')}</button></div>
+      </div>
+    </div>
+    <div class="card"><h3>${t('poruthams')}</h3>
+      <div class="tbl-wrap"><table class="ptbl"><thead><tr><th>${t('porutham')}</th><th>${t('result')}</th><th></th><th>${t('meaning')}</th></tr></thead><tbody>
+      ${pr.items.map(it => `<tr><td>${t('p_' + it.key)}${it.critical ? ` <span class="tag db">${t('critical')}</span>` : ''}<div class="msub">${matchDetail(it, gc, bc)}<br>${t('m_' + it.key)}</div></td><td><span class="pill ${it.result}">${t(it.result)}</span></td><td class="muted det" style="font-size:13px">${matchDetail(it, gc, bc)}</td><td class="why">${t('m_' + it.key)}</td></tr>`).join('')}
+      </tbody></table></div>
+    </div>
+    <div class="card"><h3>${t('doshaCompat')}</h3>
+      <div class="tbl-wrap"><table class="dtbl"><thead><tr><th></th><th>${t('boy')}</th><th>${t('girl')}</th><th></th></tr></thead><tbody>
+        <tr><td>${t('chevBoth')}</td><td>${yn(dc.chevvai.boy)}</td><td>${yn(dc.chevvai.girl)}</td><td><span class="pill ${dc.chevvai.balanced ? 'good' : 'bad'}">${dc.chevvai.balanced ? t('balanced') : t('unbalanced')}</span></td></tr>
+        <tr><td>${t('rkBoth')}</td><td>${yn(dc.rahuKetu.boy)}</td><td>${yn(dc.rahuKetu.girl)}</td><td><span class="pill ${dc.rahuKetu.balanced ? 'good' : 'bad'}">${dc.rahuKetu.balanced ? t('balanced') : t('unbalanced')}</span></td></tr>
+      </tbody></table></div>
+      <p class="note">${t('compatNote')}</p>
+      <p class="note">${t('rulesNote')}</p>
+    </div>
+    <div class="card"><h3>${t('bothCharts')}</h3><div class="charts">
+      <div><p class="chart-t">${esc(bc._name)} · ${t('rasiChart')}</p>${siChart(bc, false, bc._name)}</div>
+      <div><p class="chart-t">${esc(gc._name)} · ${t('rasiChart')}</p>${siChart(gc, false, gc._name)}</div>
+    </div></div>
+    <div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="matchAi"></div></div>`;
+  renderAi('match');
+}
+
+// ================= AI (Gemini) =================
+const EN = I.en;
+function chartText(pd, c) {
+  const pl = c.planets.map(p => `${p.name}: ${EN.rasisEn[p.sign]} (${EN.rasis[p.sign]}) ${fmtDeg(p.deg)}, house ${p.house}, ${EN.naks[p.nakshatra]} pada ${p.pada}, navamsa ${EN.rasisEn[p.navamsa]}${p.dignity ? ', ' + p.dignity : ''}${p.retro && p.name !== 'Rahu' && p.name !== 'Ketu' ? ', retrograde' : ''}${p.combust ? ', combust' : ''}`).join('\n');
+  const cur = J.currentDasa(c.dasa, Date.now());
+  const ch = c.doshas.chevvai;
+  return `Name: ${pd.name || 'not given'}${pd.gender ? `\nGender: ${pd.gender}` : ''}
+Birth: ${pd.date} ${pd.time} (${fmtOff(c.input.offsetMinutes)}), ${pd.place}
+Lagna: ${EN.rasisEn[c.lagna.sign]} (${EN.rasis[c.lagna.sign]}) ${fmtDeg(c.lagna.deg)}, Lagna nakshatra ${EN.naks[c.lagna.nakshatra]}
+Moon sign (Rasi): ${EN.rasisEn[c.rasi]} (${EN.rasis[c.rasi]}); Janma nakshatra: ${EN.naks[c.nakshatra]} pada ${c.pada}
+Tamil calendar: ${EN.years60[c.tamil.year]} year, ${EN.months[c.tamil.month]} ${c.tamil.date}; Tithi: ${c.panchang.tithi === 14 ? 'Pournami' : c.panchang.tithi === 29 ? 'Amavasai' : EN.tithis[c.panchang.tithi % 15] + ' ' + c.panchang.paksha}; Yoga: ${EN.yogas[c.panchang.yoga]}; Karana: ${EN.karanas[c.panchang.karana]}; Weekday: ${EN.days[c.panchang.weekday]}
+Planets (sidereal, Lahiri, whole-sign houses from Lagna):
+${pl}
+Navamsa Lagna: ${EN.rasisEn[c.lagna.navamsa]}
+Vimshottari: balance at birth ${c.dasa.balance.lord} ${c.dasa.balance.years.toFixed(2)} years; current ${cur ? `${cur.md.lord} mahadasa (${new Date(cur.md.start).toISOString().slice(0, 10)} to ${new Date(cur.md.end).toISOString().slice(0, 10)}), ${cur.bh.lord} bhukti (to ${new Date(cur.bh.end).toISOString().slice(0, 10)})` : 'n/a'}
+Chevvai dosham: ${!ch.present ? 'absent' : ch.effective ? 'present (' + ch.refs.map(r => `house ${r.house} from ${r.from}${r.cancelled ? ', cancelled' : ''}`).join('; ') + ')' : 'present but cancelled'}
+Current transits (${new Date().toISOString().slice(0, 10)}): ${J.transits(c, Date.now()).map(x => `${x.name} in ${EN.rasisEn[x.sign]} (house ${x.fromMoon} from Moon)`).join(', ')}
+Rahu-Ketu dosham: ${c.doshas.rahuKetu.present ? 'present' : 'absent'} (Rahu house ${c.doshas.rahuKetu.rahuHouse}, Ketu house ${c.doshas.rahuKetu.ketuHouse}); Kala Sarpa: ${c.doshas.kalaSarpa ? 'yes' : 'no'}`;
+}
+function langRule() {
+  return lang === 'ta'
+    ? 'Write the entire answer in Tamil (தமிழ் script), in the warm, clear style of an experienced Tamil astrologer. Use Tamil astrological terms (லக்னம், ராசி, தசை, புக்தி, etc.).'
+    : 'Write in clear, warm English. Keep Sanskrit/Tamil astrological terms with a short English gloss the first time.';
+}
+function horoPrompt() {
+  const { pd, c } = horoState;
+  const today = new Date().toISOString().slice(0, 10);
+  return `You are an experienced South Indian (Tamil) Vedic astrologer. Interpret the computed birth chart below. Do not recompute positions; rely on the data given. Today is ${today}.
+
+${chartText(pd, c)}
+
+Write a balanced reading with these sections as markdown "##" headings:
+1. Overview & personality (Lagna, Moon sign, nakshatra)
+2. Education & career
+3. Wealth & finances
+4. Marriage & relationships
+5. Health tendencies (general, non-medical)
+6. Current dasa–bhukti and transit outlook (dasa-bhukti, plus Saturn and Jupiter transits from the Moon; what this period emphasises and when it changes)
+7. Strengths to build on
+8. Simple traditional remedies (temple visits, prayers, charity, discipline — never costly or fear-based)
+
+Rules: 150–250 words per section, use short paragraphs and occasional bullets. Point to the specific placements behind each statement. Be encouraging and practical; avoid fatalistic predictions, exact death or illness predictions, and fear-mongering. End with one line reminding that astrology is guidance, not certainty.
+${langRule()}`;
+}
+function matchPrompt() {
+  const { boy, girl, bc, gc, pr, dc } = matchState;
+  const items = pr.items.map(i => `${EN['p_' + i.key]}: ${i.result === 'good' ? 'Uthamam (matching)' : i.result === 'medium' ? 'Madhyamam (average)' : 'Not matching'}`).join('\n');
+  return `You are an experienced Tamil Vedic astrologer doing marriage matching (thirumana porutham). Use the computed data below; do not recompute.
+
+BOY
+${chartText(boy, bc)}
+
+GIRL
+${chartText(girl, gc)}
+
+10 PORUTHAM RESULTS (counted from girl's star to boy's star)
+${items}
+Total: ${pr.score}/10. Rajju ${pr.items.find(i => i.key === 'rajju').result === 'good' ? 'OK' : 'NOT matching'}; Vedhai ${pr.items.find(i => i.key === 'vedhai').result === 'good' ? 'OK' : 'NOT matching'}.
+Dosha samyam: Chevvai — boy ${dc.chevvai.boy ? 'yes' : 'no'}, girl ${dc.chevvai.girl ? 'yes' : 'no'}; Rahu-Ketu — boy ${dc.rahuKetu.boy ? 'yes' : 'no'}, girl ${dc.rahuKetu.girl ? 'yes' : 'no'}.
+
+Write the analysis with these "##" sections:
+1. Overall verdict (one clear paragraph with the score and whether Rajju/Vedhai are clear)
+2. Porutham-by-porutham notes (only the notable ones, briefly)
+3. Dosha samyam
+4. Beyond stars: 7th house, Venus, Jupiter and current dasa of both, and how the two temperaments complement each other
+5. Practical guidance for the couple and simple traditional parihara if anything is weak
+
+Rules: about 500–700 words in total. Be fair and balanced; mention that families often also weigh the full charts, and that compatibility in values and understanding matters. Avoid fear-based or fatalistic statements.
+${langRule()}`;
+}
+function md(src) {
+  const lines = esc(src).split(/\r?\n/);
+  let html = '', inList = false;
+  const inline = s => s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[^*])\*(?!\s)(.+?)\*(?!\*)/g, '$1<i>$2</i>');
+  for (const raw of lines) {
+    const l = raw.trimEnd();
+    const h = l.match(/^(#{1,4})\s+(.*)$/), li = l.match(/^\s*(?:[-*•]|\d+\.)\s+(.*)$/);
+    if (li) { if (!inList) { html += '<ul>'; inList = true; } html += `<li>${inline(li[1])}</li>`; continue; }
+    if (inList) { html += '</ul>'; inList = false; }
+    if (h) { const n = Math.min(4, h[1].length + 1); html += `<h${n}>${inline(h[2])}</h${n}>`; }
+    else if (l.trim()) html += `<p>${inline(l)}</p>`;
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+function aiKey(which) {
+  return lang + '|' + (which === 'horo' ? JSON.stringify(horoState.pd) : JSON.stringify([matchState.boy, matchState.girl]));
+}
+function renderAi(which) {
+  const box = document.getElementById(which === 'horo' ? 'horoAi' : 'matchAi');
+  if (!box) return;
+  const k = aiKey(which), cached = aiCache[which][k];
+  const btnLabel = which === 'horo' ? t('aiBtn') : t('aiMatchBtn');
+  if (cached && cached.text) { box.innerHTML = `<div class="md">${md(cached.text)}</div>`; return; }
+  if (!apiKey) { box.innerHTML = `<p class="muted" style="margin:0 0 12px">${t('aiNeedKey')}</p><button class="btn" type="button" data-open-settings>${t('aiSettings')}</button>`; box.querySelector('[data-open-settings]').onclick = openSettings; return; }
+  const err = cached && cached.error ? `<p class="err">${esc(cached.error)}</p>` : '';
+  box.innerHTML = `${err}<button class="btn" type="button">${cached && cached.error ? t('aiRetry') : btnLabel}</button>`;
+  box.querySelector('button').onclick = () => runAi(which);
+}
+async function runAi(which) {
+  const box = document.getElementById(which === 'horo' ? 'horoAi' : 'matchAi');
+  const k = aiKey(which);
+  const btn = box.querySelector('button');
+  btn.disabled = true; btn.innerHTML = `<span class="spin"></span> ${t('aiWorking')}`;
+  try {
+    const prompt = which === 'horo' ? horoPrompt() : matchPrompt();
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+      body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7 } })
+    });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error((j.error && j.error.message) || `HTTP ${res.status}`);
+    const text = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
+    if (!text) throw new Error(j.promptFeedback?.blockReason ? `Blocked: ${j.promptFeedback.blockReason}` : 'Empty response from Gemini');
+    aiCache[which][k] = { text };
+  } catch (e) {
+    aiCache[which][k] = { error: e.message };
+  }
+  renderAi(which);
+}
+
+// ================= settings =================
+const dlg = document.getElementById('settings');
+function openSettings() {
+  document.getElementById('apiKey').value = apiKey;
+  document.getElementById('model').value = model;
+  document.getElementById('nodeType').value = nodeType;
+  dlg.showModal();
+}
+document.getElementById('openSettings').onclick = openSettings;
+dlg.addEventListener('close', () => {
+  if (dlg.returnValue !== 'save') return;
+  apiKey = document.getElementById('apiKey').value.trim();
+  model = document.getElementById('model').value.trim() || 'gemini-3.5-flash';
+  const nt = document.getElementById('nodeType').value;
+  if (nt !== nodeType) { nodeType = nt; store.set('jothidam.node', nt); recompute(); }
+  if (document.getElementById('remember').checked && apiKey) { store.set('jothidam.key', apiKey); store.set('jothidam.model', model); }
+  else { store.del('jothidam.key'); store.set('jothidam.model', model); }
+  refreshKeyDot(); if (horoState) renderAi('horo'); if (matchState) renderAi('match');
+});
+document.getElementById('clearKey').onclick = () => { apiKey = ''; store.del('jothidam.key'); document.getElementById('apiKey').value = ''; refreshKeyDot(); dlg.close('cancel'); if (horoState) renderAi('horo'); if (matchState) renderAi('match'); };
+function refreshKeyDot() { document.getElementById('keyDot').classList.toggle('hidden', !!apiKey); }
+refreshKeyDot();
+
+// ================= language & tabs =================
+function applyLang() {
+  document.body.classList.toggle('ta', lang === 'ta');
+  document.documentElement.lang = lang;
+  document.getElementById('lang-en').classList.toggle('on', lang === 'en');
+  document.getElementById('lang-ta').classList.toggle('on', lang === 'ta');
+  document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
+  document.querySelectorAll('[data-tp]').forEach(el => el.title = t(el.dataset.tp));
+  document.title = lang === 'ta' ? 'ஜோதிடம் · Jothidam' : 'Jothidam · ஜோதிடம்';
+  renderHoro(); renderMatch();
+  store.set('jothidam.lang', lang);
+}
+document.getElementById('lang-en').onclick = () => { lang = 'en'; applyLang(); };
+document.getElementById('lang-ta').onclick = () => { lang = 'ta'; applyLang(); };
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  document.getElementById('tab-horo').classList.toggle('hidden', b.dataset.tab !== 'horo');
+  document.getElementById('tab-match').classList.toggle('hidden', b.dataset.tab !== 'match');
+  if (!location.hash.startsWith('#' + b.dataset.tab)) history.replaceState(null, '', '#' + b.dataset.tab);
+});
+
+// ================= wire forms =================
+const single = personForm(document.getElementById('p-single'), 'ps', { gender: true });
+const boyF = personForm(document.getElementById('p-boy'), 'pb', { title: 'boy', fixedGender: 'male' });
+const girlF = personForm(document.getElementById('p-girl'), 'pg', { title: 'girl', fixedGender: 'female' });
+
+document.getElementById('horoForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const err = document.getElementById('horoErr'); err.textContent = '';
+  try {
+    const pd = single.read();
+    const c = J.computeChart({ ...pd.calc, nodeType });
+    horoState = { pd, c }; renderHoro(); setHash('horo');
+    document.getElementById('horoOut').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (ex) { err.textContent = ex.message; }
+});
+document.getElementById('matchForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const err = document.getElementById('matchErr'); err.textContent = '';
+  try {
+    const boy = boyF.read(), girl = girlF.read();
+    const bc = J.computeChart({ ...boy.calc, nodeType }), gc = J.computeChart({ ...girl.calc, nodeType });
+    matchState = { boy, girl, bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc) };
+    renderMatch(); setHash('match');
+    document.getElementById('matchOut').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (ex) { err.textContent = ex.message; }
+});
+
+// ================= share links & recompute =================
+const b64e = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const b64d = s => JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g, '+').replace(/_/g, '/')))));
+const slim = pd => ({ n: pd.name, g: pd.gender, d: pd.date, t: pd.time, p: pd.place, la: pd.calc.lat, lo: pd.calc.lon, z: pd.calc.zone, o: pd.calc.offsetMinutes });
+const fat = x => { const [y, m, d] = x.d.split('-').map(Number), [h, mi] = x.t.split(':').map(Number); return { name: x.n || '', gender: x.g, date: x.d, time: x.t, place: x.p || '', calc: { y, m, d, h, mi, lat: +x.la, lon: +x.lo, zone: x.z || null, offsetMinutes: x.z ? null : x.o } }; };
+function setHash(which) {
+  const data = which === 'horo' ? { h: slim(horoState.pd) } : { b: slim(matchState.boy), g: slim(matchState.girl) };
+  history.replaceState(null, '', '#' + which + '=' + b64e(data));
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-share]'); if (!b) return;
+  try { await navigator.clipboard.writeText(location.href); } catch { prompt('', location.href); return; }
+  const old = b.textContent; b.textContent = t('copied'); setTimeout(() => b.textContent = old, 1800);
+});
+function recompute() {
+  if (horoState) { horoState.c = J.computeChart({ ...horoState.pd.calc, nodeType }); }
+  if (matchState) {
+    const bc = J.computeChart({ ...matchState.boy.calc, nodeType }), gc = J.computeChart({ ...matchState.girl.calc, nodeType });
+    Object.assign(matchState, { bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc) });
+  }
+  renderHoro(); renderMatch();
+}
+function loadFromHash() {
+  const m = location.hash.match(/^#(horo|match)=(.+)$/); if (!m) return false;
+  try {
+    const data = b64d(m[2]);
+    if (m[1] === 'horo' && data.h) {
+      const pd = fat(data.h); single.write(pd);
+      horoState = { pd, c: J.computeChart({ ...pd.calc, nodeType }) };
+    } else if (data.b && data.g) {
+      const boy = fat(data.b), girl = fat(data.g); boyF.write(boy); girlF.write(girl);
+      const bc = J.computeChart({ ...boy.calc, nodeType }), gc = J.computeChart({ ...girl.calc, nodeType });
+      matchState = { boy, girl, bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc) };
+      document.querySelector('.tabs button[data-tab="match"]').click();
+    }
+    return true;
+  } catch { return false; }
+}
+
+// initial state
+const savedLang = store.get('jothidam.lang'); if (savedLang === 'ta') lang = 'ta';
+if (!loadFromHash() && location.hash.startsWith('#match')) document.querySelector('.tabs button[data-tab="match"]').click();
+applyLang();
+})();
+</script>
+</body>
+</html>

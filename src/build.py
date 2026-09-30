@@ -1,0 +1,6 @@
+s=open('src/template.html').read()
+a=open('node_modules/astronomy-engine/astronomy.browser.min.js').read()
+e=open('src/engine.js').read()
+s=s.replace('<script>/*ASTRONOMY*/</script>','<script>/* astronomy-engine 2.1.19 (MIT) — Don Cross, https://github.com/cosinekitty/astronomy */\n'+a+'\n</script>')
+s=s.replace('<script>/*ENGINE*/</script>','<script>\n'+e+'\n</script>')
+import os; open('index.html','w').write(s); print(len(s))
