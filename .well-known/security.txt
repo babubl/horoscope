@@ -1,0 +1,5 @@
+Contact: https://github.com/babubl/horoscope/issues
+Expires: 2027-09-30T00:00:00.000Z
+Preferred-Languages: en, ta
+Canonical: https://subajathagam.in/.well-known/security.txt
+Policy: https://subajathagam.in/privacy.html

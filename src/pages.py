@@ -13,6 +13,14 @@ SHELL = '''<!doctype html>
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#a3361f">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:site_name" content="Suba Jathagam">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="https://subajathagam.in/{fname}">
+<meta property="og:image" content="https://subajathagam.in/icons/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -59,8 +67,8 @@ SHELL = '''<!doctype html>
 '''
 
 
-def page(fname, title, desc, en, ta):
-    body = f'<div data-lang="en">{en}</div>\n<div data-lang="ta">{ta}</div>'
+def page(fname, title, desc, en, ta, extra=''):
+    body = f'<div data-lang="en">{en}</div>\n<div data-lang="ta">{ta}</div>' + extra
     open(fname, 'w').write(SHELL.format(title=title, desc=desc, body=body, fname=fname))
     print(fname)
 
@@ -278,8 +286,16 @@ TERMS_TA = f'''
 <p><a href="{REPO}/issues">{REPO}/issues</a></p>
 '''
 
+
+FAQ_LD = """<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How are the 10 poruthams checked?","acceptedAnswer":{"@type":"Answer","text":"Stars are counted from the girl's nakshatra to the boy's nakshatra, following Tamil practice. Dinam, Ganam, Mahendram, Stree Deergham, Yoni, Rasi, Rasi Adhipathi, Vasyam, Rajju and Vedhai are each marked matching, average or not matching. Rajju and Vedhai are treated as decisive."}},
+{"@type":"Question","name":"What is Chevvai dosham?","acceptedAnswer":{"@type":"Answer","text":"Mars in the 2nd, 4th, 7th, 8th or 12th house from the Lagna or the Moon. It is treated as cancelled when Mars is in its own or exalted sign or in the classical exception signs for that house."}},
+{"@type":"Question","name":"What is Ezharai Sani?","acceptedAnswer":{"@type":"Answer","text":"Saturn transiting the 12th, 1st and 2nd houses from the Moon sign, a period of about seven and a half years."}},
+{"@type":"Question","name":"Which ayanamsa does Suba Jathagam use?","acceptedAnswer":{"@type":"Answer","text":"Lahiri (Chitrapaksha) ayanamsa with the Thirukanitha method. Positions agree with Swiss Ephemeris to within seconds of arc."}}
+]}</script>"""
+
 page('guide.html', 'Suba Jathagam guide · 10 poruthams, doshams, dasa — ஜாதக வழிகாட்டி',
-     'How to read a South Indian jathagam: Rasi and Navamsa charts, Vimshottari dasa, the 10 poruthams for marriage matching, Chevvai dosham and Sani transits — in English and Tamil.', GUIDE_EN, GUIDE_TA)
+     'How to read a South Indian jathagam: Rasi and Navamsa charts, Vimshottari dasa, the 10 poruthams for marriage matching, Chevvai dosham and Sani transits — in English and Tamil.', GUIDE_EN, GUIDE_TA, FAQ_LD)
 page('about.html', 'About Suba Jathagam · சுப ஜாதகம் பற்றி', 'About Suba Jathagam, a free South Indian horoscope and marriage matching tool in Tamil and English.', ABOUT_EN, ABOUT_TA)
 page('privacy.html', 'Privacy policy · Suba Jathagam', 'Privacy policy for the Suba Jathagam website and Android app.', PRIVACY_EN, PRIVACY_TA)
 page('terms.html', 'Terms of use · Suba Jathagam', 'Terms of use for the Suba Jathagam website and Android app.', TERMS_EN, TERMS_TA)
