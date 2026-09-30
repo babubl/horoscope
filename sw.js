@@ -1,5 +1,5 @@
 /* Jothidam service worker — offline app shell, cached fonts, live network for place search and AI */
-const VERSION = 'subajathagam-v7';
+const VERSION = 'subajathagam-v8';
 const SHELL = ['./', 'index.html', 'about.html', 'guide.html', 'privacy.html', 'terms.html', 'assets/site.css', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png', 'data/places.json'];
 const FONT_CACHE = 'jothidam-fonts';
@@ -24,11 +24,18 @@ self.addEventListener('fetch', e => {
     return;
   }
   if (url.origin !== location.origin) return; // place search, Gemini, ads: always network
+  const isPage = req.mode === 'navigate' || /\.(html|webmanifest)$/.test(url.pathname) || url.pathname.endsWith('/');
   e.respondWith((async () => {
     const c = await caches.open(VERSION);
-    const hit = await c.match(req, { ignoreSearch: req.mode === 'navigate' });
-    const net = fetch(req).then(r => { if (r.ok) c.put(req.mode === 'navigate' ? new Request(url.pathname) : req, r.clone()); return r; });
+    const key = req.mode === 'navigate' ? new Request(url.pathname) : req;
+    if (isPage) {
+      // pages: network first so updates show immediately; cache only when offline
+      try { const r = await fetch(req, { cache: 'no-cache' }); if (r.ok) c.put(key, r.clone()); return r; }
+      catch { return (await c.match(key, { ignoreSearch: true })) || (await c.match('index.html')) || Response.error(); }
+    }
+    const hit = await c.match(req);
+    const net = fetch(req).then(r => { if (r.ok) c.put(req, r.clone()); return r; });
     if (hit) { e.waitUntil(net.catch(() => {})); return hit; }
-    try { return await net; } catch { return (await c.match('index.html')) || Response.error(); }
+    try { return await net; } catch { return Response.error(); }
   })());
 });
