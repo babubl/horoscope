@@ -9,7 +9,13 @@
 <meta property="og:description" content="Free South Indian Vedic horoscope (Rasi, Navamsa, Dasa, Tamil panchangam) and 10 Porutham matching, in English and Tamil.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#a3361f">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect x='2' y='2' width='32' height='32' rx='4' fill='%23fffdf8' stroke='%23b8872f' stroke-width='2'/%3E%3Cpath d='M2 10h32M2 26h32M10 2v32M26 2v32' stroke='%23b8872f' stroke-width='1.2'/%3E%3Ccircle cx='18' cy='18' r='5' fill='%23a3361f'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jothidam">
+<meta property="og:image" content="icons/icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -166,6 +172,16 @@ dialog h3{margin-bottom:6px}
 .muted{color:var(--muted)}
 a{color:var(--accent)}
 
+/* ================= ads, app banner, footer ================= */
+.adslot{margin:18px 0;min-height:0;text-align:center}
+.adslot:empty{display:none}
+.adslot .adlabel{display:block;font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.appbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--accent-soft);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:18px;font-size:14px}
+.appbar b{color:var(--accent)}
+.flinks{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.flinks a{color:var(--muted)}
+.sheet .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:5}
+.sheet .wm span{transform:rotate(-35deg);font:800 16mm/1.1 'Noto Sans Tamil',sans-serif;color:rgba(143,13,23,.13);text-align:center;white-space:nowrap}
 /* ================= Traditional jathagam (print) ================= */
 .jv{position:fixed;inset:0;z-index:50;background:#4a3527;overflow:auto;display:none}
 .jv.open{display:block}
@@ -282,6 +298,7 @@ a{color:var(--accent)}
 </header>
 
 <main class="wrap">
+  <div class="appbar hidden" id="appbar"><span data-t="appPitch">Get the Android app — no ads, works offline, print the traditional jathagam.</span><a class="btn" id="appbarLink" href="#" target="_blank" rel="noopener" data-t="getApp">Get the app · ₹10</a></div>
   <!-- HOROSCOPE -->
   <section id="tab-horo">
     <form class="card" id="horoForm" autocomplete="off">
@@ -314,9 +331,11 @@ a{color:var(--accent)}
   </section>
 </main>
 
+<div class="wrap"><div class="adslot" id="ad-bottom"></div></div>
 <footer>
   <div class="wrap">
     <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
+    <nav class="flinks"><a href="guide.html" data-t="lGuide">Guide</a><a href="about.html" data-t="lAbout">About</a><a href="privacy.html" data-t="lPrivacy">Privacy</a><a href="terms.html" data-t="lTerms">Terms</a></nav>
   </div>
 </footer>
 
@@ -326,7 +345,7 @@ a{color:var(--accent)}
     <div class="field"><label for="jv-father" data-t="father">Father's name</label><input id="jv-father" maxlength="60"></div>
     <div class="field"><label for="jv-mother" data-t="mother">Mother's name</label><input id="jv-mother" maxlength="60"></div>
     <div class="field"><label for="jv-gothram" data-t="gothram">Gothram / Kulam (optional)</label><input id="jv-gothram" maxlength="40"></div>
-    <div class="btns"><button class="btn" type="button" id="jv-print" data-t="printNow">Print</button><button class="btn ghost" type="button" id="jv-close" data-t="close">Close</button></div>
+    <div class="btns"><button class="btn" type="button" id="jv-print">Print</button><button class="btn ghost" type="button" id="jv-close" data-t="close">Close</button></div>
   </div>
   <div class="jv-pages" id="jv-pages"></div>
 </div>
@@ -994,6 +1013,24 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
 'use strict';
 const J = window.Jothidam;
 
+// ================= site configuration =================
+// Fill these in when the accounts exist. Empty values switch the feature off.
+const CONFIG = {
+  adsenseClient: '',              // e.g. 'ca-pub-1234567890123456'  (ads show on the website only, never in the app)
+  adSlotBottom: '',               // AdSense display-ad slot id for the bottom unit, e.g. '1234567890'
+  playStoreUrl: ''                // e.g. 'https://play.google.com/store/apps/details?id=in.jothidam.app'
+                                  // when set, the website shows "Get the app" and printing the jathagam needs the app
+};
+const IS_APP = (() => {
+  let v = false;
+  try {
+    if (/[?&]source=twa\b/.test(location.search) || document.referrer.startsWith('android-app://')) sessionStorage.setItem('jothidam.app', '1');
+    v = sessionStorage.getItem('jothidam.app') === '1';
+  } catch { v = /[?&]source=twa\b/.test(location.search); }
+  return v;
+})();
+const PRINT_LOCKED = !!CONFIG.playStoreUrl && !IS_APP;
+
 // ================= i18n =================
 const I = {
   en: {
@@ -1041,6 +1078,8 @@ const I = {
     karanas:['Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti','Shakuni','Chatushpada','Naga','Kimstughna'],
     days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
     center:'Rasi', centerNav:'Navamsa', weekdayNote:'Tamil date, weekday and panchangam follow the sunrise-to-sunrise day at the birth place.',
+    appPitch:'Get the Android app — no ads, works offline, print the traditional jathagam.', getApp:'Get the app · ₹10', printInApp:'Print & PDF in the app · ₹10', previewWm:'PREVIEW · Jothidam app',
+    lGuide:'Guide', lAbout:'About', lPrivacy:'Privacy', lTerms:'Terms', adLabel:'Advertisement',
     jathagamBtn:'Traditional Jathagam', father:"Father's name", mother:"Mother's name", gothram:'Gothram / Kulam (optional)', printNow:'Print', close:'Close',
     tamilDate:'Tamil date', starLord:'Star lord', sunrise:'Sunrise', sunset:'Sunset', nazhigai:'Janma nazhigai', beforeSunriseNote:'Born before sunrise, so the Tamil day is the previous calendar day.',
     varusham:'year', transits:'Current transits (Gochara)', transitSub:'Positions today, counted from your Moon sign ({r}).', fromMoonH:'From Moon', fromLagnaH:'From Lagna',
@@ -1095,6 +1134,8 @@ const I = {
     karanas:['பவம்','பாலவம்','கௌலவம்','தைதுலம்','கரசை','வணிசை','பத்திரை','சகுனி','சதுஷ்பாதம்','நாகவம்','கிம்ஸ்துக்னம்'],
     days:['ஞாயிறு','திங்கள்','செவ்வாய்','புதன்','வியாழன்','வெள்ளி','சனி'],
     center:'ராசி', centerNav:'நவாம்சம்', weekdayNote:'தமிழ் தேதி, கிழமை, பஞ்சாங்கம் ஆகியவை பிறந்த ஊரின் சூரிய உதயம் முதல் அடுத்த உதயம் வரையிலான நாளின்படி.',
+    appPitch:'Android செயலி — விளம்பரம் இல்லை, இணையம் இல்லாமலும் இயங்கும், பாரம்பரிய ஜாதகம் அச்சிடலாம்.', getApp:'செயலி பெறுக · ₹10', printInApp:'செயலியில் அச்சிடு / PDF · ₹10', previewWm:'மாதிரி · ஜோதிடம் செயலி',
+    lGuide:'வழிகாட்டி', lAbout:'எங்களைப் பற்றி', lPrivacy:'தனியுரிமை', lTerms:'விதிமுறைகள்', adLabel:'விளம்பரம்',
     jathagamBtn:'பாரம்பரிய ஜாதகம்', father:'தந்தை பெயர்', mother:'தாய் பெயர்', gothram:'கோத்திரம் / குலம் (விருப்பம்)', printNow:'அச்சிடு', close:'மூடு',
     tamilDate:'தமிழ் தேதி', starLord:'நட்சத்திர அதிபதி', sunrise:'சூரிய உதயம்', sunset:'சூரிய அஸ்தமனம்', nazhigai:'ஜனன நாழிகை', beforeSunriseNote:'சூரிய உதயத்திற்கு முன் பிறந்ததால், தமிழ் நாள் முந்தைய தேதியாகும்.',
     varusham:'வருடம்', transits:'தற்போதைய கோசாரம்', transitSub:'இன்றைய கிரக நிலை, உங்கள் ராசியிலிருந்து ({r}).', fromMoonH:'ராசியிலிருந்து', fromLagnaH:'லக்னத்திலிருந்து',
@@ -1154,7 +1195,7 @@ function personForm(host, id, opts) {
     timer = setTimeout(async () => {
       const my = ++seq; geo.textContent = t('searching');
       try {
-        const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=7&language=en&format=json`);
+        const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=7&language=${lang}&format=json`);
         const j = await r.json(); if (my !== seq) return;
         const res = j.results || [];
         geo.textContent = res.length ? '' : t('noPlace');
@@ -1667,15 +1708,16 @@ function renderJathagam() {
   const name = esc(pd.name) || '—';
   const tithiTxt = tithiName(pn.tithi);
   const paksha = pn.tithi === 14 || pn.tithi === 29 ? '' : (lang === 'ta' ? Lx[pn.paksha] : (pn.paksha === 'shukla' ? 'Shukla paksha' : 'Krishna paksha'));
+  const placeShort = esc(/^-?[\d.]+, -?[\d.]+$/.test(pd.place) ? pd.place : pd.place.split(',')[0]);
   const prose = X.prose({
     year: Lx.years60[tm.year], month: Lx.months[tm.month], tdate: tm.date, gdate: fmtDateInput(pd.date), day: X.dayFull[pn.weekday],
     paksha, tithi: tithiTxt, star: Lx.naks[c.nakshatra], pada: c.pada, yoga: Lx.yogas[pn.yoga], karana: Lx.karanas[pn.karana],
-    naz: tm.sunriseOk ? `${tm.nazhigai}.${String(tm.vinadi).padStart(2, '0')}` : '—', time: esc(pd.time), place: esc(pd.place.split(',')[0]),
+    naz: tm.sunriseOk ? `${tm.nazhigai}.${String(tm.vinadi).padStart(2, '0')}` : '—', time: esc(pd.time), place: placeShort,
     lagna: Lx.rasis[c.lagna.sign], rasi: Lx.rasis[c.rasi], name, parents: X.parents(father, mother, rel)
   });
   const kv = [
     [X.kv.name, name], [X.kv.dob, fmtDateInput(pd.date)], [X.kv.tob, esc(pd.time)],
-    [X.kv.place, esc(pd.place.split(',')[0])], [X.kv.lagna, Lx.rasis[c.lagna.sign]], [X.kv.rasi, Lx.rasis[c.rasi]],
+    [X.kv.place, placeShort], [X.kv.lagna, Lx.rasis[c.lagna.sign]], [X.kv.rasi, Lx.rasis[c.rasi]],
     [X.kv.star, Lx.naks[c.nakshatra]], [X.kv.pada, c.pada], gothram ? [X.kv.gothram, gothram] : [X.kv.ayan, fmtDeg(c.ayanamsa)],
   ];
   const [bY, bM, bD] = ymd(c.dasa.balance.years);
@@ -1742,6 +1784,8 @@ function renderJathagam() {
     <div class="subham">${X.subham}<small>${X.blessing}</small></div>
     <p class="foot-note">${X.note}</p>`;
   document.getElementById('jv-pages').innerHTML = sheetShell(page1, '1 / 2') + sheetShell(page2, '2 / 2');
+  if (PRINT_LOCKED) document.querySelectorAll('#jv-pages .sheet').forEach(sh => sh.insertAdjacentHTML('beforeend', `<div class="wm"><span>${esc(t('previewWm'))}</span></div>`));
+  const pb = document.getElementById('jv-print'); pb.textContent = PRINT_LOCKED ? t('printInApp') : t('printNow');
   fitSheets();
 }
 function fitSheets() {
@@ -1758,6 +1802,7 @@ function closeJathagam() { document.getElementById('jv').classList.remove('open'
 document.getElementById('jv-close').onclick = closeJathagam;
 ['jv-father', 'jv-mother', 'jv-gothram'].forEach(id => document.getElementById(id).addEventListener('input', renderJathagam));
 document.getElementById('jv-print').onclick = async () => {
+  if (PRINT_LOCKED) { window.open(CONFIG.playStoreUrl, '_blank', 'noopener'); return; }
   try { await document.fonts.ready; } catch {}
   document.body.classList.add('pj');
   document.querySelectorAll('#jv-pages .sheet').forEach(el => el.style.zoom = 1);
@@ -1804,6 +1849,27 @@ function loadFromHash() {
     }
     return true;
   } catch { return false; }
+}
+
+// ================= ads (website only), app banner, offline =================
+function setupAds() {
+  if (!CONFIG.adsenseClient || IS_APP) return;
+  const sc = document.createElement('script');
+  sc.async = true; sc.crossOrigin = 'anonymous';
+  sc.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(CONFIG.adsenseClient)}`;
+  document.head.appendChild(sc);
+  if (CONFIG.adSlotBottom) {
+    document.getElementById('ad-bottom').innerHTML = `<span class="adlabel">${t('adLabel')}</span><ins class="adsbygoogle" style="display:block" data-ad-client="${CONFIG.adsenseClient}" data-ad-slot="${CONFIG.adSlotBottom}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch {}
+  }
+}
+if (CONFIG.playStoreUrl && !IS_APP) {
+  document.getElementById('appbar').classList.remove('hidden');
+  document.getElementById('appbarLink').href = CONFIG.playStoreUrl;
+}
+setupAds();
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 
 // initial state

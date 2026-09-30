@@ -26,6 +26,27 @@ South Indian Vedic horoscope and marriage matching in a single web page, in Engl
 
 https://babubl.github.io/horoscope/ — served by GitHub Pages from the `gh-pages` branch (kept identical to `main`).
 
+## Repository layout
+
+| Path | What it is |
+|---|---|
+| `index.html` | The app (built — do not edit by hand) |
+| `src/template.html`, `src/engine.js` | App source: UI and the astronomy / porutham engine |
+| `src/vendor/` | astronomy-engine 2.1.19 (MIT) |
+| `src/build.py` | Builds `index.html`: `python3 src/build.py` |
+| `src/pages.py` | Builds `guide.html`, `about.html`, `privacy.html`, `terms.html`: `python3 src/pages.py` |
+| `manifest.webmanifest`, `sw.js`, `icons/` | Installable app and offline support |
+| `store/` | Play Store listing text, screenshots, feature graphic and Android publishing steps |
+
+## Switching on ads and the app
+
+Edit `CONFIG` near the top of the script in `src/template.html`, then run `python3 src/build.py`:
+
+- `adsenseClient` and `adSlotBottom` — AdSense publisher and slot ids. Ads appear on the website only, never in the app or on the printed jathagam. Also add `ads.txt` at the site root as AdSense instructs.
+- `playStoreUrl` — once the app is live. The website then shows "Get the app · ₹10", and printing the traditional jathagam becomes app-only (the website keeps a watermarked preview).
+
+When changing any cached file, bump `VERSION` in `sw.js` so installed copies update.
+
 ## Traditions differ
 
 Porutham rules follow the common Tamil (Thirukanitha) practice as published by Prokerala, Vikatan, IBC Bakthi and Dheivegam: Dinam good at counts 2, 4, 6, 8, 9, 11, 13, 15, 18, 20, 24, 26; Vasyam from the Tamil girl-to-boy list; Rajju and Vedhai decisive. Traditions still differ on some points (Gana with Rakshasa, same-rasi rules, Yoni gender), and temple Vakya panchangams give slightly different positions than Thirukanitha. The rules used are marked in the code (`porutham()` inside `index.html`) so they can be adjusted.

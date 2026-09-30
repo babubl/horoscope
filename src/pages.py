@@ -1,0 +1,275 @@
+"""Generate the content pages (guide, about, privacy, terms) in English and Tamil.
+Run from the repo root: python3 src/pages.py"""
+
+UPDATED = '30 September 2026'
+UPDATED_TA = '30 செப்டம்பர் 2026'
+REPO = 'https://github.com/babubl/horoscope'
+
+SHELL = '''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content="{desc}">
+<meta name="theme-color" content="#a3361f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="en">
+<header><div class="wrap bar">
+  <a class="brand" href="./"><img src="icons/icon-192.png" alt=""><b>Jothidam · ஜோதிடம்</b></a>
+  <div class="seg" role="group" aria-label="Language"><button id="l-en" class="on">EN</button><button id="l-ta">தமிழ்</button></div>
+</div></header>
+<main class="wrap">
+{body}
+</main>
+<footer><div class="wrap">
+  <span data-lang="en">Astrology is a traditional belief system — use it for reflection, not for medical, legal or financial decisions.</span>
+  <span data-lang="ta">ஜோதிடம் ஒரு பாரம்பரிய நம்பிக்கை — மருத்துவ, சட்ட, நிதி முடிவுகளுக்கு இதை மட்டும் சார்ந்திருக்க வேண்டாம்.</span>
+  <nav><a href="./"><span data-lang="en">Horoscope &amp; matching</span><span data-lang="ta">ஜாதகம் &amp; பொருத்தம்</span></a>
+  <a href="guide.html"><span data-lang="en">Guide</span><span data-lang="ta">வழிகாட்டி</span></a>
+  <a href="about.html"><span data-lang="en">About</span><span data-lang="ta">எங்களைப் பற்றி</span></a>
+  <a href="privacy.html"><span data-lang="en">Privacy</span><span data-lang="ta">தனியுரிமை</span></a>
+  <a href="terms.html"><span data-lang="en">Terms</span><span data-lang="ta">விதிமுறைகள்</span></a></nav>
+</div></footer>
+<script>
+(function(){{
+  var lang='en'; try{{lang=localStorage.getItem('jothidam.lang')==='ta'?'ta':'en';}}catch(e){{}}
+  function set(l){{lang=l;document.body.className=l;document.documentElement.lang=l;
+    document.getElementById('l-en').classList.toggle('on',l==='en');document.getElementById('l-ta').classList.toggle('on',l==='ta');
+    try{{localStorage.setItem('jothidam.lang',l);}}catch(e){{}}}}
+  document.getElementById('l-en').onclick=function(){{set('en')}};document.getElementById('l-ta').onclick=function(){{set('ta')}};
+  set(lang);
+}})();
+</script>
+</body>
+</html>
+'''
+
+
+def page(fname, title, desc, en, ta):
+    body = f'<div data-lang="en">{en}</div>\n<div data-lang="ta">{ta}</div>'
+    open(fname, 'w').write(SHELL.format(title=title, desc=desc, body=body))
+    print(fname)
+
+
+# ------------------------------------------------------------------ GUIDE
+GUIDE_EN = '''
+<h1>Guide to your jathagam</h1>
+<p class="lead">How to read the South Indian chart, what the dasa periods mean, and exactly how the 10 poruthams are checked on this site.</p>
+
+<h2>Reading the South Indian chart</h2>
+<p>In the South Indian (square) chart the twelve rasis never move. Meenam (Pisces) is the top-left box, and the signs run clockwise: Mesham, Rishabam, Mithunam along the top, Kadagam and Simham down the right, Kanni, Thulam, Viruchigam and Dhanusu along the bottom, and Makaram and Kumbham up the left. The box with the diagonal mark and <b>La / ல</b> is the Lagna (ascendant). Planets are written in the box of the rasi they occupied at birth. A small <b>R / வ</b> marks a retrograde (vakra) planet.</p>
+<p>The <b>Rasi</b> chart shows the planets by sign. The <b>Navamsa</b> chart divides every sign into nine parts; astrologers read it for marriage, dharma and the inner strength of each planet.</p>
+
+<h2>Lagna, Rasi and Nakshatra</h2>
+<p><b>Lagna</b> is the sign rising on the eastern horizon at the birth moment. It changes roughly every two hours, which is why the birth time matters. <b>Rasi</b> is the sign the Moon occupies, and <b>Nakshatra</b> (star) is one of the 27 lunar mansions, each divided into four padas. Your star decides the dasa sequence and is the basis of marriage matching.</p>
+
+<h2>Vimshottari dasa</h2>
+<p>Life is divided into planetary periods totalling 120 years: Ketu 7, Venus 20, Sun 6, Moon 10, Mars 7, Rahu 18, Jupiter 16, Saturn 19 and Mercury 17 years. The first dasa is the lord of your birth star, and the <b>dasa balance</b> depends on how much of the star the Moon had yet to travel at birth. Each mahadasa is split into nine <b>bhuktis</b> in the same order.</p>
+
+<h2>The 10 poruthams (marriage matching)</h2>
+<p>Following Tamil practice, stars are counted from the <b>girl’s star to the boy’s star</b> (both included), and rasis from the girl’s rasi to the boy’s rasi.</p>
+<div class="tbl"><table>
+<tr><th>Porutham</th><th>What it indicates</th><th>Rule used here</th></tr>
+<tr><td>Dinam</td><td>Day-to-day health and harmony</td><td>Good at counts 2, 4, 6, 8, 9, 11, 13, 15, 18, 20, 24, 26. Counts 12, 14 and 16 are average except for one pada. Same star is good for Rohini, Thiruvathirai, Poosam, Magam, Hastham and Thiruvonam.</td></tr>
+<tr><td>Ganam</td><td>Temperament — Deva, Manushya, Rakshasa</td><td>Same gana is good. Deva–Manushya is average. Girl Rakshasa with a Deva or Manushya boy is average; boy Rakshasa with a Deva or Manushya girl does not match.</td></tr>
+<tr><td>Mahendram</td><td>Progeny and prosperity</td><td>Good at counts 4, 7, 10, 13, 16, 19, 22, 25.</td></tr>
+<tr><td>Stree Deergham</td><td>Well-being of the wife</td><td>Count above 13 is good; 8–13 is average.</td></tr>
+<tr><td>Yoni</td><td>Physical compatibility</td><td>Each star has an animal. Enemy animals (horse–buffalo, elephant–lion, goat–monkey, serpent–mongoose, dog–deer, cat–rat, cow–tiger) do not match.</td></tr>
+<tr><td>Rasi</td><td>Family harmony and lineage</td><td>7th is best; 3, 4, 5, 9, 10, 11 match. 2, 6, 8 and 12 (including shashtashtakam) do not. Same rasi matches when the boy’s star comes after the girl’s.</td></tr>
+<tr><td>Rasi Adhipathi</td><td>Friendship of the Moon-sign lords</td><td>Same or friendly lords match; friend–neutral is average; enemies do not match.</td></tr>
+<tr><td>Vasyam</td><td>Mutual attraction</td><td>From the Tamil vasya list: the boy’s rasi vasya to the girl’s is full; only the reverse is half.</td></tr>
+<tr><td>Rajju</td><td>Longevity of the marriage — most important</td><td>Both stars must not fall in the same rajju (Siro, Kanta, Udara, Kati, Pada).</td></tr>
+<tr><td>Vedhai</td><td>Freedom from obstacles</td><td>The fixed vedha pairs (for example Aswini–Kettai, Bharani–Anusham) do not match.</td></tr>
+</table></div>
+<p>The site gives 1 point for a match and half for average. <b>Rajju and Vedhai are treated as decisive</b>: if either fails, the verdict is “not recommended by tradition” whatever the total. Families and astrologers differ on a few of these rules, so treat the score as a first screen and discuss the full charts with your family astrologer.</p>
+
+<h2>Doshams</h2>
+<h3>Chevvai (Mars) dosham</h3>
+<p>Mars in the 2nd, 4th, 7th, 8th or 12th house from the Lagna or the Moon. It is treated as cancelled when Mars is in its own or exalted sign, or in the classical exception signs for that house (for example the 7th house in Kadagam or Makaram). In matching, tradition prefers both partners to have it or both not to (dosha samyam).</p>
+<h3>Rahu–Ketu (Naga) dosham</h3>
+<p>Rahu or Ketu in the 1st, 2nd, 7th or 8th house from the Lagna.</p>
+<h3>Kala Sarpa yoga</h3>
+<p>All seven planets from the Sun to Saturn lie on one side of the Rahu–Ketu axis.</p>
+
+<h2>Saturn and Jupiter transits (Gochara)</h2>
+<p>Transits are counted from your Moon sign. Saturn in the 12th, 1st and 2nd is <b>Ezharai Sani</b> (about seven and a half years); the 8th is <b>Ashtama Sani</b>, the 4th <b>Ardhashtama Sani</b> and the 7th <b>Kandaka Sani</b>. Jupiter is considered supportive in the 2nd, 5th, 7th, 9th and 11th from the Moon.</p>
+
+<h2>Tamil calendar and nazhigai</h2>
+<p>The Tamil month begins when the Sun enters a new rasi. If that happens before sunset, the month starts that day; otherwise the next day. The Tamil day runs from sunrise to sunrise, so a birth before sunrise belongs to the previous day. <b>Janma nazhigai</b> is the time from sunrise to birth in nazhigai (24 minutes) and vinadi (24 seconds).</p>
+
+<h2>How the calculations are done</h2>
+<p>Positions are calculated in your browser with the Lahiri (Chitrapaksha) ayanamsa, whole-sign houses and the modern Thirukanitha method. They agree with Swiss Ephemeris — the engine behind professional astrology software — to within seconds of arc. Temple Vakya panchangams use older formulas and can differ slightly, especially for a star near its boundary.</p>
+<p><a class="cta" href="./">Make your horoscope</a></p>
+'''
+
+GUIDE_TA = '''
+<h1>ஜாதக வழிகாட்டி</h1>
+<p class="lead">தென்னிந்திய கட்டத்தைப் படிப்பது எப்படி, தசைகள் என்ன சொல்கின்றன, இந்த தளத்தில் 10 பொருத்தங்கள் எந்த விதிகளின்படி பார்க்கப்படுகின்றன.</p>
+
+<h2>தென்னிந்திய ராசிக் கட்டத்தைப் படிப்பது</h2>
+<p>தென்னிந்திய கட்டத்தில் 12 ராசிகளின் இடம் மாறாது. இடது மேல் கட்டம் மீனம்; அங்கிருந்து கடிகாரச் சுற்றில் மேஷம், ரிஷபம், மிதுனம் (மேல் வரிசை), கடகம், சிம்மம் (வலப்புறம்), கன்னி, துலாம், விருச்சிகம், தனுசு (கீழ் வரிசை), மகரம், கும்பம் (இடப்புறம்). சாய்கோடும் <b>ல</b> எழுத்தும் உள்ள கட்டமே லக்னம். பிறந்த நேரத்தில் கிரகம் இருந்த ராசியில் அதன் பெயர் எழுதப்படும். <b>வ</b> என்பது வக்ர கிரகம்.</p>
+<p><b>ராசிக் கட்டம்</b> கிரகங்களின் ராசியைக் காட்டுகிறது. <b>நவாம்சம்</b> ஒவ்வொரு ராசியையும் ஒன்பது பகுதிகளாகப் பிரிக்கிறது; திருமணம், தர்மம், கிரகங்களின் உள் பலம் ஆகியவற்றுக்கு இது பார்க்கப்படுகிறது.</p>
+
+<h2>லக்னம், ராசி, நட்சத்திரம்</h2>
+<p><b>லக்னம்</b> — பிறந்த நேரத்தில் கிழக்கில் உதயமாகும் ராசி; சுமார் இரண்டு மணி நேரத்திற்கு ஒருமுறை மாறும், அதனால் பிறந்த நேரம் முக்கியம். <b>ராசி</b> — சந்திரன் இருக்கும் ராசி. <b>நட்சத்திரம்</b> — 27 நட்சத்திரங்களில் ஒன்று, ஒவ்வொன்றும் நான்கு பாதங்கள். தசை வரிசையும் திருமணப் பொருத்தமும் நட்சத்திரத்தை அடிப்படையாகக் கொண்டவை.</p>
+
+<h2>விம்சோத்தரி தசை</h2>
+<p>மொத்தம் 120 ஆண்டுகள்: கேது 7, சுக்கிரன் 20, சூரியன் 6, சந்திரன் 10, செவ்வாய் 7, ராகு 18, குரு 16, சனி 19, புதன் 17. ஜன்ம நட்சத்திர அதிபதியின் தசையில் வாழ்க்கை தொடங்குகிறது; பிறக்கும் போது சந்திரன் அந்த நட்சத்திரத்தில் இன்னும் கடக்க வேண்டிய அளவைப் பொறுத்து <b>தசா இருப்பு</b> அமைகிறது. ஒவ்வொரு மகா தசையும் அதே வரிசையில் ஒன்பது <b>புக்திகளாக</b> பிரிகிறது.</p>
+
+<h2>10 திருமணப் பொருத்தங்கள்</h2>
+<p>தமிழ் மரபுப்படி <b>பெண்ணின் நட்சத்திரத்திலிருந்து ஆணின் நட்சத்திரம் வரை</b> (இரண்டையும் சேர்த்து) எண்ணப்படுகிறது; ராசியும் அப்படியே.</p>
+<div class="tbl"><table>
+<tr><th>பொருத்தம்</th><th>குறிப்பது</th><th>இங்கு பின்பற்றும் விதி</th></tr>
+<tr><td>தினம்</td><td>அன்றாட ஆரோக்கியம், ஒற்றுமை</td><td>எண்ணிக்கை 2, 4, 6, 8, 9, 11, 13, 15, 18, 20, 24, 26 உத்தமம். 12, 14, 16 ஒரு பாதம் தவிர மத்திமம். ஒரே நட்சத்திரம் — ரோகிணி, திருவாதிரை, பூசம், மகம், அஸ்தம், திருவோணம் உத்தமம்.</td></tr>
+<tr><td>கணம்</td><td>குணம் — தேவ, மனுஷ, ராட்சச</td><td>ஒரே கணம் உத்தமம். தேவ–மனுஷ மத்திமம். பெண் ராட்சச, ஆண் தேவ/மனுஷ — மத்திமம்; ஆண் ராட்சச, பெண் தேவ/மனுஷ — பொருத்தம் இல்லை.</td></tr>
+<tr><td>மகேந்திரம்</td><td>சந்ததி, செல்வம்</td><td>எண்ணிக்கை 4, 7, 10, 13, 16, 19, 22, 25.</td></tr>
+<tr><td>ஸ்திரீ தீர்க்கம்</td><td>மனைவியின் நலம்</td><td>13-க்கு மேல் உத்தமம்; 8–13 மத்திமம்.</td></tr>
+<tr><td>யோனி</td><td>உடல் ஒற்றுமை</td><td>ஒவ்வொரு நட்சத்திரத்திற்கும் ஒரு விலங்கு. பகை விலங்குகள் (குதிரை–எருமை, யானை–சிங்கம், ஆடு–குரங்கு, பாம்பு–கீரி, நாய்–மான், பூனை–எலி, பசு–புலி) பொருந்தாது.</td></tr>
+<tr><td>ராசி</td><td>குடும்ப ஒற்றுமை, வம்சம்</td><td>7-ஆம் ராசி மிகச் சிறப்பு; 3, 4, 5, 9, 10, 11 பொருந்தும். 2, 6, 8, 12 (ஷஷ்டாஷ்டகம் உட்பட) பொருந்தாது. ஒரே ராசியில் ஆணின் நட்சத்திரம் பெண்ணின் நட்சத்திரத்திற்குப் பின் இருந்தால் பொருந்தும்.</td></tr>
+<tr><td>ராசி அதிபதி</td><td>ராசி அதிபதிகளின் நட்பு</td><td>ஒரே அதிபதி அல்லது நட்பு — உத்தமம்; நட்பு–சமம் — மத்திமம்; பகை — பொருந்தாது.</td></tr>
+<tr><td>வசியம்</td><td>பரஸ்பர ஈர்ப்பு</td><td>தமிழ் வசியப் பட்டியல்படி: பெண் ராசிக்கு ஆண் ராசி வசியமானால் முழு; மறுபக்கம் மட்டும் என்றால் பாதி.</td></tr>
+<tr><td>ரஜ்ஜு</td><td>மாங்கல்ய பலம் — மிக முக்கியம்</td><td>இருவரின் நட்சத்திரமும் ஒரே ரஜ்ஜுவில் (சிரசு, கண்டம், உதரம், கடி, பாதம்) இருக்கக் கூடாது.</td></tr>
+<tr><td>வேதை</td><td>தடைகள் இல்லாமை</td><td>வேதை ஜோடிகள் (உ.தா. அஸ்வினி–கேட்டை, பரணி–அனுஷம்) பொருந்தாது.</td></tr>
+</table></div>
+<p>பொருத்தம் உள்ளதற்கு 1, மத்திமத்திற்கு ½ மதிப்பெண். <b>ரஜ்ஜு, வேதை இரண்டும் தீர்மானிக்கும் பொருத்தங்கள்</b> — இவற்றில் ஒன்று இல்லையென்றால் மொத்த மதிப்பெண் எதுவானாலும் “மரபுப்படி பரிந்துரைக்கப்படவில்லை”. சில விதிகளில் ஜோதிடர்களிடையே வேறுபாடு உண்டு; மதிப்பெண்ணை முதல் கட்டப் பார்வையாக எடுத்துக்கொண்டு, முழு ஜாதகத்தை குடும்ப ஜோதிடரிடம் பார்க்கவும்.</p>
+
+<h2>தோஷங்கள்</h2>
+<h3>செவ்வாய் தோஷம்</h3>
+<p>லக்னம் அல்லது சந்திரனிலிருந்து 2, 4, 7, 8, 12-ஆம் வீடுகளில் செவ்வாய். செவ்வாய் ஆட்சி/உச்சம் பெற்றாலோ, அந்த வீட்டிற்கான விதிவிலக்கு ராசியில் இருந்தாலோ (உ.தா. 7-ஆம் வீடு கடகம் அல்லது மகரம்) நிவர்த்தி. பொருத்தத்தில் இருவருக்கும் இருப்பதோ, இருவருக்கும் இல்லாததோ (தோஷ சாம்யம்) நல்லது.</p>
+<h3>ராகு–கேது (நாக) தோஷம்</h3>
+<p>லக்னத்திலிருந்து 1, 2, 7, 8-ல் ராகு அல்லது கேது.</p>
+<h3>கால சர்ப்ப யோகம்</h3>
+<p>சூரியன் முதல் சனி வரை ஏழு கிரகங்களும் ராகு–கேது அச்சின் ஒரே பக்கம்.</p>
+
+<h2>சனி, குரு கோசாரம்</h2>
+<p>கோசாரம் ஜன்ம ராசியிலிருந்து கணக்கிடப்படுகிறது. சனி 12, 1, 2-ல் <b>ஏழரைச் சனி</b>; 8-ல் <b>அஷ்டமச் சனி</b>; 4-ல் <b>அர்த்தாஷ்டமச் சனி</b>; 7-ல் <b>கண்டகச் சனி</b>. குரு ராசிக்கு 2, 5, 7, 9, 11-ல் சாதகம்.</p>
+
+<h2>தமிழ் நாட்காட்டி, நாழிகை</h2>
+<p>சூரியன் புதிய ராசியில் நுழையும் போது தமிழ் மாதம் பிறக்கிறது. அது சூரிய அஸ்தமனத்திற்கு முன் நடந்தால் அன்றே மாதம் தொடக்கம்; இல்லையெனில் மறுநாள். தமிழ் நாள் சூரிய உதயம் முதல் மறு உதயம் வரை — உதயத்திற்கு முன் பிறந்தால் முந்தைய நாள். <b>ஜனன நாழிகை</b> — சூரிய உதயத்திலிருந்து பிறப்பு வரையிலான நேரம் (1 நாழிகை = 24 நிமிடம், 1 விநாடி = 24 வினாடி).</p>
+
+<h2>கணிப்பு முறை</h2>
+<p>லஹிரி (சித்திரபக்ஷ) அயனாம்சம், ராசி வீட்டு முறை, திருக்கணித முறையில் உங்கள் உலாவியிலேயே கணிக்கப்படுகிறது. தொழில்முறை ஜோதிட மென்பொருள்களின் அடிப்படையான Swiss Ephemeris-உடன் சில வினாடி-பாகை அளவுக்குள் ஒத்துப்போகிறது. கோயில்களில் பயன்படும் வாக்கிய பஞ்சாங்கம் பழைய சூத்திரங்களைப் பயன்படுத்துவதால், நட்சத்திர எல்லையில் சிறு வேறுபாடு வரலாம்.</p>
+<p><a class="cta" href="./">உங்கள் ஜாதகம் பார்க்க</a></p>
+'''
+
+# ------------------------------------------------------------------ ABOUT
+ABOUT_EN = f'''
+<h1>About Jothidam</h1>
+<p class="lead">A clean, accurate South Indian horoscope and marriage-matching tool, made in Chennai for Tamil families everywhere.</p>
+<div class="card">
+<p><b>What it does.</b> From a name, date, time and place of birth it prepares the Rasi and Navamsa charts, Tamil date and panchangam, Vimshottari dasa and bhukti, dosha checks and current Saturn and Jupiter transits. For two people it checks the 10 poruthams and dosha samyam. It can print a traditional two-page jathagam with Pillaiyar suzhi, Om and manjal–kungumam borders.</p>
+<p><b>Accuracy.</b> Tested on 400 random charts from 1900 to 2060 against Swiss Ephemeris (Lahiri): planets typically within 1–3 seconds of arc, Lagna within half a second of arc, and no difference in any rasi, nakshatra or Lagna. The matching rules follow published Tamil practice and are explained in the <a href="guide.html">guide</a>.</p>
+<p><b>Privacy.</b> Calculations happen on your own device. There is no sign-up and no database of birth details. See the <a href="privacy.html">privacy policy</a>.</p>
+<p><b>Languages.</b> Tamil and English throughout.</p>
+</div>
+<h2>Contact</h2>
+<p>Suggestions, corrections from astrologers and bug reports are welcome on the project page: <a href="{REPO}/issues">{REPO}/issues</a>.</p>
+'''
+ABOUT_TA = f'''
+<h1>ஜோதிடம் பற்றி</h1>
+<p class="lead">துல்லியமான, எளிய தென்னிந்திய ஜாதகம் மற்றும் திருமணப் பொருத்தக் கருவி — சென்னையில் உருவாக்கப்பட்டது, உலகெங்கும் உள்ள தமிழ்க் குடும்பங்களுக்காக.</p>
+<div class="card">
+<p><b>என்ன செய்கிறது.</b> பெயர், பிறந்த தேதி, நேரம், ஊர் கொடுத்தால் ராசி, நவாம்சக் கட்டங்கள், தமிழ் தேதி, பஞ்சாங்கம், விம்சோத்தரி தசா–புக்தி, தோஷ பரிசோதனை, சனி–குரு கோசாரம் ஆகியவற்றைத் தருகிறது. இருவருக்கு 10 பொருத்தங்களையும் தோஷ சாம்யத்தையும் பார்க்கிறது. பிள்ளையார் சுழி, ஓம், மஞ்சள்–குங்கும ஓரங்களுடன் பாரம்பரிய இரண்டு பக்க ஜாதகத்தையும் அச்சிடலாம்.</p>
+<p><b>துல்லியம்.</b> 1900 முதல் 2060 வரை 400 ஜாதகங்களை Swiss Ephemeris (லஹிரி) உடன் ஒப்பிட்டுச் சோதித்தோம்: கிரகங்கள் பெரும்பாலும் 1–3 வினாடி-பாகைக்குள், லக்னம் அரை வினாடி-பாகைக்குள்; ஒரு ராசி, நட்சத்திரம், லக்னம் கூட மாறவில்லை. பொருத்த விதிகள் வெளியிடப்பட்ட தமிழ் மரபைப் பின்பற்றுகின்றன — <a href="guide.html">வழிகாட்டியில்</a> விளக்கம் உள்ளது.</p>
+<p><b>தனியுரிமை.</b> கணிப்பு உங்கள் சாதனத்திலேயே நடக்கிறது. கணக்கு தேவையில்லை; பிறப்பு விவரங்கள் எங்கும் சேமிக்கப்படுவதில்லை. <a href="privacy.html">தனியுரிமைக் கொள்கை</a> பார்க்கவும்.</p>
+<p><b>மொழிகள்.</b> தமிழ், ஆங்கிலம்.</p>
+</div>
+<h2>தொடர்பு</h2>
+<p>ஆலோசனைகள், ஜோதிடர்களின் திருத்தங்கள், பிழை அறிக்கைகள் — திட்டப் பக்கத்தில் தெரிவிக்கலாம்: <a href="{REPO}/issues">{REPO}/issues</a>.</p>
+'''
+
+# ------------------------------------------------------------------ PRIVACY
+PRIVACY_EN = f'''
+<h1>Privacy policy</h1>
+<p class="lead">Last updated {UPDATED}. This policy covers the Jothidam website and the Jothidam Android app.</p>
+<h2>The short version</h2>
+<p>Your birth details are processed on your own device. We have no accounts, no server database and we do not sell or share personal data.</p>
+<h2>What is processed and where</h2>
+<ul>
+<li><b>Birth details</b> (name, gender, date, time, place, coordinates): used on your device to calculate charts. They are not sent to us.</li>
+<li><b>Share links</b>: when you make a chart, its details are written into the page address so you can reopen or share it. Anyone you send the link to can see those details.</li>
+<li><b>Place search</b>: the place name you type is sent to the Open-Meteo geocoding service to find coordinates and the time zone. See <a href="https://open-meteo.com/en/terms">Open-Meteo’s terms</a>.</li>
+<li><b>AI readings (optional)</b>: only if you add your own Google Gemini API key, the computed chart (including the name you entered) is sent from your device to Google to write the reading, under <a href="https://ai.google.dev/gemini-api/terms">Google’s Gemini API terms</a>.</li>
+<li><b>Stored on your device</b>: your language choice, the Rahu/Ketu setting and, if you choose, your Gemini key, in the browser’s local storage. Clearing site data removes them.</li>
+<li><b>Fonts</b> are loaded from Google Fonts.</li>
+</ul>
+<h2>Advertising (website only)</h2>
+<p>The website may show ads from Google AdSense. Google and its partners use cookies to serve ads based on your visits to this and other sites. You can turn off personalised ads at <a href="https://adssettings.google.com">Google Ad Settings</a>. See <a href="https://policies.google.com/technologies/ads">how Google uses information from sites that use its services</a>. The Android app shows no ads.</p>
+<h2>Children</h2>
+<p>Jothidam is intended for general audiences and is not directed at children under 13. We do not knowingly collect children’s data.</p>
+<h2>Your choices</h2>
+<p>You can use every calculation without the AI reading and without place search (enter coordinates instead). Because we hold no personal data, there is nothing for us to delete; clearing your browser or app data removes everything stored on your device.</p>
+<h2>Contact</h2>
+<p>Questions about this policy: <a href="{REPO}/issues">{REPO}/issues</a>.</p>
+'''
+PRIVACY_TA = f'''
+<h1>தனியுரிமைக் கொள்கை</h1>
+<p class="lead">கடைசியாகப் புதுப்பித்தது {UPDATED_TA}. இது ஜோதிடம் இணையதளம், ஜோதிடம் Android செயலி இரண்டுக்கும் பொருந்தும்.</p>
+<h2>சுருக்கமாக</h2>
+<p>உங்கள் பிறப்பு விவரங்கள் உங்கள் சாதனத்திலேயே கணிக்கப்படுகின்றன. கணக்கு இல்லை, சர்வர் தரவுத்தளம் இல்லை; தனிப்பட்ட தகவல்களை விற்பதும் பகிர்வதும் இல்லை.</p>
+<h2>என்ன தகவல், எங்கே</h2>
+<ul>
+<li><b>பிறப்பு விவரங்கள்</b> (பெயர், பாலினம், தேதி, நேரம், ஊர், அட்சரேகை): உங்கள் சாதனத்தில் ஜாதகம் கணிக்க மட்டும். எங்களுக்கு அனுப்பப்படுவதில்லை.</li>
+<li><b>பகிர்வு இணைப்பு</b>: ஜாதகம் கணித்ததும் அதன் விவரங்கள் பக்க முகவரியில் சேர்க்கப்படும். இணைப்பைப் பெறுபவர் அவற்றைப் பார்க்கலாம்.</li>
+<li><b>ஊர் தேடல்</b>: நீங்கள் தட்டச்சு செய்யும் ஊர் பெயர் Open-Meteo சேவைக்கு அனுப்பப்பட்டு அட்சரேகையும் நேர மண்டலமும் பெறப்படுகின்றன.</li>
+<li><b>AI பலன் (விருப்பம்)</b>: நீங்கள் உங்கள் சொந்த Gemini API key சேர்த்தால் மட்டும், கணித்த ஜாதக விவரம் (நீங்கள் கொடுத்த பெயர் உட்பட) உங்கள் சாதனத்திலிருந்து Google-க்கு அனுப்பப்படும்.</li>
+<li><b>சாதனத்தில் சேமிப்பவை</b>: மொழித் தேர்வு, ராகு/கேது அமைப்பு, நீங்கள் விரும்பினால் Gemini key. தள தரவை அழித்தால் இவை நீங்கும்.</li>
+<li><b>எழுத்துருக்கள்</b> Google Fonts-லிருந்து ஏற்றப்படுகின்றன.</li>
+</ul>
+<h2>விளம்பரங்கள் (இணையதளத்தில் மட்டும்)</h2>
+<p>இணையதளத்தில் Google AdSense விளம்பரங்கள் வரலாம். Google மற்றும் அதன் கூட்டாளர்கள் குக்கீகளைப் பயன்படுத்துகின்றனர். தனிப்பயன் விளம்பரங்களை <a href="https://adssettings.google.com">Google Ad Settings</a>-ல் நிறுத்தலாம். Android செயலியில் விளம்பரம் இல்லை.</p>
+<h2>குழந்தைகள்</h2>
+<p>ஜோதிடம் பொதுப் பயனர்களுக்கானது; 13 வயதுக்குட்பட்டோரை நோக்கியது அல்ல.</p>
+<h2>உங்கள் தேர்வுகள்</h2>
+<p>AI பலனும் ஊர் தேடலும் இல்லாமலே அனைத்துக் கணிப்புகளையும் பயன்படுத்தலாம் (அட்சரேகையை நேரடியாக உள்ளிடலாம்). நாங்கள் எந்தத் தனிப்பட்ட தகவலையும் வைத்திருப்பதில்லை; உலாவி/செயலி தரவை அழித்தால் சாதனத்தில் உள்ளவை அனைத்தும் நீங்கும்.</p>
+<h2>தொடர்பு</h2>
+<p><a href="{REPO}/issues">{REPO}/issues</a></p>
+'''
+
+# ------------------------------------------------------------------ TERMS
+TERMS_EN = f'''
+<h1>Terms of use</h1>
+<p class="lead">Last updated {UPDATED}.</p>
+<h2>Guidance, not guarantees</h2>
+<p>Jothidam presents traditional Vedic astrology for cultural, personal and educational use. Charts are calculated carefully, but interpretations and matching results are traditional beliefs, not predictions of fact. Do not rely on Jothidam for medical, legal, financial or other professional decisions, and consult your family astrologer before important decisions such as marriage.</p>
+<h2>Accuracy of your details</h2>
+<p>Results depend on the birth date, time and place you enter. A wrong time or place can change the Lagna, the star or the matching result.</p>
+<h2>AI readings</h2>
+<p>Optional readings are written by Google Gemini from the computed chart. They can contain mistakes and are provided as is.</p>
+<h2>Purchases</h2>
+<p>The Android app is sold through Google Play. Payments and refunds follow <a href="https://support.google.com/googleplay/answer/2479637">Google Play’s refund policy</a>.</p>
+<h2>Liability</h2>
+<p>Jothidam is provided “as is”, without warranties. To the extent the law allows, the makers are not liable for any loss arising from its use.</p>
+<h2>Contact</h2>
+<p><a href="{REPO}/issues">{REPO}/issues</a></p>
+'''
+TERMS_TA = f'''
+<h1>பயன்பாட்டு விதிமுறைகள்</h1>
+<p class="lead">கடைசியாகப் புதுப்பித்தது {UPDATED_TA}.</p>
+<h2>வழிகாட்டல், உத்தரவாதம் அல்ல</h2>
+<p>ஜோதிடம் பாரம்பரிய வேத ஜோதிடத்தை கலாச்சார, தனிப்பட்ட, கல்வி நோக்கில் வழங்குகிறது. ஜாதகக் கணிப்பு கவனமாகச் செய்யப்படுகிறது; ஆனால் பலன்களும் பொருத்த முடிவுகளும் பாரம்பரிய நம்பிக்கைகள் — உறுதியான முன்கணிப்புகள் அல்ல. மருத்துவ, சட்ட, நிதி முடிவுகளுக்கு இதைச் சார்ந்திருக்க வேண்டாம்; திருமணம் போன்ற முக்கிய முடிவுகளுக்கு முன் குடும்ப ஜோதிடரைக் கலந்தாலோசிக்கவும்.</p>
+<h2>உங்கள் விவரங்களின் துல்லியம்</h2>
+<p>நீங்கள் உள்ளிடும் தேதி, நேரம், ஊர் ஆகியவற்றைப் பொறுத்தே முடிவுகள். தவறான நேரம் அல்லது ஊர் லக்னம், நட்சத்திரம், பொருத்த முடிவை மாற்றலாம்.</p>
+<h2>AI பலன்கள்</h2>
+<p>விருப்பத்தேர்வான பலன்கள் Google Gemini மூலம் எழுதப்படுகின்றன; அவற்றில் பிழைகள் இருக்கலாம்.</p>
+<h2>வாங்குதல்</h2>
+<p>Android செயலி Google Play மூலம் விற்கப்படுகிறது. பணம் செலுத்துதலும் திருப்பித் தருதலும் Google Play கொள்கைப்படி.</p>
+<h2>பொறுப்பு</h2>
+<p>ஜோதிடம் “உள்ளபடியே” வழங்கப்படுகிறது. சட்டம் அனுமதிக்கும் அளவில், இதன் பயன்பாட்டால் ஏற்படும் இழப்புகளுக்கு உருவாக்கியவர்கள் பொறுப்பல்ல.</p>
+<h2>தொடர்பு</h2>
+<p><a href="{REPO}/issues">{REPO}/issues</a></p>
+'''
+
+page('guide.html', 'Jothidam guide · 10 poruthams, doshams, dasa — ஜாதக வழிகாட்டி',
+     'How to read a South Indian jathagam: Rasi and Navamsa charts, Vimshottari dasa, the 10 poruthams for marriage matching, Chevvai dosham and Sani transits — in English and Tamil.', GUIDE_EN, GUIDE_TA)
+page('about.html', 'About Jothidam · ஜோதிடம் பற்றி', 'About Jothidam, a free South Indian horoscope and marriage matching tool in Tamil and English.', ABOUT_EN, ABOUT_TA)
+page('privacy.html', 'Privacy policy · Jothidam', 'Privacy policy for the Jothidam website and Android app.', PRIVACY_EN, PRIVACY_TA)
+page('terms.html', 'Terms of use · Jothidam', 'Terms of use for the Jothidam website and Android app.', TERMS_EN, TERMS_TA)
