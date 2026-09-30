@@ -206,6 +206,7 @@ PRIVACY_EN = f'''
 <li><b>AI readings (optional)</b>: only if you add your own Google Gemini API key, the computed chart (including the name you entered) is sent from your device to Google to write the reading, under <a href="https://ai.google.dev/gemini-api/terms">Google’s Gemini API terms</a>.</li>
 <li><b>Stored on your device</b>: your language choice, the Rahu/Ketu setting and, if you choose, your Gemini key, in the browser’s local storage. Clearing site data removes them.</li>
 <li><b>Visit counting (website only)</b>: page visits are counted with <a href="https://www.goatcounter.com/help/privacy">GoatCounter</a>, which uses no cookies and stores no personal data. The Android app does not count visits.</li>
+<li><b>Feedback</b>: when you send feedback, your message, rating and any name or contact you choose to add are delivered to the maker (by email through Web3Forms, or as a note in GoatCounter). Leave the optional fields empty to stay anonymous.</li>
 <li><b>Fonts</b> are loaded from Google Fonts.</li>
 </ul>
 <h2>Advertising (website only)</h2>
@@ -230,6 +231,7 @@ PRIVACY_TA = f'''
 <li><b>AI பலன் (விருப்பம்)</b>: நீங்கள் உங்கள் சொந்த Gemini API key சேர்த்தால் மட்டும், கணித்த ஜாதக விவரம் (நீங்கள் கொடுத்த பெயர் உட்பட) உங்கள் சாதனத்திலிருந்து Google-க்கு அனுப்பப்படும்.</li>
 <li><b>சாதனத்தில் சேமிப்பவை</b>: மொழித் தேர்வு, ராகு/கேது அமைப்பு, நீங்கள் விரும்பினால் Gemini key. தள தரவை அழித்தால் இவை நீங்கும்.</li>
 <li><b>பார்வை எண்ணிக்கை (இணையதளம் மட்டும்)</b>: பக்கப் பார்வைகள் GoatCounter மூலம் எண்ணப்படுகின்றன — குக்கீகள் இல்லை, தனிப்பட்ட தகவல் சேமிக்கப்படுவதில்லை. Android செயலியில் எண்ணிக்கை இல்லை.</li>
+<li><b>கருத்து</b>: நீங்கள் அனுப்பும் செய்தி, மதிப்பீடு, நீங்கள் விரும்பிச் சேர்க்கும் பெயர்/தொடர்பு ஆகியவை உருவாக்கியவருக்கு அனுப்பப்படும் (Web3Forms மின்னஞ்சல் அல்லது GoatCounter குறிப்பாக). விருப்பப் புலங்களை காலியாக விட்டால் அடையாளமின்றி அனுப்பலாம்.</li>
 <li><b>எழுத்துருக்கள்</b> Google Fonts-லிருந்து ஏற்றப்படுகின்றன.</li>
 </ul>
 <h2>விளம்பரங்கள் (இணையதளத்தில் மட்டும்)</h2>

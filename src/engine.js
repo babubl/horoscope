@@ -239,6 +239,58 @@
     return null;
   }
 
+
+  // ---------- Daily panchangam (for a place and local date) ----------
+  function siderealSunMoon(ms) {
+    const d = new Date(ms), t = A.MakeTime(d), ay = ayanamsa(d), dpsi = A.e_tilt(t).dpsi / 3600;
+    return { sun: norm(A.SunPosition(t).elon - dpsi - ay), moon: norm(A.EclipticGeoMoon(t).lon - dpsi - ay) };
+  }
+  const ANGA = {
+    tithi: ms => { const x = siderealSunMoon(ms); return Math.floor(norm(x.moon - x.sun) / 12); },
+    nakshatra: ms => Math.floor(siderealSunMoon(ms).moon / (360 / 27)),
+    yoga: ms => { const x = siderealSunMoon(ms); return Math.floor(norm(x.sun + x.moon) / (360 / 27)); }
+  };
+  function angaEnd(kind, fromMs) {
+    const f = ANGA[kind], v0 = f(fromMs);
+    let a = fromMs, b = fromMs, step = 2 * 3600000;
+    for (let i = 0; i < 40; i++) { b += step; if (f(b) !== v0) break; a = b; }
+    for (let i = 0; i < 30; i++) { const m = (a + b) / 2; if (f(m) === v0) a = m; else b = m; }
+    return b;
+  }
+  function dailyPanchang({ y, m, d, lat, lon, zone }) {
+    const noon = localToUtc(y, m, d, 12, 0, zone).utc;
+    const offset = tzOffsetMinutes(zone, noon);
+    const obs = new A.Observer(lat, lon, 0);
+    const mid = localToUtc(y, m, d, 0, 0, zone).utc;
+    const r = A.SearchRiseSet(A.Body.Sun, obs, +1, new Date(mid), 1);
+    const sunrise = r ? r.date.getTime() : mid + 6 * 3600000;
+    const st = A.SearchRiseSet(A.Body.Sun, obs, -1, new Date(sunrise), 1);
+    const sunset = st ? st.date.getTime() : mid + 18 * 3600000;
+    const r2 = A.SearchRiseSet(A.Body.Sun, obs, +1, new Date(sunset), 1);
+    const nextRise = r2 ? r2.date.getTime() : sunrise + 86400000;
+    const weekday = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+    const part = (sunset - sunrise) / 8;
+    const seg = n => ({ start: sunrise + (n - 1) * part, end: sunrise + n * part });
+    const RAHU = [8, 2, 7, 5, 6, 4, 3], YAMA = [5, 4, 3, 2, 1, 7, 6], GULI = [7, 6, 5, 4, 3, 2, 1];
+    const list = kind => {
+      const out = []; let t0 = sunrise;
+      for (let i = 0; i < 3 && t0 < nextRise; i++) { const v = ANGA[kind](t0 + 1000); const e = angaEnd(kind, t0 + 1000); out.push({ index: v, end: e }); t0 = e; }
+      return out;
+    };
+    const x = siderealSunMoon(sunrise);
+    const k = Math.floor(norm(x.moon - x.sun) / 6);
+    let karana; if (k === 0) karana = 10; else if (k >= 57) karana = 7 + (k - 57); else karana = (k - 1) % 7;
+    const tamil = tamilCalendar(sunrise + 3600000, offset, lat, lon);
+    const muhurta = (sunset - sunrise) / 15;
+    const abhijit = { start: sunrise + 7 * muhurta, end: sunrise + 8 * muhurta };
+    return {
+      offset, sunrise, sunset, nextRise, weekday, tamil, karana,
+      moonSign: Math.floor(x.moon / 30), sunSign: Math.floor(x.sun / 30),
+      tithi: list('tithi'), nakshatra: list('nakshatra'), yoga: list('yoga'),
+      rahu: seg(RAHU[weekday]), yama: seg(YAMA[weekday]), gulika: seg(GULI[weekday]), abhijit
+    };
+  }
+
   // ---------- Doshas ----------
   function doshaChecks(P, lagna) {
     const mars = P.Mars;
@@ -373,6 +425,6 @@
     return { chevvai: { girl: g, boy: b, balanced: g === b }, rahuKetu: { girl: gr, boy: br, balanced: gr === br } };
   }
 
-  const api = { computeChart, currentDasa, transits, saturnPhase, porutham, doshaCompat, localToUtc, tzOffsetMinutes, ayanamsa, RASI_LORD, DASA_YEARS, GANA, YONI, RAJJU, PLANETS };
+  const api = { dailyPanchang, computeChart, currentDasa, transits, saturnPhase, porutham, doshaCompat, localToUtc, tzOffsetMinutes, ayanamsa, RASI_LORD, DASA_YEARS, GANA, YONI, RAJJU, PLANETS };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.Jothidam = api;
 })(typeof window !== 'undefined' ? window : globalThis);

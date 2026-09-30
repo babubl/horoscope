@@ -171,6 +171,57 @@ dialog h3{margin-bottom:6px}
 .check{display:flex;gap:8px;align-items:center;font-size:13.5px;margin-top:12px}
 .check input{width:16px;height:16px}
 .hidden{display:none!important}
+/* place picker */
+.suggest{max-height:330px;overflow-y:auto}
+.suggest .opt{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline;width:100%;text-align:left;border:0;background:none;padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--line);font:inherit;color:var(--ink);min-height:44px}
+.suggest .opt:last-child{border-bottom:0}
+.suggest .opt.active,.suggest .opt:hover{background:var(--accent-soft)}
+.suggest .opt b{font-weight:600}
+.suggest .opt small{color:var(--muted);font-size:12.5px;flex-basis:100%}
+.suggest .opt .ta{color:var(--accent);font-size:13px}
+.suggest .sh{padding:7px 12px 5px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+.suggest .empty{padding:12px;color:var(--muted);font-size:13.5px}
+.geo.ok{color:var(--good);font-weight:600}
+.geo.warn{color:var(--mid)}
+/* hero + today strip */
+.tabs{overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs button{white-space:nowrap}
+@media (max-width:480px){.brand h1{font-size:21px}.brand small{display:none}.tabs{gap:0}.tabs button{padding:12px 9px;font-size:14px}}
+.hero{display:flex;gap:14px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.hero h2{font:700 clamp(24px,3.4vw,32px)/1.15 var(--display);margin:0;text-wrap:balance}
+body.ta .hero h2{font-family:'Noto Serif Tamil','Noto Sans Tamil',serif;font-size:clamp(20px,3vw,26px)}
+.hero p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.today{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13.5px;margin-bottom:18px;cursor:pointer;text-align:left;width:100%;color:var(--ink);font-family:inherit}
+.today:hover{border-color:var(--accent-2)}
+.today .lbl{font-weight:700;color:var(--accent)}
+.today span b{font-weight:600}
+.today .go{margin-left:auto;color:var(--accent);font-weight:600;white-space:nowrap}
+/* panchangam tab */
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.pgrid{grid-template-columns:1fr}}
+.pgrid .stat small{display:block;color:var(--muted);font-size:12px;margin-top:2px;font-weight:500}
+.kaalam{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+@media (max-width:760px){.kaalam{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kaalam .stat.avoid{border-color:color-mix(in srgb,var(--bad) 45%,var(--line))}
+.kaalam .stat.avoid span{color:var(--bad)}
+.kaalam .stat.goodt{border-color:color-mix(in srgb,var(--good) 45%,var(--line))}
+.kaalam .stat.goodt span{color:var(--good)}
+.pbar{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
+.pbar .field{flex:1;min-width:200px}
+.daynav{display:flex;gap:6px}
+.daynav button{min-width:42px}
+/* feedback */
+.fb{display:grid;gap:14px}
+.stars{display:flex;gap:4px}
+.stars button{background:none;border:0;font-size:30px;line-height:1;cursor:pointer;color:var(--line);padding:2px}
+.stars button.on{color:var(--accent-2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer;font:600 13px/1 inherit}
+.chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.fb textarea{width:100%;min-height:110px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font:inherit;color:inherit;resize:vertical}
+.fb .ok{color:var(--good);font-weight:600}
+.btn:focus-visible,.chips button:focus-visible,.stars button:focus-visible,.suggest .opt:focus-visible,.today:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
 .muted{color:var(--muted)}
 a{color:var(--accent)}
 
@@ -255,6 +306,23 @@ a{color:var(--accent)}
 .sheet .pgno{position:absolute;bottom:4.6mm;left:0;right:0;text-align:center;font-size:2.4mm;color:#fff;font-weight:700;letter-spacing:.3mm;text-shadow:0 0 1mm var(--kum-d)}
 .sheet .foot-note{font-size:2.5mm;color:#8a6a45;text-align:center;margin-top:1.5mm}
 .sheet .two{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.sheet .couple{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:1mm}
+.sheet .couple .who{border:.35mm solid var(--gold2);border-radius:1.5mm;padding:2.5mm 3.5mm;background:#fffdf5}
+.sheet .couple .who h6{margin:0 0 1.5mm;font-size:4.2mm;color:var(--kum-d);text-align:center}
+.sheet .couple .who div{display:flex;justify-content:space-between;gap:2mm;font-size:3.05mm;border-bottom:.2mm dotted #c9a45a;padding:.6mm 0}
+.sheet .couple .who div span{color:#7a5a3a}
+.sheet .res-g{color:#1f6b3a;font-weight:700}.sheet .res-m{color:#8a5d00;font-weight:700}.sheet .res-b{color:#a31515;font-weight:700}
+.sheet .scorebox{display:flex;align-items:center;justify-content:center;gap:6mm;margin-top:3mm;padding:3mm;border:.5mm solid var(--kum-d);border-radius:2mm;background:linear-gradient(#fff6d6,#fdeec0)}
+.sheet .scorebox .n{font-size:10mm;font-weight:800;color:var(--kum-d);line-height:1}
+.sheet .scorebox .n small{font-size:4mm;color:#6b3a14}
+.sheet .scorebox .v{font-size:4.6mm;font-weight:800;color:var(--kum-d)}
+.sheet .scorebox .v small{display:block;font-size:3mm;font-weight:400;color:#6b3a14;max-width:95mm;line-height:1.5;margin-top:1mm}
+.sheet .charts2.small{grid-template-columns:1fr 1fr;gap:10mm;margin:1.5mm 22mm 0}
+.sheet .charts2.small .si .c .pl{font-size:2.6mm}.sheet .charts2.small .si .c .sn{font-size:1.9mm}.sheet .charts2.small .si .ctr b{font-size:3.6mm}.sheet .charts2.small .si .ctr small{font-size:2mm}
+.sheet.msheet td{padding:.5mm 1.5mm}.sheet.msheet h5{margin:1.5mm 0 1mm}
+.sheet.msheet .invo-row svg{width:10mm;height:15mm}.sheet.msheet .suzhi{font-size:8mm!important}.sheet.msheet .invo-t{margin-top:1mm}
+.sheet.msheet .scorebox{margin-top:2mm;padding:2mm}.sheet.msheet .charts2.small{margin:1mm 30mm 0;gap:8mm}
+.sheet.msheet .couple .who div{padding:.45mm 0}.sheet.msheet .sign{margin-top:2mm!important}
 .sheet .nava{display:flex;align-items:center;justify-content:center;gap:7mm;margin-top:4mm}
 .sheet .nava-g{display:grid;grid-template-columns:repeat(3,17mm);grid-auto-rows:9mm;border:.6mm solid var(--kum-d);outline:.25mm solid var(--gold2);outline-offset:.8mm;background:#fffdf5}
 .sheet .nava-g div{display:grid;place-items:center;border:.25mm solid #c9a45a;font-size:3mm;font-weight:700;color:var(--ink2)}
@@ -297,12 +365,17 @@ a{color:var(--accent)}
     <nav class="tabs" role="tablist">
       <button class="on" data-tab="horo" data-t="tabHoro">Horoscope</button>
       <button data-tab="match" data-t="tabMatch">Marriage Match</button>
+      <button data-tab="panch" data-t="tabPanch">Panchangam</button>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
   <div class="appbar hidden" id="appbar"><span data-t="appPitch">Get the Android app — no ads, works offline, print the traditional jathagam.</span><a class="btn" id="appbarLink" href="#" target="_blank" rel="noopener" data-t="getApp">Get the app · ₹10</a></div>
+  <div class="hero">
+    <div><h2 data-t="heroTitle">Your jathagam, the traditional way</h2><p data-t="heroSub">Accurate South Indian horoscope, 10 porutham matching and daily panchangam — free, in Tamil and English.</p></div>
+  </div>
+  <button type="button" class="today" id="todayStrip" aria-label="Today's panchangam"></button>
   <!-- HOROSCOPE -->
   <section id="tab-horo">
     <form class="card" id="horoForm" autocomplete="off">
@@ -333,6 +406,37 @@ a{color:var(--accent)}
     </form>
     <div id="matchOut"></div>
   </section>
+
+  <!-- PANCHANGAM -->
+  <section id="tab-panch" class="hidden">
+    <div class="card">
+      <h2 data-t="panchTitle">Daily panchangam</h2>
+      <p class="sub" data-t="panchSub">Tithi, nakshatra, yoga, karana and the day's good and avoidable times, for your town.</p>
+      <div class="pbar">
+        <div class="field place"><label for="pp-place" data-t="panchPlace">Town</label>
+          <input id="pp-place" autocomplete="off" aria-autocomplete="list"><div class="suggest" id="pp-sug" role="listbox"></div><div class="geo" id="pp-geo"></div></div>
+        <div class="field" style="flex:0 1 180px;min-width:150px"><label for="pp-date" data-t="panchDate">Date</label><input id="pp-date" type="date"></div>
+        <div class="daynav"><button type="button" class="btn ghost" id="pp-prev" aria-label="Previous day">‹</button><button type="button" class="btn ghost" id="pp-today" data-t="today">Today</button><button type="button" class="btn ghost" id="pp-next" aria-label="Next day">›</button></div>
+      </div>
+      <div id="panchOut"></div>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section class="card" id="feedback" style="margin-top:18px">
+    <h2 data-t="fbTitle">Tell us what you think</h2>
+    <p class="sub" data-t="fbSub">Found a wrong result, missing town, or have an idea? Your note goes straight to the maker.</p>
+    <form class="fb" id="fbForm" autocomplete="off">
+      <div><label data-t="fbRate">How useful was Suba Jathagam?</label><div class="stars" id="fbStars" role="radiogroup"></div></div>
+      <div><label data-t="fbType">About</label><div class="chips" id="fbType"></div></div>
+      <div class="field"><label for="fbMsg" data-t="fbMsg">Your message</label><textarea id="fbMsg" maxlength="2000" required></textarea></div>
+      <div class="grid g2">
+        <div class="field"><label for="fbName" data-t="fbName">Name (optional)</label><input id="fbName" maxlength="60"></div>
+        <div class="field"><label for="fbContact" data-t="fbContact">Phone or email, if you want a reply (optional)</label><input id="fbContact" maxlength="80"></div>
+      </div>
+      <div class="actions" style="margin-top:0"><button class="btn" type="submit" id="fbSend" data-t="fbSend">Send feedback</button><span id="fbStatus" aria-live="polite"></span></div>
+    </form>
+  </section>
 </main>
 
 <div class="wrap"><div class="adslot" id="ad-bottom"></div></div>
@@ -340,16 +444,17 @@ a{color:var(--accent)}
   <div class="wrap">
     <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
     <div class="visits hidden" id="visits"></div>
-    <nav class="flinks"><a href="guide.html" data-t="lGuide">Guide</a><a href="about.html" data-t="lAbout">About</a><a href="privacy.html" data-t="lPrivacy">Privacy</a><a href="terms.html" data-t="lTerms">Terms</a></nav>
+    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="guide.html" data-t="lGuide">Guide</a><a href="about.html" data-t="lAbout">About</a><a href="privacy.html" data-t="lPrivacy">Privacy</a><a href="terms.html" data-t="lTerms">Terms</a></nav>
   </div>
 </footer>
 
 
 <div class="jv" id="jv" role="dialog" aria-modal="true" aria-label="Jathagam">
   <div class="jv-bar">
-    <div class="field"><label for="jv-father" data-t="father">Father's name</label><input id="jv-father" maxlength="60"></div>
-    <div class="field"><label for="jv-mother" data-t="mother">Mother's name</label><input id="jv-mother" maxlength="60"></div>
-    <div class="field"><label for="jv-gothram" data-t="gothram">Gothram / Kulam (optional)</label><input id="jv-gothram" maxlength="40"></div>
+    <div class="field jv-h"><label for="jv-father" data-t="father">Father's name</label><input id="jv-father" maxlength="60"></div>
+    <div class="field jv-h"><label for="jv-mother" data-t="mother">Mother's name</label><input id="jv-mother" maxlength="60"></div>
+    <div class="field jv-h"><label for="jv-gothram" data-t="gothram">Gothram / Kulam (optional)</label><input id="jv-gothram" maxlength="40"></div>
+    <div class="field jv-m hidden" style="flex:3"><span class="sub" style="margin:0" data-t="matchPrintHint">Traditional porutham report — print it or save as PDF.</span></div>
     <div class="btns"><button class="btn" type="button" id="jv-print">Print</button><button class="btn ghost" type="button" id="jv-close" data-t="close">Close</button></div>
   </div>
   <div class="jv-pages" id="jv-pages"></div>
@@ -383,7 +488,8 @@ const J = window.Jothidam;
 const CONFIG = {
   adsenseClient: '',              // e.g. 'ca-pub-1234567890123456'  (ads show on the website only, never in the app)
   adSlotBottom: '',               // AdSense display-ad slot id for the bottom unit, e.g. '1234567890'
-  goatcounter: 'subajathagam',     // GoatCounter site code: visits counted on the website only (not in the app)
+  goatcounter: 'subajathagam',
+  web3formsKey: '',               // Web3Forms access key: feedback is emailed to you. Empty = feedback is logged as a GoatCounter event instead     // GoatCounter site code: visits counted on the website only (not in the app)
   playStoreUrl: ''                // e.g. 'https://play.google.com/store/apps/details?id=in.jothidam.app'
                                   // when set, the website shows "Get the app" and printing the jathagam needs the app
 };
@@ -445,6 +551,14 @@ const I = {
     days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
     center:'Rasi', centerNav:'Navamsa', weekdayNote:'Tamil date, weekday and panchangam follow the sunrise-to-sunrise day at the birth place.',
     appPitch:'Get the Android app — no ads, works offline, print the traditional jathagam.', getApp:'Get the app · ₹10', printInApp:'Print & PDF in the app · ₹10', previewWm:'PREVIEW · Suba Jathagam app',
+    tabPanch:'Panchangam', heroTitle:'Your jathagam, the traditional way', heroSub:'Accurate South Indian horoscope, 10 porutham matching and daily panchangam — free, in Tamil and English.',
+    todayLbl:'Today', seeFull:'Full panchangam ›', panchTitle:'Daily panchangam', panchSub:"Tithi, nakshatra, yoga, karana and the day's good and avoidable times, for your town.", panchPlace:'Town', panchDate:'Date', today:'Today',
+    till:'till', then:'then', rahuKalam:'Rahu kalam', yamagandam:'Yamagandam', kuligai:'Kuligai', abhijit:'Abhijit muhurtham', avoid:'Avoid for new starts', goodTime:'Good time', nextDay:'next day',
+    moonSignToday:'Moon in', sunSignToday:'Sun in', printPdf:'Print / PDF', jathagamHint:'Two-page traditional jathagam with Pillaiyar suzhi and manjal–kungumam border — print it or save as PDF.', matchPrintHint:'Traditional porutham report — print it or save as PDF.',
+    popular:'Popular', fromMap:'More places', placeSel:'Selected', placeAuto:'Using', typeMore:'Keep typing to see more towns', noMatch:'No town found. Try another spelling, or enter latitude and longitude below.',
+    fbTitle:'Tell us what you think', fbSub:'Found a wrong result, missing town, or have an idea? Your note goes straight to the maker.', fbRate:'How useful was Suba Jathagam?', fbType:'About', fbMsg:'Your message', fbName:'Name (optional)', fbContact:'Phone or email, if you want a reply (optional)', fbSend:'Send feedback', fbSending:'Sending…', fbThanks:'Thank you! Your feedback reached us.', fbFail:"Couldn't send right now. Please try again in a minute.", fbNeedMsg:'Please write a short message.',
+    fbTypes:['Suggestion','Wrong result','Missing town','Praise','Other'], lFeedback:'Feedback',
+    sheetMatchTitle:'Thirumana Porutham', sheetGroom:'Groom', sheetBride:'Bride', sheetScore:'Porutham', sheetDosha:'Dosha samyam',
     visitsLbl:'visits so far', lGuide:'Guide', lAbout:'About', lPrivacy:'Privacy', lTerms:'Terms', adLabel:'Advertisement',
     jathagamBtn:'Traditional Jathagam', father:"Father's name", mother:"Mother's name", gothram:'Gothram / Kulam (optional)', printNow:'Print', close:'Close',
     tamilDate:'Tamil date', starLord:'Star lord', sunrise:'Sunrise', sunset:'Sunset', nazhigai:'Janma nazhigai', beforeSunriseNote:'Born before sunrise, so the Tamil day is the previous calendar day.',
@@ -501,6 +615,14 @@ const I = {
     days:['ஞாயிறு','திங்கள்','செவ்வாய்','புதன்','வியாழன்','வெள்ளி','சனி'],
     center:'ராசி', centerNav:'நவாம்சம்', weekdayNote:'தமிழ் தேதி, கிழமை, பஞ்சாங்கம் ஆகியவை பிறந்த ஊரின் சூரிய உதயம் முதல் அடுத்த உதயம் வரையிலான நாளின்படி.',
     appPitch:'Android செயலி — விளம்பரம் இல்லை, இணையம் இல்லாமலும் இயங்கும், பாரம்பரிய ஜாதகம் அச்சிடலாம்.', getApp:'செயலி பெறுக · ₹10', printInApp:'செயலியில் அச்சிடு / PDF · ₹10', previewWm:'மாதிரி · சுப ஜாதகம் செயலி',
+    tabPanch:'பஞ்சாங்கம்', heroTitle:'உங்கள் ஜாதகம், பாரம்பரிய முறையில்', heroSub:'துல்லியமான தென்னிந்திய ஜாதகம், 10 திருமணப் பொருத்தம், தினசரி பஞ்சாங்கம் — இலவசம், தமிழிலும் ஆங்கிலத்திலும்.',
+    todayLbl:'இன்று', seeFull:'முழு பஞ்சாங்கம் ›', panchTitle:'தினசரி பஞ்சாங்கம்', panchSub:'உங்கள் ஊருக்கான திதி, நட்சத்திரம், யோகம், கரணம், நல்ல நேரம், தவிர்க்க வேண்டிய நேரம்.', panchPlace:'ஊர்', panchDate:'தேதி', today:'இன்று',
+    till:'வரை', then:'பின்', rahuKalam:'ராகு காலம்', yamagandam:'எமகண்டம்', kuligai:'குளிகை', abhijit:'அபிஜித் முகூர்த்தம்', avoid:'சுப காரியம் தவிர்க்கவும்', goodTime:'நல்ல நேரம்', nextDay:'மறுநாள்',
+    moonSignToday:'சந்திரன்', sunSignToday:'சூரியன்', printPdf:'அச்சிடு / PDF', jathagamHint:'பிள்ளையார் சுழி, மஞ்சள்–குங்கும ஓரத்துடன் இரண்டு பக்க பாரம்பரிய ஜாதகம் — அச்சிடலாம் அல்லது PDF-ஆக சேமிக்கலாம்.', matchPrintHint:'பாரம்பரிய பொருத்த அறிக்கை — அச்சிடலாம் அல்லது PDF-ஆக சேமிக்கலாம்.',
+    popular:'பிரபல ஊர்கள்', fromMap:'மேலும் ஊர்கள்', placeSel:'தேர்வு', placeAuto:'பயன்படுத்துவது', typeMore:'மேலும் ஊர்கள் பார்க்க தொடர்ந்து தட்டச்சு செய்யவும்', noMatch:'ஊர் கிடைக்கவில்லை. வேறு எழுத்துக்கூட்டலில் முயலவும், அல்லது கீழே அட்சரேகை/தீர்க்கரேகை உள்ளிடவும்.',
+    fbTitle:'உங்கள் கருத்தைச் சொல்லுங்கள்', fbSub:'தவறான முடிவு, விடுபட்ட ஊர், புதிய யோசனை — உங்கள் கருத்து நேரடியாக உருவாக்கியவருக்குச் செல்லும்.', fbRate:'சுப ஜாதகம் எவ்வளவு பயனுள்ளதாக இருந்தது?', fbType:'எதைப் பற்றி', fbMsg:'உங்கள் செய்தி', fbName:'பெயர் (விருப்பம்)', fbContact:'பதில் வேண்டுமெனில் தொலைபேசி அல்லது மின்னஞ்சல் (விருப்பம்)', fbSend:'அனுப்பு', fbSending:'அனுப்புகிறது…', fbThanks:'நன்றி! உங்கள் கருத்து கிடைத்தது.', fbFail:'இப்போது அனுப்ப முடியவில்லை. சிறிது நேரம் கழித்து முயலவும்.', fbNeedMsg:'சிறு செய்தி எழுதவும்.',
+    fbTypes:['ஆலோசனை','தவறான முடிவு','விடுபட்ட ஊர்','பாராட்டு','மற்றவை'], lFeedback:'கருத்து',
+    sheetMatchTitle:'திருமணப் பொருத்தம்', sheetGroom:'மணமகன்', sheetBride:'மணமகள்', sheetScore:'பொருத்தம்', sheetDosha:'தோஷ சாம்யம்',
     visitsLbl:'பார்வைகள்', lGuide:'வழிகாட்டி', lAbout:'எங்களைப் பற்றி', lPrivacy:'தனியுரிமை', lTerms:'விதிமுறைகள்', adLabel:'விளம்பரம்',
     jathagamBtn:'பாரம்பரிய ஜாதகம்', father:'தந்தை பெயர்', mother:'தாய் பெயர்', gothram:'கோத்திரம் / குலம் (விருப்பம்)', printNow:'அச்சிடு', close:'மூடு',
     tamilDate:'தமிழ் தேதி', starLord:'நட்சத்திர அதிபதி', sunrise:'சூரிய உதயம்', sunset:'சூரிய அஸ்தமனம்', nazhigai:'ஜனன நாழிகை', beforeSunriseNote:'சூரிய உதயத்திற்கு முன் பிறந்ததால், தமிழ் நாள் முந்தைய தேதியாகும்.',
@@ -527,6 +649,136 @@ let apiKey = store.get('jothidam.key') || '';
 let model = store.get('jothidam.model') || 'gemini-3.5-flash';
 let nodeType = store.get('jothidam.node') === 'true' ? 'true' : 'mean';
 
+// ================= place search =================
+const COUNTRY = {
+  IN: ['India', 'இந்தியா'], LK: ['Sri Lanka', 'இலங்கை'], SG: ['Singapore', 'சிங்கப்பூர்'], MY: ['Malaysia', 'மலேசியா'], AE: ['UAE', 'ஐக்கிய அரபு அமீரகம்'],
+  SA: ['Saudi Arabia', 'சவுதி அரேபியா'], QA: ['Qatar', 'கத்தார்'], KW: ['Kuwait', 'குவைத்'], OM: ['Oman', 'ஓமன்'], BH: ['Bahrain', 'பஹ்ரைன்'],
+  GB: ['UK', 'ஐக்கிய இராச்சியம்'], US: ['USA', 'அமெரிக்கா'], CA: ['Canada', 'கனடா'], AU: ['Australia', 'ஆஸ்திரேலியா'], NZ: ['New Zealand', 'நியூசிலாந்து'],
+  ZA: ['South Africa', 'தென்னாப்பிரிக்கா'], MU: ['Mauritius', 'மொரிசியஸ்'], FR: ['France', 'பிரான்ஸ்'], DE: ['Germany', 'ஜெர்மனி'], RE: ['Réunion', 'ரீயூனியன்']
+};
+const cname = cc => (COUNTRY[cc] ? COUNTRY[cc][lang === 'ta' ? 1 : 0] : cc);
+const fold = x => String(x || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9஀-௿ ]+/g, ' ').replace(/\s+/g, ' ').trim();
+let PLACES = null, placesP = null;
+function loadPlaces() {
+  if (!placesP) placesP = fetch('data/places.json').then(r => r.json()).then(d => {
+    PLACES = d.p.map((p, i) => ({ name: p[0], ta: p[1], adm: p[2], cc: p[3], lat: p[4], lon: p[5], tz: d.tz[p[6]], alias: p[7], rank: i,
+      k: fold(p[0]), ka: fold(p[7]).split(' | ').join('|'), kt: fold(p[1]) }));
+    return PLACES;
+  }).catch(() => (PLACES = []));
+  return placesP;
+}
+const POPULAR = ['Chennai', 'Madurai', 'Coimbatore', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Thanjavur', 'Bengaluru', 'Singapore', 'Colombo'];
+function placeLabel(p) {
+  const nm = lang === 'ta' && p.ta ? p.ta : p.name;
+  const reg = [p.adm, cname(p.cc)].filter(Boolean).join(', ');
+  return { nm, reg, full: [nm, p.adm, cname(p.cc)].filter(Boolean).join(', ') };
+}
+function searchLocal(q, n = 8) {
+  if (!PLACES) return [];
+  const f = fold(q); if (!f) return [];
+  const out = [];
+  for (const p of PLACES) {
+    let sc = -1;
+    if (p.k === f || p.kt === f) sc = 0;
+    else if (p.k.startsWith(f) || (p.kt && p.kt.startsWith(f))) sc = 1;
+    else if (p.alias && fold(p.alias).split(' ').some(a => a.startsWith(f))) sc = 1;
+    else if (p.k.split(' ').some(w => w.startsWith(f))) sc = 2;
+    else if (f.length >= 4 && p.k.includes(f)) sc = 3;
+    if (sc >= 0) out.push([sc, p.rank, p]);
+  }
+  out.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  return out.slice(0, n).map(x => x[2]);
+}
+async function searchRemote(q) {
+  try {
+    const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=8&language=${lang}&format=json`);
+    const j = await r.json();
+    return (j.results || []).filter(p => p.feature_code !== 'AIRP').map(p => ({
+      name: p.name, ta: '', adm: p.admin1 || '', cc: p.country_code || '', lat: p.latitude, lon: p.longitude, tz: p.timezone || 'Asia/Kolkata', remote: true,
+      countryName: p.country
+    }));
+  } catch { return []; }
+}
+function placePicker(input, box, geo, onPick, onClear) {
+  let items = [], active = -1, seq = 0, timer, chosenLabel = '';
+  const render = (list, header, extra) => {
+    items = list; active = list.length ? 0 : -1;
+    if (!list.length && !extra) { box.style.display = 'none'; return; }
+    box.innerHTML = (header ? `<div class="sh">${header}</div>` : '') + list.map((p, i) => {
+      const l = placeLabel(p), reg = p.remote && !COUNTRY[p.cc] ? [p.adm, p.countryName].filter(Boolean).join(', ') : l.reg;
+      const alt = lang === 'ta' ? (p.ta ? p.name : '') : p.ta;
+      return `<button type="button" class="opt${i === 0 ? ' active' : ''}" role="option" data-i="${i}"><b>${esc(l.nm)}</b>${alt ? ` <span class="ta">${esc(alt)}</span>` : ''} <small>${esc(reg)}</small></button>`;
+    }).join('') + (extra || '');
+    box.style.display = 'block';
+  };
+  const choose = (p, auto) => {
+    const l = placeLabel(p);
+    input.value = p.remote ? [p.name, p.adm, p.countryName].filter(Boolean).join(', ') : l.full;
+    chosenLabel = input.value;
+    geo.className = 'geo ok';
+    geo.textContent = `✓ ${auto ? t('placeAuto') : t('placeSel')}: ${input.value} · ${(+p.lat).toFixed(2)}°, ${(+p.lon).toFixed(2)}° · ${p.tz}`;
+    box.style.display = 'none';
+    onPick(p);
+  };
+  const setActive = i => {
+    const opts = box.querySelectorAll('.opt'); if (!opts.length) return;
+    active = (i + opts.length) % opts.length;
+    opts.forEach((o, k) => o.classList.toggle('active', k === active));
+    opts[active].scrollIntoView({ block: 'nearest' });
+  };
+  const showPopular = async () => {
+    await loadPlaces();
+    if (input.value.trim() || document.activeElement !== input) return;
+    render(POPULAR.map(n => PLACES.find(p => p.name === n)).filter(Boolean), t('popular'));
+  };
+  const update = async () => {
+    const q = input.value.trim();
+    if (input.value !== chosenLabel) { geo.className = 'geo'; geo.textContent = ''; onClear && onClear(); }
+    if (!q) { showPopular(); return; }
+    await loadPlaces();
+    const my = ++seq;
+    const local = searchLocal(q);
+    render(local, '', local.length < 3 && q.length < 3 ? `<div class="empty">${t('typeMore')}</div>` : '');
+    clearTimeout(timer);
+    if (q.length >= 3) timer = setTimeout(async () => {
+      const remote = await searchRemote(q);
+      if (my !== seq) return;
+      const extra = remote.filter(r => !local.some(l => Math.abs(l.lat - r.lat) < 0.08 && Math.abs(l.lon - r.lon) < 0.08)).slice(0, 8 - Math.min(local.length, 5));
+      const merged = local.slice(0, 8 - extra.length).concat(extra);
+      if (!merged.length) { render([], '', `<div class="empty">${t('noMatch')}</div>`); return; }
+      render(merged, '');
+    }, 280);
+  };
+  input.addEventListener('input', update);
+  input.addEventListener('focus', () => { loadPlaces(); if (!input.value.trim()) showPopular(); else if (input.value !== chosenLabel) update(); });
+  input.addEventListener('blur', () => { box.style.display = 'none'; });
+  input.addEventListener('keydown', e => {
+    if (box.style.display !== 'block') { if (e.key === 'ArrowDown') { update(); e.preventDefault(); } return; }
+    if (e.key === 'ArrowDown') { setActive(active + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { setActive(active - 1); e.preventDefault(); }
+    else if (e.key === 'Enter') { if (active >= 0 && items[active]) { choose(items[active]); e.preventDefault(); } }
+    else if (e.key === 'Escape') { box.style.display = 'none'; }
+  });
+  // pointerdown keeps focus in the input, so the tap always lands (fixes mobile selection)
+  box.addEventListener('pointerdown', e => {
+    const b = e.target.closest('.opt'); if (!b) return;
+    e.preventDefault(); choose(items[+b.dataset.i]);
+  });
+  box.addEventListener('mousedown', e => e.preventDefault());
+  return {
+    choose,
+    mark: label => { chosenLabel = label; },
+    focus: () => { input.focus(); },
+    async resolve(q) {
+      await loadPlaces();
+      const local = searchLocal(q, 1);
+      if (local.length) return local[0];
+      const remote = await searchRemote(q);
+      return remote[0] || null;
+    }
+  };
+}
+
 // ================= person form =================
 function personForm(host, id, opts) {
   host.innerHTML = `
@@ -551,48 +803,37 @@ function personForm(host, id, opts) {
       </div>
     </details>`;
   const $ = s => host.querySelector(s);
-  const place = $(`#${id}-place`), sug = $(`#${id}-sug`), geo = $(`#${id}-geo`);
-  const state = { zone: null, label: '' };
-  let timer, seq = 0;
-  place.addEventListener('input', () => {
-    state.zone = null; clearTimeout(timer);
-    const q = place.value.trim();
-    if (q.length < 2) { sug.style.display = 'none'; return; }
-    timer = setTimeout(async () => {
-      const my = ++seq; geo.textContent = t('searching');
-      try {
-        const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=7&language=${lang}&format=json`);
-        const j = await r.json(); if (my !== seq) return;
-        const res = j.results || [];
-        geo.textContent = res.length ? '' : t('noPlace');
-        sug.innerHTML = res.map((p, i) => `<button type="button" data-i="${i}">${esc(p.name)} <small>${esc([p.admin1, p.country].filter(Boolean).join(', '))}</small></button>`).join('');
-        sug.style.display = res.length ? 'block' : 'none';
-        sug.querySelectorAll('button').forEach(b => b.onclick = () => {
-          const p = res[+b.dataset.i];
-          place.value = [p.name, p.admin1, p.country].filter(Boolean).join(', ');
-          $(`#${id}-lat`).value = p.latitude.toFixed(4); $(`#${id}-lon`).value = p.longitude.toFixed(4);
-          $(`#${id}-tz`).value = ''; state.zone = p.timezone; state.label = place.value;
-          geo.textContent = `${p.latitude.toFixed(2)}°, ${p.longitude.toFixed(2)}° · ${p.timezone}`;
-          sug.style.display = 'none';
-        });
-      } catch { if (my === seq) geo.textContent = t('noPlace'); }
-    }, 300);
-  });
-  place.addEventListener('blur', () => setTimeout(() => sug.style.display = 'none', 200));
+  const place = $(`#${id}-place`), geo = $(`#${id}-geo`);
+  const state = { zone: null, label: '', picked: null };
+  const setCoords = p => {
+    $(`#${id}-lat`).value = (+p.lat).toFixed(4); $(`#${id}-lon`).value = (+p.lon).toFixed(4); $(`#${id}-tz`).value = '';
+    state.zone = p.tz; state.label = place.value; state.picked = p;
+  };
+  const picker = placePicker(place, $(`#${id}-sug`), geo, p => setCoords(p), () => { state.picked = null; state.zone = null; });
   return {
     write(pd) {
       $(`#${id}-name`).value = pd.name || ''; if (opts.gender && pd.gender) $(`#${id}-gender`).value = pd.gender;
       $(`#${id}-date`).value = pd.date; $(`#${id}-time`).value = pd.time; place.value = pd.place || '';
       $(`#${id}-lat`).value = pd.calc.lat; $(`#${id}-lon`).value = pd.calc.lon;
-      state.zone = pd.calc.zone || null;
+      state.zone = pd.calc.zone || null; state.label = place.value; state.picked = { lat: pd.calc.lat, lon: pd.calc.lon, tz: pd.calc.zone };
+      geo.className = 'geo ok'; picker.mark(place.value);
       $(`#${id}-tz`).value = pd.calc.zone ? '' : fmtOff(pd.calc.offsetMinutes).replace('UTC', '').replace('−', '-');
       geo.textContent = `${(+pd.calc.lat).toFixed(2)}°, ${(+pd.calc.lon).toFixed(2)}°${pd.calc.zone ? ' · ' + pd.calc.zone : ''}`;
     },
-    read() {
+    async read() {
       const date = $(`#${id}-date`).value, time = $(`#${id}-time`).value;
+      if (!date || !time) throw new Error(t('fillAll'));
+      if (!state.picked || place.value.trim() !== state.label) {
+        const typed = place.value.trim();
+        const manual = isFinite(parseFloat($(`#${id}-lat`).value)) && isFinite(parseFloat($(`#${id}-lon`).value)) && !typed;
+        if (typed) {
+          const best = await picker.resolve(typed);
+          if (!best) { picker.focus(); throw new Error(t('noMatch')); }
+          picker.choose(best, true);
+        } else if (!manual) { picker.focus(); throw new Error(t('pickPlace')); }
+      }
       const lat = parseFloat($(`#${id}-lat`).value), lon = parseFloat($(`#${id}-lon`).value);
       const tzs = $(`#${id}-tz`).value.trim();
-      if (!date || !time) throw new Error(t('fillAll'));
       if (!isFinite(lat) || !isFinite(lon)) throw new Error(t('pickPlace'));
       let offsetMinutes = null, zone = state.zone;
       if (tzs) {
@@ -743,7 +984,7 @@ function renderHoro() {
     <div class="card">
       <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
         <div style="margin-right:auto"><h2>${esc(pd.name) || t('rasiChart')}</h2><p class="sub" style="margin:0">${birthLine(pd, c)}</p></div>
-        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openJathagam">🪔 ${t('jathagamBtn')}</button><button class="btn ghost" type="button" data-share="horo">${t('share')}</button><button class="btn ghost" type="button" onclick="window.print()">${t('print')}</button></div>
+        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openJathagam">🪔 ${t('printPdf')}</button><button class="btn ghost" type="button" data-share="horo">${t('share')}</button></div>
       </div>
       <div style="margin-top:16px">${statsBlock(c)}</div>
       <p class="note">${t('weekdayNote')}${c.tamil.beforeSunrise ? ' ' + t('beforeSunriseNote') : ''}</p>
@@ -756,10 +997,11 @@ function renderHoro() {
     <div class="card"><h3>${t('dasa')}</h3>${dasaBlock(c)}</div>
     <div class="card"><h3>${t('doshas')}</h3>${doshaBlock(c)}</div>
     <div class="card"><h3>${t('transits')}</h3>${transitBlock(c)}</div>
-    <div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="horoAi"></div></div>`;
+    ${apiKey ? `<div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="horoAi"></div></div>` : ''}
+    <div class="card no-print" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><h3 style="margin:0">🪔 ${t('jathagamBtn')}</h3><p class="sub" style="margin:4px 0 0">${t('jathagamHint')}</p></div><button class="btn" type="button" data-open-sheet="horo">${t('printPdf')}</button></div>`;
   renderAi('horo');
-  document.getElementById('openJathagam').onclick = openJathagam;
-  if (document.getElementById('jv').classList.contains('open')) renderJathagam();
+  document.getElementById('openJathagam').onclick = () => openSheet('horo');
+  if (document.getElementById('jv').classList.contains('open') && sheetMode === 'horo') renderSheets();
 }
 
 // ================= Match render =================
@@ -794,7 +1036,7 @@ function renderMatch() {
       <div class="score" style="margin-top:18px">
         <div class="dial" style="--p:${pr.score * 10};--c:${color}"><div><div><b>${pr.score}</b><small>${t('outOf')}</small></div></div></div>
         <div class="verdict"><div class="big" style="color:${color}">${t('v_' + pr.verdict)}</div><p>${t('vd_' + pr.verdict)}</p></div>
-        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" type="button" data-share="match">${t('share')}</button><button class="btn ghost" type="button" onclick="window.print()">${t('print')}</button></div>
+        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openMatchSheet">🪔 ${t('printPdf')}</button><button class="btn ghost" type="button" data-share="match">${t('share')}</button></div>
       </div>
     </div>
     <div class="card"><h3>${t('poruthams')}</h3>
@@ -814,8 +1056,11 @@ function renderMatch() {
       <div><p class="chart-t">${esc(bc._name)} · ${t('rasiChart')}</p>${siChart(bc, false, bc._name)}</div>
       <div><p class="chart-t">${esc(gc._name)} · ${t('rasiChart')}</p>${siChart(gc, false, gc._name)}</div>
     </div></div>
-    <div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="matchAi"></div></div>`;
+    ${apiKey ? `<div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="matchAi"></div></div>` : ''}
+    <div class="card no-print" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><h3 style="margin:0">🪔 ${t('sheetMatchTitle')}</h3><p class="sub" style="margin:4px 0 0">${t('matchPrintHint')}</p></div><button class="btn" type="button" data-open-sheet="match">${t('printPdf')}</button></div>`;
   renderAi('match');
+  document.getElementById('openMatchSheet').onclick = () => openSheet('match');
+  if (document.getElementById('jv').classList.contains('open') && sheetMode === 'match') renderSheets();
 }
 
 // ================= AI (Gemini) =================
@@ -956,7 +1201,7 @@ dlg.addEventListener('close', () => {
   if (nt !== nodeType) { nodeType = nt; store.set('jothidam.node', nt); recompute(); }
   if (document.getElementById('remember').checked && apiKey) { store.set('jothidam.key', apiKey); store.set('jothidam.model', model); }
   else { store.del('jothidam.key'); store.set('jothidam.model', model); }
-  refreshKeyDot(); if (horoState) renderAi('horo'); if (matchState) renderAi('match');
+  refreshKeyDot(); renderHoro(); renderMatch();
 });
 document.getElementById('clearKey').onclick = () => { apiKey = ''; store.del('jothidam.key'); document.getElementById('apiKey').value = ''; refreshKeyDot(); dlg.close('cancel'); if (horoState) renderAi('horo'); if (matchState) renderAi('match'); };
 function refreshKeyDot() { document.getElementById('keyDot').classList.toggle('hidden', !!apiKey); }
@@ -973,14 +1218,15 @@ function applyLang() {
   if (typeof renderVisits === 'function') renderVisits();
   document.title = lang === 'ta' ? 'சுப ஜாதகம் · Suba Jathagam' : 'Suba Jathagam · சுப ஜாதகம்';
   renderHoro(); renderMatch();
+  if (typeof renderPanch === 'function') { renderPanch(); renderToday(); renderFeedbackControls(); }
   store.set('jothidam.lang', lang);
 }
 document.getElementById('lang-en').onclick = () => { lang = 'en'; applyLang(); };
 document.getElementById('lang-ta').onclick = () => { lang = 'ta'; applyLang(); };
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
-  document.getElementById('tab-horo').classList.toggle('hidden', b.dataset.tab !== 'horo');
-  document.getElementById('tab-match').classList.toggle('hidden', b.dataset.tab !== 'match');
+  ['horo', 'match', 'panch'].forEach(k => document.getElementById('tab-' + k).classList.toggle('hidden', b.dataset.tab !== k));
+  if (b.dataset.tab === 'panch') renderPanch();
   if (!location.hash.startsWith('#' + b.dataset.tab)) history.replaceState(null, '', '#' + b.dataset.tab);
 });
 
@@ -989,21 +1235,21 @@ const single = personForm(document.getElementById('p-single'), 'ps', { gender: t
 const boyF = personForm(document.getElementById('p-boy'), 'pb', { title: 'boy', fixedGender: 'male' });
 const girlF = personForm(document.getElementById('p-girl'), 'pg', { title: 'girl', fixedGender: 'female' });
 
-document.getElementById('horoForm').addEventListener('submit', e => {
+document.getElementById('horoForm').addEventListener('submit', async e => {
   e.preventDefault();
   const err = document.getElementById('horoErr'); err.textContent = '';
   try {
-    const pd = single.read();
+    const pd = await single.read();
     const c = J.computeChart({ ...pd.calc, nodeType });
     horoState = { pd, c }; renderHoro(); setHash('horo');
     document.getElementById('horoOut').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (ex) { err.textContent = ex.message; }
 });
-document.getElementById('matchForm').addEventListener('submit', e => {
+document.getElementById('matchForm').addEventListener('submit', async e => {
   e.preventDefault();
   const err = document.getElementById('matchErr'); err.textContent = '';
   try {
-    const boy = boyF.read(), girl = girlF.read();
+    const boy = await boyF.read(), girl = await girlF.read();
     const bc = J.computeChart({ ...boy.calc, nodeType }), gc = J.computeChart({ ...girl.calc, nodeType });
     matchState = { boy, girl, bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc) };
     renderMatch(); setHash('match');
@@ -1160,17 +1406,65 @@ function fitSheets() {
   const z = Math.min(1, (w - 24) / px);
   document.querySelectorAll('#jv-pages .sheet').forEach(el => el.style.zoom = z);
 }
-function openJathagam() {
+let sheetMode = 'horo';
+function renderSheets() { if (sheetMode === 'match') renderMatchSheet(); else renderJathagam(); }
+function openSheet(mode) {
+  sheetMode = mode;
+  document.querySelectorAll('.jv-h').forEach(el => el.classList.toggle('hidden', mode !== 'horo'));
+  document.querySelectorAll('.jv-m').forEach(el => el.classList.toggle('hidden', mode !== 'match'));
   document.getElementById('jv').classList.add('open');
   document.body.style.overflow = 'hidden';
-  renderJathagam();
+  renderSheets();
+  try { window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path: 'print-preview-' + mode, event: true }); } catch {}
+}
+function openJathagam() { openSheet('horo'); }
+document.addEventListener('click', e => { const b = e.target.closest('[data-open-sheet]'); if (b) openSheet(b.dataset.openSheet); });
+function renderMatchSheet() {
+  if (!matchState) return;
+  const { boy, girl, bc, gc, pr, dc } = matchState, X = JT[lang], Lx = L();
+  const who = (pd, c, title) => `<div class="who"><h6>${title}</h6>
+    <div><span>${X.kv.name}</span><b>${esc(pd.name) || '—'}</b></div>
+    <div><span>${X.kv.dob}</span><b>${fmtDateInput(pd.date)} · ${esc(pd.time)}</b></div>
+    <div><span>${X.kv.place}</span><b>${esc(/^-?[\d.]+, -?[\d.]+$/.test(pd.place) ? pd.place : pd.place.split(',')[0])}</b></div>
+    <div><span>${X.kv.star}</span><b>${Lx.naks[c.nakshatra]} · ${c.pada}</b></div>
+    <div><span>${X.kv.rasi}</span><b>${Lx.rasis[c.rasi]}</b></div>
+    <div><span>${X.kv.lagna}</span><b>${Lx.rasis[c.lagna.sign]}</b></div>
+    <div><span>${t('chevvai')}</span><b>${c.doshas.chevvai.effective ? t('yes') : t('no')}</b></div></div>`;
+  const mark = r => r === 'good' ? `<span class="res-g">✓ ${t('good')}</span>` : r === 'medium' ? `<span class="res-m">½ ${t('medium')}</span>` : `<span class="res-b">✗ ${t('bad')}</span>`;
+  const rows = pr.items.map(it => `<tr><td>${t('p_' + it.key)}</td><td style="text-align:left">${t('m_' + it.key)}</td><td>${mark(it.result)}</td></tr>`).join('');
+  bc._name = boy.name || X.kv.name; gc._name = girl.name || X.kv.name;
+  bc._when = `${fmtDateInput(boy.date)} · ${esc(boy.time)}`; gc._when = `${fmtDateInput(girl.date)} · ${esc(girl.time)}`;
+  const invocation = `<div class="invo"><div class="suzhi" style="font-size:10mm">உ</div>
+      <div class="invo-row" style="margin-top:0">${LAMP}<div class="om" style="width:14mm;height:14mm;font-size:8.5mm">ௐ</div>${LAMP}</div>
+      <div class="invo-t">${X.invo}</div></div>`;
+  const page = `${invocation}
+    <div class="title" style="font-size:7mm;margin-top:1.5mm">${t('sheetMatchTitle')}</div>
+    <div class="rule" style="margin:2mm 0"></div>
+    <div class="couple">${who(boy, bc, t('sheetGroom'))}${who(girl, gc, t('sheetBride'))}</div>
+    <h5>${t('poruthams')}</h5>
+    <table><thead><tr><th>${t('porutham')}</th><th>${t('meaning')}</th><th>${t('result')}</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="scorebox"><div class="n">${pr.score}<small> / 10</small></div><div class="v">${t('v_' + pr.verdict)}<small>${t('vd_' + pr.verdict)}</small></div></div>
+    <p class="foot-note" style="font-size:2.9mm;margin-top:2mm">${t('sheetDosha')}: ${t('chevBoth')} — ${dc.chevvai.balanced ? t('balanced') : t('unbalanced')} · ${t('rkBoth')} — ${dc.rahuKetu.balanced ? t('balanced') : t('unbalanced')}</p>
+    <div class="charts2 small">
+      <div><p class="ch-t" style="font-size:3.4mm">${t('sheetGroom')} · ${X.rasi}</p>${siChart(bc, false, X.rasi)}</div>
+      <div><p class="ch-t" style="font-size:3.4mm">${t('sheetBride')} · ${X.rasi}</p>${siChart(gc, false, X.rasi)}</div>
+    </div>
+    <div class="grow"></div>
+    <div class="sign" style="margin-top:3mm"><div class="line">${X.date}</div><div class="line">${X.astrologer}</div></div>
+    <div class="subham" style="font-size:5mm">${X.subham}</div>
+    <p class="foot-note">${JT[lang].note}</p>`;
+  document.getElementById('jv-pages').innerHTML = sheetShell(page, '').replace('class="sheet"', 'class="sheet msheet"');
+  if (PRINT_LOCKED) document.querySelectorAll('#jv-pages .sheet').forEach(sh => sh.insertAdjacentHTML('beforeend', `<div class="wm"><span>${esc(t('previewWm'))}</span></div>`));
+  const pb = document.getElementById('jv-print'); pb.textContent = PRINT_LOCKED ? t('printInApp') : t('printNow');
+  fitSheets();
 }
 function closeJathagam() { document.getElementById('jv').classList.remove('open'); document.body.style.overflow = ''; }
 document.getElementById('jv-close').onclick = closeJathagam;
-['jv-father', 'jv-mother', 'jv-gothram'].forEach(id => document.getElementById(id).addEventListener('input', renderJathagam));
+['jv-father', 'jv-mother', 'jv-gothram'].forEach(id => document.getElementById(id).addEventListener('input', renderSheets));
 document.getElementById('jv-print').onclick = async () => {
   if (PRINT_LOCKED) { window.open(CONFIG.playStoreUrl, '_blank', 'noopener'); return; }
   try { await document.fonts.ready; } catch {}
+  try { window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path: 'print-' + sheetMode, event: true }); } catch {}
   document.body.classList.add('pj');
   document.querySelectorAll('#jv-pages .sheet').forEach(el => el.style.zoom = 1);
   window.print();
@@ -1178,6 +1472,116 @@ document.getElementById('jv-print').onclick = async () => {
 window.addEventListener('afterprint', () => { if (document.body.classList.contains('pj')) { document.body.classList.remove('pj'); fitSheets(); } });
 window.addEventListener('resize', () => { if (document.getElementById('jv').classList.contains('open')) fitSheets(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('jv').classList.contains('open')) closeJathagam(); });
+
+// ================= panchangam =================
+const PANCH_DEFAULT = { name: 'Chennai', ta: 'சென்னை', adm: 'Tamil Nadu', cc: 'IN', lat: 13.0878, lon: 80.2785, tz: 'Asia/Kolkata' };
+let panchPlace = (() => { try { const v = JSON.parse(localStorage.getItem('sj.panchPlace') || 'null'); if (v && isFinite(v.lat)) return v; } catch {} return PANCH_DEFAULT; })();
+const localYMD = (tz, ms = Date.now()) => { const p = {}; new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date(ms)).forEach(x => p[x.type] = x.value); return `${p.year}-${p.month}-${p.day}`; };
+let panchDate = localYMD(panchPlace.tz);
+const ppInput = document.getElementById('pp-place'), ppGeo = document.getElementById('pp-geo');
+const ppPicker = placePicker(ppInput, document.getElementById('pp-sug'), ppGeo, p => {
+  panchPlace = { name: p.name, ta: p.ta || '', adm: p.adm || '', cc: p.cc || '', lat: +p.lat, lon: +p.lon, tz: p.tz, remote: p.remote, countryName: p.countryName };
+  try { localStorage.setItem('sj.panchPlace', JSON.stringify(panchPlace)); } catch {}
+  renderPanch(); renderToday();
+});
+function computeDay(ymd, pl) {
+  const [y, m, d] = ymd.split('-').map(Number);
+  return J.dailyPanchang({ y, m, d, lat: pl.lat, lon: pl.lon, zone: pl.tz });
+}
+function clock(ms, p) {
+  const s = fmtClock(ms, p.offset);
+  const dayOf = x => Math.floor((x + p.offset * 60000) / 86400000);
+  return dayOf(ms) > dayOf(p.sunrise) ? `${s} (${t('nextDay')})` : s;
+}
+function tithiText(i) { return `${tithiName(i)}${i === 14 || i === 29 ? '' : ' · ' + t(i < 15 ? 'shukla' : 'krishna')}`; }
+function angaList(list, nameFn, p) {
+  const first = list[0], rest = list.slice(1);
+  return `<b>${nameFn(first.index)}</b><small>${t('till')} ${clock(first.end, p)}${rest.length ? ` · ${t('then')} ${nameFn(rest[0].index)}` : ''}</small>`;
+}
+function placeTitle(pl) { const l = placeLabel(pl); return pl.remote ? [pl.name, pl.adm, pl.countryName].filter(Boolean).join(', ') : l.full; }
+function renderPanch() {
+  if (document.getElementById('tab-panch').classList.contains('hidden')) return;
+  if (document.activeElement !== ppInput) {
+    ppInput.value = placeTitle(panchPlace);
+    ppGeo.className = 'geo'; ppGeo.textContent = `${(+panchPlace.lat).toFixed(2)}°, ${(+panchPlace.lon).toFixed(2)}° · ${panchPlace.tz}`;
+  }
+  document.getElementById('pp-date').value = panchDate;
+  let p;
+  try { p = computeDay(panchDate, panchPlace); } catch (e) { document.getElementById('panchOut').innerHTML = `<p class="err">${esc(e.message)}</p>`; return; }
+  const Lx = L(), tm = p.tamil;
+  const cell = (k, v) => `<div class="stat"><span>${k}</span>${v}</div>`;
+  const kt = (k, seg, cls, note) => `<div class="stat ${cls}"><span>${k}</span><b>${clock(seg.start, p)} – ${clock(seg.end, p)}</b><small class="muted" style="display:block;font-size:12px">${note}</small></div>`;
+  document.getElementById('panchOut').innerHTML = `
+    <div class="pgrid">
+      ${cell(t('tamilDate'), `<b>${Lx.years60[tm.year]} ${t('varusham')}, ${Lx.months[tm.month]} ${tm.date}</b><small>${Lx.days[p.weekday]}</small>`)}
+      ${cell(t('sunrise') + ' / ' + t('sunset'), `<b>${fmtClock(p.sunrise, p.offset)} · ${fmtClock(p.sunset, p.offset)}</b><small>${t('sunSignToday')} ${Lx.rasis[p.sunSign]} · ${t('moonSignToday')} ${Lx.rasis[p.moonSign]}</small>`)}
+      ${cell(t('tithi'), angaList(p.tithi, tithiText, p))}
+      ${cell(t('star'), angaList(p.nakshatra, i => Lx.naks[i], p))}
+      ${cell(t('yoga'), angaList(p.yoga, i => Lx.yogas[i], p))}
+      ${cell(t('karana'), `<b>${Lx.karanas[p.karana]}</b><small>${t('sunrise')}</small>`)}
+    </div>
+    <div class="kaalam">
+      ${kt(t('rahuKalam'), p.rahu, 'avoid', t('avoid'))}
+      ${kt(t('yamagandam'), p.yama, 'avoid', t('avoid'))}
+      ${kt(t('kuligai'), p.gulika, 'avoid', t('avoid'))}
+      ${kt(t('abhijit'), p.abhijit, 'goodt', t('goodTime'))}
+    </div>
+    <p class="note">${t('weekdayNote')}</p>`;
+}
+function renderToday() {
+  const el = document.getElementById('todayStrip');
+  try {
+    const p = computeDay(localYMD(panchPlace.tz), panchPlace), Lx = L(), tm = p.tamil;
+    const now = Date.now();
+    const cur = list => (list.find(x => now < x.end) || list[list.length - 1]).index;
+    el.innerHTML = `<span class="lbl">${t('todayLbl')} · ${esc(lang === 'ta' && panchPlace.ta ? panchPlace.ta : panchPlace.name)}</span>
+      <span>${Lx.months[tm.month]} ${tm.date}, ${Lx.days[p.weekday]}</span>
+      <span>${t('tithi')}: <b>${tithiName(cur(p.tithi))}</b></span>
+      <span>${t('star')}: <b>${Lx.naks[cur(p.nakshatra)]}</b></span>
+      <span>${t('rahuKalam')}: <b>${fmtClock(p.rahu.start, p.offset)}–${fmtClock(p.rahu.end, p.offset)}</b></span>
+      <span class="go">${t('seeFull')}</span>`;
+  } catch { el.classList.add('hidden'); }
+}
+document.getElementById('todayStrip').onclick = () => { document.querySelector('.tabs button[data-tab="panch"]').click(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+const shiftDay = n => { const [y, m, d] = panchDate.split('-').map(Number); const x = new Date(Date.UTC(y, m - 1, d + n)); panchDate = x.toISOString().slice(0, 10); renderPanch(); };
+document.getElementById('pp-prev').onclick = () => shiftDay(-1);
+document.getElementById('pp-next').onclick = () => shiftDay(1);
+document.getElementById('pp-today').onclick = () => { panchDate = localYMD(panchPlace.tz); renderPanch(); };
+document.getElementById('pp-date').addEventListener('change', e => { if (e.target.value) { panchDate = e.target.value; renderPanch(); } });
+
+// ================= feedback =================
+const fb = { rating: 0, type: 0 };
+function renderFeedbackControls() {
+  document.getElementById('fbStars').innerHTML = [1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" aria-checked="${fb.rating === n}" aria-label="${n}" data-n="${n}" class="${n <= fb.rating ? 'on' : ''}">★</button>`).join('');
+  document.getElementById('fbType').innerHTML = L().fbTypes.map((x, i) => `<button type="button" data-i="${i}" class="${fb.type === i ? 'on' : ''}">${esc(x)}</button>`).join('');
+}
+document.getElementById('fbStars').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; fb.rating = +b.dataset.n; renderFeedbackControls(); });
+document.getElementById('fbType').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; fb.type = +b.dataset.i; renderFeedbackControls(); });
+document.getElementById('fbForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const status = document.getElementById('fbStatus'), btn = document.getElementById('fbSend');
+  const msg = document.getElementById('fbMsg').value.trim();
+  if (!msg) { status.className = 'err'; status.textContent = t('fbNeedMsg'); return; }
+  const name = document.getElementById('fbName').value.trim(), contact = document.getElementById('fbContact').value.trim();
+  const type = I.en.fbTypes[fb.type];
+  const ctx = horoState ? 'horoscope' : matchState ? 'match' : 'home';
+  btn.disabled = true; status.className = ''; status.textContent = t('fbSending');
+  let ok = false;
+  try {
+    if (CONFIG.web3formsKey) {
+      const r = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ access_key: CONFIG.web3formsKey, subject: `Suba Jathagam feedback · ${type} · ${fb.rating || '-'}★`, from_name: name || 'Suba Jathagam visitor',
+          name, contact, rating: fb.rating || '', type, message: msg, page: ctx, language: lang, botcheck: '' }) });
+      const j = await r.json().catch(() => ({})); ok = r.ok && j.success !== false;
+    } else if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: `feedback-${Date.now().toString(36)}-${fb.rating || 0}star`, title: `[${type}] ${fb.rating || '-'}★ ${msg.slice(0, 400)}${contact ? ' · contact: ' + contact.slice(0, 60) : ''}${name ? ' · ' + name.slice(0, 40) : ''}`, event: true });
+      ok = true;
+    }
+  } catch { ok = false; }
+  btn.disabled = false;
+  if (ok) { status.className = 'ok'; status.textContent = t('fbThanks'); e.target.reset(); fb.rating = 0; fb.type = 0; renderFeedbackControls(); }
+  else { status.className = 'err'; status.textContent = t('fbFail'); }
+});
 
 // ================= share links & recompute =================
 const b64e = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -1257,7 +1661,10 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 
 // initial state
 const savedLang = store.get('jothidam.lang'); if (savedLang === 'ta') lang = 'ta';
-if (!loadFromHash() && location.hash.startsWith('#match')) document.querySelector('.tabs button[data-tab="match"]').click();
+if (!loadFromHash()) {
+  if (location.hash.startsWith('#match')) document.querySelector('.tabs button[data-tab="match"]').click();
+  else if (location.hash.startsWith('#panch')) document.querySelector('.tabs button[data-tab="panch"]').click();
+}
 applyLang();
 })();
 </script>

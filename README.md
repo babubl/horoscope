@@ -16,6 +16,10 @@ South Indian Vedic horoscope and marriage matching in a single web page, in Engl
 - Tamil calendar: Tamil year (60-year cycle), month and date use the sankranti-before-sunset rule; weekday, panchangam and Janma nazhigai use the local sunrise.
 - Current transits: Saturn (Ezharai / Ashtama / Ardhashtama / Kandaka Sani) and Jupiter from the Moon sign.
 - Traditional jathagam: a two-page A4 print in Tamil or English with manjal–kungumam side borders, Pillaiyar suzhi, Om with kuthuvilakku, the Janani Janma sloka, traditional birth prose, Rasi and Navamsa charts, Navagraha grid, planet table, dasa–bhukti and panchangam. Father's and mother's names and gothram are optional.
+- Daily panchangam: tithi, nakshatra and yoga with end times, karana, sunrise/sunset, Rahu kalam, Yamagandam, Kuligai and Abhijit for any town and date; a "Today" strip on the home page.
+- Place search: 5,400 towns built in (every Tamil Nadu town over 15,000 people, all of India, and diaspora cities) with Tamil names and common spellings (Trichy, Kovai, Tuticorin…), plus online search for villages. A typed town is used automatically even if not picked from the list.
+- Print: traditional two-page jathagam and a one-page Thirumana Porutham report, both A4.
+- Feedback form: rating, topic and message. Set `web3formsKey` in CONFIG to receive it by email; without it, feedback appears as events in GoatCounter.
 - Share links: the page URL holds the birth details, so a chart or match can be reopened or sent.
 - Place search: Open-Meteo geocoding (free, no key). It also supplies the time zone; historical offsets (e.g. India's +06:30 war time in 1942–45) come from the browser's time-zone data. You can override latitude, longitude and UTC offset under "Coordinates & time zone".
 - Gemini key: each visitor adds their own key via the gear icon. It is stored only in their browser (optional) and sent only to Google.

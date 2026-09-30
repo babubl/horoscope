@@ -1,7 +1,7 @@
 /* Jothidam service worker — offline app shell, cached fonts, live network for place search and AI */
-const VERSION = 'subajathagam-v6';
+const VERSION = 'subajathagam-v7';
 const SHELL = ['./', 'index.html', 'about.html', 'guide.html', 'privacy.html', 'terms.html', 'assets/site.css', 'manifest.webmanifest',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png'];
+  'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png', 'data/places.json'];
 const FONT_CACHE = 'jothidam-fonts';
 
 self.addEventListener('install', e => {
