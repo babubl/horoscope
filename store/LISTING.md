@@ -1,4 +1,4 @@
-# Play Store listing kit — Jothidam
+# Play Store listing kit — Suba Jathagam
 
 Everything here is ready to paste into Play Console. Images are in this folder.
 
@@ -10,15 +10,15 @@ Everything here is ready to paste into Play Console. Images are in this folder.
 
 ## App details
 
-- **App name (30 chars max):** `Jothidam - Tamil Jathagam`
+- **App name (30 chars max):** `Suba Jathagam: Tamil Horoscope`
 - **Default language:** Tamil (ta-IN); add English (en-IN) as a translation
 - **App or game:** App
 - **Free or paid:** Paid — ₹10 (India). Other countries: let Google convert, or leave India only to start.
 - **Category:** Lifestyle
 - **Tags:** Astrology, Horoscope, Calendar
 - **Contact email:** your email (Play requires one; it is shown on the listing)
-- **Website:** your domain (or https://babubl.github.io/horoscope/)
-- **Privacy policy URL:** `https://<your-domain>/privacy.html` (until the domain is live: https://babubl.github.io/horoscope/privacy.html)
+- **Website:** https://subajathagam.in
+- **Privacy policy URL:** `https://subajathagam.in/privacy.html` (until the domain is live: https://babubl.github.io/horoscope/privacy.html)
 
 ## Tamil listing (ta-IN)
 
@@ -31,7 +31,7 @@ Everything here is ready to paste into Play Console. Images are in this folder.
 **Full description**
 
 ```
-ஜோதிடம் — துல்லியமான தென்னிந்திய ஜாதகமும் திருமணப் பொருத்தமும், தமிழிலும் ஆங்கிலத்திலும்.
+சுப ஜாதகம் — துல்லியமான தென்னிந்திய ஜாதகமும் திருமணப் பொருத்தமும், தமிழிலும் ஆங்கிலத்திலும்.
 
 ஜாதகம்
 • ராசி, நவாம்சக் கட்டங்கள் (தென்னிந்திய முறை)
@@ -53,7 +53,7 @@ Everything here is ready to paste into Play Console. Images are in this folder.
 • தந்தை, தாய் பெயர், கோத்திரம் சேர்க்கலாம்
 • அச்சிடலாம் அல்லது PDF-ஆக சேமித்து WhatsApp-ல் பகிரலாம்
 
-ஏன் ஜோதிடம்?
+ஏன் சுப ஜாதகம்?
 • லஹிரி அயனாம்சம், திருக்கணித முறை — Swiss Ephemeris-உடன் சோதிக்கப்பட்ட துல்லியம்
 • விளம்பரம் இல்லை
 • இணையம் இல்லாமலும் இயங்கும்
@@ -73,7 +73,7 @@ Tamil horoscope, 10 Porutham marriage matching and traditional jathagam print
 **Full description**
 
 ```
-Jothidam — accurate South Indian horoscope and marriage matching, in Tamil and English.
+Suba Jathagam — accurate South Indian horoscope and marriage matching, in Tamil and English.
 
 HOROSCOPE
 • Rasi and Navamsa charts in the South Indian style

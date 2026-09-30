@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jothidam · ஜோதிடம்</title>
+<title>Suba Jathagam · சுப ஜாதகம்</title>
 <meta name="description" content="South Indian Vedic horoscope (Rasi, Navamsa, Dasa) and 10 Porutham marriage matching, with AI readings in English and Tamil.">
-<meta property="og:title" content="Jothidam · ஜோதிடம் — Tamil horoscope &amp; marriage matching">
+<meta property="og:title" content="Suba Jathagam · சுப ஜாதகம் — Tamil horoscope &amp; marriage matching">
+<meta property="og:url" content="https://subajathagam.in/">
+<link rel="canonical" href="https://subajathagam.in/">
 <meta property="og:description" content="Free South Indian Vedic horoscope (Rasi, Navamsa, Dasa, Tamil panchangam) and 10 Porutham matching, in English and Tamil.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#a3361f">
@@ -14,7 +16,7 @@
 <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Jothidam">
+<meta name="apple-mobile-web-app-title" content="Suba Jathagam">
 <meta property="og:image" content="icons/icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,6 +181,8 @@ a{color:var(--accent)}
 .appbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--accent-soft);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:18px;font-size:14px}
 .appbar b{color:var(--accent)}
 .flinks{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.visits{margin-top:8px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.visits b{color:var(--accent)}
 .flinks a{color:var(--muted)}
 .sheet .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:5}
 .sheet .wm span{transform:rotate(-35deg);font:800 16mm/1.1 'Noto Sans Tamil',sans-serif;color:rgba(143,13,23,.13);text-align:center;white-space:nowrap}
@@ -280,7 +284,7 @@ a{color:var(--accent)}
     <div class="bar">
       <div class="brand">
         <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><rect x="2" y="2" width="32" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="2"/><path d="M2 10h32M2 26h32M10 2v32M26 2v32" stroke="var(--gold)" stroke-width="1.2"/><circle cx="18" cy="18" r="5" fill="var(--accent)"/></svg>
-        <div><h1 data-t="appName">Jothidam</h1><small data-t="tagline">South Indian Vedic horoscope &amp; matching</small></div>
+        <div><h1 data-t="appName">Suba Jathagam</h1><small data-t="tagline">South Indian Vedic horoscope &amp; matching</small></div>
       </div>
       <div class="seg" role="group" aria-label="Language">
         <button id="lang-en" class="on">EN</button><button id="lang-ta">தமிழ்</button>
@@ -335,6 +339,7 @@ a{color:var(--accent)}
 <footer>
   <div class="wrap">
     <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
+    <div class="visits hidden" id="visits"></div>
     <nav class="flinks"><a href="guide.html" data-t="lGuide">Guide</a><a href="about.html" data-t="lAbout">About</a><a href="privacy.html" data-t="lPrivacy">Privacy</a><a href="terms.html" data-t="lTerms">Terms</a></nav>
   </div>
 </footer>
@@ -378,6 +383,7 @@ const J = window.Jothidam;
 const CONFIG = {
   adsenseClient: '',              // e.g. 'ca-pub-1234567890123456'  (ads show on the website only, never in the app)
   adSlotBottom: '',               // AdSense display-ad slot id for the bottom unit, e.g. '1234567890'
+  goatcounter: 'subajathagam',     // GoatCounter site code: visits counted on the website only (not in the app)
   playStoreUrl: ''                // e.g. 'https://play.google.com/store/apps/details?id=in.jothidam.app'
                                   // when set, the website shows "Get the app" and printing the jathagam needs the app
 };
@@ -394,7 +400,7 @@ const PRINT_LOCKED = !!CONFIG.playStoreUrl && !IS_APP;
 // ================= i18n =================
 const I = {
   en: {
-    appName:'Jothidam', tagline:'South Indian Vedic horoscope & matching', tabHoro:'Horoscope', tabMatch:'Marriage Match',
+    appName:'Suba Jathagam', tagline:'South Indian Vedic horoscope & matching', tabHoro:'Horoscope', tabMatch:'Marriage Match',
     horoTitle:'Birth chart', horoSub:'Enter birth details. Charts use Lahiri ayanamsa and South Indian style.',
     matchTitle:'Marriage matching (10 Porutham)', matchSub:"Enter both birth details. Matching counts from the girl's star to the boy's star, as in Tamil tradition.",
     makeChart:'Build horoscope', doMatch:'Check match', name:'Name', gender:'Gender', male:'Male', female:'Female', dob:'Date of birth', tob:'Time of birth', pob:'Place of birth',
@@ -438,8 +444,8 @@ const I = {
     karanas:['Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti','Shakuni','Chatushpada','Naga','Kimstughna'],
     days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
     center:'Rasi', centerNav:'Navamsa', weekdayNote:'Tamil date, weekday and panchangam follow the sunrise-to-sunrise day at the birth place.',
-    appPitch:'Get the Android app — no ads, works offline, print the traditional jathagam.', getApp:'Get the app · ₹10', printInApp:'Print & PDF in the app · ₹10', previewWm:'PREVIEW · Jothidam app',
-    lGuide:'Guide', lAbout:'About', lPrivacy:'Privacy', lTerms:'Terms', adLabel:'Advertisement',
+    appPitch:'Get the Android app — no ads, works offline, print the traditional jathagam.', getApp:'Get the app · ₹10', printInApp:'Print & PDF in the app · ₹10', previewWm:'PREVIEW · Suba Jathagam app',
+    visitsLbl:'visits so far', lGuide:'Guide', lAbout:'About', lPrivacy:'Privacy', lTerms:'Terms', adLabel:'Advertisement',
     jathagamBtn:'Traditional Jathagam', father:"Father's name", mother:"Mother's name", gothram:'Gothram / Kulam (optional)', printNow:'Print', close:'Close',
     tamilDate:'Tamil date', starLord:'Star lord', sunrise:'Sunrise', sunset:'Sunset', nazhigai:'Janma nazhigai', beforeSunriseNote:'Born before sunrise, so the Tamil day is the previous calendar day.',
     varusham:'year', transits:'Current transits (Gochara)', transitSub:'Positions today, counted from your Moon sign ({r}).', fromMoonH:'From Moon', fromLagnaH:'From Lagna',
@@ -450,7 +456,7 @@ const I = {
     years60:['Prabhava','Vibhava','Shukla','Pramoduta','Prajotpatti','Angirasa','Shrimukha','Bhava','Yuva','Dhatu','Ishvara','Bahudhanya','Pramathi','Vikrama','Vishu','Chitrabhanu','Subhanu','Tarana','Parthiva','Vyaya','Sarvajit','Sarvadhari','Virodhi','Vikruti','Khara','Nandana','Vijaya','Jaya','Manmatha','Durmukhi','Hevilambi','Vilambi','Vikari','Sharvari','Plava','Shubhakrut','Shobhakrut','Krodhi','Vishvavasu','Parabhava','Plavanga','Kilaka','Saumya','Sadharana','Virodhikrut','Paridhavi','Pramadicha','Ananda','Rakshasa','Nala','Pingala','Kalayukti','Siddharthi','Raudri','Durmati','Dundubhi','Rudhirodgari','Raktakshi','Krodhana','Akshaya']
   },
   ta: {
-    appName:'ஜோதிடம்', tagline:'தென்னிந்திய ஜாதகம் & திருமணப் பொருத்தம்', tabHoro:'ஜாதகம்', tabMatch:'திருமணப் பொருத்தம்',
+    appName:'சுப ஜாதகம்', tagline:'தென்னிந்திய ஜாதகம் & திருமணப் பொருத்தம்', tabHoro:'ஜாதகம்', tabMatch:'திருமணப் பொருத்தம்',
     horoTitle:'ஜனன ஜாதகம்', horoSub:'பிறப்பு விவரங்களை உள்ளிடவும். லஹிரி அயனாம்சம், தென்னிந்திய கட்ட முறை.',
     matchTitle:'திருமணப் பொருத்தம் (10 பொருத்தங்கள்)', matchSub:'இருவரின் பிறப்பு விவரங்களையும் உள்ளிடவும். பெண்ணின் நட்சத்திரத்திலிருந்து ஆணின் நட்சத்திரம் வரை எண்ணப்படுகிறது.',
     makeChart:'ஜாதகம் கணி', doMatch:'பொருத்தம் பார்', name:'பெயர்', gender:'பாலினம்', male:'ஆண்', female:'பெண்', dob:'பிறந்த தேதி', tob:'பிறந்த நேரம்', pob:'பிறந்த ஊர்',
@@ -494,8 +500,8 @@ const I = {
     karanas:['பவம்','பாலவம்','கௌலவம்','தைதுலம்','கரசை','வணிசை','பத்திரை','சகுனி','சதுஷ்பாதம்','நாகவம்','கிம்ஸ்துக்னம்'],
     days:['ஞாயிறு','திங்கள்','செவ்வாய்','புதன்','வியாழன்','வெள்ளி','சனி'],
     center:'ராசி', centerNav:'நவாம்சம்', weekdayNote:'தமிழ் தேதி, கிழமை, பஞ்சாங்கம் ஆகியவை பிறந்த ஊரின் சூரிய உதயம் முதல் அடுத்த உதயம் வரையிலான நாளின்படி.',
-    appPitch:'Android செயலி — விளம்பரம் இல்லை, இணையம் இல்லாமலும் இயங்கும், பாரம்பரிய ஜாதகம் அச்சிடலாம்.', getApp:'செயலி பெறுக · ₹10', printInApp:'செயலியில் அச்சிடு / PDF · ₹10', previewWm:'மாதிரி · ஜோதிடம் செயலி',
-    lGuide:'வழிகாட்டி', lAbout:'எங்களைப் பற்றி', lPrivacy:'தனியுரிமை', lTerms:'விதிமுறைகள்', adLabel:'விளம்பரம்',
+    appPitch:'Android செயலி — விளம்பரம் இல்லை, இணையம் இல்லாமலும் இயங்கும், பாரம்பரிய ஜாதகம் அச்சிடலாம்.', getApp:'செயலி பெறுக · ₹10', printInApp:'செயலியில் அச்சிடு / PDF · ₹10', previewWm:'மாதிரி · சுப ஜாதகம் செயலி',
+    visitsLbl:'பார்வைகள்', lGuide:'வழிகாட்டி', lAbout:'எங்களைப் பற்றி', lPrivacy:'தனியுரிமை', lTerms:'விதிமுறைகள்', adLabel:'விளம்பரம்',
     jathagamBtn:'பாரம்பரிய ஜாதகம்', father:'தந்தை பெயர்', mother:'தாய் பெயர்', gothram:'கோத்திரம் / குலம் (விருப்பம்)', printNow:'அச்சிடு', close:'மூடு',
     tamilDate:'தமிழ் தேதி', starLord:'நட்சத்திர அதிபதி', sunrise:'சூரிய உதயம்', sunset:'சூரிய அஸ்தமனம்', nazhigai:'ஜனன நாழிகை', beforeSunriseNote:'சூரிய உதயத்திற்கு முன் பிறந்ததால், தமிழ் நாள் முந்தைய தேதியாகும்.',
     varusham:'வருடம்', transits:'தற்போதைய கோசாரம்', transitSub:'இன்றைய கிரக நிலை, உங்கள் ராசியிலிருந்து ({r}).', fromMoonH:'ராசியிலிருந்து', fromLagnaH:'லக்னத்திலிருந்து',
@@ -964,7 +970,8 @@ function applyLang() {
   document.getElementById('lang-ta').classList.toggle('on', lang === 'ta');
   document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
   document.querySelectorAll('[data-tp]').forEach(el => el.title = t(el.dataset.tp));
-  document.title = lang === 'ta' ? 'ஜோதிடம் · Jothidam' : 'Jothidam · ஜோதிடம்';
+  if (typeof renderVisits === 'function') renderVisits();
+  document.title = lang === 'ta' ? 'சுப ஜாதகம் · Suba Jathagam' : 'Suba Jathagam · சுப ஜாதகம்';
   renderHoro(); renderMatch();
   store.set('jothidam.lang', lang);
 }
@@ -1016,7 +1023,7 @@ const JT = {
     rasi: 'ராசி', amsam: 'நவாம்சம்', grahaNilai: 'ஜனன கால கிரக நிலை', dasaIruppu: 'ஜனன கால தசா இருப்பு', dasaTitle: 'விம்சோத்தரி மகா தசைகள்',
     th: ['கிரகம்', 'ராசி', 'பாகை', 'நட்சத்திரம்', 'பாதம்', 'நவாம்சம்', 'நிலை'], dth: ['தசை', 'தொடக்கம்', 'முடிவு'],
     panch: 'பஞ்சாங்கக் குறிப்பு', astrologer: 'ஜோதிடர் கையொப்பம்', date: 'தேதி', subham: 'சுபம்',
-    blessing: 'ஸர்வே ஜனா: ஸுகினோ பவந்து', note: 'லஹிரி அயனாம்சம் · திருக்கணித முறை · ஜோதிடம்',
+    blessing: 'ஸர்வே ஜனா: ஸுகினோ பவந்து', note: 'லஹிரி அயனாம்சம் · திருக்கணித முறை · subajathagam.in',
     dasaLine: (lord, y, m, d) => `<b>${lord}</b> தசை இருப்பு <b>${y}</b> வருடம் <b>${m}</b> மாதம் <b>${d}</b> நாள்`,
     prose: x => `ஸ்வஸ்திஸ்ரீ <b>${x.year}</b> வருஷம் <b>${x.month}</b> மாதம் <b>${x.tdate}</b>-ம் தேதி (${x.gdate}) <b>${x.day}</b>, ${x.paksha} <b>${x.tithi}</b> திதி, <b>${x.star}</b> நட்சத்திரம் <b>${x.pada}</b>-ம் பாதம், <b>${x.yoga}</b> யோகம், <b>${x.karana}</b> கரணம் கூடிய சுபதினத்தில், சூரிய உதயாதி நாழிகை <b>${x.naz}</b>-க்கு (<b>${x.time}</b> மணிக்கு), <b>${x.place}</b> நகரில், <b>${x.lagna}</b> லக்னத்தில், <b>${x.rasi}</b> ராசியில்${x.parents ? `, ${x.parents}` : ''} <b>${x.name}</b> ஜனனம்.`,
     parents: (f, m, rel) => f && m ? `திரு. <b>${f}</b> — திருமதி. <b>${m}</b> தம்பதியருக்கு ${rel}` : f ? `திரு. <b>${f}</b> அவர்களுக்கு ${rel}` : m ? `திருமதி. <b>${m}</b> அவர்களுக்கு ${rel}` : ''
@@ -1030,7 +1037,7 @@ const JT = {
     rasi: 'Rasi', amsam: 'Navamsa', grahaNilai: 'Planetary positions at birth', dasaIruppu: 'Dasa balance at birth', dasaTitle: 'Vimshottari Mahadasas',
     th: ['Planet', 'Rasi', 'Degree', 'Nakshatra', 'Pada', 'Navamsa', 'Status'], dth: ['Dasa', 'From', 'To'],
     panch: 'Panchangam at birth', astrologer: 'Astrologer’s signature', date: 'Date', subham: 'Subham',
-    blessing: 'Sarve janāḥ sukhino bhavantu', note: 'Lahiri ayanamsa · Thirukanitha · Jothidam',
+    blessing: 'Sarve janāḥ sukhino bhavantu', note: 'Lahiri ayanamsa · Thirukanitha · subajathagam.in',
     dasaLine: (lord, y, m, d) => `<b>${lord}</b> dasa balance: <b>${y}</b> years <b>${m}</b> months <b>${d}</b> days`,
     prose: x => `Svasti Śrī. In the Tamil year <b>${x.year}</b>, month of <b>${x.month}</b>, day <b>${x.tdate}</b> (${x.gdate}), on <b>${x.day}</b>, in ${x.paksha} <b>${x.tithi}</b> tithi, <b>${x.star}</b> nakshatra pada <b>${x.pada}</b>, <b>${x.yoga}</b> yoga and <b>${x.karana}</b> karana, at <b>${x.naz}</b> nazhigai after sunrise (<b>${x.time}</b>), at <b>${x.place}</b>, in <b>${x.lagna}</b> lagna and <b>${x.rasi}</b> rasi, was born <b>${x.name}</b>${x.parents ? `, ${x.parents}` : ''}.`,
     parents: (f, m, rel) => f && m ? `${rel} of Sri <b>${f}</b> and Smt. <b>${m}</b>` : f ? `${rel} of Sri <b>${f}</b>` : m ? `${rel} of Smt. <b>${m}</b>` : ''
@@ -1228,6 +1235,22 @@ if (CONFIG.playStoreUrl && !IS_APP) {
   document.getElementById('appbarLink').href = CONFIG.playStoreUrl;
 }
 setupAds();
+let visitCount = '';
+function renderVisits() {
+  const el = document.getElementById('visits');
+  if (!visitCount) return;
+  el.innerHTML = `<b>${esc(visitCount)}</b> ${t('visitsLbl')}`; el.classList.remove('hidden');
+}
+(function setupCounter() {
+  const code = CONFIG.goatcounter;
+  if (!code || IS_APP || !/^https?:$/.test(location.protocol) || location.hostname === 'localhost') return;
+  const sc = document.createElement('script');
+  sc.async = true; sc.src = 'https://gc.zgo.at/count.js';
+  sc.dataset.goatcounter = `https://${code}.goatcounter.com/count`;
+  document.head.appendChild(sc);
+  fetch(`https://${code}.goatcounter.com/counter/TOTAL.json`).then(r => r.ok ? r.json() : null)
+    .then(j => { if (j && j.count) { visitCount = String(j.count).trim(); renderVisits(); } }).catch(() => {});
+})();
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }

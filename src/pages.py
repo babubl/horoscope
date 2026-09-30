@@ -20,10 +20,11 @@ SHELL = '''<!doctype html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="canonical" href="https://subajathagam.in/{fname}">
 </head>
 <body class="en">
 <header><div class="wrap bar">
-  <a class="brand" href="./"><img src="icons/icon-192.png" alt=""><b>Jothidam · ஜோதிடம்</b></a>
+  <a class="brand" href="./"><img src="icons/icon-192.png" alt=""><b>Suba Jathagam · சுப ஜாதகம்</b></a>
   <div class="seg" role="group" aria-label="Language"><button id="l-en" class="on">EN</button><button id="l-ta">தமிழ்</button></div>
 </div></header>
 <main class="wrap">
@@ -46,6 +47,11 @@ SHELL = '''<!doctype html>
     try{{localStorage.setItem('jothidam.lang',l);}}catch(e){{}}}}
   document.getElementById('l-en').onclick=function(){{set('en')}};document.getElementById('l-ta').onclick=function(){{set('ta')}};
   set(lang);
+  var app=false; try{{app=sessionStorage.getItem('jothidam.app')==='1';}}catch(e){{}}
+  if(!app && /^https?:$/.test(location.protocol) && location.hostname!=='localhost'){{
+    var s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';
+    s.setAttribute('data-goatcounter','https://subajathagam.goatcounter.com/count');document.head.appendChild(s);
+  }}
 }})();
 </script>
 </body>
@@ -55,7 +61,7 @@ SHELL = '''<!doctype html>
 
 def page(fname, title, desc, en, ta):
     body = f'<div data-lang="en">{en}</div>\n<div data-lang="ta">{ta}</div>'
-    open(fname, 'w').write(SHELL.format(title=title, desc=desc, body=body))
+    open(fname, 'w').write(SHELL.format(title=title, desc=desc, body=body, fname=fname))
     print(fname)
 
 
@@ -162,7 +168,7 @@ GUIDE_TA = '''
 
 # ------------------------------------------------------------------ ABOUT
 ABOUT_EN = f'''
-<h1>About Jothidam</h1>
+<h1>About Suba Jathagam</h1>
 <p class="lead">A clean, accurate South Indian horoscope and marriage-matching tool, made in Chennai for Tamil families everywhere.</p>
 <div class="card">
 <p><b>What it does.</b> From a name, date, time and place of birth it prepares the Rasi and Navamsa charts, Tamil date and panchangam, Vimshottari dasa and bhukti, dosha checks and current Saturn and Jupiter transits. For two people it checks the 10 poruthams and dosha samyam. It can print a traditional two-page jathagam with Pillaiyar suzhi, Om and manjal–kungumam borders.</p>
@@ -174,7 +180,7 @@ ABOUT_EN = f'''
 <p>Suggestions, corrections from astrologers and bug reports are welcome on the project page: <a href="{REPO}/issues">{REPO}/issues</a>.</p>
 '''
 ABOUT_TA = f'''
-<h1>ஜோதிடம் பற்றி</h1>
+<h1>சுப ஜாதகம் பற்றி</h1>
 <p class="lead">துல்லியமான, எளிய தென்னிந்திய ஜாதகம் மற்றும் திருமணப் பொருத்தக் கருவி — சென்னையில் உருவாக்கப்பட்டது, உலகெங்கும் உள்ள தமிழ்க் குடும்பங்களுக்காக.</p>
 <div class="card">
 <p><b>என்ன செய்கிறது.</b> பெயர், பிறந்த தேதி, நேரம், ஊர் கொடுத்தால் ராசி, நவாம்சக் கட்டங்கள், தமிழ் தேதி, பஞ்சாங்கம், விம்சோத்தரி தசா–புக்தி, தோஷ பரிசோதனை, சனி–குரு கோசாரம் ஆகியவற்றைத் தருகிறது. இருவருக்கு 10 பொருத்தங்களையும் தோஷ சாம்யத்தையும் பார்க்கிறது. பிள்ளையார் சுழி, ஓம், மஞ்சள்–குங்கும ஓரங்களுடன் பாரம்பரிய இரண்டு பக்க ஜாதகத்தையும் அச்சிடலாம்.</p>
@@ -189,7 +195,7 @@ ABOUT_TA = f'''
 # ------------------------------------------------------------------ PRIVACY
 PRIVACY_EN = f'''
 <h1>Privacy policy</h1>
-<p class="lead">Last updated {UPDATED}. This policy covers the Jothidam website and the Jothidam Android app.</p>
+<p class="lead">Last updated {UPDATED}. This policy covers the Suba Jathagam website and the Suba Jathagam Android app.</p>
 <h2>The short version</h2>
 <p>Your birth details are processed on your own device. We have no accounts, no server database and we do not sell or share personal data.</p>
 <h2>What is processed and where</h2>
@@ -199,12 +205,13 @@ PRIVACY_EN = f'''
 <li><b>Place search</b>: the place name you type is sent to the Open-Meteo geocoding service to find coordinates and the time zone. See <a href="https://open-meteo.com/en/terms">Open-Meteo’s terms</a>.</li>
 <li><b>AI readings (optional)</b>: only if you add your own Google Gemini API key, the computed chart (including the name you entered) is sent from your device to Google to write the reading, under <a href="https://ai.google.dev/gemini-api/terms">Google’s Gemini API terms</a>.</li>
 <li><b>Stored on your device</b>: your language choice, the Rahu/Ketu setting and, if you choose, your Gemini key, in the browser’s local storage. Clearing site data removes them.</li>
+<li><b>Visit counting (website only)</b>: page visits are counted with <a href="https://www.goatcounter.com/help/privacy">GoatCounter</a>, which uses no cookies and stores no personal data. The Android app does not count visits.</li>
 <li><b>Fonts</b> are loaded from Google Fonts.</li>
 </ul>
 <h2>Advertising (website only)</h2>
 <p>The website may show ads from Google AdSense. Google and its partners use cookies to serve ads based on your visits to this and other sites. You can turn off personalised ads at <a href="https://adssettings.google.com">Google Ad Settings</a>. See <a href="https://policies.google.com/technologies/ads">how Google uses information from sites that use its services</a>. The Android app shows no ads.</p>
 <h2>Children</h2>
-<p>Jothidam is intended for general audiences and is not directed at children under 13. We do not knowingly collect children’s data.</p>
+<p>Suba Jathagam is intended for general audiences and is not directed at children under 13. We do not knowingly collect children’s data.</p>
 <h2>Your choices</h2>
 <p>You can use every calculation without the AI reading and without place search (enter coordinates instead). Because we hold no personal data, there is nothing for us to delete; clearing your browser or app data removes everything stored on your device.</p>
 <h2>Contact</h2>
@@ -212,7 +219,7 @@ PRIVACY_EN = f'''
 '''
 PRIVACY_TA = f'''
 <h1>தனியுரிமைக் கொள்கை</h1>
-<p class="lead">கடைசியாகப் புதுப்பித்தது {UPDATED_TA}. இது ஜோதிடம் இணையதளம், ஜோதிடம் Android செயலி இரண்டுக்கும் பொருந்தும்.</p>
+<p class="lead">கடைசியாகப் புதுப்பித்தது {UPDATED_TA}. இது சுப ஜாதகம் இணையதளம், சுப ஜாதகம் Android செயலி இரண்டுக்கும் பொருந்தும்.</p>
 <h2>சுருக்கமாக</h2>
 <p>உங்கள் பிறப்பு விவரங்கள் உங்கள் சாதனத்திலேயே கணிக்கப்படுகின்றன. கணக்கு இல்லை, சர்வர் தரவுத்தளம் இல்லை; தனிப்பட்ட தகவல்களை விற்பதும் பகிர்வதும் இல்லை.</p>
 <h2>என்ன தகவல், எங்கே</h2>
@@ -222,12 +229,13 @@ PRIVACY_TA = f'''
 <li><b>ஊர் தேடல்</b>: நீங்கள் தட்டச்சு செய்யும் ஊர் பெயர் Open-Meteo சேவைக்கு அனுப்பப்பட்டு அட்சரேகையும் நேர மண்டலமும் பெறப்படுகின்றன.</li>
 <li><b>AI பலன் (விருப்பம்)</b>: நீங்கள் உங்கள் சொந்த Gemini API key சேர்த்தால் மட்டும், கணித்த ஜாதக விவரம் (நீங்கள் கொடுத்த பெயர் உட்பட) உங்கள் சாதனத்திலிருந்து Google-க்கு அனுப்பப்படும்.</li>
 <li><b>சாதனத்தில் சேமிப்பவை</b>: மொழித் தேர்வு, ராகு/கேது அமைப்பு, நீங்கள் விரும்பினால் Gemini key. தள தரவை அழித்தால் இவை நீங்கும்.</li>
+<li><b>பார்வை எண்ணிக்கை (இணையதளம் மட்டும்)</b>: பக்கப் பார்வைகள் GoatCounter மூலம் எண்ணப்படுகின்றன — குக்கீகள் இல்லை, தனிப்பட்ட தகவல் சேமிக்கப்படுவதில்லை. Android செயலியில் எண்ணிக்கை இல்லை.</li>
 <li><b>எழுத்துருக்கள்</b> Google Fonts-லிருந்து ஏற்றப்படுகின்றன.</li>
 </ul>
 <h2>விளம்பரங்கள் (இணையதளத்தில் மட்டும்)</h2>
 <p>இணையதளத்தில் Google AdSense விளம்பரங்கள் வரலாம். Google மற்றும் அதன் கூட்டாளர்கள் குக்கீகளைப் பயன்படுத்துகின்றனர். தனிப்பயன் விளம்பரங்களை <a href="https://adssettings.google.com">Google Ad Settings</a>-ல் நிறுத்தலாம். Android செயலியில் விளம்பரம் இல்லை.</p>
 <h2>குழந்தைகள்</h2>
-<p>ஜோதிடம் பொதுப் பயனர்களுக்கானது; 13 வயதுக்குட்பட்டோரை நோக்கியது அல்ல.</p>
+<p>சுப ஜாதகம் பொதுப் பயனர்களுக்கானது; 13 வயதுக்குட்பட்டோரை நோக்கியது அல்ல.</p>
 <h2>உங்கள் தேர்வுகள்</h2>
 <p>AI பலனும் ஊர் தேடலும் இல்லாமலே அனைத்துக் கணிப்புகளையும் பயன்படுத்தலாம் (அட்சரேகையை நேரடியாக உள்ளிடலாம்). நாங்கள் எந்தத் தனிப்பட்ட தகவலையும் வைத்திருப்பதில்லை; உலாவி/செயலி தரவை அழித்தால் சாதனத்தில் உள்ளவை அனைத்தும் நீங்கும்.</p>
 <h2>தொடர்பு</h2>
@@ -239,7 +247,7 @@ TERMS_EN = f'''
 <h1>Terms of use</h1>
 <p class="lead">Last updated {UPDATED}.</p>
 <h2>Guidance, not guarantees</h2>
-<p>Jothidam presents traditional Vedic astrology for cultural, personal and educational use. Charts are calculated carefully, but interpretations and matching results are traditional beliefs, not predictions of fact. Do not rely on Jothidam for medical, legal, financial or other professional decisions, and consult your family astrologer before important decisions such as marriage.</p>
+<p>Suba Jathagam presents traditional Vedic astrology for cultural, personal and educational use. Charts are calculated carefully, but interpretations and matching results are traditional beliefs, not predictions of fact. Do not rely on Suba Jathagam for medical, legal, financial or other professional decisions, and consult your family astrologer before important decisions such as marriage.</p>
 <h2>Accuracy of your details</h2>
 <p>Results depend on the birth date, time and place you enter. A wrong time or place can change the Lagna, the star or the matching result.</p>
 <h2>AI readings</h2>
@@ -247,7 +255,7 @@ TERMS_EN = f'''
 <h2>Purchases</h2>
 <p>The Android app is sold through Google Play. Payments and refunds follow <a href="https://support.google.com/googleplay/answer/2479637">Google Play’s refund policy</a>.</p>
 <h2>Liability</h2>
-<p>Jothidam is provided “as is”, without warranties. To the extent the law allows, the makers are not liable for any loss arising from its use.</p>
+<p>Suba Jathagam is provided “as is”, without warranties. To the extent the law allows, the makers are not liable for any loss arising from its use.</p>
 <h2>Contact</h2>
 <p><a href="{REPO}/issues">{REPO}/issues</a></p>
 '''
@@ -255,7 +263,7 @@ TERMS_TA = f'''
 <h1>பயன்பாட்டு விதிமுறைகள்</h1>
 <p class="lead">கடைசியாகப் புதுப்பித்தது {UPDATED_TA}.</p>
 <h2>வழிகாட்டல், உத்தரவாதம் அல்ல</h2>
-<p>ஜோதிடம் பாரம்பரிய வேத ஜோதிடத்தை கலாச்சார, தனிப்பட்ட, கல்வி நோக்கில் வழங்குகிறது. ஜாதகக் கணிப்பு கவனமாகச் செய்யப்படுகிறது; ஆனால் பலன்களும் பொருத்த முடிவுகளும் பாரம்பரிய நம்பிக்கைகள் — உறுதியான முன்கணிப்புகள் அல்ல. மருத்துவ, சட்ட, நிதி முடிவுகளுக்கு இதைச் சார்ந்திருக்க வேண்டாம்; திருமணம் போன்ற முக்கிய முடிவுகளுக்கு முன் குடும்ப ஜோதிடரைக் கலந்தாலோசிக்கவும்.</p>
+<p>சுப ஜாதகம் பாரம்பரிய வேத ஜோதிடத்தை கலாச்சார, தனிப்பட்ட, கல்வி நோக்கில் வழங்குகிறது. ஜாதகக் கணிப்பு கவனமாகச் செய்யப்படுகிறது; ஆனால் பலன்களும் பொருத்த முடிவுகளும் பாரம்பரிய நம்பிக்கைகள் — உறுதியான முன்கணிப்புகள் அல்ல. மருத்துவ, சட்ட, நிதி முடிவுகளுக்கு இதைச் சார்ந்திருக்க வேண்டாம்; திருமணம் போன்ற முக்கிய முடிவுகளுக்கு முன் குடும்ப ஜோதிடரைக் கலந்தாலோசிக்கவும்.</p>
 <h2>உங்கள் விவரங்களின் துல்லியம்</h2>
 <p>நீங்கள் உள்ளிடும் தேதி, நேரம், ஊர் ஆகியவற்றைப் பொறுத்தே முடிவுகள். தவறான நேரம் அல்லது ஊர் லக்னம், நட்சத்திரம், பொருத்த முடிவை மாற்றலாம்.</p>
 <h2>AI பலன்கள்</h2>
@@ -263,13 +271,13 @@ TERMS_TA = f'''
 <h2>வாங்குதல்</h2>
 <p>Android செயலி Google Play மூலம் விற்கப்படுகிறது. பணம் செலுத்துதலும் திருப்பித் தருதலும் Google Play கொள்கைப்படி.</p>
 <h2>பொறுப்பு</h2>
-<p>ஜோதிடம் “உள்ளபடியே” வழங்கப்படுகிறது. சட்டம் அனுமதிக்கும் அளவில், இதன் பயன்பாட்டால் ஏற்படும் இழப்புகளுக்கு உருவாக்கியவர்கள் பொறுப்பல்ல.</p>
+<p>சுப ஜாதகம் “உள்ளபடியே” வழங்கப்படுகிறது. சட்டம் அனுமதிக்கும் அளவில், இதன் பயன்பாட்டால் ஏற்படும் இழப்புகளுக்கு உருவாக்கியவர்கள் பொறுப்பல்ல.</p>
 <h2>தொடர்பு</h2>
 <p><a href="{REPO}/issues">{REPO}/issues</a></p>
 '''
 
-page('guide.html', 'Jothidam guide · 10 poruthams, doshams, dasa — ஜாதக வழிகாட்டி',
+page('guide.html', 'Suba Jathagam guide · 10 poruthams, doshams, dasa — ஜாதக வழிகாட்டி',
      'How to read a South Indian jathagam: Rasi and Navamsa charts, Vimshottari dasa, the 10 poruthams for marriage matching, Chevvai dosham and Sani transits — in English and Tamil.', GUIDE_EN, GUIDE_TA)
-page('about.html', 'About Jothidam · ஜோதிடம் பற்றி', 'About Jothidam, a free South Indian horoscope and marriage matching tool in Tamil and English.', ABOUT_EN, ABOUT_TA)
-page('privacy.html', 'Privacy policy · Jothidam', 'Privacy policy for the Jothidam website and Android app.', PRIVACY_EN, PRIVACY_TA)
-page('terms.html', 'Terms of use · Jothidam', 'Terms of use for the Jothidam website and Android app.', TERMS_EN, TERMS_TA)
+page('about.html', 'About Suba Jathagam · சுப ஜாதகம் பற்றி', 'About Suba Jathagam, a free South Indian horoscope and marriage matching tool in Tamil and English.', ABOUT_EN, ABOUT_TA)
+page('privacy.html', 'Privacy policy · Suba Jathagam', 'Privacy policy for the Suba Jathagam website and Android app.', PRIVACY_EN, PRIVACY_TA)
+page('terms.html', 'Terms of use · Suba Jathagam', 'Terms of use for the Suba Jathagam website and Android app.', TERMS_EN, TERMS_TA)

@@ -20,16 +20,16 @@ Then Claude adds the `CNAME` file to the repo. In GitHub → repo **Settings →
 
 ## 2. Build the app package with PWABuilder (about 10 minutes, free)
 
-1. Open https://www.pwabuilder.com and enter `https://<your-domain>/`.
+1. Open https://www.pwabuilder.com and enter `https://subajathagam.in/`.
 2. Choose **Package for stores → Android → Generate package**, and set:
 
 | Option | Value |
 |---|---|
-| Package ID | `com.babubl.jothidam` (never change this after publishing) |
-| App name | `Jothidam - Tamil Jathagam` |
-| Launcher name | `Jothidam` |
+| Package ID | `in.subajathagam.app` (never change this after publishing) |
+| App name | `Suba Jathagam: Tamil Horoscope` |
+| Launcher name | `Suba Jathagam` |
 | App version / code | `1.0.0` / `1` |
-| Host | `<your-domain>` |
+| Host | `subajathagam.in` |
 | Start URL | `/?source=twa` |
 | Theme colour | `#A3361F` |
 | Background colour | `#FAF5EC` |

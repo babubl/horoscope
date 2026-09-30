@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jothidam guide · 10 poruthams, doshams, dasa — ஜாதக வழிகாட்டி</title>
+<title>Suba Jathagam guide · 10 poruthams, doshams, dasa — ஜாதக வழிகாட்டி</title>
 <meta name="description" content="How to read a South Indian jathagam: Rasi and Navamsa charts, Vimshottari dasa, the 10 poruthams for marriage matching, Chevvai dosham and Sani transits — in English and Tamil.">
 <meta name="theme-color" content="#a3361f">
 <link rel="manifest" href="manifest.webmanifest">
@@ -13,10 +13,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="canonical" href="https://subajathagam.in/guide.html">
 </head>
 <body class="en">
 <header><div class="wrap bar">
-  <a class="brand" href="./"><img src="icons/icon-192.png" alt=""><b>Jothidam · ஜோதிடம்</b></a>
+  <a class="brand" href="./"><img src="icons/icon-192.png" alt=""><b>Suba Jathagam · சுப ஜாதகம்</b></a>
   <div class="seg" role="group" aria-label="Language"><button id="l-en" class="on">EN</button><button id="l-ta">தமிழ்</button></div>
 </div></header>
 <main class="wrap">
@@ -136,6 +137,11 @@
     try{localStorage.setItem('jothidam.lang',l);}catch(e){}}
   document.getElementById('l-en').onclick=function(){set('en')};document.getElementById('l-ta').onclick=function(){set('ta')};
   set(lang);
+  var app=false; try{app=sessionStorage.getItem('jothidam.app')==='1';}catch(e){}
+  if(!app && /^https?:$/.test(location.protocol) && location.hostname!=='localhost'){
+    var s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';
+    s.setAttribute('data-goatcounter','https://subajathagam.goatcounter.com/count');document.head.appendChild(s);
+  }
 })();
 </script>
 </body>

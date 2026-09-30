@@ -1,4 +1,4 @@
-# Jothidam · ஜோதிடம்
+# Suba Jathagam · சுப ஜாதகம்
 
 South Indian Vedic horoscope and marriage matching in a single web page, in English and Tamil.
 
@@ -24,7 +24,7 @@ South Indian Vedic horoscope and marriage matching in a single web page, in Engl
 
 ## Live site
 
-https://babubl.github.io/horoscope/ — served by GitHub Pages from the `gh-pages` branch (kept identical to `main`).
+https://subajathagam.in (once the domain is connected; until then https://babubl.github.io/horoscope/) — served by GitHub Pages from the `gh-pages` branch (kept identical to `main`).
 
 ## Repository layout
 
