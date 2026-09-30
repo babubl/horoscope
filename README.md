@@ -15,6 +15,7 @@ South Indian Vedic horoscope and marriage matching in a single web page, in Engl
 - Accuracy: benchmarked on 400 random charts (1900–2060) against Swiss Ephemeris (Lahiri): planets median 1–3″, worst 23″ (Moon); Lagna median 0.5″, worst 4″; zero sign, nakshatra or Lagna mismatches.
 - Tamil calendar: Tamil year (60-year cycle), month and date use the sankranti-before-sunset rule; weekday, panchangam and Janma nazhigai use the local sunrise.
 - Current transits: Saturn (Ezharai / Ashtama / Ardhashtama / Kandaka Sani) and Jupiter from the Moon sign.
+- Traditional jathagam: a two-page A4 print in Tamil or English with manjal–kungumam side borders, Pillaiyar suzhi, Om with kuthuvilakku, the Janani Janma sloka, traditional birth prose, Rasi and Navamsa charts, Navagraha grid, planet table, dasa–bhukti and panchangam. Father's and mother's names and gothram are optional.
 - Share links: the page URL holds the birth details, so a chart or match can be reopened or sent.
 - Place search: Open-Meteo geocoding (free, no key). It also supplies the time zone; historical offsets (e.g. India's +06:30 war time in 1942–45) come from the browser's time-zone data. You can override latitude, longitude and UTC offset under "Coordinates & time zone".
 - Gemini key: each visitor adds their own key via the gear icon. It is stored only in their browser (optional) and sent only to Google.

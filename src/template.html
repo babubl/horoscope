@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect x='2' y='2' width='32' height='32' rx='4' fill='%23fffdf8' stroke='%23b8872f' stroke-width='2'/%3E%3Cpath d='M2 10h32M2 26h32M10 2v32M26 2v32' stroke='%23b8872f' stroke-width='1.2'/%3E%3Ccircle cx='18' cy='18' r='5' fill='%23a3361f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#faf5ec; --paper:#fffdf8; --ink:#2b1d14; --muted:#7a6553; --line:#e6d8c3;
@@ -165,6 +165,92 @@ dialog h3{margin-bottom:6px}
 .hidden{display:none!important}
 .muted{color:var(--muted)}
 a{color:var(--accent)}
+
+/* ================= Traditional jathagam (print) ================= */
+.jv{position:fixed;inset:0;z-index:50;background:#4a3527;overflow:auto;display:none}
+.jv.open{display:block}
+.jv-bar{position:sticky;top:0;z-index:2;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.jv-bar .field{min-width:140px;flex:1}
+.jv-bar .field input{min-height:38px;padding:7px 10px}
+.jv-bar .btns{display:flex;gap:8px}
+.jv-pages{padding:20px 0 40px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.sheet{--manjal:#f0b91e;--manjal-d:#d99a0b;--kum:#c1121f;--kum-d:#8f0d17;--ink2:#3a1606;--gold2:#a8801f;
+  width:210mm;height:297mm;flex:none;background:#fffaf0;color:var(--ink2);position:relative;overflow:hidden;
+  font-family:'Noto Serif Tamil','Noto Sans Tamil',Georgia,serif;box-shadow:0 6px 30px rgba(0,0,0,.35);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet .band{position:absolute;top:0;bottom:0;width:13mm;
+  background:
+    radial-gradient(circle at 50% 50%, var(--kum) 0 2.6mm, var(--kum-d) 2.7mm 3.1mm, transparent 3.2mm) 50% 3mm/13mm 16mm repeat-y,
+    linear-gradient(90deg,var(--manjal-d),var(--manjal) 35%,#f7cf4c 55%,var(--manjal) 75%,var(--manjal-d))}
+.sheet .band.l{left:0;border-right:1.2mm solid var(--kum)}
+.sheet .band.r{right:0;border-left:1.2mm solid var(--kum)}
+.sheet .band::after{content:"";position:absolute;top:0;bottom:0;width:.5mm;background:var(--gold2)}
+.sheet .band.l::after{right:-2.2mm}.sheet .band.r::after{left:-2.2mm}
+.sheet .topb,.sheet .botb{position:absolute;left:14.2mm;right:14.2mm;height:4mm;background:repeating-linear-gradient(90deg,var(--kum) 0 5mm,var(--manjal) 5mm 10mm)}
+.sheet .topb{top:0;border-bottom:.6mm solid var(--gold2)}.sheet .botb{bottom:0;border-top:.6mm solid var(--gold2)}
+.sheet .inner{position:absolute;left:20mm;right:20mm;top:9mm;bottom:9mm;border:.5mm solid var(--kum-d);outline:.25mm solid var(--gold2);outline-offset:1.2mm;padding:5mm 7mm;display:flex;flex-direction:column}
+.sheet .corner{position:absolute;width:12mm;height:12mm}
+.sheet .corner.tl{top:.6mm;left:.6mm}.sheet .corner.tr{top:.6mm;right:.6mm;transform:scaleX(-1)}
+.sheet .corner.bl{bottom:.6mm;left:.6mm;transform:scaleY(-1)}.sheet .corner.br{bottom:.6mm;right:.6mm;transform:scale(-1)}
+.sheet .invo{text-align:center;line-height:1}
+.sheet .suzhi{font-size:12mm;color:var(--kum);font-weight:800}
+.sheet .invo-row{display:flex;align-items:center;justify-content:center;gap:7mm;margin-top:1.5mm}
+.sheet .om{width:17mm;height:17mm;border-radius:50%;display:grid;place-items:center;font-size:10mm;color:var(--kum);font-weight:700;
+  background:radial-gradient(circle,#fff6d6 0 58%,#f7d774 59% 66%,#fff6d6 67%);border:.5mm solid var(--gold2);box-shadow:0 0 0 1mm #fff3cf,0 0 0 1.25mm var(--gold2)}
+.sheet .invo-t{font-size:3.6mm;font-weight:700;color:var(--kum-d);margin-top:2.5mm;letter-spacing:.2mm}
+.sheet .title{margin:2.5mm auto 0;text-align:center;font-size:7.5mm;font-weight:800;color:var(--kum-d);position:relative;padding:0 13mm;line-height:1.2}
+.sheet .title::before,.sheet .title::after{content:"❖";position:absolute;top:50%;transform:translateY(-50%);font-size:4mm;color:var(--gold2)}
+.sheet .title::before{left:2mm}.sheet .title::after{right:2mm}
+.sheet .sloka{text-align:center;font-size:3.2mm;line-height:1.55;color:#6b3a14;margin:1.5mm 0 0;font-style:italic}
+.sheet .rule{height:2.4mm;margin:2.5mm 0;background:radial-gradient(circle,var(--kum) 0 .7mm,transparent .8mm) center/5mm 2.4mm repeat-x;border-top:.25mm solid var(--gold2);border-bottom:.25mm solid var(--gold2)}
+.sheet .prose{font-size:3.7mm;line-height:1.85;text-align:justify;margin:0}
+.sheet .prose b{color:var(--kum-d)}
+.sheet .kv{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3mm 5mm;font-size:3.15mm;margin-top:1mm}
+.sheet .kv div{border-bottom:.2mm dotted #c9a45a;padding-bottom:.6mm;display:flex;justify-content:space-between;gap:2mm}
+.sheet .kv span{color:#7a5a3a}.sheet .kv b{text-align:right}
+.sheet .charts2{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:2mm}
+.sheet .ch-t{text-align:center;font-weight:800;color:var(--kum-d);font-size:4mm;margin:0 0 1.5mm}
+.sheet .si{max-width:none;border:.7mm solid var(--kum-d);background:#fffdf5}
+.sheet .si .c{border:.3mm solid #b8872f;padding:1mm 1.2mm}
+.sheet .si .c .sn{font-size:2.3mm;color:#9a7a55}
+.sheet .si .c .pl{font-size:3.2mm;color:var(--ink2);font-weight:700;gap:0 1.6mm}
+.sheet .si .c .pl .asc{color:var(--kum)}
+.sheet .si .c.lg{background:#fff1c9}
+.sheet .si .c.lg::before{background:linear-gradient(135deg,var(--kum) 0 50%,transparent 50%);width:4.5mm;height:4.5mm}
+.sheet .si .c.lg .sn{padding-left:3.5mm}
+.sheet .si .ctr{border:.3mm solid #b8872f;background:radial-gradient(circle,#fff8e1,#fdf0cc)}
+.sheet .si .ctr b{font-family:inherit;font-size:4.6mm;color:var(--kum-d)}
+.sheet .si .ctr small{font-size:2.5mm;color:#6b3a14;margin-top:1mm}
+.sheet h5{font-size:4mm;color:var(--kum-d);margin:1.8mm 0 1.2mm;text-align:center;font-weight:800}
+.sheet table{font-size:2.95mm;border:.35mm solid var(--kum-d);border-collapse:collapse;width:100%}
+.sheet th{background:#fbe7b0;color:var(--kum-d);font-size:2.9mm;border:.2mm solid #c9a45a;padding:.9mm 1.5mm;text-align:center;font-weight:700}
+.sheet td{border:.2mm solid #d8bf8a;padding:.65mm 1.5mm;white-space:nowrap;text-align:center;color:var(--ink2)}
+.sheet td:first-child{text-align:left;font-weight:700}
+.sheet tr.now td{background:#fff1c9}
+.sheet .grow{flex:1}
+.sheet .sign{display:flex;justify-content:space-between;align-items:flex-end;font-size:3.1mm;margin-top:9mm}
+.sheet .sign .line{border-top:.25mm solid var(--ink2);padding-top:1mm;min-width:45mm;text-align:center}
+.sheet .subham{text-align:center;font-size:6mm;font-weight:800;color:var(--kum);margin-top:1mm;line-height:1.2}
+.sheet .subham small{display:block;font-size:3.1mm;color:#6b3a14;font-weight:400;font-style:italic;margin-top:1mm}
+.sheet .pgno{position:absolute;bottom:4.6mm;left:0;right:0;text-align:center;font-size:2.4mm;color:#fff;font-weight:700;letter-spacing:.3mm;text-shadow:0 0 1mm var(--kum-d)}
+.sheet .foot-note{font-size:2.5mm;color:#8a6a45;text-align:center;margin-top:1.5mm}
+.sheet .two{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.sheet .nava{display:flex;align-items:center;justify-content:center;gap:7mm;margin-top:4mm}
+.sheet .nava-g{display:grid;grid-template-columns:repeat(3,17mm);grid-auto-rows:9mm;border:.6mm solid var(--kum-d);outline:.25mm solid var(--gold2);outline-offset:.8mm;background:#fffdf5}
+.sheet .nava-g div{display:grid;place-items:center;border:.25mm solid #c9a45a;font-size:3mm;font-weight:700;color:var(--ink2)}
+.sheet .nava-g div.sun{background:radial-gradient(circle,#ffe79a,#f0b91e);color:var(--kum-d)}
+.sheet .nava-t{font-size:3.4mm;color:var(--kum-d);font-weight:700;text-align:center;line-height:1.7}
+.sheet .nava-t small{display:block;color:#6b3a14;font-weight:400;font-style:italic;font-size:3mm}
+.sheet .dasabox{margin-top:4mm;text-align:center;font-size:3.7mm;padding:2.2mm 4mm;border:.4mm solid var(--gold2);background:linear-gradient(#fff6d6,#fdeec0);border-radius:1.5mm}
+@media print{
+  @page{size:A4;margin:0}
+  body.pj > *:not(.jv){display:none!important}
+  body.pj .jv{position:static!important;display:block!important;background:none;overflow:visible}
+  body.pj .jv-bar{display:none!important}
+  body.pj .jv-pages{padding:0;gap:0;display:block}
+  body.pj .sheet{box-shadow:none;break-after:page;zoom:1!important;margin:0}
+  body.pj .sheet:last-child{break-after:auto}
+}
 @media print{
   header .seg,header .iconbtn,.tabs,.actions,form,footer,.no-print{display:none!important}
   body{background:#fff}
@@ -234,6 +320,16 @@ a{color:var(--accent)}
   </div>
 </footer>
 
+
+<div class="jv" id="jv" role="dialog" aria-modal="true" aria-label="Jathagam">
+  <div class="jv-bar">
+    <div class="field"><label for="jv-father" data-t="father">Father's name</label><input id="jv-father" maxlength="60"></div>
+    <div class="field"><label for="jv-mother" data-t="mother">Mother's name</label><input id="jv-mother" maxlength="60"></div>
+    <div class="field"><label for="jv-gothram" data-t="gothram">Gothram / Kulam (optional)</label><input id="jv-gothram" maxlength="40"></div>
+    <div class="btns"><button class="btn" type="button" id="jv-print" data-t="printNow">Print</button><button class="btn ghost" type="button" id="jv-close" data-t="close">Close</button></div>
+  </div>
+  <div class="jv-pages" id="jv-pages"></div>
+</div>
 <dialog id="settings">
   <form method="dialog" id="settingsForm">
     <h3 data-t="aiSettings">AI reading settings</h3>
@@ -305,6 +401,7 @@ const I = {
     karanas:['Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti','Shakuni','Chatushpada','Naga','Kimstughna'],
     days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
     center:'Rasi', centerNav:'Navamsa', weekdayNote:'Tamil date, weekday and panchangam follow the sunrise-to-sunrise day at the birth place.',
+    jathagamBtn:'Traditional Jathagam', father:"Father's name", mother:"Mother's name", gothram:'Gothram / Kulam (optional)', printNow:'Print', close:'Close',
     tamilDate:'Tamil date', starLord:'Star lord', sunrise:'Sunrise', sunset:'Sunset', nazhigai:'Janma nazhigai', beforeSunriseNote:'Born before sunrise, so the Tamil day is the previous calendar day.',
     varusham:'year', transits:'Current transits (Gochara)', transitSub:'Positions today, counted from your Moon sign ({r}).', fromMoonH:'From Moon', fromLagnaH:'From Lagna',
     sadeSati:'Ezharai Sani (Sade Sati)', sadePart:['','phase 1 of 3','phase 2 of 3 (Janma Sani)','phase 3 of 3'], ashtama:'Ashtama Sani', ardhashtama:'Ardhashtama Sani', kandaka:'Kandaka Sani', saturnClear:'Saturn is not in a Sade Sati, Ashtama, Ardhashtama or Kandaka position from your Moon.',
@@ -358,6 +455,7 @@ const I = {
     karanas:['பவம்','பாலவம்','கௌலவம்','தைதுலம்','கரசை','வணிசை','பத்திரை','சகுனி','சதுஷ்பாதம்','நாகவம்','கிம்ஸ்துக்னம்'],
     days:['ஞாயிறு','திங்கள்','செவ்வாய்','புதன்','வியாழன்','வெள்ளி','சனி'],
     center:'ராசி', centerNav:'நவாம்சம்', weekdayNote:'தமிழ் தேதி, கிழமை, பஞ்சாங்கம் ஆகியவை பிறந்த ஊரின் சூரிய உதயம் முதல் அடுத்த உதயம் வரையிலான நாளின்படி.',
+    jathagamBtn:'பாரம்பரிய ஜாதகம்', father:'தந்தை பெயர்', mother:'தாய் பெயர்', gothram:'கோத்திரம் / குலம் (விருப்பம்)', printNow:'அச்சிடு', close:'மூடு',
     tamilDate:'தமிழ் தேதி', starLord:'நட்சத்திர அதிபதி', sunrise:'சூரிய உதயம்', sunset:'சூரிய அஸ்தமனம்', nazhigai:'ஜனன நாழிகை', beforeSunriseNote:'சூரிய உதயத்திற்கு முன் பிறந்ததால், தமிழ் நாள் முந்தைய தேதியாகும்.',
     varusham:'வருடம்', transits:'தற்போதைய கோசாரம்', transitSub:'இன்றைய கிரக நிலை, உங்கள் ராசியிலிருந்து ({r}).', fromMoonH:'ராசியிலிருந்து', fromLagnaH:'லக்னத்திலிருந்து',
     sadeSati:'ஏழரைச் சனி', sadePart:['','முதல் சுற்று (விரயச் சனி)','இரண்டாம் சுற்று (ஜென்மச் சனி)','மூன்றாம் சுற்று (பாதச் சனி)'], ashtama:'அஷ்டமச் சனி', ardhashtama:'அர்த்தாஷ்டமச் சனி', kandaka:'கண்டகச் சனி', saturnClear:'ஏழரை, அஷ்டம, அர்த்தாஷ்டம, கண்டகச் சனி எதுவும் தற்போது இல்லை.',
@@ -598,7 +696,7 @@ function renderHoro() {
     <div class="card">
       <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
         <div style="margin-right:auto"><h2>${esc(pd.name) || t('rasiChart')}</h2><p class="sub" style="margin:0">${birthLine(pd, c)}</p></div>
-        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" type="button" data-share="horo">${t('share')}</button><button class="btn ghost" type="button" onclick="window.print()">${t('print')}</button></div>
+        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openJathagam">🪔 ${t('jathagamBtn')}</button><button class="btn ghost" type="button" data-share="horo">${t('share')}</button><button class="btn ghost" type="button" onclick="window.print()">${t('print')}</button></div>
       </div>
       <div style="margin-top:16px">${statsBlock(c)}</div>
       <p class="note">${t('weekdayNote')}${c.tamil.beforeSunrise ? ' ' + t('beforeSunriseNote') : ''}</p>
@@ -613,6 +711,8 @@ function renderHoro() {
     <div class="card"><h3>${t('transits')}</h3>${transitBlock(c)}</div>
     <div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="horoAi"></div></div>`;
   renderAi('horo');
+  document.getElementById('openJathagam').onclick = openJathagam;
+  if (document.getElementById('jv').classList.contains('open')) renderJathagam();
 }
 
 // ================= Match render =================
@@ -862,6 +962,170 @@ document.getElementById('matchForm').addEventListener('submit', e => {
     document.getElementById('matchOut').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (ex) { err.textContent = ex.message; }
 });
+
+
+// ================= Traditional jathagam =================
+const JT = {
+  ta: {
+    invo: 'ஸ்ரீ விநாயகர் துணை', title: 'ஜனன ஜாதகம்', navaT: 'நவக்கிரக துணை', navaS: 'ஓம் நவக்கிரஹ தேவதாப்யோ நம:', bhuktiT: 'நடப்பு தசா புக்திகள்',
+    sloka: 'ஜனனீ ஜன்ம ஸௌக்யானாம் வர்த்தனீ குலஸம்பதாம் ।<br>பதவீ பூர்வ புண்யானாம் லிக்யதே ஜன்மபத்ரிகா ॥',
+    dayFull: ['ஞாயிற்றுக்கிழமை', 'திங்கட்கிழமை', 'செவ்வாய்க்கிழமை', 'புதன்கிழமை', 'வியாழக்கிழமை', 'வெள்ளிக்கிழமை', 'சனிக்கிழமை'],
+    son: 'புத்திரனாக', daughter: 'புத்திரியாக', child: 'மகவாக',
+    kv: { name: 'பெயர்', dob: 'பிறந்த தேதி', tob: 'பிறந்த நேரம்', place: 'பிறந்த ஊர்', lagna: 'லக்னம்', rasi: 'ராசி', star: 'நட்சத்திரம்', pada: 'பாதம்', gothram: 'கோத்திரம்', naz: 'உதயாதி நாழிகை', rise: 'சூரிய உதயம்', ayan: 'அயனாம்சம்' },
+    rasi: 'ராசி', amsam: 'நவாம்சம்', grahaNilai: 'ஜனன கால கிரக நிலை', dasaIruppu: 'ஜனன கால தசா இருப்பு', dasaTitle: 'விம்சோத்தரி மகா தசைகள்',
+    th: ['கிரகம்', 'ராசி', 'பாகை', 'நட்சத்திரம்', 'பாதம்', 'நவாம்சம்', 'நிலை'], dth: ['தசை', 'தொடக்கம்', 'முடிவு'],
+    panch: 'பஞ்சாங்கக் குறிப்பு', astrologer: 'ஜோதிடர் கையொப்பம்', date: 'தேதி', subham: 'சுபம்',
+    blessing: 'ஸர்வே ஜனா: ஸுகினோ பவந்து', note: 'லஹிரி அயனாம்சம் · திருக்கணித முறை · ஜோதிடம்',
+    dasaLine: (lord, y, m, d) => `<b>${lord}</b> தசை இருப்பு <b>${y}</b> வருடம் <b>${m}</b> மாதம் <b>${d}</b> நாள்`,
+    prose: x => `ஸ்வஸ்திஸ்ரீ <b>${x.year}</b> வருஷம் <b>${x.month}</b> மாதம் <b>${x.tdate}</b>-ம் தேதி (${x.gdate}) <b>${x.day}</b>, ${x.paksha} <b>${x.tithi}</b> திதி, <b>${x.star}</b> நட்சத்திரம் <b>${x.pada}</b>-ம் பாதம், <b>${x.yoga}</b> யோகம், <b>${x.karana}</b> கரணம் கூடிய சுபதினத்தில், சூரிய உதயாதி நாழிகை <b>${x.naz}</b>-க்கு (<b>${x.time}</b> மணிக்கு), <b>${x.place}</b> நகரில், <b>${x.lagna}</b> லக்னத்தில், <b>${x.rasi}</b> ராசியில்${x.parents ? `, ${x.parents}` : ''} <b>${x.name}</b> ஜனனம்.`,
+    parents: (f, m, rel) => f && m ? `திரு. <b>${f}</b> — திருமதி. <b>${m}</b> தம்பதியருக்கு ${rel}` : f ? `திரு. <b>${f}</b> அவர்களுக்கு ${rel}` : m ? `திருமதி. <b>${m}</b> அவர்களுக்கு ${rel}` : ''
+  },
+  en: {
+    invo: 'Sri Vinayagar Thunai', title: 'Janana Jathagam', navaT: 'Navagraha Thunai', navaS: 'Om Navagraha Devatābhyo Namaḥ', bhuktiT: 'Bhuktis of the current dasa',
+    sloka: 'Jananī janma saukhyānām vardhanī kula sampadām ।<br>Padavī pūrva puṇyānām likhyate janma patrikā ॥',
+    dayFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    son: 'son', daughter: 'daughter', child: 'child',
+    kv: { name: 'Name', dob: 'Date of birth', tob: 'Time of birth', place: 'Place of birth', lagna: 'Lagna', rasi: 'Rasi', star: 'Nakshatra', pada: 'Pada', gothram: 'Gothram', naz: 'Nazhigai from sunrise', rise: 'Sunrise', ayan: 'Ayanamsa' },
+    rasi: 'Rasi', amsam: 'Navamsa', grahaNilai: 'Planetary positions at birth', dasaIruppu: 'Dasa balance at birth', dasaTitle: 'Vimshottari Mahadasas',
+    th: ['Planet', 'Rasi', 'Degree', 'Nakshatra', 'Pada', 'Navamsa', 'Status'], dth: ['Dasa', 'From', 'To'],
+    panch: 'Panchangam at birth', astrologer: 'Astrologer’s signature', date: 'Date', subham: 'Subham',
+    blessing: 'Sarve janāḥ sukhino bhavantu', note: 'Lahiri ayanamsa · Thirukanitha · Jothidam',
+    dasaLine: (lord, y, m, d) => `<b>${lord}</b> dasa balance: <b>${y}</b> years <b>${m}</b> months <b>${d}</b> days`,
+    prose: x => `Svasti Śrī. In the Tamil year <b>${x.year}</b>, month of <b>${x.month}</b>, day <b>${x.tdate}</b> (${x.gdate}), on <b>${x.day}</b>, in ${x.paksha} <b>${x.tithi}</b> tithi, <b>${x.star}</b> nakshatra pada <b>${x.pada}</b>, <b>${x.yoga}</b> yoga and <b>${x.karana}</b> karana, at <b>${x.naz}</b> nazhigai after sunrise (<b>${x.time}</b>), at <b>${x.place}</b>, in <b>${x.lagna}</b> lagna and <b>${x.rasi}</b> rasi, was born <b>${x.name}</b>${x.parents ? `, ${x.parents}` : ''}.`,
+    parents: (f, m, rel) => f && m ? `${rel} of Sri <b>${f}</b> and Smt. <b>${m}</b>` : f ? `${rel} of Sri <b>${f}</b>` : m ? `${rel} of Smt. <b>${m}</b>` : ''
+  }
+};
+const LAMP = `<svg width="15mm" height="22mm" viewBox="0 0 60 88" aria-hidden="true">
+  <defs><radialGradient id="fl" cx="50%" cy="70%" r="60%"><stop offset="0" stop-color="#fff7c2"/><stop offset=".45" stop-color="#ffc233"/><stop offset="1" stop-color="#e2461b"/></radialGradient>
+  <linearGradient id="br" x1="0" x2="1"><stop offset="0" stop-color="#9a6a12"/><stop offset=".5" stop-color="#f1cf6a"/><stop offset="1" stop-color="#9a6a12"/></linearGradient></defs>
+  <ellipse cx="30" cy="13" rx="10" ry="12" fill="#ffd966" opacity=".35"/>
+  <path d="M30 2 C35 10 36 16 30 22 C24 16 25 10 30 2Z" fill="url(#fl)"/>
+  <path d="M12 26 Q30 36 48 26 Q46 33 30 34 Q14 33 12 26Z" fill="url(#br)"/>
+  <rect x="27" y="34" width="6" height="34" rx="2" fill="url(#br)"/>
+  <circle cx="30" cy="44" r="4.5" fill="url(#br)"/><circle cx="30" cy="57" r="3.5" fill="url(#br)"/>
+  <path d="M14 82 Q30 64 46 82Z" fill="url(#br)"/><rect x="10" y="81" width="40" height="5" rx="2" fill="url(#br)"/>
+</svg>`;
+const CORNER = `<svg class="corner {c}" viewBox="0 0 48 48" aria-hidden="true"><path d="M2 2h44M2 2v44" stroke="#8f0d17" stroke-width="2.2" fill="none"/>
+  <path d="M8 8 Q24 8 24 24 Q8 24 8 8Z" fill="#f0b91e" stroke="#8f0d17" stroke-width="1.2"/><circle cx="16" cy="16" r="3" fill="#c1121f"/>
+  <circle cx="32" cy="8" r="2" fill="#c1121f"/><circle cx="8" cy="32" r="2" fill="#c1121f"/><circle cx="40" cy="8" r="1.4" fill="#a8801f"/><circle cx="8" cy="40" r="1.4" fill="#a8801f"/></svg>`;
+
+function sheetShell(inner, pg) {
+  const corners = ['tl', 'tr', 'bl', 'br'].map(c => CORNER.replace('{c}', c)).join('');
+  return `<section class="sheet"><div class="band l"></div><div class="band r"></div><div class="topb"></div><div class="botb"></div>
+    <div class="inner">${corners}${inner}</div></section>`;
+}
+function ymd(years) {
+  const Y = Math.floor(years), mf = (years - Y) * 12, M = Math.floor(mf), D = Math.floor((mf - M) * 30);
+  return [Y, M, D];
+}
+function renderJathagam() {
+  if (!horoState) return;
+  const { pd, c } = horoState, X = JT[lang], Lx = L(), tm = c.tamil, pn = c.panchang, off = c.input.offsetMinutes;
+  const father = esc(document.getElementById('jv-father').value.trim()), mother = esc(document.getElementById('jv-mother').value.trim());
+  const gothram = esc(document.getElementById('jv-gothram').value.trim());
+  const rel = pd.gender === 'female' ? X.daughter : pd.gender === 'male' ? X.son : X.child;
+  const name = esc(pd.name) || '—';
+  const tithiTxt = tithiName(pn.tithi);
+  const paksha = pn.tithi === 14 || pn.tithi === 29 ? '' : (lang === 'ta' ? Lx[pn.paksha] : (pn.paksha === 'shukla' ? 'Shukla paksha' : 'Krishna paksha'));
+  const prose = X.prose({
+    year: Lx.years60[tm.year], month: Lx.months[tm.month], tdate: tm.date, gdate: fmtDateInput(pd.date), day: X.dayFull[pn.weekday],
+    paksha, tithi: tithiTxt, star: Lx.naks[c.nakshatra], pada: c.pada, yoga: Lx.yogas[pn.yoga], karana: Lx.karanas[pn.karana],
+    naz: tm.sunriseOk ? `${tm.nazhigai}.${String(tm.vinadi).padStart(2, '0')}` : '—', time: esc(pd.time), place: esc(pd.place.split(',')[0]),
+    lagna: Lx.rasis[c.lagna.sign], rasi: Lx.rasis[c.rasi], name, parents: X.parents(father, mother, rel)
+  });
+  const kv = [
+    [X.kv.name, name], [X.kv.dob, fmtDateInput(pd.date)], [X.kv.tob, esc(pd.time)],
+    [X.kv.place, esc(pd.place.split(',')[0])], [X.kv.lagna, Lx.rasis[c.lagna.sign]], [X.kv.rasi, Lx.rasis[c.rasi]],
+    [X.kv.star, Lx.naks[c.nakshatra]], [X.kv.pada, c.pada], gothram ? [X.kv.gothram, gothram] : [X.kv.ayan, fmtDeg(c.ayanamsa)],
+  ];
+  const [bY, bM, bD] = ymd(c.dasa.balance.years);
+  c._name = pd.name; c._when = `${fmtDateInput(pd.date)} · ${esc(pd.time)}`;
+  const invocation = `<div class="invo"><div class="suzhi">உ</div>
+      <div class="invo-row">${LAMP}<div class="om">ௐ</div>${LAMP}</div>
+      <div class="invo-t">${X.invo}</div></div>`;
+  const page1 = `${invocation}
+    <div class="title">${X.title}</div>
+    <p class="sloka">${X.sloka}</p>
+    <div class="rule"></div>
+    <p class="prose">${prose}</p>
+    <div class="rule"></div>
+    <div class="kv">${kv.map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>
+    <div class="charts2">
+      <div><p class="ch-t">${X.rasi}</p>${siChart(c, false, X.rasi)}</div>
+      <div><p class="ch-t">${X.amsam}</p>${siChart(c, true, X.amsam)}</div>
+    </div>
+    <div class="grow"></div>
+    <div class="nava">
+      <div class="nava-t">${X.navaT}<small>${X.navaS}</small></div>
+      <div class="nava-g">${['Mercury', 'Venus', 'Moon', 'Jupiter', 'Sun', 'Mars', 'Ketu', 'Saturn', 'Rahu'].map(g => `<div class="${g === 'Sun' ? 'sun' : ''}">${Lx.pl[g]}</div>`).join('')}</div>
+    </div>
+    <div class="grow"></div>
+    <div class="dasabox">${X.dasaIruppu}: ${X.dasaLine(Lx.pl[c.dasa.balance.lord], bY, bM, bD)}</div>`;
+  const rowsP = [[`<span style="color:#c1121f">${lang === 'ta' ? 'லக்னம்' : 'Lagna'}</span>`, c.lagna.sign, c.lagna.deg, c.lagna.nakshatra, c.lagna.pada, c.lagna.navamsa, '']]
+    .concat(c.planets.map(p => {
+      const st = [p.dignity ? t(p.dignity) : '', p.retro && p.name !== 'Rahu' && p.name !== 'Ketu' ? t('retro') : '', p.combust ? t('combust') : ''].filter(Boolean).join(', ');
+      return [Lx.pl[p.name], p.sign, p.deg, p.nakshatra, p.pada, p.navamsa, st];
+    }));
+  const planetTbl = `<table><thead><tr>${X.th.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rowsP.map(r =>
+    `<tr><td>${r[0]}</td><td>${Lx.rasis[r[1]]}</td><td>${fmtDeg(r[2])}</td><td>${Lx.naks[r[3]]}</td><td>${r[4]}</td><td>${Lx.rasis[r[5]]}</td><td>${r[6]}</td></tr>`).join('')}</tbody></table>`;
+  const now = Date.now();
+  const dasaRows = c.dasa.periods.filter(p => p.end > c.utc).slice(0, 10).map(p =>
+    `<tr class="${now >= p.start && now < p.end ? 'now' : ''}"><td>${Lx.pl[p.lord]}</td><td>${fmtDate(Math.max(p.start, c.utc))}</td><td>${fmtDate(p.end)}</td></tr>`).join('');
+  const curD = J.currentDasa(c.dasa, now);
+  const bRow = b => `<tr class="${b === curD.bh ? 'now' : ''}"><td>${Lx.pl[curD.md.lord]} – ${Lx.pl[b.lord]}</td><td>${fmtDate(b.start)}</td><td>${fmtDate(b.end)}</td></tr>`;
+  const bHead = `<thead><tr>${X.dth.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
+  const bhuktiTbl = curD ? `<h5>${X.bhuktiT}</h5><div class="two"><table>${bHead}<tbody>${curD.md.bhuktis.slice(0, 5).map(bRow).join('')}</tbody></table><table>${bHead}<tbody>${curD.md.bhuktis.slice(5).map(bRow).join('')}</tbody></table></div>` : '';
+  const panchRows = [
+    [t('tamilDate'), `${Lx.years60[tm.year]}, ${Lx.months[tm.month]} ${tm.date}`], [t('weekday'), Lx.days[pn.weekday]],
+    [t('tithi'), `${tithiTxt}${paksha ? ' · ' + paksha : ''}`], [t('star'), `${Lx.naks[c.nakshatra]} · ${c.pada}`],
+    [t('starLord'), Lx.pl[DASA_LORDS[c.nakshatra % 9]]], [t('yoga'), Lx.yogas[pn.yoga]], [t('karana'), Lx.karanas[pn.karana]],
+    [t('sunrise'), tm.sunriseOk ? fmtClock(tm.sunrise, off) : '—'], [t('sunset'), tm.sunriseOk ? fmtClock(tm.sunset, off) : '—'],
+    [t('nazhigai'), tm.sunriseOk ? `${tm.nazhigai}.${String(tm.vinadi).padStart(2, '0')}` : '—'], [t('ayan'), `${fmtDeg(c.ayanamsa)} (Lahiri)`]
+  ];
+  const ch = c.doshas.chevvai;
+  const doshaRows = [
+    [t('chevvai'), !ch.present ? t('absent') : ch.effective ? t('present') : t('cancelled')],
+    [t('rahuKetu'), c.doshas.rahuKetu.present ? t('present') : t('absent')],
+    [t('kalaSarpa'), c.doshas.kalaSarpa ? t('present') : t('absent')]
+  ];
+  const kvTbl = rows => `<table><tbody>${rows.map(([k, v]) => `<tr><td>${k}</td><td style="text-align:left">${v}</td></tr>`).join('')}</tbody></table>`;
+  const page2 = `<div class="invo"><div class="suzhi" style="font-size:7mm">உ</div></div>
+    <h5>${X.grahaNilai}</h5>${planetTbl}
+    <div class="two" style="margin-top:2mm">
+      <div><h5>${X.dasaTitle}</h5><table><thead><tr>${X.dth.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${dasaRows}</tbody></table>
+        </div>
+      <div><h5>${X.panch}</h5>${kvTbl(panchRows.concat(doshaRows))}</div>
+    </div>
+    ${bhuktiTbl}
+    <div class="grow"></div>
+    <div class="sign"><div class="line">${X.date}</div><div class="line">${X.astrologer}</div></div>
+    <div class="subham">${X.subham}<small>${X.blessing}</small></div>
+    <p class="foot-note">${X.note}</p>`;
+  document.getElementById('jv-pages').innerHTML = sheetShell(page1, '1 / 2') + sheetShell(page2, '2 / 2');
+  fitSheets();
+}
+function fitSheets() {
+  const w = document.getElementById('jv').clientWidth, px = 210 * 96 / 25.4;
+  const z = Math.min(1, (w - 24) / px);
+  document.querySelectorAll('#jv-pages .sheet').forEach(el => el.style.zoom = z);
+}
+function openJathagam() {
+  document.getElementById('jv').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderJathagam();
+}
+function closeJathagam() { document.getElementById('jv').classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('jv-close').onclick = closeJathagam;
+['jv-father', 'jv-mother', 'jv-gothram'].forEach(id => document.getElementById(id).addEventListener('input', renderJathagam));
+document.getElementById('jv-print').onclick = async () => {
+  try { await document.fonts.ready; } catch {}
+  document.body.classList.add('pj');
+  document.querySelectorAll('#jv-pages .sheet').forEach(el => el.style.zoom = 1);
+  window.print();
+};
+window.addEventListener('afterprint', () => { if (document.body.classList.contains('pj')) { document.body.classList.remove('pj'); fitSheets(); } });
+window.addEventListener('resize', () => { if (document.getElementById('jv').classList.contains('open')) fitSheets(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('jv').classList.contains('open')) closeJathagam(); });
 
 // ================= share links & recompute =================
 const b64e = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
