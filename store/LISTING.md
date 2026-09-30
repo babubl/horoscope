@@ -18,7 +18,7 @@ Everything here is ready to paste into Play Console. Images are in this folder.
 - **Tags:** Astrology, Horoscope, Calendar
 - **Contact email:** your email (Play requires one; it is shown on the listing)
 - **Website:** https://subajathagam.in
-- **Privacy policy URL:** `https://subajathagam.in/privacy.html` (until the domain is live: https://babubl.github.io/horoscope/privacy.html)
+- **Privacy policy URL:** `https://subajathagam.in/privacy.html` 
 
 ## Tamil listing (ta-IN)
 
