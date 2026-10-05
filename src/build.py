@@ -77,6 +77,8 @@ def prerender(page, l):
         return m.group(1) + esc(v) + m.group(4) if isinstance(v, str) else m.group(0)
     body = re.sub(r'(<[a-z0-9]+[^>]*\bdata-t="(\w+)"[^>]*>)([^<]*)(<)', fill, body)
     body = body.replace(f'<option value="{l}" lang="{l}">', f'<option value="{l}" lang="{l}" selected>')
+    body = body.replace('<span id="langCur">English</span>', f'<span id="langCur">{NATIVE[l]}</span>', 1)
+    body = body.replace(f'data-lang="{l}" lang="{l}" hreflang', f'class="on" data-lang="{l}" lang="{l}" hreflang', 1)
     open_tag = '<body class="indic">' if l != 'en' else '<body>'
     return head + open_tag + body + '<script>/* astronomy-engine' + tail
 

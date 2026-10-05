@@ -565,6 +565,30 @@ body.noscroll{overflow:hidden}
 @media print{header,.bnav,.fab,.hero,.today,.recent,.jump{display:none!important}}
 /* traditional lettering on the printed sheet */
 .sheet .title,.sheet .subham{font-family:'Tiro Tamil','Noto Serif Malayalam','Tiro Telugu','Tiro Kannada','Tiro Devanagari Hindi','Marcellus',serif;font-weight:400}
+
+/* ================= language picker v2: clear, high-contrast, native names ================= */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.langpick{position:relative}
+#langBtn{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:7px 12px;border-radius:999px;cursor:pointer;
+  background:#fff3d6;color:#6e1216;border:1.5px solid #f0c35a;font:700 14px/1 var(--body);box-shadow:0 2px 8px -2px rgba(0,0,0,.35)}
+#langBtn:hover{background:#ffe8b0}
+#langBtn .chev{transition:transform .15s}
+#langBtn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.langmenu{position:absolute;right:0;top:calc(100% + 8px);z-index:50;width:230px;padding:6px;border-radius:14px;background:var(--paper);color:var(--ink);
+  border:1px solid var(--line);box-shadow:0 18px 40px -12px rgba(40,10,5,.45)}
+.langmenu button{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;width:100%;text-align:left;border:0;background:none;padding:9px 12px;border-radius:10px;cursor:pointer;color:inherit}
+.langmenu button b{font-size:16px;font-weight:600}
+.langmenu button small{grid-row:2;color:var(--muted);font-size:12px}
+.langmenu button i{grid-row:1/3;grid-column:2;font-style:normal;color:var(--accent);font-weight:700;visibility:hidden}
+.langmenu button:hover,.langmenu button:focus-visible{background:var(--accent-soft)}
+.langmenu button.on{background:var(--accent-soft)}
+.langmenu button.on i{visibility:visible}
+.langchips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;color:#ffe3a3}
+.langchips a{text-decoration:none;color:#fff2d2;font-size:14px;font-weight:600;padding:6px 13px;border-radius:999px;border:1px solid rgba(240,195,90,.55);background:rgba(255,243,214,.08)}
+.langchips a:hover{background:rgba(255,243,214,.2)}
+.langchips a.on{background:#ffe3a3;color:#6e1216;border-color:#ffe3a3}
+@media (max-width:370px){#langBtn > svg:first-child{display:none}.brand svg{width:28px;height:28px}}
+@media (max-width:480px){.bar{gap:8px}.brand h1{font-size:20px!important}.brand{gap:7px;min-width:0}#langBtn{padding:7px 10px;font-size:13.5px;gap:5px}.langchips a{font-size:13.5px;padding:6px 11px}}
 </style>
 <script>window.SJ_LANG="kn";window.SJ_TITLES={"en": "Suba Jathagam — Free Horoscope, Kundli Matching & Panchangam in 6 Indian Languages", "ta": "சுப ஜாதகம் — இலவச ஜாதகம், திருமணப் பொருத்தம், பஞ்சாங்கம் தமிழில்", "ml": "ശുഭ ജാതകം — സൗജന്യ ജാതകം, വിവാഹ പൊരുത്തം, പഞ്ചാംഗം മലയാളത്തിൽ", "te": "శుభ జాతకం — ఉచిత జాతకం, వివాహ పొంతన (గుణ మేళనం), పంచాంగం తెలుగులో", "kn": "ಶುಭ ಜಾತಕ — ಉಚಿತ ಜಾತಕ, ಮದುವೆ ಹೊಂದಾಣಿಕೆ (ಗುಣ ಮಿಲನ), ಪಂಚಾಂಗ ಕನ್ನಡದಲ್ಲಿ", "hi": "शुभ जातक — मुफ़्त कुंडली, कुंडली मिलान (36 गुण) और आज का पंचांग हिंदी में"};</script>
 </head>
@@ -576,9 +600,13 @@ body.noscroll{overflow:hidden}
         <svg width="38" height="38" viewBox="0 0 36 36" aria-hidden="true"><rect x="1.5" y="1.5" width="33" height="33" rx="5" fill="#fff3d6" stroke="#f0c35a" stroke-width="2"/><path d="M1.5 10h33M1.5 26h33M10 1.5v33M26 1.5v33" stroke="#c99a3a" stroke-width="1.1"/><rect x="10" y="10" width="16" height="16" fill="#fde7b0"/><circle cx="18" cy="18" r="4.6" fill="#b3201f"/><circle cx="18" cy="18" r="1.6" fill="#f0c35a"/></svg>
         <div><h1 data-t="appName">ಶುಭ ಜಾತಕ</h1><small data-t="tagline">ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಜಾತಕ, ಹೊಂದಾಣಿಕೆ, ಪಂಚಾಂಗ</small></div>
       </a>
-      <label class="langsel ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><select id="langSel" aria-label="Language">
+      <div class="langpick">
+        <button type="button" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा / மொழி"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span id="langCur">ಕನ್ನಡ</span><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="langmenu" id="langMenu" role="listbox" aria-label="Language" hidden><button type="button" role="option" data-lang="en" lang="en"><b>English</b><small>English</small><i aria-hidden="true">✓</i></button><button type="button" role="option" data-lang="ta" lang="ta"><b>தமிழ்</b><small>Tamil</small><i aria-hidden="true">✓</i></button><button type="button" role="option" data-lang="ml" lang="ml"><b>മലയാളം</b><small>Malayalam</small><i aria-hidden="true">✓</i></button><button type="button" role="option" data-lang="te" lang="te"><b>తెలుగు</b><small>Telugu</small><i aria-hidden="true">✓</i></button><button type="button" role="option" data-lang="kn" lang="kn"><b>ಕನ್ನಡ</b><small>Kannada</small><i aria-hidden="true">✓</i></button><button type="button" role="option" data-lang="hi" lang="hi"><b>हिन्दी</b><small>Hindi</small><i aria-hidden="true">✓</i></button></div>
+        <span class="sr-only"><select id="langSel" aria-label="Language">
         <option value="en" lang="en">English</option><option value="ta" lang="ta">தமிழ்</option><option value="ml" lang="ml">മലയാളം</option><option value="te" lang="te">తెలుగు</option><option value="kn" lang="kn" selected>ಕನ್ನಡ</option><option value="hi" lang="hi">हिन्दी</option>
-      </select></label>
+      </select></span>
+      </div>
       <button class="iconbtn" id="openSettings" title="Settings" aria-label="Settings">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         <span class="dot hidden" id="keyDot"></span>
@@ -595,7 +623,7 @@ body.noscroll{overflow:hidden}
 <main class="wrap">
   <div class="appbar hidden" id="appbar"><span data-t="appPitch">Android ಆ್ಯಪ್ — ಜಾಹೀರಾತು ಇಲ್ಲ, ಇಂಟರ್ನೆಟ್ ಇಲ್ಲದೆಯೂ ಕೆಲಸ ಮಾಡುತ್ತದೆ, ಸಾಂಪ್ರದಾಯಿಕ ಜಾತಕ ಮುದ್ರಿಸಿ.</span><a class="btn" id="appbarLink" href="#" target="_blank" rel="noopener" data-t="getApp">ಆ್ಯಪ್ ಪಡೆಯಿರಿ · ₹10</a></div>
   <div class="hero">
-    <div><h2 data-t="heroTitle">ನಿಮ್ಮ ಜಾತಕ, ಸಾಂಪ್ರದಾಯಿಕ ರೀತಿಯಲ್ಲಿ</h2><p data-t="heroSub">ನಿಖರ ಜಾತಕ, ವಿವಾಹ ಹೊಂದಾಣಿಕೆ ಮತ್ತು ದೈನಂದಿನ ಪಂಚಾಂಗ — ಉಚಿತ, ಕನ್ನಡ ಸೇರಿ 6 ಭಾಷೆಗಳಲ್ಲಿ.</p></div>
+    <div><h2 data-t="heroTitle">ನಿಮ್ಮ ಜಾತಕ, ಸಾಂಪ್ರದಾಯಿಕ ರೀತಿಯಲ್ಲಿ</h2><p data-t="heroSub">ನಿಖರ ಜಾತಕ, ವಿವಾಹ ಹೊಂದಾಣಿಕೆ ಮತ್ತು ದೈನಂದಿನ ಪಂಚಾಂಗ — ಉಚಿತ, ಕನ್ನಡ ಸೇರಿ 6 ಭಾಷೆಗಳಲ್ಲಿ.</p><nav class="langchips" aria-label="Language"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="/" data-lang="en" lang="en" hreflang="en">English</a><a href="/ta/" data-lang="ta" lang="ta" hreflang="ta">தமிழ்</a><a href="/ml/" data-lang="ml" lang="ml" hreflang="ml">മലയാളം</a><a href="/te/" data-lang="te" lang="te" hreflang="te">తెలుగు</a><a href="/kn/" class="on" data-lang="kn" lang="kn" hreflang="kn">ಕನ್ನಡ</a><a href="/hi/" data-lang="hi" lang="hi" hreflang="hi">हिन्दी</a></nav></div>
     <button class="btn ghost" type="button" data-wa="site" id="waSite"></button>
   </div>
   <button type="button" class="today" id="todayStrip" aria-label="Today's panchangam"></button>
@@ -5382,6 +5410,7 @@ function syncSettings() {
   document.getElementById('tradSel').value = trad;
   document.getElementById('chartSel').value = chartStyle;
   document.getElementById('langSel').value = lang;
+  if (typeof setLangUI === 'function') setLangUI();
 }
 function applyLang() {
   document.body.classList.toggle('indic', lang !== 'en');
@@ -5860,6 +5889,28 @@ document.addEventListener('click', e => {
     return;
   }
   if (e.target.closest('[data-recent-clear]')) { store.del('sj.recent'); renderRecent(); }
+});
+
+
+// ================= language picker =================
+const langBtn = document.getElementById('langBtn'), langMenu = document.getElementById('langMenu');
+function setLangUI() {
+  document.getElementById('langCur').textContent = (C.LANGS.find(x => x[0] === lang) || C.LANGS[0])[1];
+  document.querySelectorAll('.langmenu [data-lang], .langchips [data-lang]').forEach(b => { b.classList.toggle('on', b.dataset.lang === lang); if (b.getAttribute('role') === 'option') b.setAttribute('aria-selected', b.dataset.lang === lang); });
+}
+function langMenuOpen(open) { langMenu.hidden = !open; langBtn.setAttribute('aria-expanded', open); if (open) (langMenu.querySelector('.on') || langMenu.querySelector('button')).focus(); }
+langBtn.addEventListener('click', () => langMenuOpen(langMenu.hidden));
+function chooseLang(v) { const sel = document.getElementById('langSel'); if (sel.value !== v) { sel.value = v; sel.dispatchEvent(new Event('change')); } langMenuOpen(false); }
+document.addEventListener('click', e => {
+  const b = e.target.closest('.langmenu [data-lang], .langchips [data-lang]');
+  if (b) { e.preventDefault(); chooseLang(b.dataset.lang); return; }
+  if (!langMenu.hidden && !e.target.closest('.langpick')) langMenuOpen(false);
+});
+langMenu.addEventListener('keydown', e => {
+  const items = [...langMenu.querySelectorAll('button')], i = items.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown') { items[(i + 1) % items.length].focus(); e.preventDefault(); }
+  else if (e.key === 'ArrowUp') { items[(i - 1 + items.length) % items.length].focus(); e.preventDefault(); }
+  else if (e.key === 'Escape') { langMenuOpen(false); langBtn.focus(); }
 });
 
 // ================= share links & recompute =================
