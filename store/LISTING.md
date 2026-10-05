@@ -40,7 +40,7 @@ Everything is calculated on the phone. Three optional features send data off the
 | Data type | Collected? | Purpose / notes |
 |---|---|---|
 | Location → Approximate location | Yes · optional · not shared · processed ephemerally | The town typed is looked up on Open-Meteo for coordinates. App functionality |
-| Personal info → Name | Yes · optional · processed ephemerally | Only if the user adds their own Gemini key and asks for an AI reading. App functionality |
+| Personal info → Name, Other info (birth date, time and place) | Yes · optional · processed ephemerally | Only if the user adds their own Gemini key and asks for an AI reading: the chart goes to Google Gemini. App functionality |
 | Personal info → Name, Email address, Phone number | Yes · optional | Only if typed into the feedback form. Developer communications |
 | App activity → Other user-generated content | Yes · optional | The feedback message. Developer communications |
 | Everything else | No | No accounts, ads, analytics, crash logs or device identifiers in the app |
