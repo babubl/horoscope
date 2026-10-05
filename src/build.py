@@ -116,7 +116,7 @@ for l in LANGS:
         'short_name': BRAND[l] if l != 'en' else 'Suba Jathagam',
         'description': SEO[l]['desc'], 'lang': l, 'dir': 'ltr',
         'id': path(l), 'start_url': path(l) + '?source=pwa', 'scope': '/',
-        'display': 'standalone', 'orientation': 'portrait', 'background_color': '#faf5ec', 'theme_color': '#a3361f',
+        'display': 'standalone', 'orientation': 'portrait', 'background_color': '#f7efe0', 'theme_color': '#6e1216',
         'categories': ['lifestyle', 'entertainment', 'books'],
         'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192', 'type': 'image/png', 'purpose': 'any'},
                   {'src': '/icons/icon-512.png', 'sizes': '512x512', 'type': 'image/png', 'purpose': 'any'},

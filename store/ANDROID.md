@@ -26,14 +26,14 @@ Then Claude adds the `CNAME` file to the repo. In GitHub → repo **Settings →
 | Option | Value |
 |---|---|
 | Package ID | `in.subajathagam.app` (never change this after publishing) |
-| App name | `Suba Jathagam: Tamil Horoscope` |
+| App name | `Suba Jathagam – Kundli & Match` |
 | Launcher name | `Suba Jathagam` |
 | App version / code | `1.0.0` / `1` |
 | Host | `subajathagam.in` |
 | Start URL | `/?source=twa` |
-| Theme colour | `#A3361F` |
-| Background colour | `#FAF5EC` |
-| Navigation bar colour | `#A3361F` |
+| Theme colour | `#6E1216` |
+| Background colour | `#F7EFE0` |
+| Navigation bar colour | `#6E1216` |
 | Display mode | Standalone |
 | Orientation | Portrait |
 | Notifications | Off |
