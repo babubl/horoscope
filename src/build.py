@@ -42,6 +42,7 @@ def seo_section(l):
     d = SEO[l]
     faq = ''.join(f'<h3>{esc(q)}</h3><p>{esc(a)}</p>' for q, a in d['faq'])
     links = ''.join(f'<a href="{path(x)}" hreflang="{x}" lang="{x}">{NATIVE[x]}</a>' for x in LANGS if x != l)
+    links = f'<a href="{path(l)}nakshatra/">★ {I[l]["lNaks"]}</a>' + links
     return f'''<section class="card seo" id="about-site" lang="{l}">
     <h2>{esc(d['h2'])}</h2>
     <p>{esc(d['intro'])}</p>
@@ -79,10 +80,15 @@ def prerender(page, l):
     body = body.replace(f'<option value="{l}" lang="{l}">', f'<option value="{l}" lang="{l}" selected>')
     body = body.replace('<span id="langCur">English</span>', f'<span id="langCur">{NATIVE[l]}</span>', 1)
     body = body.replace(f'data-lang="{l}" lang="{l}" hreflang', f'class="on" data-lang="{l}" lang="{l}" hreflang', 1)
+    body = body.replace('<a href="/nakshatra/" id="naksLink"', f'<a href="{path(l)}nakshatra/" id="naksLink"', 1)
     open_tag = '<body class="indic">' if l != 'en' else '<body>'
     return head + open_tag + body + '<script>/* astronomy-engine' + tail
 
 
+_m = re.search(r"adsenseClient: '([^']*)'", tmpl)
+ADS_CLIENT = _m.group(1) if _m else ''
+if ADS_CLIENT:
+    open('ads.txt', 'w').write(f'google.com, {ADS_CLIENT.replace("ca-", "")}, DIRECT, f08c47fec0942fa0\n')
 titles = {l: SEO[l]['title'] for l in LANGS}
 alts = ''.join(f'<link rel="alternate" hreflang="{l}" href="{SITE}{path(l)}">\n' for l in LANGS) + f'<link rel="alternate" hreflang="x-default" href="{SITE}/">\n'
 
@@ -101,6 +107,8 @@ for l in LANGS:
                f'<meta property="og:locale" content="{LOCALE[l]}">\n' + '\n'.join(f'<meta property="og:locale:alternate" content="{LOCALE[x]}">' for x in LANGS if x != l), p, count=1)
     p = re.sub(r'<script type="application/ld\+json">.*?</script>\n', lambda m: jsonld(l), p, count=1, flags=re.S)
     p = p.replace('<link rel="manifest" href="/manifest.webmanifest">', f'<link rel="manifest" href="{"/" if l == "en" else path(l)}manifest.webmanifest">', 1)
+    if ADS_CLIENT:
+        p = p.replace('</head>', f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n</head>', 1)
     p = p.replace('</head>', f'<script>window.SJ_LANG={json.dumps(l)};window.SJ_TITLES={json.dumps(titles, ensure_ascii=False)};</script>\n</head>', 1)
     p = p.replace('<!--SEO-->', seo_section(l), 1)
     p = prerender(p, l)
@@ -129,9 +137,20 @@ for l in LANGS:
     out = 'manifest.webmanifest' if l == 'en' else f'{l}/manifest.webmanifest'
     open(out, 'w').write(json.dumps(m, ensure_ascii=False, indent=2) + '\n')
 
+# ---- nakshatra knowledge pages (27 stars x 6 languages)
+import nakshatra  # noqa: E402
+# ads on the knowledge pages: website only, never inside the Android app (it sets jothidam.app)
+ads_head = (f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n<script>(function(){{var app=false;try{{app=sessionStorage.getItem("jothidam.app")==="1"||/[?&]source=twa/.test(location.search);}}catch(e){{}}'
+            f'if(!app){{var s=document.createElement("script");s.async=true;s.crossOrigin="anonymous";s.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADS_CLIENT}";document.head.appendChild(s);}}}})();</script>' if ADS_CLIENT else '')
+kb_urls = nakshatra.generate(I, ads_head)
+print('nakshatra pages', len(kb_urls))
+
 # ---- sitemap with language alternates
 xl = ''.join(f'    <xhtml:link rel="alternate" hreflang="{x}" href="{SITE}{path(x)}"/>\n' for x in LANGS) + f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>\n'
 urls = ''.join(f'  <url><loc>{SITE}{path(l)}</loc><changefreq>weekly</changefreq><priority>{"1.0" if l == "en" else "0.9"}</priority>\n{xl}  </url>\n' for l in LANGS)
+for loc, alts_ in kb_urls:
+    xl2 = ''.join(f'    <xhtml:link rel="alternate" hreflang="{x}" href="{SITE}{h}"/>\n' for x, h in alts_) + f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{alts_[0][1]}"/>\n'
+    urls += f'  <url><loc>{SITE}{loc}</loc><changefreq>monthly</changefreq><priority>{"0.8" if loc.endswith("/") else "0.7"}</priority>\n{xl2}  </url>\n'
 for pg, fq, pr in [('guide.html', 'monthly', '0.7'), ('about.html', 'yearly', '0.4'), ('privacy.html', 'yearly', '0.3'), ('terms.html', 'yearly', '0.3')]:
     urls += f'  <url><loc>{SITE}/{pg}</loc><changefreq>{fq}</changefreq><priority>{pr}</priority></url>\n'
 open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + urls + '</urlset>\n')

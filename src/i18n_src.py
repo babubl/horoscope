@@ -559,6 +559,7 @@ MORE['recentT'] = {'en': 'Recent', 'ta': 'சமீபத்தியவை', 'm
 MORE['clearT'] = {'en': 'Clear', 'ta': 'அழி', 'ml': 'മായ്ക്കുക', 'te': 'తొలగించు', 'kn': 'ಅಳಿಸಿ', 'hi': 'हटाएँ'}
 MORE['aiReport'] = {'en': 'Report this reading', 'ta': 'இந்தப் பலனைப் புகாரளி', 'ml': 'ഈ ഫലം റിപ്പോർട്ട് ചെയ്യുക', 'te': 'ఈ ఫలితాన్ని నివేదించండి', 'kn': 'ಈ ಫಲಾಫಲವನ್ನು ವರದಿ ಮಾಡಿ', 'hi': 'इस फलादेश की शिकायत करें'}
 MORE['aiNote2'] = {'en': 'Written by AI (Google Gemini). If anything is wrong or offensive:', 'ta': 'AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:', 'ml': 'AI (Google Gemini) എഴുതിയത്. തെറ്റോ അനുചിതമോ ആയി എന്തെങ്കിലും ഉണ്ടെങ്കിൽ:', 'te': 'AI (Google Gemini) రాసింది. ఏదైనా తప్పు లేదా అభ్యంతరకరంగా ఉంటే:', 'kn': 'AI (Google Gemini) ಬರೆದದ್ದು. ಏನಾದರೂ ತಪ್ಪು ಅಥವಾ ಆಕ್ಷೇಪಾರ್ಹವಾಗಿದ್ದರೆ:', 'hi': 'AI (Google Gemini) द्वारा लिखा गया। कुछ गलत या आपत्तिजनक हो तो:'}
+MORE['lNaks'] = {'en': '27 Nakshatras', 'ta': '27 நட்சத்திரங்கள்', 'ml': '27 നക്ഷത്രങ്ങൾ', 'te': '27 నక్షత్రాలు', 'kn': '27 ನಕ್ಷತ್ರಗಳು', 'hi': '27 नक्षत्र'}
 for k, v in MORE.items():
     for l, txt in v.items():
         out[l][k] = txt

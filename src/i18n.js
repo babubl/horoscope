@@ -134,7 +134,8 @@ const I_EXTRA = {
 "recentT": "Recent",
 "clearT": "Clear",
 "aiReport": "Report this reading",
-"aiNote2": "Written by AI (Google Gemini). If anything is wrong or offensive:"
+"aiNote2": "Written by AI (Google Gemini). If anything is wrong or offensive:",
+"lNaks": "27 Nakshatras"
 },
 "ta": {
 "tagline": "உங்கள் மொழியில் ஜாதகம், பொருத்தம், பஞ்சாங்கம்",
@@ -264,7 +265,8 @@ const I_EXTRA = {
 "recentT": "சமீபத்தியவை",
 "clearT": "அழி",
 "aiReport": "இந்தப் பலனைப் புகாரளி",
-"aiNote2": "AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:"
+"aiNote2": "AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:",
+"lNaks": "27 நட்சத்திரங்கள்"
 },
 "hi": {
 "appName": "शुभ जातक",
@@ -748,6 +750,7 @@ const I_EXTRA = {
 "clearT": "हटाएँ",
 "aiReport": "इस फलादेश की शिकायत करें",
 "aiNote2": "AI (Google Gemini) द्वारा लिखा गया। कुछ गलत या आपत्तिजनक हो तो:",
+"lNaks": "27 नक्षत्र",
 "years60": [
 "प्रभव",
 "विभव",
@@ -1378,6 +1381,7 @@ const I_EXTRA = {
 "clearT": "తొలగించు",
 "aiReport": "ఈ ఫలితాన్ని నివేదించండి",
 "aiNote2": "AI (Google Gemini) రాసింది. ఏదైనా తప్పు లేదా అభ్యంతరకరంగా ఉంటే:",
+"lNaks": "27 నక్షత్రాలు",
 "years60": [
 "ప్రభవ",
 "విభవ",
@@ -2008,6 +2012,7 @@ const I_EXTRA = {
 "clearT": "ಅಳಿಸಿ",
 "aiReport": "ಈ ಫಲಾಫಲವನ್ನು ವರದಿ ಮಾಡಿ",
 "aiNote2": "AI (Google Gemini) ಬರೆದದ್ದು. ಏನಾದರೂ ತಪ್ಪು ಅಥವಾ ಆಕ್ಷೇಪಾರ್ಹವಾಗಿದ್ದರೆ:",
+"lNaks": "27 ನಕ್ಷತ್ರಗಳು",
 "years60": [
 "ಪ್ರಭವ",
 "ವಿಭವ",
@@ -2652,6 +2657,7 @@ const I_EXTRA = {
 "clearT": "മായ്ക്കുക",
 "aiReport": "ഈ ഫലം റിപ്പോർട്ട് ചെയ്യുക",
 "aiNote2": "AI (Google Gemini) എഴുതിയത്. തെറ്റോ അനുചിതമോ ആയി എന്തെങ്കിലും ഉണ്ടെങ്കിൽ:",
+"lNaks": "27 നക്ഷത്രങ്ങൾ",
 "years60": [
 "പ്രഭവ",
 "വിഭവ",

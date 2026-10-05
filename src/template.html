@@ -706,7 +706,7 @@ body.noscroll{overflow:hidden}
   <div class="wrap">
     <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
     <div class="visits hidden" id="visits"></div>
-    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="/guide.html" data-t="lGuide">Guide</a><a href="/about.html" data-t="lAbout">About</a><a href="/privacy.html" data-t="lPrivacy">Privacy</a><a href="/terms.html" data-t="lTerms">Terms</a></nav>
+    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="/nakshatra/" id="naksLink" data-t="lNaks">27 Nakshatras</a><a href="/guide.html" data-t="lGuide">Guide</a><a href="/about.html" data-t="lAbout">About</a><a href="/privacy.html" data-t="lPrivacy">Privacy</a><a href="/terms.html" data-t="lTerms">Terms</a></nav>
   </div>
 </footer>
 
@@ -1621,6 +1621,7 @@ function applyLang() {
     history.replaceState(null, '', LANG_PATH(lang) + location.search + location.hash);
   }
   document.getElementById('homeLink').href = LANG_PATH(lang);
+  document.getElementById('naksLink').href = LANG_PATH(lang) + 'nakshatra/';
   if (typeof renderRecent === 'function') renderRecent();
   const canon = document.querySelector('link[rel=canonical]'); if (canon) canon.href = 'https://subajathagam.in' + LANG_PATH(lang);
   renderHoro(); renderMatch();

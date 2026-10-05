@@ -681,7 +681,7 @@ body.noscroll{overflow:hidden}
     <h2>Free horoscope and marriage matching, in your language</h2>
     <p>Suba Jathagam makes a complete birth chart from the date, time and place of birth — Rasi and Navamsa charts in South or North Indian style, planet positions, nakshatra and pada, Vimshottari dasa and bhukti, and Mars, Rahu–Ketu and Kala Sarpa dosha checks. Marriage matching shows both the South Indian 10 porutham and the North Indian 36-guna Ashtakoota score.</p>
     <h3>Is Suba Jathagam really free?</h3><p>Yes. Charts, matching, panchangam and the printable horoscope are free, with no sign-up.</p><h3>Which matching method should I use?</h3><p>Tamil and Kerala families usually follow the 10 porutham (with Rajju and Vedhai); Telugu, Kannada and North Indian families usually follow the 36-guna Ashtakoota (Guna Milan). Suba Jathagam shows both, and your tradition decides which comes first.</p><h3>How accurate are the calculations?</h3><p>Planet positions come from a modern astronomical engine with the Lahiri ayanamsa. Tithi, nakshatra, Rahu kalam and the Tamil, Malayalam and lunar calendar dates are worked out from the actual sunrise at the birth place.</p><h3>Can I print a traditional horoscope?</h3><p>Yes — a two-page horoscope in your culture’s style: manjal-kungumam for Tamil, kasavu gold for Kerala, a mango-leaf thoranam for Telugu, kumkum and green for Kannada, and saffron with swastik and kalash for North India. Print it or save it as a PDF.</p><h3>Is my birth data stored?</h3><p>No. Everything is calculated inside your browser; nothing is sent to our server.</p>
-    <nav class="langs" aria-label="Languages"><a href="/ta/" hreflang="ta" lang="ta">தமிழ்</a><a href="/ml/" hreflang="ml" lang="ml">മലയാളം</a><a href="/te/" hreflang="te" lang="te">తెలుగు</a><a href="/kn/" hreflang="kn" lang="kn">ಕನ್ನಡ</a><a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a></nav>
+    <nav class="langs" aria-label="Languages"><a href="/nakshatra/">★ 27 Nakshatras</a><a href="/ta/" hreflang="ta" lang="ta">தமிழ்</a><a href="/ml/" hreflang="ml" lang="ml">മലയാളം</a><a href="/te/" hreflang="te" lang="te">తెలుగు</a><a href="/kn/" hreflang="kn" lang="kn">ಕನ್ನಡ</a><a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a></nav>
   </section>
   <!-- FEEDBACK -->
 </main>
@@ -717,7 +717,7 @@ body.noscroll{overflow:hidden}
   <div class="wrap">
     <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
     <div class="visits hidden" id="visits"></div>
-    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="/guide.html" data-t="lGuide">Guide</a><a href="/about.html" data-t="lAbout">About</a><a href="/privacy.html" data-t="lPrivacy">Privacy</a><a href="/terms.html" data-t="lTerms">Terms</a></nav>
+    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="/nakshatra/" id="naksLink" data-t="lNaks">27 Nakshatras</a><a href="/guide.html" data-t="lGuide">Guide</a><a href="/about.html" data-t="lAbout">About</a><a href="/privacy.html" data-t="lPrivacy">Privacy</a><a href="/terms.html" data-t="lTerms">Terms</a></nav>
   </div>
 </footer>
 
@@ -1711,7 +1711,8 @@ const I_EXTRA = {
 "recentT": "Recent",
 "clearT": "Clear",
 "aiReport": "Report this reading",
-"aiNote2": "Written by AI (Google Gemini). If anything is wrong or offensive:"
+"aiNote2": "Written by AI (Google Gemini). If anything is wrong or offensive:",
+"lNaks": "27 Nakshatras"
 },
 "ta": {
 "tagline": "உங்கள் மொழியில் ஜாதகம், பொருத்தம், பஞ்சாங்கம்",
@@ -1841,7 +1842,8 @@ const I_EXTRA = {
 "recentT": "சமீபத்தியவை",
 "clearT": "அழி",
 "aiReport": "இந்தப் பலனைப் புகாரளி",
-"aiNote2": "AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:"
+"aiNote2": "AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:",
+"lNaks": "27 நட்சத்திரங்கள்"
 },
 "hi": {
 "appName": "शुभ जातक",
@@ -2325,6 +2327,7 @@ const I_EXTRA = {
 "clearT": "हटाएँ",
 "aiReport": "इस फलादेश की शिकायत करें",
 "aiNote2": "AI (Google Gemini) द्वारा लिखा गया। कुछ गलत या आपत्तिजनक हो तो:",
+"lNaks": "27 नक्षत्र",
 "years60": [
 "प्रभव",
 "विभव",
@@ -2955,6 +2958,7 @@ const I_EXTRA = {
 "clearT": "తొలగించు",
 "aiReport": "ఈ ఫలితాన్ని నివేదించండి",
 "aiNote2": "AI (Google Gemini) రాసింది. ఏదైనా తప్పు లేదా అభ్యంతరకరంగా ఉంటే:",
+"lNaks": "27 నక్షత్రాలు",
 "years60": [
 "ప్రభవ",
 "విభవ",
@@ -3585,6 +3589,7 @@ const I_EXTRA = {
 "clearT": "ಅಳಿಸಿ",
 "aiReport": "ಈ ಫಲಾಫಲವನ್ನು ವರದಿ ಮಾಡಿ",
 "aiNote2": "AI (Google Gemini) ಬರೆದದ್ದು. ಏನಾದರೂ ತಪ್ಪು ಅಥವಾ ಆಕ್ಷೇಪಾರ್ಹವಾಗಿದ್ದರೆ:",
+"lNaks": "27 ನಕ್ಷತ್ರಗಳು",
 "years60": [
 "ಪ್ರಭವ",
 "ವಿಭವ",
@@ -4229,6 +4234,7 @@ const I_EXTRA = {
 "clearT": "മായ്ക്കുക",
 "aiReport": "ഈ ഫലം റിപ്പോർട്ട് ചെയ്യുക",
 "aiNote2": "AI (Google Gemini) എഴുതിയത്. തെറ്റോ അനുചിതമോ ആയി എന്തെങ്കിലും ഉണ്ടെങ്കിൽ:",
+"lNaks": "27 നക്ഷത്രങ്ങൾ",
 "years60": [
 "പ്രഭവ",
 "വിഭവ",
@@ -5439,6 +5445,7 @@ function applyLang() {
     history.replaceState(null, '', LANG_PATH(lang) + location.search + location.hash);
   }
   document.getElementById('homeLink').href = LANG_PATH(lang);
+  document.getElementById('naksLink').href = LANG_PATH(lang) + 'nakshatra/';
   if (typeof renderRecent === 'function') renderRecent();
   const canon = document.querySelector('link[rel=canonical]'); if (canon) canon.href = 'https://subajathagam.in' + LANG_PATH(lang);
   renderHoro(); renderMatch();
