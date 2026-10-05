@@ -5973,11 +5973,14 @@ function renderVisits() {
 }
 (function setupCounter() {
   const code = CONFIG.goatcounter;
-  if (!code || IS_APP || !/^https?:$/.test(location.protocol) || location.hostname === 'localhost') return;
+  if (!code || !/^https?:$/.test(location.protocol) || location.hostname === 'localhost') return;
   const sc = document.createElement('script');
   sc.async = true; sc.src = 'https://gc.zgo.at/count.js';
   sc.dataset.goatcounter = `https://${code}.goatcounter.com/count`;
+  // in the app, no visit counting: the script is loaded only so the feedback form can deliver messages
+  if (IS_APP) sc.dataset.goatcounterSettings = '{"no_onload":true}';
   document.head.appendChild(sc);
+  if (IS_APP) return;
   fetch(`https://${code}.goatcounter.com/counter/TOTAL.json`).then(r => r.ok ? r.json() : null)
     .then(j => { if (j && j.count) { visitCount = String(j.count).trim(); renderVisits(); } }).catch(() => {});
 })();
