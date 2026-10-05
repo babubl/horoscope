@@ -557,6 +557,8 @@ MORE['chevDet'] = {'ta': '{ref} {h}-ஆம் வீட்டில் செவ
 MORE['trySample'] = {'en': 'Try a sample', 'ta': 'மாதிரி பாருங்கள்', 'ml': 'ഒരു ഉദാഹരണം കാണുക', 'te': 'నమూనా చూడండి', 'kn': 'ಮಾದರಿ ನೋಡಿ', 'hi': 'नमूना देखें'}
 MORE['recentT'] = {'en': 'Recent', 'ta': 'சமீபத்தியவை', 'ml': 'സമീപകാലം', 'te': 'ఇటీవలివి', 'kn': 'ಇತ್ತೀಚಿನವು', 'hi': 'हाल के'}
 MORE['clearT'] = {'en': 'Clear', 'ta': 'அழி', 'ml': 'മായ്ക്കുക', 'te': 'తొలగించు', 'kn': 'ಅಳಿಸಿ', 'hi': 'हटाएँ'}
+MORE['aiReport'] = {'en': 'Report this reading', 'ta': 'இந்தப் பலனைப் புகாரளி', 'ml': 'ഈ ഫലം റിപ്പോർട്ട് ചെയ്യുക', 'te': 'ఈ ఫలితాన్ని నివేదించండి', 'kn': 'ಈ ಫಲಾಫಲವನ್ನು ವರದಿ ಮಾಡಿ', 'hi': 'इस फलादेश की शिकायत करें'}
+MORE['aiNote2'] = {'en': 'Written by AI (Google Gemini). If anything is wrong or offensive:', 'ta': 'AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:', 'ml': 'AI (Google Gemini) എഴുതിയത്. തെറ്റോ അനുചിതമോ ആയി എന്തെങ്കിലും ഉണ്ടെങ്കിൽ:', 'te': 'AI (Google Gemini) రాసింది. ఏదైనా తప్పు లేదా అభ్యంతరకరంగా ఉంటే:', 'kn': 'AI (Google Gemini) ಬರೆದದ್ದು. ಏನಾದರೂ ತಪ್ಪು ಅಥವಾ ಆಕ್ಷೇಪಾರ್ಹವಾಗಿದ್ದರೆ:', 'hi': 'AI (Google Gemini) द्वारा लिखा गया। कुछ गलत या आपत्तिजनक हो तो:'}
 for k, v in MORE.items():
     for l, txt in v.items():
         out[l][k] = txt

@@ -132,7 +132,9 @@ const I_EXTRA = {
 "aiAbout": "AI reading (optional)",
 "trySample": "Try a sample",
 "recentT": "Recent",
-"clearT": "Clear"
+"clearT": "Clear",
+"aiReport": "Report this reading",
+"aiNote2": "Written by AI (Google Gemini). If anything is wrong or offensive:"
 },
 "ta": {
 "tagline": "உங்கள் மொழியில் ஜாதகம், பொருத்தம், பஞ்சாங்கம்",
@@ -260,7 +262,9 @@ const I_EXTRA = {
 "chevDet": "{ref} {h}-ஆம் வீட்டில் செவ்வாய்.",
 "trySample": "மாதிரி பாருங்கள்",
 "recentT": "சமீபத்தியவை",
-"clearT": "அழி"
+"clearT": "அழி",
+"aiReport": "இந்தப் பலனைப் புகாரளி",
+"aiNote2": "AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:"
 },
 "hi": {
 "appName": "शुभ जातक",
@@ -742,6 +746,8 @@ const I_EXTRA = {
 "trySample": "नमूना देखें",
 "recentT": "हाल के",
 "clearT": "हटाएँ",
+"aiReport": "इस फलादेश की शिकायत करें",
+"aiNote2": "AI (Google Gemini) द्वारा लिखा गया। कुछ गलत या आपत्तिजनक हो तो:",
 "years60": [
 "प्रभव",
 "विभव",
@@ -1370,6 +1376,8 @@ const I_EXTRA = {
 "trySample": "నమూనా చూడండి",
 "recentT": "ఇటీవలివి",
 "clearT": "తొలగించు",
+"aiReport": "ఈ ఫలితాన్ని నివేదించండి",
+"aiNote2": "AI (Google Gemini) రాసింది. ఏదైనా తప్పు లేదా అభ్యంతరకరంగా ఉంటే:",
 "years60": [
 "ప్రభవ",
 "విభవ",
@@ -1998,6 +2006,8 @@ const I_EXTRA = {
 "trySample": "ಮಾದರಿ ನೋಡಿ",
 "recentT": "ಇತ್ತೀಚಿನವು",
 "clearT": "ಅಳಿಸಿ",
+"aiReport": "ಈ ಫಲಾಫಲವನ್ನು ವರದಿ ಮಾಡಿ",
+"aiNote2": "AI (Google Gemini) ಬರೆದದ್ದು. ಏನಾದರೂ ತಪ್ಪು ಅಥವಾ ಆಕ್ಷೇಪಾರ್ಹವಾಗಿದ್ದರೆ:",
 "years60": [
 "ಪ್ರಭವ",
 "ವಿಭವ",
@@ -2640,6 +2650,8 @@ const I_EXTRA = {
 "trySample": "ഒരു ഉദാഹരണം കാണുക",
 "recentT": "സമീപകാലം",
 "clearT": "മായ്ക്കുക",
+"aiReport": "ഈ ഫലം റിപ്പോർട്ട് ചെയ്യുക",
+"aiNote2": "AI (Google Gemini) എഴുതിയത്. തെറ്റോ അനുചിതമോ ആയി എന്തെങ്കിലും ഉണ്ടെങ്കിൽ:",
 "years60": [
 "പ്രഭവ",
 "വിഭവ",

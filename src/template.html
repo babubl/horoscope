@@ -1546,7 +1546,7 @@ function renderAi(which) {
   if (!box) return;
   const k = aiKey(which), cached = aiCache[which][k];
   const btnLabel = which === 'horo' ? t('aiBtn') : t('aiMatchBtn');
-  if (cached && cached.text) { box.innerHTML = `<div class="md">${md(cached.text)}</div>`; return; }
+  if (cached && cached.text) { box.innerHTML = `<div class="md">${md(cached.text)}</div><p class="note" style="margin-top:14px">${esc(t('aiNote2'))} <a href="#feedback" data-fb-open>${esc(t('aiReport'))}</a></p>`; return; }
   if (!apiKey) { box.innerHTML = `<p class="muted" style="margin:0 0 12px">${t('aiNeedKey')}</p><button class="btn" type="button" data-open-settings>${t('aiSettings')}</button>`; box.querySelector('[data-open-settings]').onclick = openSettings; return; }
   const err = cached && cached.error ? `<p class="err">${esc(cached.error)}</p>` : '';
   box.innerHTML = `${err}<button class="btn" type="button">${cached && cached.error ? t('aiRetry') : btnLabel}</button>`;
