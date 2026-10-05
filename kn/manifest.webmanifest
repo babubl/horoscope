@@ -1,11 +1,11 @@
 {
-  "name": "Suba Jathagam",
-  "short_name": "Suba Jathagam",
-  "description": "Free online jathagam / kundli with Rasi and Navamsa charts, dasa–bhukti, 10 porutham and 36 guna marriage matching, daily panchangam and Rahu kalam — in Tamil, Malayalam, Telugu, Kannada, Hindi and English. Print a traditional horoscope.",
-  "lang": "en",
+  "name": "ಶುಭ ಜಾತಕ · Suba Jathagam",
+  "short_name": "ಶುಭ ಜಾತಕ",
+  "description": "ಉಚಿತ ಕನ್ನಡ ಜಾತಕ: ರಾಶಿ, ನವಾಂಶ ಕುಂಡಲಿ, ಗ್ರಹ ಸ್ಥಿತಿ, ನಕ್ಷತ್ರ, ವಿಂಶೋತ್ತರಿ ದಶೆ, ಕುಜ ದೋಷ, 36 ಗುಣಗಳ ಮದುವೆ ಹೊಂದಾಣಿಕೆ, ಇಂದಿನ ಪಂಚಾಂಗ, ರಾಹುಕಾಲ. ಸಾಂಪ್ರದಾಯಿಕ ಜನ್ಮ ಕುಂಡಲಿ ಮುದ್ರಿಸಿ.",
+  "lang": "kn",
   "dir": "ltr",
-  "id": "/",
-  "start_url": "/?source=pwa",
+  "id": "/kn/",
+  "start_url": "/kn/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
@@ -44,8 +44,8 @@
   ],
   "shortcuts": [
     {
-      "name": "Horoscope",
-      "url": "/?source=pwa#horo",
+      "name": "ಜಾತಕ",
+      "url": "/kn/?source=pwa#horo",
       "icons": [
         {
           "src": "/icons/icon-192.png",
@@ -54,8 +54,8 @@
       ]
     },
     {
-      "name": "Marriage Match",
-      "url": "/?source=pwa#match",
+      "name": "ವಿವಾಹ ಹೊಂದಾಣಿಕೆ",
+      "url": "/kn/?source=pwa#match",
       "icons": [
         {
           "src": "/icons/icon-192.png",
@@ -64,8 +64,8 @@
       ]
     },
     {
-      "name": "Panchangam",
-      "url": "/?source=pwa#panch",
+      "name": "ಪಂಚಾಂಗ",
+      "url": "/kn/?source=pwa#panch",
       "icons": [
         {
           "src": "/icons/icon-192.png",

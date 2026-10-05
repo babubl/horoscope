@@ -32,15 +32,15 @@
 ]}
 </script>
 <meta name="theme-color" content="#a3361f">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
-<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Suba Jathagam">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Serif+Malayalam:wght@400;700;800&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Serif+Telugu:wght@400;700;800&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Serif+Kannada:wght@400;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#faf5ec; --paper:#fffdf8; --ink:#2b1d14; --muted:#7a6553; --line:#e6d8c3;
@@ -48,8 +48,8 @@
   --good:#2f7d4a; --good-bg:#e3f2e6; --mid:#a36b00; --mid-bg:#fbefd6; --bad:#b3261e; --bad-bg:#fbe3e0;
   --shadow:0 1px 2px rgba(60,30,10,.06),0 8px 24px rgba(60,30,10,.06);
   --radius:14px;
-  --display:'Cormorant Garamond',Georgia,serif;
-  --body:'Inter','Noto Sans Tamil',system-ui,sans-serif;
+  --display:'Cormorant Garamond','Noto Serif Tamil','Noto Serif Malayalam','Noto Serif Telugu','Noto Serif Kannada','Noto Serif Devanagari',Georgia,serif;
+  --body:'Inter','Noto Sans Tamil','Noto Sans Malayalam','Noto Sans Telugu','Noto Sans Kannada','Noto Sans Devanagari',system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -68,7 +68,7 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--body)}
-body.ta{--body:'Noto Sans Tamil','Inter',system-ui,sans-serif}
+body.indic{--body:'Noto Sans Tamil','Noto Sans Malayalam','Noto Sans Telugu','Noto Sans Kannada','Noto Sans Devanagari','Inter',system-ui,sans-serif}
 button,input,select{font:inherit;color:inherit}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
 header{border-bottom:1px solid var(--line);background:var(--paper)}
@@ -122,7 +122,7 @@ details.adv .grid{margin-top:10px}
 @media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .stat{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
 .stat span{display:block;font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-body.ta .stat span{text-transform:none;letter-spacing:0}
+body.indic .stat span{text-transform:none;letter-spacing:0}
 .stat b{display:block;font-size:15.5px;margin-top:2px}
 .charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 @media (max-width:760px){.charts{grid-template-columns:1fr}}
@@ -161,7 +161,7 @@ tr.now td{background:var(--accent-soft)}
 .ai{border:1px dashed var(--accent-2);border-radius:12px;padding:16px;background:color-mix(in srgb,var(--accent-soft) 45%,var(--paper))}
 .ai .md h2,.ai .md h3,.ai .md h4{font-family:var(--display);color:var(--accent);margin:18px 0 6px}
 .ai .md h2{font-size:21px}.ai .md h3{font-size:19px}.ai .md h4{font-size:17px}
-body.ta .ai .md h2,body.ta .ai .md h3,body.ta .ai .md h4{font-family:'Noto Sans Tamil',sans-serif;font-size:16.5px}
+body.indic .ai .md h2,body.indic .ai .md h3,body.indic .ai .md h4{font-family:'Noto Sans Tamil','Noto Sans Malayalam','Noto Sans Telugu','Noto Sans Kannada','Noto Sans Devanagari',sans-serif;font-size:16.5px}
 .ai .md p{margin:6px 0}
 .ai .md ul{margin:6px 0;padding-left:20px}
 .ai .md > :first-child{margin-top:0}
@@ -210,7 +210,7 @@ dialog h3{margin-bottom:6px}
 .wa-ic{width:18px;height:18px;flex:none;color:#25a55a}
 .hero{display:flex;gap:14px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
 .hero h2{font:700 clamp(24px,3.4vw,32px)/1.15 var(--display);margin:0;text-wrap:balance}
-body.ta .hero h2{font-family:'Noto Serif Tamil','Noto Sans Tamil',serif;font-size:clamp(20px,3vw,26px)}
+body.indic .hero h2{font-family:'Noto Serif Tamil','Noto Serif Malayalam','Noto Serif Telugu','Noto Serif Kannada','Noto Serif Devanagari',serif;font-size:clamp(20px,3vw,26px)}
 .hero p{margin:6px 0 0;color:var(--muted);max-width:62ch}
 .today{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13.5px;margin-bottom:18px;cursor:pointer;text-align:left;width:100%;color:var(--ink);font-family:inherit}
 .today:hover{border-color:var(--accent-2)}
@@ -257,7 +257,63 @@ a{color:var(--accent)}
 .visits b{color:var(--accent)}
 .flinks a{color:var(--muted)}
 .sheet .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:5}
-.sheet .wm span{transform:rotate(-35deg);font:800 16mm/1.1 'Noto Sans Tamil',sans-serif;color:rgba(143,13,23,.13);text-align:center;white-space:nowrap}
+.sheet .wm span{transform:rotate(-35deg);font:800 16mm/1.1 'Noto Sans Tamil','Noto Sans Malayalam','Noto Sans Telugu','Noto Sans Kannada','Noto Sans Devanagari',sans-serif;color:rgba(143,13,23,.13);text-align:center;white-space:nowrap}
+
+/* ================= national: language picker, North chart, guna, regional print themes ================= */
+.langsel{position:relative;display:inline-flex;align-items:center}
+.langsel select{appearance:none;-webkit-appearance:none;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 30px 7px 12px;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer;min-height:38px}
+.langsel::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.langsel svg{position:absolute;left:10px;pointer-events:none;color:var(--muted)}
+.langsel.ic select{padding-left:30px}
+@media (max-width:520px){.brand small{display:none}.brand h1{font-size:22px}.langsel select{max-width:118px}}
+.seg.mini{padding:2px}.seg.mini button{padding:4px 10px;font-size:12.5px}
+.chart-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.chart-head h3{margin:0}
+.ni{display:block;width:100%;max-width:440px;aspect-ratio:1;margin:0 auto;background:var(--paper)}
+.ni .fr{fill:none;stroke:var(--gold);stroke-width:.7}
+.ni .h1{fill:var(--accent-soft);stroke:none}
+.ni .sn{fill:var(--muted);font-size:3.6px;font-weight:600}
+.ni .pl{fill:var(--ink);font-size:4.6px;font-weight:700}
+.ni .pl .r{font-size:3px}
+.ni-cap{text-align:center;color:var(--muted);font-size:12px;margin-top:6px}
+.mview{margin:16px 0 0}
+.gtbl td.pts{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.papa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}
+.trad-hint{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.seo{margin-top:18px}
+.seo h2{font:600 22px/1.25 var(--display);margin:0 0 6px}
+body.indic .seo h2{font-family:inherit;font-size:19px}
+.seo h3{font-size:15px;margin:14px 0 4px}
+.seo p{margin:0 0 6px;color:var(--muted)}
+.seo .langs{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:12px}
+.seo .langs a{color:var(--accent);font-weight:600}
+/* North chart on the printed sheet */
+.sheet .ni{max-width:none;background:#fffdf5;outline:.7mm solid var(--kum-d)}
+.sheet .ni .fr{stroke:#b8872f;stroke-width:.55}
+.sheet .ni .h1{fill:#fff1c9}
+.sheet .ni .sn{fill:#9a7a55}
+.sheet .ni .pl{fill:var(--ink2)}
+/* Kerala: kasavu cream and gold */
+.sheet.th-ml{--manjal:#d9b44a;--manjal-d:#b8902a;--kum:#7a1f12;--kum-d:#5a2a0a;--gold2:#b8902a;background:#fdf8ea}
+.sheet.th-ml .band{background:linear-gradient(90deg,#fbf3dc 0 2mm,#c9a03a 2mm 3.4mm,#fbf3dc 3.4mm 4.6mm,#c9a03a 4.6mm 5.1mm,#fbf3dc 5.1mm 7.9mm,#c9a03a 7.9mm 8.4mm,#fbf3dc 8.4mm 9.6mm,#c9a03a 9.6mm 11mm,#fbf3dc 11mm)}
+.sheet.th-ml .band.l{border-right-color:#b8902a}.sheet.th-ml .band.r{border-left-color:#b8902a}
+.sheet.th-ml .topb,.sheet.th-ml .botb{background:repeating-linear-gradient(90deg,#c9a03a 0 6mm,#fbf3dc 6mm 7mm,#7a1f12 7mm 8mm,#fbf3dc 8mm 9mm)}
+.sheet.th-ml .om{background:radial-gradient(circle,#fff8e1,#f5e3a8)}
+/* Telugu: pasupu-kunkuma with a mango-leaf thoranam */
+.sheet.th-te{--manjal:#f4c430;--manjal-d:#dba515;--kum:#c8102e;--kum-d:#8a0b1f}
+.sheet.th-te .topb{height:9mm;border:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='44' viewBox='0 0 40 44'%3E%3Cpath d='M0 3 Q20 9 40 3' stroke='%23a8801f' stroke-width='1.8' fill='none'/%3E%3Cpath d='M20 6 C27 15 26 31 20 42 C14 31 13 15 20 6Z' fill='%233f8a2e' stroke='%23275a1b' stroke-width='.8'/%3E%3Cpath d='M20 8 V40' stroke='%23275a1b' stroke-width='.7'/%3E%3Ccircle cx='5' cy='5' r='2.4' fill='%23f0b91e'/%3E%3Ccircle cx='35' cy='5' r='2.4' fill='%23c8102e'/%3E%3C/svg%3E") 0 0/8mm 8.8mm repeat-x}
+/* Kannada: kumkum red, gold and leaf green */
+.sheet.th-kn{--manjal:#e8b923;--manjal-d:#c99512;--kum:#b0151f;--kum-d:#7d0d16}
+.sheet.th-kn .band{background:radial-gradient(circle at 50% 50%,#f3c637 0 2.4mm,#a8801f 2.5mm 2.9mm,transparent 3mm) 50% 3mm/13mm 14mm repeat-y,linear-gradient(90deg,#1f5a24,#2f7d33 40%,#3b8f3e 55%,#2f7d33 70%,#1f5a24)}
+.sheet.th-kn .topb,.sheet.th-kn .botb{background:repeating-linear-gradient(90deg,#b0151f 0 5mm,#e8b923 5mm 8mm,#2f7d33 8mm 11mm,#e8b923 11mm 14mm)}
+/* North Indian: saffron and sindoor */
+.sheet.th-hi{--manjal:#ff9933;--manjal-d:#e2761b;--kum:#c1121f;--kum-d:#8f0d17;background:#fffaf2}
+.sheet.th-hi .band{background:radial-gradient(circle at 50% 50%,#c1121f 0 2.2mm,#fff2d6 2.3mm 2.7mm,transparent 2.8mm) 50% 3mm/13mm 15mm repeat-y,linear-gradient(90deg,#e2761b,#ff9933 35%,#ffb15c 55%,#ff9933 75%,#e2761b)}
+.sheet.th-hi .topb,.sheet.th-hi .botb{background:repeating-linear-gradient(90deg,#c1121f 0 4mm,#ff9933 4mm 9mm,#fff2d6 9mm 10mm)}
+.sheet .om.long{font-size:7mm}
+.sheet .suzhi svg{width:12mm;height:12mm;display:inline-block}
+.sheet.msheet .suzhi svg{width:9mm;height:9mm}
+.sheet .gtbl td:nth-child(3),.sheet .gtbl td:nth-child(4){text-align:center}
 /* ================= Traditional jathagam (print) ================= */
 .jv{position:fixed;inset:0;z-index:50;background:#4a3527;overflow:auto;display:none}
 .jv.open{display:block}
@@ -268,7 +324,7 @@ a{color:var(--accent)}
 .jv-pages{padding:20px 0 40px;display:flex;flex-direction:column;align-items:center;gap:20px}
 .sheet{--manjal:#f0b91e;--manjal-d:#d99a0b;--kum:#c1121f;--kum-d:#8f0d17;--ink2:#3a1606;--gold2:#a8801f;
   width:210mm;height:297mm;flex:none;background:#fffaf0;color:var(--ink2);position:relative;overflow:hidden;
-  font-family:'Noto Serif Tamil','Noto Sans Tamil',Georgia,serif;box-shadow:0 6px 30px rgba(0,0,0,.35);
+  font-family:'Noto Serif Tamil','Noto Serif Malayalam','Noto Serif Telugu','Noto Serif Kannada','Noto Serif Devanagari','Noto Sans Tamil',Georgia,serif;box-shadow:0 6px 30px rgba(0,0,0,.35);
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 .sheet .band{position:absolute;top:0;bottom:0;width:13mm;
   background:
@@ -375,10 +431,10 @@ a{color:var(--accent)}
         <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><rect x="2" y="2" width="32" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="2"/><path d="M2 10h32M2 26h32M10 2v32M26 2v32" stroke="var(--gold)" stroke-width="1.2"/><circle cx="18" cy="18" r="5" fill="var(--accent)"/></svg>
         <div><h1 data-t="appName">Suba Jathagam</h1><small data-t="tagline">South Indian Vedic horoscope &amp; matching</small></div>
       </div>
-      <div class="seg" role="group" aria-label="Language">
-        <button id="lang-en" class="on">EN</button><button id="lang-ta">தமிழ்</button>
-      </div>
-      <button class="iconbtn" id="openSettings" title="AI settings" aria-label="AI settings">
+      <label class="langsel ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><select id="langSel" aria-label="Language">
+        <option value="en" lang="en">English</option><option value="ta" lang="ta">தமிழ்</option><option value="ml" lang="ml">മലയാളം</option><option value="te" lang="te">తెలుగు</option><option value="kn" lang="kn">ಕನ್ನಡ</option><option value="hi" lang="hi">हिन्दी</option>
+      </select></label>
+      <button class="iconbtn" id="openSettings" title="Settings" aria-label="Settings">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         <span class="dot hidden" id="keyDot"></span>
       </button>
@@ -444,6 +500,7 @@ a{color:var(--accent)}
     </div>
   </section>
 
+  <!--SEO-->
   <!-- FEEDBACK -->
   <section class="card" id="feedback" style="margin-top:18px">
     <h2 data-t="fbTitle">Tell us what you think</h2>
@@ -466,7 +523,7 @@ a{color:var(--accent)}
   <div class="wrap">
     <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
     <div class="visits hidden" id="visits"></div>
-    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="guide.html" data-t="lGuide">Guide</a><a href="about.html" data-t="lAbout">About</a><a href="privacy.html" data-t="lPrivacy">Privacy</a><a href="terms.html" data-t="lTerms">Terms</a></nav>
+    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="/guide.html" data-t="lGuide">Guide</a><a href="/about.html" data-t="lAbout">About</a><a href="/privacy.html" data-t="lPrivacy">Privacy</a><a href="/terms.html" data-t="lTerms">Terms</a></nav>
   </div>
 </footer>
 
@@ -483,7 +540,15 @@ a{color:var(--accent)}
 </div>
 <dialog id="settings">
   <form method="dialog" id="settingsForm">
-    <h3 data-t="aiSettings">AI reading settings</h3>
+    <h3 data-t="settingsT">Settings</h3>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="field"><label for="tradSel" data-t="tradLabel">Tradition</label><select id="tradSel">
+        <option value="ta" data-t="tr_ta">Tamil</option><option value="ml" data-t="tr_ml">Kerala</option><option value="te" data-t="tr_te">Telugu</option><option value="kn" data-t="tr_kn">Kannada</option><option value="hi" data-t="tr_hi">North Indian</option></select></div>
+      <div class="field"><label for="chartSel" data-t="chartStyle">Chart style</label><select id="chartSel">
+        <option value="south" data-t="southStyle">South Indian</option><option value="north" data-t="northStyle">North Indian</option></select></div>
+    </div>
+    <p class="trad-hint" data-t="tradHint"></p>
+    <h3 style="margin-top:18px;font-size:16px" data-t="aiAbout">AI reading (optional)</h3>
     <p class="sub" data-t="aiSettingsSub">Readings are written by Google Gemini using your own API key. The key is sent only to Google from your browser.</p>
     <div class="field"><label for="apiKey" data-t="apiKey">Gemini API key</label><input id="apiKey" type="password" placeholder="AIza…" autocomplete="off"></div>
     <p class="note"><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" data-t="getKey">Get a free key from Google AI Studio ↗</a></p>
@@ -658,8 +723,15 @@ const I = {
     years60:['பிரபவ','விபவ','சுக்ல','பிரமோதூத','பிரஜோத்பத்தி','ஆங்கீரச','ஸ்ரீமுக','பவ','யுவ','தாது','ஈஸ்வர','வெகுதான்ய','பிரமாதி','விக்கிரம','விஷு','சித்திரபானு','சுபானு','தாரண','பார்த்திப','விய','சர்வசித்து','சர்வதாரி','விரோதி','விக்ருதி','கர','நந்தன','விஜய','ஜய','மன்மத','துன்முகி','ஹேவிளம்பி','விளம்பி','விகாரி','சார்வரி','பிலவ','சுபகிருது','சோபகிருது','குரோதி','விசுவாவசு','பராபவ','பிலவங்க','கீலக','சௌமிய','சாதாரண','விரோதிகிருது','பரிதாபி','பிரமாதீச','ஆனந்த','ராட்சச','நள','பிங்கள','காளயுக்தி','சித்தார்த்தி','ரௌத்திரி','துன்மதி','துந்துபி','ருத்ரோத்காரி','ரக்தாட்சி','குரோதன','அட்சய']
   }
 };
+// merge the generated translations (src/i18n.js): Malayalam, Telugu, Kannada, Hindi and new keys
+Object.assign(I.en, I_EXTRA.en); Object.assign(I.ta, I_EXTRA.ta);
+for (const l of ['ml', 'te', 'kn', 'hi']) I[l] = Object.assign({}, I.en, I_EXTRA[l]);
+const C = window.SJC;
+const LANG_CODES = C.LANGS.map(x => x[0]);
 let lang = 'en';
-const t = (k, vars) => { let s = (I[lang][k] ?? I.en[k] ?? k); if (vars) for (const v in vars) s = s.replace('{' + v + '}', vars[v]); return s; };
+let trad = 'ta', chartStyle = 'south', matchView = 'porutham';
+const TR = () => C.TRADS[trad];
+const t = (k, vars) => { let s = (I[lang][k] ?? I.en[k] ?? k); if (vars) for (const v in vars) s = s.split('{' + v + '}').join(vars[v]); return s; };
 const L = () => I[lang];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -674,28 +746,25 @@ let model = store.get('jothidam.model') || 'gemini-3.5-flash';
 let nodeType = store.get('jothidam.node') === 'true' ? 'true' : 'mean';
 
 // ================= place search =================
-const COUNTRY = {
-  IN: ['India', 'இந்தியா'], LK: ['Sri Lanka', 'இலங்கை'], SG: ['Singapore', 'சிங்கப்பூர்'], MY: ['Malaysia', 'மலேசியா'], AE: ['UAE', 'ஐக்கிய அரபு அமீரகம்'],
-  SA: ['Saudi Arabia', 'சவுதி அரேபியா'], QA: ['Qatar', 'கத்தார்'], KW: ['Kuwait', 'குவைத்'], OM: ['Oman', 'ஓமன்'], BH: ['Bahrain', 'பஹ்ரைன்'],
-  GB: ['UK', 'ஐக்கிய இராச்சியம்'], US: ['USA', 'அமெரிக்கா'], CA: ['Canada', 'கனடா'], AU: ['Australia', 'ஆஸ்திரேலியா'], NZ: ['New Zealand', 'நியூசிலாந்து'],
-  ZA: ['South Africa', 'தென்னாப்பிரிக்கா'], MU: ['Mauritius', 'மொரிசியஸ்'], FR: ['France', 'பிரான்ஸ்'], DE: ['Germany', 'ஜெர்மனி'], RE: ['Réunion', 'ரீயூனியன்']
-};
-const cname = cc => (COUNTRY[cc] ? COUNTRY[cc][lang === 'ta' ? 1 : 0] : cc);
-const fold = x => String(x || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9஀-௿ ]+/g, ' ').replace(/\s+/g, ' ').trim();
+const COUNTRY = C.COUNTRY;
+const cname = cc => (COUNTRY[cc] ? COUNTRY[cc][lang] || COUNTRY[cc].en : cc);
+const sname = a => (a && C.STATES[a] && lang !== 'en' ? C.STATES[a][lang] || a : a);
+// a place's name in the reader's script (falls back to English)
+const natName = (p, l = lang) => l === 'ta' ? (p.ta || '') : C.NAT_IDX[l] != null ? ((p.nat && p.nat[C.NAT_IDX[l]]) || '') : '';
+const fold = x => String(x || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9\u0900-\u097f\u0b80-\u0bff\u0c00-\u0d7f ]+/g, ' ').replace(/\s+/g, ' ').trim();
 let PLACES = null, placesP = null;
 function loadPlaces() {
-  if (!placesP) placesP = fetch('data/places.json').then(r => r.json()).then(d => {
-    PLACES = d.p.map((p, i) => ({ name: p[0], ta: p[1], adm: p[2], cc: p[3], lat: p[4], lon: p[5], tz: d.tz[p[6]], alias: p[7], rank: i,
-      k: fold(p[0]), ka: fold(p[7]).split(' | ').join('|'), kt: fold(p[1]) }));
+  if (!placesP) placesP = fetch('/data/places.json').then(r => r.json()).then(d => {
+    PLACES = d.p.map((p, i) => ({ name: p[0], ta: p[1], adm: p[2], cc: p[3], lat: p[4], lon: p[5], tz: d.tz[p[6]], alias: p[7], nat: p[8] || [], rank: i,
+      k: fold(p[0]), kts: [p[1]].concat(p[8] || []).filter(Boolean).map(fold) }));
     return PLACES;
   }).catch(() => (PLACES = []));
   return placesP;
 }
-const POPULAR = ['Chennai', 'Madurai', 'Coimbatore', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Thanjavur', 'Bengaluru', 'Singapore', 'Colombo'];
 function placeLabel(p) {
-  const nm = lang === 'ta' && p.ta ? p.ta : p.name;
-  const reg = [p.adm, cname(p.cc)].filter(Boolean).join(', ');
-  return { nm, reg, full: [nm, p.adm, cname(p.cc)].filter(Boolean).join(', ') };
+  const nm = natName(p) || p.name;
+  const reg = [sname(p.adm), cname(p.cc)].filter(Boolean).join(', ');
+  return { nm, reg, full: [nm, sname(p.adm), cname(p.cc)].filter(Boolean).join(', ') };
 }
 function searchLocal(q, n = 8) {
   if (!PLACES) return [];
@@ -703,8 +772,8 @@ function searchLocal(q, n = 8) {
   const out = [];
   for (const p of PLACES) {
     let sc = -1;
-    if (p.k === f || p.kt === f) sc = 0;
-    else if (p.k.startsWith(f) || (p.kt && p.kt.startsWith(f))) sc = 1;
+    if (p.k === f || p.kts.includes(f)) sc = 0;
+    else if (p.k.startsWith(f) || p.kts.some(x => x.startsWith(f))) sc = 1;
     else if (p.alias && fold(p.alias).split(' ').some(a => a.startsWith(f))) sc = 1;
     else if (p.k.split(' ').some(w => w.startsWith(f))) sc = 2;
     else if (f.length >= 4 && p.k.includes(f)) sc = 3;
@@ -715,7 +784,7 @@ function searchLocal(q, n = 8) {
 }
 async function searchRemote(q) {
   try {
-    const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=8&language=${lang}&format=json`);
+    const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=8&language=${lang === 'en' ? 'en' : lang}&format=json`);
     const j = await r.json();
     return (j.results || []).filter(p => p.feature_code !== 'AIRP').map(p => ({
       name: p.name, ta: '', adm: p.admin1 || '', cc: p.country_code || '', lat: p.latitude, lon: p.longitude, tz: p.timezone || 'Asia/Kolkata', remote: true,
@@ -730,12 +799,13 @@ function placePicker(input, box, geo, onPick, onClear) {
     if (!list.length && !extra) { box.style.display = 'none'; return; }
     box.innerHTML = (header ? `<div class="sh">${header}</div>` : '') + list.map((p, i) => {
       const l = placeLabel(p), reg = p.remote && !COUNTRY[p.cc] ? [p.adm, p.countryName].filter(Boolean).join(', ') : l.reg;
-      const alt = lang === 'ta' ? (p.ta ? p.name : '') : p.ta;
+      const alt = lang === 'en' ? natName(p, trad) : (natName(p) ? p.name : '');
       return `<button type="button" class="opt${i === 0 ? ' active' : ''}" role="option" data-i="${i}"><b>${esc(l.nm)}</b>${alt ? ` <span class="ta">${esc(alt)}</span>` : ''} <small>${esc(reg)}</small></button>`;
     }).join('') + (extra || '');
     box.style.display = 'block';
   };
   const choose = (p, auto) => {
+    clearTimeout(timer); seq++; // a late remote search must not reopen the list
     const l = placeLabel(p);
     input.value = p.remote ? [p.name, p.adm, p.countryName].filter(Boolean).join(', ') : l.full;
     chosenLabel = input.value;
@@ -753,7 +823,7 @@ function placePicker(input, box, geo, onPick, onClear) {
   const showPopular = async () => {
     await loadPlaces();
     if (input.value.trim() || document.activeElement !== input) return;
-    render(POPULAR.map(n => PLACES.find(p => p.name === n)).filter(Boolean), t('popular'));
+    render(C.POPULAR[lang].map(n => PLACES.find(p => p.name === n)).filter(Boolean), t('popular'));
   };
   const update = async () => {
     const q = input.value.trim();
@@ -876,12 +946,12 @@ function personForm(host, id, opts) {
 }
 
 // ================= formatting =================
-const fmtDate = ms => new Date(ms).toLocaleDateString(lang === 'ta' ? 'ta-IN' : 'en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const fmtDate = ms => new Date(ms).toLocaleDateString(lang === 'en' ? 'en-GB' : lang + '-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const fmtDeg = x => { const d = Math.floor(x), m = Math.floor((x - d) * 60); return `${d}°${String(m).padStart(2, '0')}′`; };
 const fmtOff = m => `UTC${m < 0 ? '−' : '+'}${String(Math.floor(Math.abs(m) / 60)).padStart(2, '0')}:${String(Math.abs(m) % 60).padStart(2, '0')}`;
 const tithiName = (i) => { const n = i % 15; if (i === 14) return L().pournami; if (i === 29) return L().amavasai; return L().tithis[n]; };
-const signName = i => lang === 'ta' ? L().rasis[i] : `${L().rasis[i]} <span class="muted">(${L().rasisEn[i]})</span>`;
-const signPlain = i => lang === 'ta' ? L().rasis[i] : L().rasis[i];
+const signName = i => lang !== 'en' ? L().rasis[i] : `${L().rasis[i]} <span class="muted">(${L().rasisEn[i]})</span>`;
+const signPlain = i => L().rasis[i];
 const yrsFmt = y => { const Y = Math.floor(y), M = Math.floor((y - Y) * 12); return `${Y}${t('yrs')} ${M}${t('mos')}`; };
 
 // ================= South Indian chart =================
@@ -905,6 +975,59 @@ function siChart(chart, useNavamsa, title) {
   return html;
 }
 
+// ================= North Indian chart =================
+// houses 1..12 anticlockwise from the top diamond: [planet text centre, sign number position, items per line]
+const NI_H = [[[50, 22], [50, 44], 3], [[25, 7], [25, 21], 3], [[8, 25], [20, 25], 2], [[25, 48], [44, 50], 3], [[8, 75], [20, 75], 2], [[25, 89], [25, 80], 3],
+  [[50, 72], [50, 57], 3], [[75, 89], [75, 80], 3], [[92, 75], [80, 75], 2], [[75, 48], [56, 50], 3], [[92, 25], [80, 25], 2], [[75, 7], [75, 21], 3]];
+function niChart(chart, useNavamsa, title) {
+  const lg = useNavamsa ? chart.lagna.navamsa : chart.lagna.sign;
+  const byHouse = Array.from({ length: 12 }, () => []);
+  chart.planets.forEach(p => {
+    const s = useNavamsa ? p.navamsa : p.sign, h = (s - lg + 12) % 12;
+    const r = p.retro && p.name !== 'Rahu' && p.name !== 'Ketu' ? `<tspan class="r" baseline-shift="super">${esc(L().rAb)}</tspan>` : '';
+    byHouse[h].push(`${esc(L().ab[p.name])}${r}`);
+  });
+  let g = `<svg class="ni" viewBox="0 0 100 100" role="img" aria-label="${esc(title)}">
+    <path class="h1" d="M50 0 L75 25 L50 50 L25 25Z"/>
+    <rect class="fr" x=".4" y=".4" width="99.2" height="99.2"/><path class="fr" d="M0 0L100 100M100 0L0 100M50 0L100 50L50 100L0 50Z"/>`;
+  for (let h = 0; h < 12; h++) {
+    const [[cx, cy], [nx, ny], per] = NI_H[h];
+    g += `<text class="sn" x="${nx}" y="${ny + 1.3}" text-anchor="middle">${(lg + h) % 12 + 1}</text>`;
+    const items = byHouse[h], lines = [];
+    for (let i = 0; i < items.length; i += per) lines.push(items.slice(i, i + per).join(' '));
+    const y0 = cy - (lines.length - 1) * 2.8 + 1.6;
+    lines.forEach((ln, i) => { g += `<text class="pl" x="${cx}" y="${(y0 + i * 5.6).toFixed(1)}" text-anchor="middle">${ln}</text>`; });
+  }
+  return g + '</svg>';
+}
+function chartHTML(chart, useNavamsa, title, caption) {
+  if (chartStyle !== 'north') return siChart(chart, useNavamsa, title);
+  return niChart(chart, useNavamsa, title) + (caption ? `<div class="ni-cap">${caption}</div>` : '');
+}
+function styleToggle() {
+  return `<div class="seg mini no-print" role="group" aria-label="${esc(t('chartStyle'))}"><button type="button" data-cs="south" class="${chartStyle === 'south' ? 'on' : ''}">${t('southStyle')}</button><button type="button" data-cs="north" class="${chartStyle === 'north' ? 'on' : ''}">${t('northStyle')}</button></div>`;
+}
+
+// ================= calendars by tradition =================
+function lunarTithi(i) { return i === 14 || i === 29 ? tithiName(i) : `${L().pakShort[i < 15 ? 0 : 1]} ${tithiName(i)}`; }
+// x: an object with .tamil, .malayalam, .lunar (a chart or a day's panchangam)
+function calText(x, tr = trad, short = false) {
+  const Lx = L();
+  if (tr === 'ml' && x.malayalam) { const m = x.malayalam; return short ? `${Lx.malMonths[m.month]} ${m.date}` : `${t('kollamFmt', { n: m.year })}, ${Lx.malMonths[m.month]} ${m.date}`; }
+  if ((tr === 'te' || tr === 'kn') && x.lunar) {
+    const u = x.lunar, mo = (u.adhika ? t('adhika') + ' ' : '') + Lx.lunarMonths[u.amanta];
+    return short ? `${mo} · ${lunarTithi(u.tithi)}` : `${t('samvFmt', { name: Lx.years60[u.samvatsara] })}, ${mo} ${lunarTithi(u.tithi)}, ${t('shakaFmt', { n: u.shaka })}`;
+  }
+  if (tr === 'hi' && x.lunar) {
+    const u = x.lunar, mo = (u.adhika ? t('adhika') + ' ' : '') + Lx.lunarMonths[u.purnimanta];
+    return short ? `${mo} · ${lunarTithi(u.tithi)}` : `${t('vikramFmt', { n: u.vikram })}, ${mo} ${lunarTithi(u.tithi)}`;
+  }
+  const tm = x.tamil;
+  return short ? `${Lx.months[tm.month]} ${tm.date}` : `${Lx.years60[tm.year]} ${t('varusham')}, ${Lx.months[tm.month]} ${tm.date}`;
+}
+// English calendar line for the AI prompt
+function calTextEn(x) { const keep = lang; lang = 'en'; try { return calText(x); } finally { lang = keep; } }
+
 // ================= Horoscope render =================
 function statusTags(p) {
   const tags = [];
@@ -918,7 +1041,7 @@ function statusTags(p) {
 function doshaBlock(c) {
   const ch = c.doshas.chevvai;
   let chevState, chevText;
-  if (!ch.present) { chevState = 'good'; chevText = t('chevNone'); }
+  if (!ch.present) { chevState = 'good'; chevText = t('chevNone', { houses: (ch.houses || [2, 4, 7, 8, 12]).join(', ') }); }
   else {
     chevText = ch.refs.map(r => t('chevDet', { h: r.house, ref: t(r.from === 'lagna' ? 'fromLagna' : 'fromMoon') }) + (r.cancelled ? t('chevCancel') : '')).join(' ');
     chevState = ch.effective ? 'bad' : 'medium';
@@ -950,11 +1073,11 @@ function dasaBlock(c) {
 }
 const DASA_LORDS = ['Ketu', 'Venus', 'Sun', 'Moon', 'Mars', 'Rahu', 'Jupiter', 'Saturn', 'Mercury'];
 const fmtClock = (ms, off) => { const d = new Date(Math.round((ms + off * 60000) / 60000) * 60000); return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`; };
-function tamilDateText(c) { const tm = c.tamil; return `${L().years60[tm.year]} ${t('varusham')}, ${L().months[tm.month]} ${tm.date}`; }
+function tamilDateText(c) { return calText(c); }
 function statsBlock(c) {
   const pn = c.panchang, tm = c.tamil, off = c.input.offsetMinutes;
   const items = [
-    [t('tamilDate'), tamilDateText(c)],
+    [t('cal_' + trad), calText(c)],
     [t('lagna'), signPlain(c.lagna.sign) + ` <small class="muted">${fmtDeg(c.lagna.deg)}</small>`],
     [t('rasi'), signPlain(c.rasi)],
     [t('star'), `${L().naks[c.nakshatra]} · ${c.pada}`],
@@ -997,6 +1120,11 @@ function birthLine(pd, c) {
 function fmtDateInput(s) { const [y, m, d] = s.split('-').map(Number); return fmtDate(Date.UTC(y, m - 1, d)); }
 
 let horoState = null, matchState = null;
+const chartOf = calc => J.computeChart({ ...calc, nodeType, marsHouses: TR().mars });
+function buildMatch(boy, girl) {
+  const bc = chartOf(boy.calc), gc = chartOf(girl.calc);
+  return { boy, girl, bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc), ak: J.ashtakoota(gc, bc), pp: J.papasamyam(gc, bc) };
+}
 const aiCache = { horo: {}, match: {} };
 
 function renderHoro() {
@@ -1013,9 +1141,9 @@ function renderHoro() {
       <div style="margin-top:16px">${statsBlock(c)}</div>
       <p class="note">${t('weekdayNote')}${c.tamil.beforeSunrise ? ' ' + t('beforeSunriseNote') : ''}</p>
     </div>
-    <div class="card"><div class="charts">
-      <div><p class="chart-t">${t('rasiChart')}</p>${siChart(c, false, t('rasiChart'))}</div>
-      <div><p class="chart-t">${t('navChart')}</p>${siChart(c, true, t('navChart'))}</div>
+    <div class="card"><div class="chart-head"><h3>${t('rasiChart')} · ${t('navChart')}</h3>${styleToggle()}</div><div class="charts">
+      <div><p class="chart-t">${t('rasiChart')}</p>${chartHTML(c, false, t('rasiChart'), esc(pd.name || ''))}</div>
+      <div><p class="chart-t">${t('navChart')}</p>${chartHTML(c, true, t('navChart'), esc(pd.name || ''))}</div>
     </div></div>
     <div class="card"><h3>${t('planets')}</h3>${planetTable(c)}</div>
     <div class="card"><h3>${t('dasa')}</h3>${dasaBlock(c)}</div>
@@ -1043,42 +1171,82 @@ function matchDetail(item, g, b) {
   }
   return '';
 }
+function gunaDetail(it, g, b) {
+  const d = it.detail, Lx = L();
+  switch (it.key) {
+    case 'varna': return `${Lx.varnaN[d.girl]} → ${Lx.varnaN[d.boy]}`;
+    case 'vashya': return `${Lx.vashyaN[d.girl]} → ${Lx.vashyaN[d.boy]}`;
+    case 'tara': return `${t('countLbl', { n: d.a })} · ${t('countLbl', { n: d.b })}`;
+    case 'yoni': return `${Lx.yoniN[d.girl]} → ${Lx.yoniN[d.boy]}`;
+    case 'maitri': return `${Lx.pl[d.girl]} → ${Lx.pl[d.boy]}`;
+    case 'gana': return `${Lx.gana[d.girl]} → ${Lx.gana[d.boy]}`;
+    case 'bhakoot': return `${signPlain(g.rasi)} → ${signPlain(b.rasi)} (${t('countLbl', { n: d.count })})`;
+    case 'nadi': return `${Lx.nadiN[d.girl]} → ${Lx.nadiN[d.boy]}`;
+  }
+  return '';
+}
+const gunaState = it => it.pts >= it.max ? 'good' : it.pts <= 0 ? (it.cancelled ? 'medium' : 'bad') : 'medium';
+const fmtPts = x => (Number.isInteger(x) ? String(x) : x.toFixed(1));
+const verdictColor = v => v === 'notRecommended' || v === 'weak' ? 'var(--bad)' : v === 'average' ? 'var(--mid)' : 'var(--good)';
+function viewToggle() {
+  return `<div class="seg mview no-print" role="group" aria-label="${esc(t('matchTitle'))}"><button type="button" data-mv="porutham" class="${matchView === 'porutham' ? 'on' : ''}">${t('poruthamTab')}</button><button type="button" data-mv="guna" class="${matchView === 'guna' ? 'on' : ''}">${t('gunaTab')}</button></div>`;
+}
+function papaCard(pp) {
+  if (!TR().papa) return '';
+  return `<div class="card"><h3>${t('papaTitle')}</h3>
+    <div class="papa"><div class="stat"><span>${t('boy')}</span><b>${t('papaPts', { n: pp.boy.total })}</b></div><div class="stat"><span>${t('girl')}</span><b>${t('papaPts', { n: pp.girl.total })}</b></div></div>
+    <p style="margin:12px 0 0"><span class="pill ${pp.ok ? 'good' : 'bad'}">${pp.ok ? t('balanced') : t('unbalanced')}</span> ${pp.ok ? t('papaOk') : t('papaBad')}</p>
+    <p class="note">${t('papaRule')}</p></div>`;
+}
 function renderMatch() {
   const out = document.getElementById('matchOut');
   if (!matchState) { out.innerHTML = ''; return; }
-  const { boy, girl, bc, gc, pr, dc } = matchState;
+  const { boy, girl, bc, gc, pr, dc, ak, pp } = matchState;
   bc._name = boy.name || t('boy'); gc._name = girl.name || t('girl');
   bc._when = `${fmtDateInput(boy.date)} ${esc(boy.time)}`; gc._when = `${fmtDateInput(girl.date)} ${esc(girl.time)}`;
-  const color = pr.verdict === 'notRecommended' || pr.verdict === 'weak' ? 'var(--bad)' : pr.verdict === 'average' ? 'var(--mid)' : 'var(--good)';
+  const guna = matchView === 'guna';
+  const verdict = guna ? ak.verdict : pr.verdict, color = verdictColor(verdict);
   const person = (pd, c, lbl) => `<div class="stat"><span>${lbl}</span><b>${esc(pd.name) || lbl}</b>
       <div class="muted" style="font-size:13px;margin-top:4px">${L().naks[c.nakshatra]} ${c.pada} · ${signPlain(c.rasi)} · ${t('lagna')}: ${signPlain(c.lagna.sign)}</div>
       <div class="muted" style="font-size:12px">${birthLine(pd, c)}</div></div>`;
   const yn = v => v ? t('yes') : t('no');
-  out.innerHTML = `
-    <div class="card">
-      <div class="pair">${person(boy, bc, t('boy'))}${person(girl, gc, t('girl'))}</div>
-      <div class="score" style="margin-top:18px">
-        <div class="dial" style="--p:${pr.score * 10};--c:${color}"><div><div><b>${pr.score}</b><small>${t('outOf')}</small></div></div></div>
-        <div class="verdict"><div class="big" style="color:${color}">${t('v_' + pr.verdict)}</div><p>${t('vd_' + pr.verdict)}</p></div>
-        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openMatchSheet">🪔 ${t('printPdf')}</button><button class="btn ghost" type="button" data-wa="match">${WA_ICON} WhatsApp</button><button class="btn ghost" type="button" data-share="match">${t('share')}</button></div>
-      </div>
-    </div>
-    <div class="card"><h3>${t('poruthams')}</h3>
+  const dial = guna
+    ? `<div class="dial" style="--p:${Math.round(ak.score / 36 * 100)};--c:${color}"><div><div><b>${fmtPts(ak.score)}</b><small>${t('gunaOutOf')}</small></div></div></div>`
+    : `<div class="dial" style="--p:${pr.score * 10};--c:${color}"><div><div><b>${pr.score}</b><small>${t('outOf')}</small></div></div></div>`;
+  const vText = guna ? t('gvd_' + ak.verdict) + (ak.nadiDosha ? ' ' + t('nadiDoshaNote') : '') : t('vd_' + pr.verdict);
+  const poruthamCard = `<div class="card"><h3>${t('poruthams')}</h3>
       <div class="tbl-wrap"><table class="ptbl"><thead><tr><th>${t('porutham')}</th><th>${t('result')}</th><th></th><th>${t('meaning')}</th></tr></thead><tbody>
       ${pr.items.map(it => `<tr><td>${t('p_' + it.key)}${it.critical ? ` <span class="tag db">${t('critical')}</span>` : ''}<div class="msub">${matchDetail(it, gc, bc)}<br>${t('m_' + it.key)}</div></td><td><span class="pill ${it.result}">${t(it.result)}</span></td><td class="muted det" style="font-size:13px">${matchDetail(it, gc, bc)}</td><td class="why">${t('m_' + it.key)}</td></tr>`).join('')}
       </tbody></table></div>
+      <p class="note">${t('rulesNote')}</p></div>`;
+  const gunaCard = `<div class="card"><h3>${t('gunaScore')}</h3>
+      <div class="tbl-wrap"><table class="ptbl gtbl"><thead><tr><th>${t('porutham')}</th><th>${t('points')}</th><th></th><th>${t('meaning')}</th></tr></thead><tbody>
+      ${ak.items.map(it => `<tr><td>${t('k_' + it.key)}${it.dosha ? ` <span class="tag ${it.cancelled ? '' : 'db'}">${it.key === 'nadi' ? t('nadiDosha') : t('bhakootDosha')}</span>` : ''}<div class="msub">${gunaDetail(it, gc, bc)}<br>${t('mk_' + it.key)}${it.dosha && it.cancelled ? '<br>' + t('doshaCancelledGen') : ''}</div></td><td class="pts"><span class="pill ${gunaState(it)}">${fmtPts(it.pts)} / ${it.max}</span></td><td class="muted det" style="font-size:13px">${gunaDetail(it, gc, bc)}</td><td class="why">${t('mk_' + it.key)}${it.dosha && it.cancelled ? ' · ' + t('doshaCancelledGen') : ''}</td></tr>`).join('')}
+      <tr><td><b>${t('gunaScore')}</b></td><td class="pts"><b>${fmtPts(ak.score)} / 36</b></td><td></td><td></td></tr>
+      </tbody></table></div>
+      <p class="note">${t('gunaRules')}</p></div>`;
+  out.innerHTML = `
+    <div class="card">
+      <div class="pair">${person(boy, bc, t('boy'))}${person(girl, gc, t('girl'))}</div>
+      ${viewToggle()}
+      <div class="score" style="margin-top:14px">
+        ${dial}
+        <div class="verdict"><div class="big" style="color:${color}">${t('v_' + verdict)}</div><p>${vText}</p></div>
+        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openMatchSheet">🪔 ${t('printPdf')}</button><button class="btn ghost" type="button" data-wa="match">${WA_ICON} WhatsApp</button><button class="btn ghost" type="button" data-share="match">${t('share')}</button></div>
+      </div>
     </div>
+    ${guna ? gunaCard : poruthamCard}
     <div class="card"><h3>${t('doshaCompat')}</h3>
       <div class="tbl-wrap"><table class="dtbl"><thead><tr><th></th><th>${t('boy')}</th><th>${t('girl')}</th><th></th></tr></thead><tbody>
         <tr><td>${t('chevBoth')}</td><td>${yn(dc.chevvai.boy)}</td><td>${yn(dc.chevvai.girl)}</td><td><span class="pill ${dc.chevvai.balanced ? 'good' : 'bad'}">${dc.chevvai.balanced ? t('balanced') : t('unbalanced')}</span></td></tr>
         <tr><td>${t('rkBoth')}</td><td>${yn(dc.rahuKetu.boy)}</td><td>${yn(dc.rahuKetu.girl)}</td><td><span class="pill ${dc.rahuKetu.balanced ? 'good' : 'bad'}">${dc.rahuKetu.balanced ? t('balanced') : t('unbalanced')}</span></td></tr>
       </tbody></table></div>
       <p class="note">${t('compatNote')}</p>
-      <p class="note">${t('rulesNote')}</p>
     </div>
-    <div class="card"><h3>${t('bothCharts')}</h3><div class="charts">
-      <div><p class="chart-t">${esc(bc._name)} · ${t('rasiChart')}</p>${siChart(bc, false, bc._name)}</div>
-      <div><p class="chart-t">${esc(gc._name)} · ${t('rasiChart')}</p>${siChart(gc, false, gc._name)}</div>
+    ${papaCard(pp)}
+    <div class="card"><div class="chart-head"><h3>${t('bothCharts')}</h3>${styleToggle()}</div><div class="charts">
+      <div><p class="chart-t">${esc(bc._name)} · ${t('rasiChart')}</p>${chartHTML(bc, false, bc._name, esc(bc._name))}</div>
+      <div><p class="chart-t">${esc(gc._name)} · ${t('rasiChart')}</p>${chartHTML(gc, false, gc._name, esc(gc._name))}</div>
     </div></div>
     ${apiKey ? `<div class="card"><h3>${t('aiTitle')}</h3><div class="ai" id="matchAi"></div></div>` : ''}
     <div class="card no-print" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><h3 style="margin:0">🪔 ${t('sheetMatchTitle')}</h3><p class="sub" style="margin:4px 0 0">${t('matchPrintHint')}</p></div><button class="btn" type="button" data-open-sheet="match">${t('printPdf')}</button></div>`;
@@ -1086,6 +1254,12 @@ function renderMatch() {
   document.getElementById('openMatchSheet').onclick = () => openSheet('match');
   if (document.getElementById('jv').classList.contains('open') && sheetMode === 'match') renderSheets();
 }
+document.addEventListener('click', e => {
+  const mv = e.target.closest('[data-mv]');
+  if (mv) { matchView = mv.dataset.mv; renderMatch(); return; }
+  const cs = e.target.closest('[data-cs]');
+  if (cs) { chartStyle = cs.dataset.cs; store.set('sj.chart', chartStyle); renderHoro(); renderMatch(); syncSettings(); }
+});
 
 // ================= AI (Gemini) =================
 const EN = I.en;
@@ -1097,24 +1271,29 @@ function chartText(pd, c) {
 Birth: ${pd.date} ${pd.time} (${fmtOff(c.input.offsetMinutes)}), ${pd.place}
 Lagna: ${EN.rasisEn[c.lagna.sign]} (${EN.rasis[c.lagna.sign]}) ${fmtDeg(c.lagna.deg)}, Lagna nakshatra ${EN.naks[c.lagna.nakshatra]}
 Moon sign (Rasi): ${EN.rasisEn[c.rasi]} (${EN.rasis[c.rasi]}); Janma nakshatra: ${EN.naks[c.nakshatra]} pada ${c.pada}
-Tamil calendar: ${EN.years60[c.tamil.year]} year, ${EN.months[c.tamil.month]} ${c.tamil.date}; Tithi: ${c.panchang.tithi === 14 ? 'Pournami' : c.panchang.tithi === 29 ? 'Amavasai' : EN.tithis[c.panchang.tithi % 15] + ' ' + c.panchang.paksha}; Yoga: ${EN.yogas[c.panchang.yoga]}; Karana: ${EN.karanas[c.panchang.karana]}; Weekday: ${EN.days[c.panchang.weekday]}
+Calendar (${trad} tradition): ${calTextEn(c)}; Tamil solar date: ${EN.years60[c.tamil.year]} year, ${EN.months[c.tamil.month]} ${c.tamil.date}; Tithi: ${c.panchang.tithi === 14 ? 'Pournami' : c.panchang.tithi === 29 ? 'Amavasai' : EN.tithis[c.panchang.tithi % 15] + ' ' + c.panchang.paksha}; Yoga: ${EN.yogas[c.panchang.yoga]}; Karana: ${EN.karanas[c.panchang.karana]}; Weekday: ${EN.days[c.panchang.weekday]}
 Planets (sidereal, Lahiri, whole-sign houses from Lagna):
 ${pl}
 Navamsa Lagna: ${EN.rasisEn[c.lagna.navamsa]}
 Vimshottari: balance at birth ${c.dasa.balance.lord} ${c.dasa.balance.years.toFixed(2)} years; current ${cur ? `${cur.md.lord} mahadasa (${new Date(cur.md.start).toISOString().slice(0, 10)} to ${new Date(cur.md.end).toISOString().slice(0, 10)}), ${cur.bh.lord} bhukti (to ${new Date(cur.bh.end).toISOString().slice(0, 10)})` : 'n/a'}
-Chevvai dosham: ${!ch.present ? 'absent' : ch.effective ? 'present (' + ch.refs.map(r => `house ${r.house} from ${r.from}${r.cancelled ? ', cancelled' : ''}`).join('; ') + ')' : 'present but cancelled'}
+Mars dosha (houses ${(ch.houses || []).join(', ')} from Lagna/Moon): ${!ch.present ? 'absent' : ch.effective ? 'present (' + ch.refs.map(r => `house ${r.house} from ${r.from}${r.cancelled ? ', cancelled' : ''}`).join('; ') + ')' : 'present but cancelled'}
 Current transits (${new Date().toISOString().slice(0, 10)}): ${J.transits(c, Date.now()).map(x => `${x.name} in ${EN.rasisEn[x.sign]} (house ${x.fromMoon} from Moon)`).join(', ')}
 Rahu-Ketu dosham: ${c.doshas.rahuKetu.present ? 'present' : 'absent'} (Rahu house ${c.doshas.rahuKetu.rahuHouse}, Ketu house ${c.doshas.rahuKetu.ketuHouse}); Kala Sarpa: ${c.doshas.kalaSarpa ? 'yes' : 'no'}`;
 }
-function langRule() {
-  return lang === 'ta'
-    ? 'Write the entire answer in Tamil (தமிழ் script), in the warm, clear style of an experienced Tamil astrologer. Use Tamil astrological terms (லக்னம், ராசி, தசை, புக்தி, etc.).'
-    : 'Write in clear, warm English. Keep Sanskrit/Tamil astrological terms with a short English gloss the first time.';
-}
+const LANG_RULE = {
+  en: 'Write in clear, warm English. Keep Sanskrit astrological terms with a short English gloss the first time.',
+  ta: 'Write the entire answer in Tamil (தமிழ் script), in the warm, clear style of an experienced Tamil astrologer. Use Tamil astrological terms (லக்னம், ராசி, தசை, புக்தி, etc.).',
+  ml: 'Write the entire answer in Malayalam (മലയാളം script), in the warm, clear style of an experienced Kerala jyotishi. Use Malayalam astrological terms (ലഗ്നം, രാശി, ദശ, അപഹാരം, etc.).',
+  te: 'Write the entire answer in Telugu (తెలుగు script), in the warm, clear style of an experienced Telugu siddhanti. Use Telugu astrological terms (లగ్నం, రాశి, దశ, అంతర్దశ, etc.).',
+  kn: 'Write the entire answer in Kannada (ಕನ್ನಡ script), in the warm, clear style of an experienced Kannada jyotishi. Use Kannada astrological terms (ಲಗ್ನ, ರಾಶಿ, ದಶೆ, ಭುಕ್ತಿ, etc.).',
+  hi: 'Write the entire answer in Hindi (देवनागरी script), in the warm, clear style of an experienced jyotishacharya. Use Hindi astrological terms (लग्न, राशि, महादशा, अंतर्दशा, etc.).'
+};
+const PERSONA = { ta: 'South Indian (Tamil)', ml: 'Kerala', te: 'Telugu', kn: 'Kannada', hi: 'North Indian (Parashari)' };
+function langRule() { return LANG_RULE[lang] || LANG_RULE.en; }
 function horoPrompt() {
   const { pd, c } = horoState;
   const today = new Date().toISOString().slice(0, 10);
-  return `You are an experienced South Indian (Tamil) Vedic astrologer. Interpret the computed birth chart below. Do not recompute positions; rely on the data given. Today is ${today}.
+  return `You are an experienced ${PERSONA[trad]} Vedic astrologer. Interpret the computed birth chart below. Do not recompute positions; rely on the data given. Today is ${today}.
 
 ${chartText(pd, c)}
 
@@ -1132,9 +1311,10 @@ Rules: 150–250 words per section, use short paragraphs and occasional bullets.
 ${langRule()}`;
 }
 function matchPrompt() {
-  const { boy, girl, bc, gc, pr, dc } = matchState;
+  const { boy, girl, bc, gc, pr, dc, ak } = matchState;
   const items = pr.items.map(i => `${EN['p_' + i.key]}: ${i.result === 'good' ? 'Uthamam (matching)' : i.result === 'medium' ? 'Madhyamam (average)' : 'Not matching'}`).join('\n');
-  return `You are an experienced Tamil Vedic astrologer doing marriage matching (thirumana porutham). Use the computed data below; do not recompute.
+  const guna = ak.items.map(i => `${i.key}: ${i.pts}/${i.max}${i.dosha ? (i.cancelled ? ' (dosha, cancelled)' : ' (dosha)') : ''}`).join(', ');
+  return `You are an experienced ${PERSONA[trad]} Vedic astrologer doing marriage matching. The family follows the ${PERSONA[trad]} tradition, so lead with ${matchView === 'guna' ? 'the 36-guna Ashtakoota score' : 'the 10 porutham check'} and mention the other briefly. Use the computed data below; do not recompute.
 
 BOY
 ${chartText(boy, bc)}
@@ -1144,12 +1324,14 @@ ${chartText(girl, gc)}
 
 10 PORUTHAM RESULTS (counted from girl's star to boy's star)
 ${items}
-Total: ${pr.score}/10. Rajju ${pr.items.find(i => i.key === 'rajju').result === 'good' ? 'OK' : 'NOT matching'}; Vedhai ${pr.items.find(i => i.key === 'vedhai').result === 'good' ? 'OK' : 'NOT matching'}.
+Total: ${pr.score}/10.
+ASHTAKOOTA (36 GUNA): ${guna}. Total ${ak.score}/36${ak.nadiDosha ? ', Nadi dosha present' : ''}${ak.bhakootDosha ? ', Bhakoot dosha present' : ''}.
+Rajju ${pr.items.find(i => i.key === 'rajju').result === 'good' ? 'OK' : 'NOT matching'}; Vedhai ${pr.items.find(i => i.key === 'vedhai').result === 'good' ? 'OK' : 'NOT matching'}.
 Dosha samyam: Chevvai — boy ${dc.chevvai.boy ? 'yes' : 'no'}, girl ${dc.chevvai.girl ? 'yes' : 'no'}; Rahu-Ketu — boy ${dc.rahuKetu.boy ? 'yes' : 'no'}, girl ${dc.rahuKetu.girl ? 'yes' : 'no'}.
 
 Write the analysis with these "##" sections:
-1. Overall verdict (one clear paragraph with the score and whether Rajju/Vedhai are clear)
-2. Porutham-by-porutham notes (only the notable ones, briefly)
+1. Overall verdict (one clear paragraph with the scores; whether Rajju/Vedhai, Nadi and Bhakoot are clear)
+2. Notable porutham / koota points (only the notable ones, briefly)
 3. Dosha samyam
 4. Beyond stars: 7th house, Venus, Jupiter and current dasa of both, and how the two temperaments complement each other
 5. Practical guidance for the couple and simple traditional parihara if anything is weak
@@ -1173,7 +1355,7 @@ function md(src) {
   return html;
 }
 function aiKey(which) {
-  return lang + '|' + (which === 'horo' ? JSON.stringify(horoState.pd) : JSON.stringify([matchState.boy, matchState.girl]));
+  return lang + '|' + trad + '|' + matchView + '|' + (which === 'horo' ? JSON.stringify(horoState.pd) : JSON.stringify([matchState.boy, matchState.girl]));
 }
 function renderAi(which) {
   const box = document.getElementById(which === 'horo' ? 'horoAi' : 'matchAi');
@@ -1231,22 +1413,49 @@ document.getElementById('clearKey').onclick = () => { apiKey = ''; store.del('jo
 function refreshKeyDot() { document.getElementById('keyDot').classList.toggle('hidden', !!apiKey); }
 refreshKeyDot();
 
-// ================= language & tabs =================
+// ================= language, tradition & tabs =================
+const LANG_PATH = l => (l === 'en' ? '/' : '/' + l + '/');
+const DOC_TITLE = window.SJ_TITLES || {};
+function syncSettings() {
+  document.getElementById('tradSel').value = trad;
+  document.getElementById('chartSel').value = chartStyle;
+  document.getElementById('langSel').value = lang;
+}
 function applyLang() {
-  document.body.classList.toggle('ta', lang === 'ta');
+  document.body.classList.toggle('indic', lang !== 'en');
+  document.body.dataset.trad = trad;
   document.documentElement.lang = lang;
-  document.getElementById('lang-en').classList.toggle('on', lang === 'en');
-  document.getElementById('lang-ta').classList.toggle('on', lang === 'ta');
+  syncSettings();
   document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
   document.querySelectorAll('[data-tp]').forEach(el => el.title = t(el.dataset.tp));
+  const sb = document.getElementById('openSettings'); sb.title = t('settingsT'); sb.setAttribute('aria-label', t('settingsT'));
   if (typeof renderVisits === 'function') renderVisits();
-  document.title = lang === 'ta' ? 'சுப ஜாதகம் — இலவச ஜாதகம், திருமணப் பொருத்தம், பஞ்சாங்கம்' : 'Suba Jathagam · சுப ஜாதகம் — Free Tamil Jathagam, Porutham & Panchangam';
+  if (DOC_TITLE[lang]) document.title = DOC_TITLE[lang];
+  // keep the address in step with the language, so shared links open in the same language
+  if (/^https?:$/.test(location.protocol) && (location.pathname === '/' || /^\/(ta|ml|te|kn|hi)\/$/.test(location.pathname) || location.pathname === '/index.html') && location.pathname !== LANG_PATH(lang)) {
+    history.replaceState(null, '', LANG_PATH(lang) + location.search + location.hash);
+  }
+  const canon = document.querySelector('link[rel=canonical]'); if (canon) canon.href = 'https://subajathagam.in' + LANG_PATH(lang);
   renderHoro(); renderMatch();
   if (typeof renderPanch === 'function') { renderPanch(); renderToday(); renderFeedbackControls(); renderWaSite(); }
   store.set('jothidam.lang', lang);
 }
-document.getElementById('lang-en').onclick = () => { lang = 'en'; applyLang(); };
-document.getElementById('lang-ta').onclick = () => { lang = 'ta'; applyLang(); };
+function setTrad(tr, explicit) {
+  trad = C.TRADS[tr] ? tr : 'ta';
+  if (explicit) store.set('sj.trad', trad);
+  if (!store.get('sj.chart')) chartStyle = TR().chart;
+  matchView = TR().match;
+  recompute();
+}
+document.getElementById('langSel').addEventListener('change', e => {
+  lang = LANG_CODES.includes(e.target.value) ? e.target.value : 'en';
+  if (!store.get('sj.trad')) setTrad(lang === 'en' ? 'ta' : lang, false);
+  if (!store.get('sj.panchPlace')) panchPlace = C.PANCH_HOME[lang];
+  try { window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path: 'lang-' + lang, event: true }); } catch {}
+  applyLang();
+});
+document.getElementById('tradSel').addEventListener('change', e => { setTrad(e.target.value, true); applyLang(); });
+document.getElementById('chartSel').addEventListener('change', e => { chartStyle = e.target.value === 'north' ? 'north' : 'south'; store.set('sj.chart', chartStyle); renderHoro(); renderMatch(); });
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
   ['horo', 'match', 'panch'].forEach(k => document.getElementById('tab-' + k).classList.toggle('hidden', b.dataset.tab !== k));
@@ -1264,7 +1473,7 @@ document.getElementById('horoForm').addEventListener('submit', async e => {
   const err = document.getElementById('horoErr'); err.textContent = '';
   try {
     const pd = await single.read();
-    const c = J.computeChart({ ...pd.calc, nodeType });
+    const c = chartOf(pd.calc);
     horoState = { pd, c }; renderHoro(); setHash('horo');
     document.getElementById('horoOut').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (ex) { err.textContent = ex.message; }
@@ -1274,8 +1483,7 @@ document.getElementById('matchForm').addEventListener('submit', async e => {
   const err = document.getElementById('matchErr'); err.textContent = '';
   try {
     const boy = await boyF.read(), girl = await girlF.read();
-    const bc = J.computeChart({ ...boy.calc, nodeType }), gc = J.computeChart({ ...girl.calc, nodeType });
-    matchState = { boy, girl, bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc) };
+    matchState = buildMatch(boy, girl);
     renderMatch(); setHash('match');
     document.getElementById('matchOut').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (ex) { err.textContent = ex.message; }
@@ -1283,53 +1491,28 @@ document.getElementById('matchForm').addEventListener('submit', async e => {
 
 
 // ================= Traditional jathagam =================
-const JT = {
-  ta: {
-    invo: 'ஸ்ரீ விநாயகர் துணை', title: 'ஜனன ஜாதகம்', navaT: 'நவக்கிரக துணை', navaS: 'ஓம் நவக்கிரஹ தேவதாப்யோ நம:', bhuktiT: 'நடப்பு தசா புக்திகள்',
-    sloka: 'ஜனனீ ஜன்ம ஸௌக்யானாம் வர்த்தனீ குலஸம்பதாம் ।<br>பதவீ பூர்வ புண்யானாம் லிக்யதே ஜன்மபத்ரிகா ॥',
-    dayFull: ['ஞாயிற்றுக்கிழமை', 'திங்கட்கிழமை', 'செவ்வாய்க்கிழமை', 'புதன்கிழமை', 'வியாழக்கிழமை', 'வெள்ளிக்கிழமை', 'சனிக்கிழமை'],
-    son: 'புத்திரனாக', daughter: 'புத்திரியாக', child: 'மகவாக',
-    kv: { name: 'பெயர்', dob: 'பிறந்த தேதி', tob: 'பிறந்த நேரம்', place: 'பிறந்த ஊர்', lagna: 'லக்னம்', rasi: 'ராசி', star: 'நட்சத்திரம்', pada: 'பாதம்', gothram: 'கோத்திரம்', naz: 'உதயாதி நாழிகை', rise: 'சூரிய உதயம்', ayan: 'அயனாம்சம்' },
-    rasi: 'ராசி', amsam: 'நவாம்சம்', grahaNilai: 'ஜனன கால கிரக நிலை', dasaIruppu: 'ஜனன கால தசா இருப்பு', dasaTitle: 'விம்சோத்தரி மகா தசைகள்',
-    th: ['கிரகம்', 'ராசி', 'பாகை', 'நட்சத்திரம்', 'பாதம்', 'நவாம்சம்', 'நிலை'], dth: ['தசை', 'தொடக்கம்', 'முடிவு'],
-    panch: 'பஞ்சாங்கக் குறிப்பு', astrologer: 'ஜோதிடர் கையொப்பம்', date: 'தேதி', subham: 'சுபம்',
-    blessing: 'ஸர்வே ஜனா: ஸுகினோ பவந்து', note: 'லஹிரி அயனாம்சம் · திருக்கணித முறை · subajathagam.in',
-    dasaLine: (lord, y, m, d) => `<b>${lord}</b> தசை இருப்பு <b>${y}</b> வருடம் <b>${m}</b> மாதம் <b>${d}</b> நாள்`,
-    prose: x => `ஸ்வஸ்திஸ்ரீ <b>${x.year}</b> வருஷம் <b>${x.month}</b> மாதம் <b>${x.tdate}</b>-ம் தேதி (${x.gdate}) <b>${x.day}</b>, ${x.paksha} <b>${x.tithi}</b> திதி, <b>${x.star}</b> நட்சத்திரம் <b>${x.pada}</b>-ம் பாதம், <b>${x.yoga}</b> யோகம், <b>${x.karana}</b> கரணம் கூடிய சுபதினத்தில், சூரிய உதயாதி நாழிகை <b>${x.naz}</b>-க்கு (<b>${x.time}</b> மணிக்கு), <b>${x.place}</b> நகரில், <b>${x.lagna}</b> லக்னத்தில், <b>${x.rasi}</b> ராசியில்${x.parents ? `, ${x.parents}` : ''} <b>${x.name}</b> ஜனனம்.`,
-    parents: (f, m, rel) => f && m ? `திரு. <b>${f}</b> — திருமதி. <b>${m}</b> தம்பதியருக்கு ${rel}` : f ? `திரு. <b>${f}</b> அவர்களுக்கு ${rel}` : m ? `திருமதி. <b>${m}</b> அவர்களுக்கு ${rel}` : ''
-  },
-  en: {
-    invo: 'Sri Vinayagar Thunai', title: 'Janana Jathagam', navaT: 'Navagraha Thunai', navaS: 'Om Navagraha Devatābhyo Namaḥ', bhuktiT: 'Bhuktis of the current dasa',
-    sloka: 'Jananī janma saukhyānām vardhanī kula sampadām ।<br>Padavī pūrva puṇyānām likhyate janma patrikā ॥',
-    dayFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    son: 'son', daughter: 'daughter', child: 'child',
-    kv: { name: 'Name', dob: 'Date of birth', tob: 'Time of birth', place: 'Place of birth', lagna: 'Lagna', rasi: 'Rasi', star: 'Nakshatra', pada: 'Pada', gothram: 'Gothram', naz: 'Nazhigai from sunrise', rise: 'Sunrise', ayan: 'Ayanamsa' },
-    rasi: 'Rasi', amsam: 'Navamsa', grahaNilai: 'Planetary positions at birth', dasaIruppu: 'Dasa balance at birth', dasaTitle: 'Vimshottari Mahadasas',
-    th: ['Planet', 'Rasi', 'Degree', 'Nakshatra', 'Pada', 'Navamsa', 'Status'], dth: ['Dasa', 'From', 'To'],
-    panch: 'Panchangam at birth', astrologer: 'Astrologer’s signature', date: 'Date', subham: 'Subham',
-    blessing: 'Sarve janāḥ sukhino bhavantu', note: 'Lahiri ayanamsa · Thirukanitha · subajathagam.in',
-    dasaLine: (lord, y, m, d) => `<b>${lord}</b> dasa balance: <b>${y}</b> years <b>${m}</b> months <b>${d}</b> days`,
-    prose: x => `Svasti Śrī. In the Tamil year <b>${x.year}</b>, month of <b>${x.month}</b>, day <b>${x.tdate}</b> (${x.gdate}), on <b>${x.day}</b>, in ${x.paksha} <b>${x.tithi}</b> tithi, <b>${x.star}</b> nakshatra pada <b>${x.pada}</b>, <b>${x.yoga}</b> yoga and <b>${x.karana}</b> karana, at <b>${x.naz}</b> nazhigai after sunrise (<b>${x.time}</b>), at <b>${x.place}</b>, in <b>${x.lagna}</b> lagna and <b>${x.rasi}</b> rasi, was born <b>${x.name}</b>${x.parents ? `, ${x.parents}` : ''}.`,
-    parents: (f, m, rel) => f && m ? `${rel} of Sri <b>${f}</b> and Smt. <b>${m}</b>` : f ? `${rel} of Sri <b>${f}</b>` : m ? `${rel} of Smt. <b>${m}</b>` : ''
-  }
-};
-const LAMP = `<svg width="15mm" height="22mm" viewBox="0 0 60 88" aria-hidden="true">
-  <defs><radialGradient id="fl" cx="50%" cy="70%" r="60%"><stop offset="0" stop-color="#fff7c2"/><stop offset=".45" stop-color="#ffc233"/><stop offset="1" stop-color="#e2461b"/></radialGradient>
-  <linearGradient id="br" x1="0" x2="1"><stop offset="0" stop-color="#9a6a12"/><stop offset=".5" stop-color="#f1cf6a"/><stop offset="1" stop-color="#9a6a12"/></linearGradient></defs>
-  <ellipse cx="30" cy="13" rx="10" ry="12" fill="#ffd966" opacity=".35"/>
-  <path d="M30 2 C35 10 36 16 30 22 C24 16 25 10 30 2Z" fill="url(#fl)"/>
-  <path d="M12 26 Q30 36 48 26 Q46 33 30 34 Q14 33 12 26Z" fill="url(#br)"/>
-  <rect x="27" y="34" width="6" height="34" rx="2" fill="url(#br)"/>
-  <circle cx="30" cy="44" r="4.5" fill="url(#br)"/><circle cx="30" cy="57" r="3.5" fill="url(#br)"/>
-  <path d="M14 82 Q30 64 46 82Z" fill="url(#br)"/><rect x="10" y="81" width="40" height="5" rx="2" fill="url(#br)"/>
-</svg>`;
+// print wording comes from src/culture.js; English wording follows the tradition
+function jt() {
+  const X = Object.assign({}, C.JT[lang] || C.JT.en);
+  if (lang === 'en') Object.assign(X, C.EN_TRAD[trad]);
+  X.sloka = lang === 'en' ? C.JT.en.sloka : lang === 'ta' ? C.JT.ta.sloka : L().sloka;
+  return X;
+}
+function symbols() { return C.SYM[lang === 'en' ? trad : lang] || C.SYM.ta; }
+function invocationHTML(small) {
+  const S = symbols(), X = jt();
+  const om = `<div class="om${S.om.length > 1 ? ' long' : ''}"${small ? ' style="width:14mm;height:14mm;font-size:' + (S.om.length > 1 ? '6' : '8.5') + 'mm"' : ''}>${S.om}</div>`;
+  return `<div class="invo"><div class="suzhi"${small ? ' style="font-size:10mm"' : ''}>${S.top}</div>
+      <div class="invo-row"${small ? ' style="margin-top:0"' : ''}>${S.side}${om}${S.side}</div>
+      <div class="invo-t">${X.invo}</div></div>`;
+}
 const CORNER = `<svg class="corner {c}" viewBox="0 0 48 48" aria-hidden="true"><path d="M2 2h44M2 2v44" stroke="#8f0d17" stroke-width="2.2" fill="none"/>
   <path d="M8 8 Q24 8 24 24 Q8 24 8 8Z" fill="#f0b91e" stroke="#8f0d17" stroke-width="1.2"/><circle cx="16" cy="16" r="3" fill="#c1121f"/>
   <circle cx="32" cy="8" r="2" fill="#c1121f"/><circle cx="8" cy="32" r="2" fill="#c1121f"/><circle cx="40" cy="8" r="1.4" fill="#a8801f"/><circle cx="8" cy="40" r="1.4" fill="#a8801f"/></svg>`;
 
 function sheetShell(inner, pg) {
   const corners = ['tl', 'tr', 'bl', 'br'].map(c => CORNER.replace('{c}', c)).join('');
-  return `<section class="sheet"><div class="band l"></div><div class="band r"></div><div class="topb"></div><div class="botb"></div>
+  return `<section class="sheet th-${trad}"><div class="band l"></div><div class="band r"></div><div class="topb"></div><div class="botb"></div>
     <div class="inner">${corners}${inner}</div></section>`;
 }
 function ymd(years) {
@@ -1338,16 +1521,17 @@ function ymd(years) {
 }
 function renderJathagam() {
   if (!horoState) return;
-  const { pd, c } = horoState, X = JT[lang], Lx = L(), tm = c.tamil, pn = c.panchang, off = c.input.offsetMinutes;
+  const { pd, c } = horoState, X = jt(), Lx = L(), tm = c.tamil, pn = c.panchang, off = c.input.offsetMinutes;
   const father = esc(document.getElementById('jv-father').value.trim()), mother = esc(document.getElementById('jv-mother').value.trim());
   const gothram = esc(document.getElementById('jv-gothram').value.trim());
   const rel = pd.gender === 'female' ? X.daughter : pd.gender === 'male' ? X.son : X.child;
   const name = esc(pd.name) || '—';
   const tithiTxt = tithiName(pn.tithi);
-  const paksha = pn.tithi === 14 || pn.tithi === 29 ? '' : (lang === 'ta' ? Lx[pn.paksha] : (pn.paksha === 'shukla' ? 'Shukla paksha' : 'Krishna paksha'));
+  const paksha = pn.tithi === 14 || pn.tithi === 29 ? '' : (lang === 'en' ? (pn.paksha === 'shukla' ? 'Shukla paksha' : 'Krishna paksha') : t(pn.paksha));
   const placeShort = esc(/^-?[\d.]+, -?[\d.]+$/.test(pd.place) ? pd.place : pd.place.split(',')[0]);
   const prose = X.prose({
-    year: Lx.years60[tm.year], month: Lx.months[tm.month], tdate: tm.date, gdate: fmtDateInput(pd.date), day: X.dayFull[pn.weekday],
+    tam: trad === 'ta' && (lang === 'ta' || lang === 'en') ? { year: Lx.years60[tm.year], month: Lx.months[tm.month], tdate: tm.date } : null,
+    cal: calText(c), gdate: fmtDateInput(pd.date), day: X.dayFull[pn.weekday],
     paksha, tithi: tithiTxt, star: Lx.naks[c.nakshatra], pada: c.pada, yoga: Lx.yogas[pn.yoga], karana: Lx.karanas[pn.karana],
     naz: tm.sunriseOk ? `${tm.nazhigai}.${String(tm.vinadi).padStart(2, '0')}` : '—', time: esc(pd.time), place: placeShort,
     lagna: Lx.rasis[c.lagna.sign], rasi: Lx.rasis[c.rasi], name, parents: X.parents(father, mother, rel)
@@ -1359,10 +1543,7 @@ function renderJathagam() {
   ];
   const [bY, bM, bD] = ymd(c.dasa.balance.years);
   c._name = pd.name; c._when = `${fmtDateInput(pd.date)} · ${esc(pd.time)}`;
-  const invocation = `<div class="invo"><div class="suzhi">உ</div>
-      <div class="invo-row">${LAMP}<div class="om">ௐ</div>${LAMP}</div>
-      <div class="invo-t">${X.invo}</div></div>`;
-  const page1 = `${invocation}
+  const page1 = `${invocationHTML(false)}
     <div class="title">${X.title}</div>
     <p class="sloka">${X.sloka}</p>
     <div class="rule"></div>
@@ -1370,8 +1551,8 @@ function renderJathagam() {
     <div class="rule"></div>
     <div class="kv">${kv.map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>
     <div class="charts2">
-      <div><p class="ch-t">${X.rasi}</p>${siChart(c, false, X.rasi)}</div>
-      <div><p class="ch-t">${X.amsam}</p>${siChart(c, true, X.amsam)}</div>
+      <div><p class="ch-t">${X.rasi}</p>${chartHTML(c, false, X.rasi)}</div>
+      <div><p class="ch-t">${X.amsam}</p>${chartHTML(c, true, X.amsam)}</div>
     </div>
     <div class="grow"></div>
     <div class="nava">
@@ -1380,7 +1561,7 @@ function renderJathagam() {
     </div>
     <div class="grow"></div>
     <div class="dasabox">${X.dasaIruppu}: ${X.dasaLine(Lx.pl[c.dasa.balance.lord], bY, bM, bD)}</div>`;
-  const rowsP = [[`<span style="color:#c1121f">${lang === 'ta' ? 'லக்னம்' : 'Lagna'}</span>`, c.lagna.sign, c.lagna.deg, c.lagna.nakshatra, c.lagna.pada, c.lagna.navamsa, '']]
+  const rowsP = [[`<span style="color:#c1121f">${X.lagnaRow}</span>`, c.lagna.sign, c.lagna.deg, c.lagna.nakshatra, c.lagna.pada, c.lagna.navamsa, '']]
     .concat(c.planets.map(p => {
       const st = [p.dignity ? t(p.dignity) : '', p.retro && p.name !== 'Rahu' && p.name !== 'Ketu' ? t('retro') : '', p.combust ? t('combust') : ''].filter(Boolean).join(', ');
       return [Lx.pl[p.name], p.sign, p.deg, p.nakshatra, p.pada, p.navamsa, st];
@@ -1395,7 +1576,7 @@ function renderJathagam() {
   const bHead = `<thead><tr>${X.dth.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
   const bhuktiTbl = curD ? `<h5>${X.bhuktiT}</h5><div class="two"><table>${bHead}<tbody>${curD.md.bhuktis.slice(0, 5).map(bRow).join('')}</tbody></table><table>${bHead}<tbody>${curD.md.bhuktis.slice(5).map(bRow).join('')}</tbody></table></div>` : '';
   const panchRows = [
-    [t('tamilDate'), `${Lx.years60[tm.year]}, ${Lx.months[tm.month]} ${tm.date}`], [t('weekday'), Lx.days[pn.weekday]],
+    [t('cal_' + trad), calText(c)], [t('weekday'), Lx.days[pn.weekday]],
     [t('tithi'), `${tithiTxt}${paksha ? ' · ' + paksha : ''}`], [t('star'), `${Lx.naks[c.nakshatra]} · ${c.pada}`],
     [t('starLord'), Lx.pl[DASA_LORDS[c.nakshatra % 9]]], [t('yoga'), Lx.yogas[pn.yoga]], [t('karana'), Lx.karanas[pn.karana]],
     [t('sunrise'), tm.sunriseOk ? fmtClock(tm.sunrise, off) : '—'], [t('sunset'), tm.sunriseOk ? fmtClock(tm.sunset, off) : '—'],
@@ -1408,7 +1589,7 @@ function renderJathagam() {
     [t('kalaSarpa'), c.doshas.kalaSarpa ? t('present') : t('absent')]
   ];
   const kvTbl = rows => `<table><tbody>${rows.map(([k, v]) => `<tr><td>${k}</td><td style="text-align:left">${v}</td></tr>`).join('')}</tbody></table>`;
-  const page2 = `<div class="invo"><div class="suzhi" style="font-size:7mm">உ</div></div>
+  const page2 = `<div class="invo"><div class="suzhi" style="font-size:7mm">${symbols().svgTop ? '<span style="display:inline-block;transform:scale(.6)">' + symbols().top + '</span>' : symbols().top}</div></div>
     <h5>${X.grahaNilai}</h5>${planetTbl}
     <div class="two" style="margin-top:2mm">
       <div><h5>${X.dasaTitle}</h5><table><thead><tr>${X.dth.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${dasaRows}</tbody></table>
@@ -1445,7 +1626,8 @@ function openJathagam() { openSheet('horo'); }
 document.addEventListener('click', e => { const b = e.target.closest('[data-open-sheet]'); if (b) openSheet(b.dataset.openSheet); });
 function renderMatchSheet() {
   if (!matchState) return;
-  const { boy, girl, bc, gc, pr, dc } = matchState, X = JT[lang], Lx = L();
+  const { boy, girl, bc, gc, pr, dc, ak, pp } = matchState, X = jt(), Lx = L();
+  const guna = matchView === 'guna';
   const who = (pd, c, title) => `<div class="who"><h6>${title}</h6>
     <div><span>${X.kv.name}</span><b>${esc(pd.name) || '—'}</b></div>
     <div><span>${X.kv.dob}</span><b>${fmtDateInput(pd.date)} · ${esc(pd.time)}</b></div>
@@ -1455,29 +1637,34 @@ function renderMatchSheet() {
     <div><span>${X.kv.lagna}</span><b>${Lx.rasis[c.lagna.sign]}</b></div>
     <div><span>${t('chevvai')}</span><b>${c.doshas.chevvai.effective ? t('yes') : t('no')}</b></div></div>`;
   const mark = r => r === 'good' ? `<span class="res-g">✓ ${t('good')}</span>` : r === 'medium' ? `<span class="res-m">½ ${t('medium')}</span>` : `<span class="res-b">✗ ${t('bad')}</span>`;
-  const rows = pr.items.map(it => `<tr><td>${t('p_' + it.key)}</td><td style="text-align:left">${t('m_' + it.key)}</td><td>${mark(it.result)}</td></tr>`).join('');
+  const table = guna
+    ? `<table class="gtbl"><thead><tr><th>${t('porutham')}</th><th>${t('meaning')}</th><th>${t('points')}</th><th>${t('result')}</th></tr></thead><tbody>${ak.items.map(it =>
+      `<tr><td>${t('k_' + it.key)}</td><td style="text-align:left">${t('mk_' + it.key)}${it.dosha ? ` · <b>${it.key === 'nadi' ? t('nadiDosha') : t('bhakootDosha')}</b>${it.cancelled ? ' (' + t('cancelled') + ')' : ''}` : ''}</td><td>${fmtPts(it.pts)} / ${it.max}</td><td>${mark(gunaState(it))}</td></tr>`).join('')}</tbody></table>`
+    : `<table><thead><tr><th>${t('porutham')}</th><th>${t('meaning')}</th><th>${t('result')}</th></tr></thead><tbody>${pr.items.map(it => `<tr><td>${t('p_' + it.key)}</td><td style="text-align:left">${t('m_' + it.key)}</td><td>${mark(it.result)}</td></tr>`).join('')}</tbody></table>`;
+  const score = guna
+    ? `<div class="scorebox"><div class="n">${fmtPts(ak.score)}<small> / 36</small></div><div class="v">${t('v_' + ak.verdict)}<small>${t('gvd_' + ak.verdict)}</small></div></div>`
+    : `<div class="scorebox"><div class="n">${pr.score}<small> / 10</small></div><div class="v">${t('v_' + pr.verdict)}<small>${t('vd_' + pr.verdict)}</small></div></div>`;
+  const other = guna ? `${t('poruthamTab')}: ${pr.score}/10` : `${t('gunaScore')}: ${fmtPts(ak.score)}/36`;
+  const papa = TR().papa ? ` · ${t('papaTitle')} — ${pp.ok ? t('balanced') : t('unbalanced')} (${pp.boy.total} / ${pp.girl.total})` : '';
   bc._name = boy.name || X.kv.name; gc._name = girl.name || X.kv.name;
   bc._when = `${fmtDateInput(boy.date)} · ${esc(boy.time)}`; gc._when = `${fmtDateInput(girl.date)} · ${esc(girl.time)}`;
-  const invocation = `<div class="invo"><div class="suzhi" style="font-size:10mm">உ</div>
-      <div class="invo-row" style="margin-top:0">${LAMP}<div class="om" style="width:14mm;height:14mm;font-size:8.5mm">ௐ</div>${LAMP}</div>
-      <div class="invo-t">${X.invo}</div></div>`;
-  const page = `${invocation}
+  const page = `${invocationHTML(true)}
     <div class="title" style="font-size:7mm;margin-top:1.5mm">${t('sheetMatchTitle')}</div>
     <div class="rule" style="margin:2mm 0"></div>
     <div class="couple">${who(boy, bc, t('sheetGroom'))}${who(girl, gc, t('sheetBride'))}</div>
-    <h5>${t('poruthams')}</h5>
-    <table><thead><tr><th>${t('porutham')}</th><th>${t('meaning')}</th><th>${t('result')}</th></tr></thead><tbody>${rows}</tbody></table>
-    <div class="scorebox"><div class="n">${pr.score}<small> / 10</small></div><div class="v">${t('v_' + pr.verdict)}<small>${t('vd_' + pr.verdict)}</small></div></div>
-    <p class="foot-note" style="font-size:2.9mm;margin-top:2mm">${t('sheetDosha')}: ${t('chevBoth')} — ${dc.chevvai.balanced ? t('balanced') : t('unbalanced')} · ${t('rkBoth')} — ${dc.rahuKetu.balanced ? t('balanced') : t('unbalanced')}</p>
+    <h5>${guna ? t('gunaTab') : t('poruthams')}</h5>
+    ${table}
+    ${score}
+    <p class="foot-note" style="font-size:2.9mm;margin-top:2mm">${other} · ${t('sheetDosha')}: ${t('chevBoth')} — ${dc.chevvai.balanced ? t('balanced') : t('unbalanced')} · ${t('rkBoth')} — ${dc.rahuKetu.balanced ? t('balanced') : t('unbalanced')}${papa}</p>
     <div class="charts2 small">
-      <div><p class="ch-t" style="font-size:3.4mm">${t('sheetGroom')} · ${X.rasi}</p>${siChart(bc, false, X.rasi)}</div>
-      <div><p class="ch-t" style="font-size:3.4mm">${t('sheetBride')} · ${X.rasi}</p>${siChart(gc, false, X.rasi)}</div>
+      <div><p class="ch-t" style="font-size:3.4mm">${t('sheetGroom')} · ${X.rasi}</p>${chartHTML(bc, false, X.rasi)}</div>
+      <div><p class="ch-t" style="font-size:3.4mm">${t('sheetBride')} · ${X.rasi}</p>${chartHTML(gc, false, X.rasi)}</div>
     </div>
     <div class="grow"></div>
     <div class="sign" style="margin-top:3mm"><div class="line">${X.date}</div><div class="line">${X.astrologer}</div></div>
     <div class="subham" style="font-size:5mm">${X.subham}</div>
-    <p class="foot-note">${JT[lang].note}</p>`;
-  document.getElementById('jv-pages').innerHTML = sheetShell(page, '').replace('class="sheet"', 'class="sheet msheet"');
+    <p class="foot-note">${X.note}</p>`;
+  document.getElementById('jv-pages').innerHTML = sheetShell(page, '').replace('class="sheet ', 'class="sheet msheet ');
   if (PRINT_LOCKED) document.querySelectorAll('#jv-pages .sheet').forEach(sh => sh.insertAdjacentHTML('beforeend', `<div class="wm"><span>${esc(t('previewWm'))}</span></div>`));
   const pb = document.getElementById('jv-print'); pb.textContent = PRINT_LOCKED ? t('printInApp') : t('printNow');
   fitSheets();
@@ -1498,13 +1685,12 @@ window.addEventListener('resize', () => { if (document.getElementById('jv').clas
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('jv').classList.contains('open')) closeJathagam(); });
 
 // ================= panchangam =================
-const PANCH_DEFAULT = { name: 'Chennai', ta: 'சென்னை', adm: 'Tamil Nadu', cc: 'IN', lat: 13.0878, lon: 80.2785, tz: 'Asia/Kolkata' };
-let panchPlace = (() => { try { const v = JSON.parse(localStorage.getItem('sj.panchPlace') || 'null'); if (v && isFinite(v.lat)) return v; } catch {} return PANCH_DEFAULT; })();
+let panchPlace = (() => { try { const v = JSON.parse(localStorage.getItem('sj.panchPlace') || 'null'); if (v && isFinite(v.lat)) return v; } catch {} return C.PANCH_HOME[window.SJ_LANG || store.get('jothidam.lang') || 'en'] || C.PANCH_HOME.en; })();
 const localYMD = (tz, ms = Date.now()) => { const p = {}; new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date(ms)).forEach(x => p[x.type] = x.value); return `${p.year}-${p.month}-${p.day}`; };
 let panchDate = localYMD(panchPlace.tz);
 const ppInput = document.getElementById('pp-place'), ppGeo = document.getElementById('pp-geo');
 const ppPicker = placePicker(ppInput, document.getElementById('pp-sug'), ppGeo, p => {
-  panchPlace = { name: p.name, ta: p.ta || '', adm: p.adm || '', cc: p.cc || '', lat: +p.lat, lon: +p.lon, tz: p.tz, remote: p.remote, countryName: p.countryName };
+  panchPlace = { name: p.name, ta: p.ta || '', nat: p.nat || [], adm: p.adm || '', cc: p.cc || '', lat: +p.lat, lon: +p.lon, tz: p.tz, remote: p.remote, countryName: p.countryName };
   try { localStorage.setItem('sj.panchPlace', JSON.stringify(panchPlace)); } catch {}
   renderPanch(); renderToday();
 });
@@ -1537,7 +1723,7 @@ function renderPanch() {
   const kt = (k, seg, cls, note) => `<div class="stat ${cls}"><span>${k}</span><b>${clock(seg.start, p)} – ${clock(seg.end, p)}</b><small class="muted" style="display:block;font-size:12px">${note}</small></div>`;
   document.getElementById('panchOut').innerHTML = `
     <div class="pgrid">
-      ${cell(t('tamilDate'), `<b>${Lx.years60[tm.year]} ${t('varusham')}, ${Lx.months[tm.month]} ${tm.date}</b><small>${Lx.days[p.weekday]}</small>`)}
+      ${cell(t('cal_' + trad), `<b>${calText(p)}</b><small>${Lx.days[p.weekday]}</small>`)}
       ${cell(t('sunrise') + ' / ' + t('sunset'), `<b>${fmtClock(p.sunrise, p.offset)} · ${fmtClock(p.sunset, p.offset)}</b><small>${t('sunSignToday')} ${Lx.rasis[p.sunSign]} · ${t('moonSignToday')} ${Lx.rasis[p.moonSign]}</small>`)}
       ${cell(t('tithi'), angaList(p.tithi, tithiText, p))}
       ${cell(t('star'), angaList(p.nakshatra, i => Lx.naks[i], p))}
@@ -1558,9 +1744,9 @@ function renderToday() {
     const p = computeDay(localYMD(panchPlace.tz), panchPlace), Lx = L(), tm = p.tamil;
     const now = Date.now();
     const cur = list => (list.find(x => now < x.end) || list[list.length - 1]).index;
-    el.innerHTML = `<span class="lbl">${t('todayLbl')} · ${esc(lang === 'ta' && panchPlace.ta ? panchPlace.ta : panchPlace.name)}</span>
-      <span>${Lx.months[tm.month]} ${tm.date}, ${Lx.days[p.weekday]}</span>
-      <span>${t('tithi')}: <b>${tithiName(cur(p.tithi))}</b></span>
+    el.innerHTML = `<span class="lbl">${t('todayLbl')} · ${esc(natName(panchPlace) || panchPlace.name)}</span>
+      <span>${calText(p, trad, true)}, ${Lx.days[p.weekday]}</span>
+      ${trad === 'te' || trad === 'kn' || trad === 'hi' ? '' : `<span>${t('tithi')}: <b>${tithiName(cur(p.tithi))}</b></span>`}
       <span>${t('star')}: <b>${Lx.naks[cur(p.nakshatra)]}</b></span>
       <span>${t('rahuKalam')}: <b>${fmtClock(p.rahu.start, p.offset)}–${fmtClock(p.rahu.end, p.offset)}</b></span>
       <span class="go">${t('seeFull')}</span>`;
@@ -1614,12 +1800,13 @@ function waText(kind) {
   const Lx = L();
   if (kind === 'horo' && horoState) {
     const { pd, c } = horoState;
-    return t('waHoro', { name: pd.name ? pd.name + ' · ' : '', rasi: Lx.rasis[c.rasi], star: `${Lx.naks[c.nakshatra]} ${c.pada}`, lagna: Lx.rasis[c.lagna.sign] }) + '\n' + SITE_URL + location.hash;
+    return t('waHoro', { name: pd.name ? pd.name + ' · ' : '', rasi: Lx.rasis[c.rasi], star: `${Lx.naks[c.nakshatra]} ${c.pada}`, lagna: Lx.rasis[c.lagna.sign] }) + '\n' + SITE_URL.replace(/\/$/, '') + LANG_PATH(lang) + location.hash;
   }
   if (kind === 'match' && matchState) {
-    return t('waMatch', { score: matchState.pr.score, verdict: t('v_' + matchState.pr.verdict) }) + '\n' + SITE_URL + location.hash;
+    const g = matchView === 'guna', m = matchState;
+    return t('waMatch', { score: g ? `${fmtPts(m.ak.score)}/36` : `${m.pr.score}/10`, verdict: t('v_' + (g ? m.ak.verdict : m.pr.verdict)) }) + '\n' + SITE_URL.replace(/\/$/, '') + LANG_PATH(lang) + location.hash;
   }
-  return t('waSiteMsg') + '\n' + SITE_URL;
+  return t('waSiteMsg') + '\n' + SITE_URL.replace(/\/$/, '') + LANG_PATH(lang);
 }
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-wa]'); if (!b) return;
@@ -1643,11 +1830,8 @@ document.addEventListener('click', async e => {
   const old = b.textContent; b.textContent = t('copied'); setTimeout(() => b.textContent = old, 1800);
 });
 function recompute() {
-  if (horoState) { horoState.c = J.computeChart({ ...horoState.pd.calc, nodeType }); }
-  if (matchState) {
-    const bc = J.computeChart({ ...matchState.boy.calc, nodeType }), gc = J.computeChart({ ...matchState.girl.calc, nodeType });
-    Object.assign(matchState, { bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc) });
-  }
+  if (horoState) { horoState.c = chartOf(horoState.pd.calc); }
+  if (matchState) matchState = buildMatch(matchState.boy, matchState.girl);
   renderHoro(); renderMatch();
 }
 function loadFromHash() {
@@ -1656,11 +1840,10 @@ function loadFromHash() {
     const data = b64d(m[2]);
     if (m[1] === 'horo' && data.h) {
       const pd = fat(data.h); single.write(pd);
-      horoState = { pd, c: J.computeChart({ ...pd.calc, nodeType }) };
+      horoState = { pd, c: chartOf(pd.calc) };
     } else if (data.b && data.g) {
       const boy = fat(data.b), girl = fat(data.g); boyF.write(boy); girlF.write(girl);
-      const bc = J.computeChart({ ...boy.calc, nodeType }), gc = J.computeChart({ ...girl.calc, nodeType });
-      matchState = { boy, girl, bc, gc, pr: J.porutham(gc, bc), dc: J.doshaCompat(gc, bc) };
+      matchState = buildMatch(boy, girl);
       document.querySelector('.tabs button[data-tab="match"]').click();
     }
     return true;
@@ -1701,14 +1884,19 @@ function renderVisits() {
     .then(j => { if (j && j.count) { visitCount = String(j.count).trim(); renderVisits(); } }).catch(() => {});
 })();
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
   // a new version took over: reload once so the visitor sees it
   let hadController = !!navigator.serviceWorker.controller, reloaded = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !reloaded) { reloaded = true; location.reload(); } hadController = true; });
 }
 
 // initial state
-const savedLang = store.get('jothidam.lang'); if (savedLang === 'ta') lang = 'ta';
+// language: the page's own language (/ta/, /hi/ ...) wins; the root page uses the visitor's last choice
+const savedLang = store.get('jothidam.lang');
+lang = window.SJ_LANG && window.SJ_LANG !== 'en' ? window.SJ_LANG : LANG_CODES.includes(savedLang) ? savedLang : 'en';
+trad = C.TRADS[store.get('sj.trad')] ? store.get('sj.trad') : (lang === 'en' ? 'ta' : lang);
+chartStyle = store.get('sj.chart') === 'north' || store.get('sj.chart') === 'south' ? store.get('sj.chart') : TR().chart;
+matchView = TR().match;
 if (!loadFromHash()) {
   if (location.hash.startsWith('#match')) document.querySelector('.tabs button[data-tab="match"]').click();
   else if (location.hash.startsWith('#panch')) document.querySelector('.tabs button[data-tab="panch"]').click();

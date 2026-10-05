@@ -1,11 +1,11 @@
 {
-  "name": "Suba Jathagam",
-  "short_name": "Suba Jathagam",
-  "description": "Free online jathagam / kundli with Rasi and Navamsa charts, dasa–bhukti, 10 porutham and 36 guna marriage matching, daily panchangam and Rahu kalam — in Tamil, Malayalam, Telugu, Kannada, Hindi and English. Print a traditional horoscope.",
-  "lang": "en",
+  "name": "शुभ जातक · Suba Jathagam",
+  "short_name": "शुभ जातक",
+  "description": "मुफ़्त जन्म कुंडली: लग्न और नवांश कुंडली (उत्तर भारतीय शैली), ग्रह स्पष्ट, विंशोत्तरी महादशा, मांगलिक दोष, 36 गुण मिलान, आज का पंचांग और राहु काल। पारंपरिक जन्म कुंडली प्रिंट करें।",
+  "lang": "hi",
   "dir": "ltr",
-  "id": "/",
-  "start_url": "/?source=pwa",
+  "id": "/hi/",
+  "start_url": "/hi/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
@@ -44,8 +44,8 @@
   ],
   "shortcuts": [
     {
-      "name": "Horoscope",
-      "url": "/?source=pwa#horo",
+      "name": "कुंडली",
+      "url": "/hi/?source=pwa#horo",
       "icons": [
         {
           "src": "/icons/icon-192.png",
@@ -54,8 +54,8 @@
       ]
     },
     {
-      "name": "Marriage Match",
-      "url": "/?source=pwa#match",
+      "name": "कुंडली मिलान",
+      "url": "/hi/?source=pwa#match",
       "icons": [
         {
           "src": "/icons/icon-192.png",
@@ -64,8 +64,8 @@
       ]
     },
     {
-      "name": "Panchangam",
-      "url": "/?source=pwa#panch",
+      "name": "पंचांग",
+      "url": "/hi/?source=pwa#panch",
       "icons": [
         {
           "src": "/icons/icon-192.png",

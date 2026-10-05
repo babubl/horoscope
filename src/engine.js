@@ -94,7 +94,7 @@
     return { index: idx, pada: Math.floor(within / (span / 4)) + 1, fraction: within / span };
   }
 
-  function computeChart({ y, m, d, h, mi, lat, lon, zone, offsetMinutes, nodeType }) {
+  function computeChart({ y, m, d, h, mi, lat, lon, zone, offsetMinutes, nodeType, marsHouses }) {
     nodeType = nodeType === 'true' ? 'true' : 'mean';
     const { utc, offset } = localToUtc(y, m, d, h, mi, offsetMinutes != null ? offsetMinutes : zone);
     const date = new Date(utc);
@@ -131,12 +131,14 @@
     const panchang = panchanga(sun.lon, moon.lon, y, m, d);
     const tamil = tamilCalendar(utc, offset, lat, lon);
     panchang.weekday = tamil.weekday;
-    const doshas = doshaChecks(P, lagna);
+    const malayalam = malayalamCalendar(utc, offset, lat, lon);
+    const lunar = lunarCalendar(utc);
+    const doshas = doshaChecks(P, lagna, marsHouses);
 
     return {
       input: { y, m, d, h, mi, lat, lon, zone, offsetMinutes: offset }, utc, ayanamsa: ay,
       lagna, planets, rasi: moon.sign, nakshatra: nk.index, pada: nk.pada,
-      tamilMonth: tamil.month, tamil, nodeType, dasa, panchang, doshas
+      tamilMonth: tamil.month, tamil, malayalam, lunar, nodeType, dasa, panchang, doshas
     };
   }
 
@@ -223,6 +225,53 @@
     };
   }
 
+
+  // ---------- Malayalam (Kollavarsham) solar calendar ----------
+  // A month starts on the civil day of the sankranti when it falls before 3/5 of that day's daylight
+  // (before Aparahna); otherwise on the next day.
+  function malayalamCalendar(utc, offset, lat, lon) {
+    const obs = new A.Observer(lat, lon, 0), DAY = 86400000;
+    const localMidnight = ms => { const l = ms + offset * 60000; return l - (((l % DAY) + DAY) % DAY) - offset * 60000; };
+    const riseSet = (dir, fromMs) => { const r = A.SearchRiseSet(A.Body.Sun, obs, dir, new Date(fromMs), 1.2); return r ? r.date.getTime() : null; };
+    const threshold = d => { const r = riseSet(+1, d) ?? d + 6 * 3600000; const st = riseSet(-1, r) ?? d + 18 * 3600000; return r + 0.6 * (st - r); };
+    let d0 = localMidnight(utc);
+    const rise = riseSet(+1, d0);
+    if (rise != null && utc < rise) d0 -= DAY; // Hindu day runs sunrise to sunrise
+    const month = Math.floor(siderealSun(threshold(d0)) / 30);
+    let a = threshold(d0), b;
+    for (let i = 0; i < 40; i++) { b = a; a -= DAY; if (Math.floor(siderealSun(a) / 30) !== month) break; }
+    for (let i = 0; i < 40; i++) { const mid = (a + b) / 2; if (Math.floor(siderealSun(mid) / 30) === month) b = mid; else a = mid; }
+    let start = localMidnight(b);
+    if (b > threshold(start)) start += DAY;
+    const date = Math.round((d0 - start) / DAY) + 1;
+    const loc = new Date(d0 + offset * 60000 + 12 * 3600000);
+    const gy = loc.getUTCFullYear(), gm = loc.getUTCMonth() + 1;
+    const kollam = (month >= 4 && month <= 8 && !(month === 8 && gm <= 2)) ? gy - 824 : gy - 825;
+    return { year: kollam, month, date, weekday: loc.getUTCDay() };
+  }
+
+  // ---------- Lunar (amanta / purnimanta) calendar ----------
+  // Amanta month = named from the Sun's sign at the new moon that starts it; no sankranti between two new moons = adhika.
+  function lunarCalendar(ms) {
+    const DAY = 86400000;
+    const pr = A.SearchMoonPhase(0, new Date(ms), -35);
+    const prev = pr ? pr.date.getTime() : ms;
+    const nx = A.SearchMoonPhase(0, new Date(prev + DAY), 35);
+    const next = nx ? nx.date.getTime() : prev + 29.53 * DAY;
+    const s1 = Math.floor(siderealSun(prev) / 30), s2 = Math.floor(siderealSun(next) / 30);
+    const adhika = s1 === s2;
+    const amanta = (s1 + 1) % 12; // 0 = Chaitra … 11 = Phalguna
+    const x = siderealSunMoon(ms);
+    const tithi = Math.floor(norm(x.moon - x.sun) / 12);
+    const krishna = tithi >= 15;
+    const purnimanta = krishna ? (amanta + 1) % 12 : amanta;
+    const yStart = new Date(prev - amanta * 29.530589 * DAY).getUTCFullYear();
+    return {
+      amanta, purnimanta, adhika, tithi, paksha: krishna ? 'krishna' : 'shukla',
+      shaka: yStart - 78, vikram: yStart + 57, samvatsara: (((yStart - 1987) % 60) + 60) % 60
+    };
+  }
+
   // ---------- Current transits (Gochara) from the Moon sign ----------
   function transits(chart, atMs) {
     const d = new Date(atMs), ay = ayanamsa(d), trop = tropicalLongitudes(d, chart.nodeType);
@@ -281,10 +330,12 @@
     const k = Math.floor(norm(x.moon - x.sun) / 6);
     let karana; if (k === 0) karana = 10; else if (k >= 57) karana = 7 + (k - 57); else karana = (k - 1) % 7;
     const tamil = tamilCalendar(sunrise + 3600000, offset, lat, lon);
+    const malayalam = malayalamCalendar(sunrise + 3600000, offset, lat, lon);
+    const lunar = lunarCalendar(sunrise + 60000);
     const muhurta = (sunset - sunrise) / 15;
     const abhijit = { start: sunrise + 7 * muhurta, end: sunrise + 8 * muhurta };
     return {
-      offset, sunrise, sunset, nextRise, weekday, tamil, karana,
+      offset, sunrise, sunset, nextRise, weekday, tamil, malayalam, lunar, karana,
       moonSign: Math.floor(x.moon / 30), sunSign: Math.floor(x.sun / 30),
       tithi: list('tithi'), nakshatra: list('nakshatra'), yoga: list('yoga'),
       rahu: seg(RAHU[weekday]), yama: seg(YAMA[weekday]), gulika: seg(GULI[weekday]), abhijit
@@ -292,17 +343,18 @@
   }
 
   // ---------- Doshas ----------
-  function doshaChecks(P, lagna) {
+  // marsHouses: South Indian rule [2,4,7,8,12] (default); North Indian Manglik rule [1,4,7,8,12]
+  function doshaChecks(P, lagna, marsHouses) {
     const mars = P.Mars;
     const fromLagna = ((mars.sign - lagna.sign + 12) % 12) + 1;
     const fromMoon = ((mars.sign - P.Moon.sign + 12) % 12) + 1;
-    const BAD = [2, 4, 7, 8, 12];
+    const BAD = Array.isArray(marsHouses) && marsHouses.length ? marsHouses : [2, 4, 7, 8, 12];
     // Classical cancellations by Mars' sign for each house
-    const CANCEL = { 2: [2, 5], 4: [0, 7], 7: [3, 9], 8: [8, 11], 12: [1, 6] };
+    const CANCEL = { 1: [0, 4], 2: [2, 5], 4: [0, 7], 7: [3, 9], 8: [8, 11], 12: [1, 6] };
     const cancelledBy = h => mars.dignity === 'own' || mars.dignity === 'exalted' || (CANCEL[h] || []).includes(mars.sign);
     const refs = [['lagna', fromLagna], ['moon', fromMoon]].filter(r => BAD.includes(r[1]));
     const active = refs.filter(r => !cancelledBy(r[1]));
-    const chevvai = { present: refs.length > 0, effective: active.length > 0, refs: refs.map(r => ({ from: r[0], house: r[1], cancelled: cancelledBy(r[1]) })) };
+    const chevvai = { houses: BAD, present: refs.length > 0, effective: active.length > 0, refs: refs.map(r => ({ from: r[0], house: r[1], cancelled: cancelledBy(r[1]) })) };
 
     const rahuH = P.Rahu.house, ketuH = P.Ketu.house;
     const rk = [1, 2, 7, 8];
@@ -419,12 +471,83 @@
     return { items: res, score, verdict, criticalFail };
   }
 
+
+  // ---------- Ashtakoota (Guna Milan, 36 points) ----------
+  const VARNA = [3, 2, 1, 4, 3, 2, 1, 4, 3, 2, 1, 4]; // 4 Brahmin, 3 Kshatriya, 2 Vaishya, 1 Shudra
+  // 0 Chatushpada 1 Manava 2 Jalachara 3 Vanachara 4 Keeta
+  const vashyaGroup = (sign, deg) => [0, 0, 1, 2, 3, 1, 1, 4, deg < 15 ? 1 : 0, deg < 15 ? 0 : 2, 1, 2][sign];
+  const VASHYA_PTS = [[2, 1, 1, 0.5, 1], [1, 2, 0.5, 0, 1], [1, 0.5, 2, 1, 1], [0, 0, 0, 2, 0], [1, 1, 1, 0, 2]]; // [boy][girl]
+  const YONI_PTS = [
+    [4, 2, 2, 3, 2, 2, 2, 1, 0, 1, 3, 3, 2, 1], [2, 4, 3, 3, 2, 2, 2, 2, 3, 1, 2, 3, 2, 0], [2, 3, 4, 2, 1, 2, 1, 3, 3, 1, 2, 0, 3, 1],
+    [3, 3, 2, 4, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2], [2, 2, 1, 2, 4, 2, 1, 2, 2, 1, 0, 2, 1, 1], [2, 2, 2, 1, 2, 4, 0, 2, 2, 1, 3, 3, 2, 1],
+    [2, 2, 1, 1, 1, 0, 4, 2, 2, 2, 2, 2, 1, 2], [1, 2, 3, 1, 2, 2, 2, 4, 3, 0, 3, 2, 2, 1], [0, 3, 3, 1, 2, 2, 2, 3, 4, 1, 2, 2, 2, 1],
+    [1, 1, 1, 2, 1, 1, 2, 0, 1, 4, 1, 1, 2, 1], [3, 2, 2, 2, 0, 3, 2, 3, 2, 1, 4, 2, 2, 1], [3, 3, 0, 2, 2, 3, 2, 2, 2, 1, 2, 4, 3, 2],
+    [2, 2, 3, 0, 1, 2, 1, 2, 2, 2, 2, 3, 4, 2], [1, 0, 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 2, 4]];
+  const GANA_PTS = [[6, 6, 1], [5, 6, 0], [1, 0, 6]]; // [boy][girl], 0 Deva 1 Manushya 2 Rakshasa
+  const NADI = [0, 1, 2, 2, 1, 0, 0, 1, 2, 2, 1, 0, 0, 1, 2, 2, 1, 0, 0, 1, 2, 2, 1, 0, 0, 1, 2]; // 0 Aadi 1 Madhya 2 Antya
+  function ashtakoota(girl, boy) {
+    const gm = girl.planets.find(p => p.name === 'Moon'), bm = boy.planets.find(p => p.name === 'Moon');
+    const gs = girl.nakshatra, bs = boy.nakshatra, gr = girl.rasi, br = boy.rasi;
+    const items = [];
+    const varna = VARNA[br] >= VARNA[gr] ? 1 : 0;
+    items.push({ key: 'varna', max: 1, pts: varna, detail: { girl: VARNA[gr], boy: VARNA[br] } });
+    const vg = vashyaGroup(gr, gm.deg), vb = vashyaGroup(br, bm.deg);
+    items.push({ key: 'vashya', max: 2, pts: VASHYA_PTS[vb][vg], detail: { girl: vg, boy: vb } });
+    const tara = n => { const r = n % 9; return [3, 5, 7].includes(r) ? 0 : 1.5; };
+    const n1 = ((bs - gs + 27) % 27) + 1, n2 = ((gs - bs + 27) % 27) + 1;
+    items.push({ key: 'tara', max: 3, pts: tara(n1) + tara(n2), detail: { a: n1, b: n2 } });
+    items.push({ key: 'yoni', max: 4, pts: YONI_PTS[YONI[bs][0]][YONI[gs][0]], detail: { girl: YONI[gs][0], boy: YONI[bs][0] } });
+    const gl = RASI_LORD[gr], bl = RASI_LORD[br];
+    let maitri;
+    if (gl === bl) maitri = 5;
+    else {
+      const a = rel(gl, bl), b = rel(bl, gl), k = [a, b].sort().join('-');
+      maitri = { 'friend-friend': 5, 'friend-neutral': 4, 'neutral-neutral': 3, 'enemy-friend': 1, 'enemy-neutral': 0.5, 'enemy-enemy': 0 }[k];
+    }
+    items.push({ key: 'maitri', max: 5, pts: maitri, detail: { girl: gl, boy: bl } });
+    items.push({ key: 'gana', max: 6, pts: GANA_PTS[GANA[bs]][GANA[gs]], detail: { girl: GANA[gs], boy: GANA[bs] } });
+    const r = ((br - gr + 12) % 12) + 1;
+    const bhakootBad = [2, 12, 5, 9, 6, 8].includes(r);
+    const bhakootCancel = bhakootBad && (gl === bl || (rel(gl, bl) === 'friend' && rel(bl, gl) === 'friend'));
+    items.push({ key: 'bhakoot', max: 7, pts: bhakootBad ? 0 : 7, detail: { count: r }, dosha: bhakootBad, cancelled: bhakootCancel });
+    const nadiSame = NADI[gs] === NADI[bs];
+    const nadiCancel = nadiSame && ((gr === br && gs !== bs) || (gs === bs && gr !== br) || (gs === bs && girl.pada !== boy.pada));
+    items.push({ key: 'nadi', max: 8, pts: nadiSame ? 0 : 8, detail: { girl: NADI[gs], boy: NADI[bs] }, dosha: nadiSame, cancelled: nadiCancel });
+    const score = items.reduce((s, x) => s + x.pts, 0);
+    const nadiDosha = nadiSame && !nadiCancel;
+    let verdict;
+    if (score < 18) verdict = 'notRecommended';
+    else if (nadiDosha) verdict = 'average';
+    else if (score >= 33) verdict = 'excellent';
+    else if (score >= 25) verdict = 'good';
+    else verdict = 'average';
+    return { items, score, max: 36, verdict, nadiDosha, bhakootDosha: bhakootBad && !bhakootCancel };
+  }
+
+  // ---------- Papasamyam (Kerala) ----------
+  // Sun, Mars, Saturn, Rahu in houses 1, 2, 4, 7, 8, 12 counted from Lagna, Moon and Venus; one point each.
+  function papaPoints(chart) {
+    const P = Object.fromEntries(chart.planets.map(p => [p.name, p]));
+    const refs = [['lagna', chart.lagna.sign], ['moon', P.Moon.sign], ['venus', P.Venus.sign]];
+    const bad = [1, 2, 4, 7, 8, 12];
+    let total = 0; const by = {};
+    for (const [ref, s0] of refs) {
+      by[ref] = 0;
+      for (const pl of ['Sun', 'Mars', 'Saturn', 'Rahu']) if (bad.includes(((P[pl].sign - s0 + 12) % 12) + 1)) { by[ref]++; total++; }
+    }
+    return { total, by };
+  }
+  function papasamyam(girl, boy) {
+    const g = papaPoints(girl), b = papaPoints(boy);
+    return { girl: g, boy: b, ok: g.total <= b.total };
+  }
+
   function doshaCompat(girlChart, boyChart) {
     const g = girlChart.doshas.chevvai.effective, b = boyChart.doshas.chevvai.effective;
     const gr = girlChart.doshas.rahuKetu.present, br = boyChart.doshas.rahuKetu.present;
     return { chevvai: { girl: g, boy: b, balanced: g === b }, rahuKetu: { girl: gr, boy: br, balanced: gr === br } };
   }
 
-  const api = { dailyPanchang, computeChart, currentDasa, transits, saturnPhase, porutham, doshaCompat, localToUtc, tzOffsetMinutes, ayanamsa, RASI_LORD, DASA_YEARS, GANA, YONI, RAJJU, PLANETS };
+  const api = { ashtakoota, papasamyam, lunarCalendar, malayalamCalendar, NADI, VARNA, dailyPanchang, computeChart, currentDasa, transits, saturnPhase, porutham, doshaCompat, localToUtc, tzOffsetMinutes, ayanamsa, RASI_LORD, DASA_YEARS, GANA, YONI, RAJJU, PLANETS };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.Jothidam = api;
 })(typeof window !== 'undefined' ? window : globalThis);

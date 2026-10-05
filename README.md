@@ -1,12 +1,25 @@
 # Suba Jathagam · சுப ஜாதகம்
 
-South Indian Vedic horoscope and marriage matching in a single web page, in English and Tamil.
+Vedic horoscope, marriage matching and panchangam in a single web page — in **English, Tamil, Malayalam, Telugu, Kannada and Hindi**, each with its own tradition:
+
+| Language page | Tradition default | Calendar shown | Chart | Matching first | Mars dosha houses | Print design |
+|---|---|---|---|---|---|---|
+| `/ta/` தமிழ் | Tamil | Tamil solar (60-year cycle) | South | 10 Porutham | 2, 4, 7, 8, 12 | Manjal–kungumam, Pillaiyar suzhi, kuthuvilakku |
+| `/ml/` മലയാളം | Kerala | Kollavarsham (Malayalam era) | South | 10 Porutham + Papasamyam | 2, 4, 7, 8, 12 | Kasavu cream and gold, nilavilakku |
+| `/te/` తెలుగు | Telugu | Amanta lunar, samvatsara, Shaka | South | 36 Guna | 2, 4, 7, 8, 12 | Pasupu–kunkuma, mango-leaf thoranam, kalasham |
+| `/kn/` ಕನ್ನಡ | Kannada | Amanta lunar, samvatsara, Shaka | South | 36 Guna | 2, 4, 7, 8, 12 | Kumkum red, gold and green, kalasha |
+| `/hi/` हिन्दी | North Indian | Purnimanta lunar, Vikram Samvat | North (diamond) | 36 Guna | 1, 4, 7, 8, 12 | Saffron, swastik, kalash |
+| `/` English | Tamil (changeable) | follows tradition | follows tradition | follows tradition | follows tradition | follows tradition |
+
+The tradition and chart style can be changed in Settings (gear icon) independently of the language.
 
 **Horoscope** — Lagna, Rasi, Nakshatra & pada, Tamil month, Panchangam (tithi, yoga, karana), South Indian Rasi and Navamsa charts, planetary table (exalted / debilitated / own / retro / combust), Vimshottari dasa with current bhukti, Chevvai / Rahu–Ketu / Kala Sarpa checks.
 
 **Marriage match** — the 10 Poruthams (Dinam, Ganam, Mahendram, Stree Deergham, Yoni, Rasi, Rasi Adhipathi, Vasyam, Rajju, Vedhai), score out of 10, verdict (Rajju and Vedhai treated as critical), and dosha samyam.
 
-**AI reading** — Google Gemini writes the interpretation in English or Tamil from the computed chart.
+**36 Guna (Ashtakoota)** — Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot and Nadi with Nadi/Bhakoot dosha and their common cancellations. Kerala view adds Papasamyam.
+
+**AI reading** — Google Gemini writes the interpretation in the page's language, as an astrologer of the chosen tradition.
 
 ## How it works
 
@@ -34,10 +47,13 @@ https://subajathagam.in — served by GitHub Pages from the `gh-pages` branch (k
 
 | Path | What it is |
 |---|---|
-| `index.html` | The app (built — do not edit by hand) |
-| `src/template.html`, `src/engine.js` | App source: UI and the astronomy / porutham engine |
+| `index.html`, `ta/ ml/ te/ kn/ hi/index.html` | The app, one page per language (built — do not edit by hand) |
+| `src/template.html`, `src/engine.js` | App source: UI and the astronomy / porutham / guna engine |
+| `src/i18n_src.py` → `src/i18n.js` | Malayalam, Telugu, Kannada and Hindi UI text (Sanskrit lists transliterated): `python3 src/i18n_src.py` |
+| `src/culture.js` | Traditions, print wording per language, print symbols, state and country names |
+| `src/seo.py` | Search titles, descriptions and the visible FAQ for each language page |
 | `src/vendor/` | astronomy-engine 2.1.19 (MIT) |
-| `src/build.py` | Builds `index.html`: `python3 src/build.py` |
+| `src/build.py` | Builds all language pages, manifests and `sitemap.xml`: `python3 src/build.py` |
 | `src/pages.py` | Builds `guide.html`, `about.html`, `privacy.html`, `terms.html`: `python3 src/pages.py` |
 | `manifest.webmanifest`, `sw.js`, `icons/` | Installable app and offline support |
 | `store/` | Play Store listing text, screenshots, feature graphic and Android publishing steps |

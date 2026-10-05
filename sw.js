@@ -1,7 +1,7 @@
 /* Jothidam service worker — offline app shell, cached fonts, live network for place search and AI */
-const VERSION = 'subajathagam-v9';
-const SHELL = ['./', 'index.html', 'about.html', 'guide.html', 'privacy.html', 'terms.html', 'assets/site.css', 'manifest.webmanifest',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png', 'data/places.json'];
+const VERSION = 'subajathagam-v10';
+const SHELL = ['/', '/ta/', '/ml/', '/te/', '/kn/', '/hi/', '/about.html', '/guide.html', '/privacy.html', '/terms.html', '/assets/site.css', '/manifest.webmanifest',
+  '/icons/icon-192.png', '/icons/icon-512.png', '/icons/icon-maskable-512.png', '/icons/apple-touch-icon.png', '/icons/favicon-32.png', '/data/places.json'];
 const FONT_CACHE = 'jothidam-fonts';
 
 self.addEventListener('install', e => {
@@ -31,7 +31,7 @@ self.addEventListener('fetch', e => {
     if (isPage) {
       // pages: network first so updates show immediately; cache only when offline
       try { const r = await fetch(req, { cache: 'no-cache' }); if (r.ok) c.put(key, r.clone()); return r; }
-      catch { return (await c.match(key, { ignoreSearch: true })) || (await c.match('index.html')) || Response.error(); }
+      catch { return (await c.match(key, { ignoreSearch: true })) || (await c.match('/')) || Response.error(); }
     }
     const hit = await c.match(req);
     const net = fetch(req).then(r => { if (r.ok) c.put(req, r.clone()); return r; });
