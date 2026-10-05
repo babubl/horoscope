@@ -1,10 +1,15 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "in.subajathagam.app",
-    "sha256_cert_fingerprints": [
-      "69:C0:9F:DF:86:ED:03:CD:53:6C:4A:F2:19:64:53:8A:76:2E:29:89:15:4A:52:1C:57:F4:77:32:44:20:B4:F8"
-    ]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.subajathagam.app",
+      "sha256_cert_fingerprints": [
+        "D8:C9:43:56:B5:FB:F1:61:89:B0:17:D9:2D:D1:E1:04:E0:A7:DA:57:7A:43:0A:C4:DF:4B:E2:E6:C7:0A:BA:FC",
+        "69:C0:9F:DF:86:ED:03:CD:53:6C:4A:F2:19:64:53:8A:76:2E:29:89:15:4A:52:1C:57:F4:77:32:44:20:B4:F8"
+      ]
+    }
   }
-}]
+]
