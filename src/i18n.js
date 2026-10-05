@@ -129,7 +129,10 @@ const I_EXTRA = {
 "settingsT": "Settings",
 "tradHint": "Your tradition sets the calendar, chart style, Mars dosha rule, matching method and the print design.",
 "shakaShort": "Shaka",
-"aiAbout": "AI reading (optional)"
+"aiAbout": "AI reading (optional)",
+"trySample": "Try a sample",
+"recentT": "Recent",
+"clearT": "Clear"
 },
 "ta": {
 "tagline": "உங்கள் மொழியில் ஜாதகம், பொருத்தம், பஞ்சாங்கம்",
@@ -254,7 +257,10 @@ const I_EXTRA = {
 "aiAbout": "AI பலன் (விருப்பம்)",
 "fromLagna": "லக்னத்திலிருந்து",
 "fromMoon": "சந்திரனிலிருந்து",
-"chevDet": "{ref} {h}-ஆம் வீட்டில் செவ்வாய்."
+"chevDet": "{ref} {h}-ஆம் வீட்டில் செவ்வாய்.",
+"trySample": "மாதிரி பாருங்கள்",
+"recentT": "சமீபத்தியவை",
+"clearT": "அழி"
 },
 "hi": {
 "appName": "शुभ जातक",
@@ -733,6 +739,9 @@ const I_EXTRA = {
 "tradHint": "आपकी परंपरा के अनुसार पंचांग, कुंडली शैली, मंगल दोष नियम, मिलान पद्धति और प्रिंट डिज़ाइन तय होते हैं।",
 "shakaShort": "शक",
 "aiAbout": "AI फलादेश (वैकल्पिक)",
+"trySample": "नमूना देखें",
+"recentT": "हाल के",
+"clearT": "हटाएँ",
 "years60": [
 "प्रभव",
 "विभव",
@@ -1358,6 +1367,9 @@ const I_EXTRA = {
 "tradHint": "మీ సంప్రదాయం ప్రకారం పంచాంగం, చక్ర శైలి, కుజ దోష నియమం, పొంతన పద్ధతి, ముద్రణ రూపం మారుతాయి.",
 "shakaShort": "శక",
 "aiAbout": "AI ఫలితాలు (ఐచ్ఛికం)",
+"trySample": "నమూనా చూడండి",
+"recentT": "ఇటీవలివి",
+"clearT": "తొలగించు",
 "years60": [
 "ప్రభవ",
 "విభవ",
@@ -1983,6 +1995,9 @@ const I_EXTRA = {
 "tradHint": "ನಿಮ್ಮ ಸಂಪ್ರದಾಯದಂತೆ ಪಂಚಾಂಗ, ಕುಂಡಲಿ ಶೈಲಿ, ಕುಜ ದೋಷ ನಿಯಮ, ಹೊಂದಾಣಿಕೆ ವಿಧಾನ ಮತ್ತು ಮುದ್ರಣ ವಿನ್ಯಾಸ ಬದಲಾಗುತ್ತವೆ.",
 "shakaShort": "ಶಕ",
 "aiAbout": "AI ಫಲಾಫಲ (ಐಚ್ಛಿಕ)",
+"trySample": "ಮಾದರಿ ನೋಡಿ",
+"recentT": "ಇತ್ತೀಚಿನವು",
+"clearT": "ಅಳಿಸಿ",
 "years60": [
 "ಪ್ರಭವ",
 "ವಿಭವ",
@@ -2622,6 +2637,9 @@ const I_EXTRA = {
 "tradHint": "നിങ്ങളുടെ സമ്പ്രദായം അനുസരിച്ച് പഞ്ചാംഗം, ചക്രശൈലി, ചൊവ്വാദോഷ നിയമം, പൊരുത്ത രീതി, അച്ചടി രൂപം എന്നിവ മാറും.",
 "shakaShort": "ശക",
 "aiAbout": "AI ഫലം (ഐച്ഛികം)",
+"trySample": "ഒരു ഉദാഹരണം കാണുക",
+"recentT": "സമീപകാലം",
+"clearT": "മായ്ക്കുക",
 "years60": [
 "പ്രഭവ",
 "വിഭവ",
