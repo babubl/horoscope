@@ -58,3 +58,4 @@ ul.tl{padding-left:20px}ul.tl li{margin:6px 0}
 .btn.big{white-space:normal;max-width:100%}
 @media (max-width:520px){.pgrid{grid-template-columns:1fr 1fr;gap:8px}.pc{padding:10px 11px}.pc b{font-size:15px}.nama th,.nama td{padding:8px 7px}.nama b.big{font-size:18px}th,td{padding:8px 9px}td.tm{font-size:12px}}
 .tw td{white-space:nowrap}.tw td.tm,.tw td:nth-child(3){white-space:normal}
+main.wrap{padding:22px 16px 48px}

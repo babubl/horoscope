@@ -17,8 +17,18 @@ engine = open('src/engine.js').read()
 i18n = open('src/i18n.js').read()
 culture = open('src/culture.js').read()
 
-base = tmpl.replace('<script>/*ASTRONOMY*/</script>', '<script>/* astronomy-engine 2.1.19 (MIT) — Don Cross, https://github.com/cosinekitty/astronomy */\n' + astro + '\n</script>')
-base = base.replace('<script>/*ENGINE*/</script>', '<script>\n' + engine + '\n</script>\n<script>\n' + i18n + '\n</script>\n<script>\n' + culture + '\n</script>')
+# the calculation core is one external file named by its content hash: cached once, shared by all six language pages
+import glob  # noqa: E402
+import hashlib  # noqa: E402
+core = ('/* astronomy-engine 2.1.19 (MIT) — Don Cross, https://github.com/cosinekitty/astronomy */\n' + astro + '\n;\n' + engine + '\n;\n' + i18n + '\n;\n' + culture + '\n')
+CORE = f'/assets/core.{hashlib.sha256(core.encode()).hexdigest()[:10]}.js'
+for old_core in glob.glob('assets/core.*.js'):
+    if '/' + old_core != CORE:
+        os.remove(old_core)
+open(CORE.lstrip('/'), 'w').write(core)
+CORE_TAG = f'<script src="{CORE}"></script>'
+base = tmpl.replace('<script>/*ASTRONOMY*/</script>\n<script>/*ENGINE*/</script>', CORE_TAG)
+assert CORE_TAG in base
 
 # ---- the merged UI dictionaries, evaluated with node exactly as the page does
 i0 = tmpl.index('const I = {')
@@ -28,6 +38,12 @@ Object.assign(I.en, I_EXTRA.en); Object.assign(I.ta, I_EXTRA.ta);
 for (const l of ['ml', 'te', 'kn', 'hi']) I[l] = Object.assign({}, I.en, I_EXTRA[l]);
 process.stdout.write(JSON.stringify(I));'''
 I = json.loads(subprocess.run(['node', '-'], input=js, capture_output=True, text=True, check=True).stdout)
+
+
+def gfonts(l):
+    block = tmpl[tmpl.index('const FONT_FAM = {'):tmpl.index('};', tmpl.index('const FONT_FAM = {'))]
+    m = re.search(r"\b" + l + r": '([^']*)'", block)
+    return 'https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=' + m.group(1) + '&display=swap'
 
 
 def path(l):
@@ -42,7 +58,8 @@ def seo_section(l):
     d = SEO[l]
     faq = ''.join(f'<h3>{esc(q)}</h3><p>{esc(a)}</p>' for q, a in d['faq'])
     links = ''.join(f'<a href="{path(x)}" hreflang="{x}" lang="{x}">{NATIVE[x]}</a>' for x in LANGS if x != l)
-    links = f'<a href="{path(l)}nakshatra/">★ {I[l]["lNaks"]}</a>' + links
+    kb = [('calendar/', '📅', 'lCal'), ('panchangam/', '☀', 'lPanchCity'), ('nakshatra/', '★', 'lNaks'), ('rasi/', '♈', 'lRasi'), ('baby-names.html', '👶', 'lBaby')]
+    links = ''.join(f'<a href="{path(l)}{h}">{ic} {I[l][k]}</a>' for h, ic, k in kb) + links
     return f'''<section class="card seo" id="about-site" lang="{l}">
     <h2>{esc(d['h2'])}</h2>
     <p>{esc(d['intro'])}</p>
@@ -70,7 +87,7 @@ def prerender(page, l):
     """Fill data-t elements with the language's text, so search engines and slow phones see it before scripts run."""
     D = I[l]
     head, rest = page.split('<body>', 1)
-    body, tail = rest.split('<script>/* astronomy-engine', 1)
+    body, tail = rest.split(CORE_TAG, 1)
 
     def fill(m):
         k = m.group(2)
@@ -82,7 +99,7 @@ def prerender(page, l):
     body = body.replace(f'data-lang="{l}" lang="{l}" hreflang', f'class="on" data-lang="{l}" lang="{l}" hreflang', 1)
     body = re.sub(r'<a href="/([^"]*)"( id="naksLink")? data-kb=', lambda m: f'<a href="{path(l)}{m.group(1)}"{m.group(2) or ""} data-kb=', body)
     open_tag = '<body class="indic">' if l != 'en' else '<body>'
-    return head + open_tag + body + '<script>/* astronomy-engine' + tail
+    return head + open_tag + body + CORE_TAG + tail
 
 
 _m = re.search(r"adsenseClient: '([^']*)'", tmpl)
@@ -106,6 +123,7 @@ for l in LANGS:
     p = re.sub(r'<meta property="og:locale" content="[^"]*">\n<meta property="og:locale:alternate" content="[^"]*">',
                f'<meta property="og:locale" content="{LOCALE[l]}">\n' + '\n'.join(f'<meta property="og:locale:alternate" content="{LOCALE[x]}">' for x in LANGS if x != l), p, count=1)
     p = re.sub(r'<script type="application/ld\+json">.*?</script>\n', lambda m: jsonld(l), p, count=1, flags=re.S)
+    p = re.sub(r'<link href="https://fonts.googleapis.com/css2\?[^"]*" rel="stylesheet" id="gf">', lambda m: f'<link href="{gfonts(l)}" rel="stylesheet" id="gf">', p, count=1)
     p = p.replace('<link rel="manifest" href="/manifest.webmanifest">', f'<link rel="manifest" href="{"/" if l == "en" else path(l)}manifest.webmanifest">', 1)
     if ADS_CLIENT:
         p = p.replace('</head>', f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n</head>', 1)
@@ -162,3 +180,12 @@ for pg, fq, pr in [('guide.html', 'monthly', '0.7'), ('about.html', 'yearly', '0
     urls += f'  <url><loc>{SITE}/{pg}</loc><changefreq>{fq}</changefreq><priority>{pr}</priority></url>\n'
 open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + urls + '</urlset>\n')
 print('manifests, sitemap.xml')
+subprocess.run([sys.executable, 'src/pages.py'], check=True)
+
+# ---- service worker: precache the current core and bump the cache version whenever the core changes
+sw = open('sw.js').read()
+sw = re.sub(r"'/assets/core\.[0-9a-f]+\.js', ", '', sw)
+sw = sw.replace("'/assets/site.css', ", f"'/assets/site.css', '{CORE}', ", 1)
+sw = re.sub(r"const VERSION = '[^']*';", f"const VERSION = 'subajathagam-{hashlib.sha256((core + open('assets/site.css').read() + open('assets/kb.css').read()).encode()).hexdigest()[:8]}';", sw, count=1)
+open('sw.js', 'w').write(sw)
+print('core', CORE, len(core))

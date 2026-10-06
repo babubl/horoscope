@@ -12,7 +12,7 @@ SHELL = '''<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<meta name="theme-color" content="#a3361f">
+<meta name="theme-color" content="#6e1216">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:site_name" content="Suba Jathagam">
@@ -21,18 +21,18 @@ SHELL = '''<!doctype html>
 <meta property="og:url" content="https://subajathagam.in/{fname}">
 <meta property="og:image" content="https://subajathagam.in/icons/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Tiro+Tamil&family=Inter:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
 <link rel="canonical" href="https://subajathagam.in/{fname}">
 </head>
 <body class="en">
 <header><div class="wrap bar">
-  <a class="brand" href="./"><img src="icons/icon-192.png" alt=""><b>Suba Jathagam · சுப ஜாதகம்</b></a>
+  <a class="brand" href="/"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>Suba Jathagam · சுப ஜாதகம்</b></a>
   <div class="seg" role="group" aria-label="Language"><button id="l-en" class="on">EN</button><button id="l-ta">தமிழ்</button></div>
 </div></header>
 <main class="wrap">
@@ -41,11 +41,17 @@ SHELL = '''<!doctype html>
 <footer><div class="wrap">
   <span data-lang="en">Astrology is a traditional belief system — use it for reflection, not for medical, legal or financial decisions.</span>
   <span data-lang="ta">ஜோதிடம் ஒரு பாரம்பரிய நம்பிக்கை — மருத்துவ, சட்ட, நிதி முடிவுகளுக்கு இதை மட்டும் சார்ந்திருக்க வேண்டாம்.</span>
-  <nav><a href="./"><span data-lang="en">Horoscope &amp; matching</span><span data-lang="ta">ஜாதகம் &amp; பொருத்தம்</span></a>
-  <a href="guide.html"><span data-lang="en">Guide</span><span data-lang="ta">வழிகாட்டி</span></a>
-  <a href="about.html"><span data-lang="en">About</span><span data-lang="ta">எங்களைப் பற்றி</span></a>
-  <a href="privacy.html"><span data-lang="en">Privacy</span><span data-lang="ta">தனியுரிமை</span></a>
-  <a href="terms.html"><span data-lang="en">Terms</span><span data-lang="ta">விதிமுறைகள்</span></a></nav>
+  <nav><a href="/"><span data-lang="en">Horoscope &amp; matching</span><span data-lang="ta">ஜாதகம் &amp; பொருத்தம்</span></a>
+  <a href="/calendar/"><span data-lang="en">Festival calendar</span><span data-lang="ta">பண்டிகை நாட்காட்டி</span></a>
+  <a href="/panchangam/"><span data-lang="en">Panchangam by city</span><span data-lang="ta">ஊர்வாரி பஞ்சாங்கம்</span></a>
+  <a href="/nakshatra/"><span data-lang="en">27 Nakshatras</span><span data-lang="ta">27 நட்சத்திரங்கள்</span></a>
+  <a href="/rasi/"><span data-lang="en">12 Rasis</span><span data-lang="ta">12 ராசிகள்</span></a>
+  <a href="/baby-names.html"><span data-lang="en">Baby names</span><span data-lang="ta">குழந்தை பெயர்</span></a>
+  <a href="/how-we-calculate.html"><span data-lang="en">How we calculate</span><span data-lang="ta">கணிப்பு முறை</span></a>
+  <a href="/guide.html"><span data-lang="en">Guide</span><span data-lang="ta">வழிகாட்டி</span></a>
+  <a href="/about.html"><span data-lang="en">About</span><span data-lang="ta">எங்களைப் பற்றி</span></a>
+  <a href="/privacy.html"><span data-lang="en">Privacy</span><span data-lang="ta">தனியுரிமை</span></a>
+  <a href="/terms.html"><span data-lang="en">Terms</span><span data-lang="ta">விதிமுறைகள்</span></a></nav>
 </div></footer>
 <script>
 (function(){{
@@ -121,7 +127,7 @@ GUIDE_EN = '''
 
 <h2>How the calculations are done</h2>
 <p>Positions are calculated in your browser with the Lahiri (Chitrapaksha) ayanamsa, whole-sign houses and the modern Thirukanitha method. They agree with Swiss Ephemeris — the engine behind professional astrology software — to within seconds of arc. Temple Vakya panchangams use older formulas and can differ slightly, especially for a star near its boundary.</p>
-<p><a class="cta" href="./">Make your horoscope</a></p>
+<p><a class="cta" href="/">Make your horoscope</a></p>
 '''
 
 GUIDE_TA = '''
@@ -171,7 +177,7 @@ GUIDE_TA = '''
 
 <h2>கணிப்பு முறை</h2>
 <p>லஹிரி (சித்திரபக்ஷ) அயனாம்சம், ராசி வீட்டு முறை, திருக்கணித முறையில் உங்கள் உலாவியிலேயே கணிக்கப்படுகிறது. தொழில்முறை ஜோதிட மென்பொருள்களின் அடிப்படையான Swiss Ephemeris-உடன் சில வினாடி-பாகை அளவுக்குள் ஒத்துப்போகிறது. கோயில்களில் பயன்படும் வாக்கிய பஞ்சாங்கம் பழைய சூத்திரங்களைப் பயன்படுத்துவதால், நட்சத்திர எல்லையில் சிறு வேறுபாடு வரலாம்.</p>
-<p><a class="cta" href="./">உங்கள் ஜாதகம் பார்க்க</a></p>
+<p><a class="cta" href="/">உங்கள் ஜாதகம் பார்க்க</a></p>
 '''
 
 # ------------------------------------------------------------------ ABOUT
@@ -180,9 +186,9 @@ ABOUT_EN = f'''
 <p class="lead">A clean, accurate South Indian horoscope and marriage-matching tool, made in Chennai for Tamil families everywhere.</p>
 <div class="card">
 <p><b>What it does.</b> From a name, date, time and place of birth it prepares the Rasi and Navamsa charts, Tamil date and panchangam, Vimshottari dasa and bhukti, dosha checks and current Saturn and Jupiter transits. For two people it checks the 10 poruthams and dosha samyam. It can print a traditional two-page jathagam with Pillaiyar suzhi, Om and manjal–kungumam borders.</p>
-<p><b>Accuracy.</b> Tested on 400 random charts from 1900 to 2060 against Swiss Ephemeris (Lahiri): planets typically within 1–3 seconds of arc, Lagna within half a second of arc, and no difference in any rasi, nakshatra or Lagna. The matching rules follow published Tamil practice and are explained in the <a href="guide.html">guide</a>.</p>
-<p><b>Privacy.</b> Calculations happen on your own device. There is no sign-up and no database of birth details. See the <a href="privacy.html">privacy policy</a>.</p>
-<p><b>Languages.</b> Tamil and English throughout.</p>
+<p><b>Accuracy.</b> Tested on 400 random charts from 1900 to 2060 against Swiss Ephemeris (Lahiri): planets typically within 1–3 seconds of arc, Lagna within half a second of arc, and no difference in any rasi, nakshatra or Lagna. The matching rules follow published Tamil practice and are explained in the <a href="/guide.html">guide</a>.</p>
+<p><b>Privacy.</b> Calculations happen on your own device. There is no sign-up and no database of birth details. See the <a href="/privacy.html">privacy policy</a>.</p>
+<p><b>Languages.</b> English, Tamil, Malayalam, Telugu, Kannada and Hindi, each with its own tradition. Full method: <a href="/how-we-calculate.html">how we calculate</a>.</p>
 </div>
 <h2>Contact</h2>
 <p>Suggestions, corrections from astrologers and bug reports are welcome on the project page: <a href="{REPO}/issues">{REPO}/issues</a>.</p>
@@ -192,9 +198,9 @@ ABOUT_TA = f'''
 <p class="lead">துல்லியமான, எளிய தென்னிந்திய ஜாதகம் மற்றும் திருமணப் பொருத்தக் கருவி — சென்னையில் உருவாக்கப்பட்டது, உலகெங்கும் உள்ள தமிழ்க் குடும்பங்களுக்காக.</p>
 <div class="card">
 <p><b>என்ன செய்கிறது.</b> பெயர், பிறந்த தேதி, நேரம், ஊர் கொடுத்தால் ராசி, நவாம்சக் கட்டங்கள், தமிழ் தேதி, பஞ்சாங்கம், விம்சோத்தரி தசா–புக்தி, தோஷ பரிசோதனை, சனி–குரு கோசாரம் ஆகியவற்றைத் தருகிறது. இருவருக்கு 10 பொருத்தங்களையும் தோஷ சாம்யத்தையும் பார்க்கிறது. பிள்ளையார் சுழி, ஓம், மஞ்சள்–குங்கும ஓரங்களுடன் பாரம்பரிய இரண்டு பக்க ஜாதகத்தையும் அச்சிடலாம்.</p>
-<p><b>துல்லியம்.</b> 1900 முதல் 2060 வரை 400 ஜாதகங்களை Swiss Ephemeris (லஹிரி) உடன் ஒப்பிட்டுச் சோதித்தோம்: கிரகங்கள் பெரும்பாலும் 1–3 வினாடி-பாகைக்குள், லக்னம் அரை வினாடி-பாகைக்குள்; ஒரு ராசி, நட்சத்திரம், லக்னம் கூட மாறவில்லை. பொருத்த விதிகள் வெளியிடப்பட்ட தமிழ் மரபைப் பின்பற்றுகின்றன — <a href="guide.html">வழிகாட்டியில்</a> விளக்கம் உள்ளது.</p>
-<p><b>தனியுரிமை.</b> கணிப்பு உங்கள் சாதனத்திலேயே நடக்கிறது. கணக்கு தேவையில்லை; பிறப்பு விவரங்கள் எங்கும் சேமிக்கப்படுவதில்லை. <a href="privacy.html">தனியுரிமைக் கொள்கை</a> பார்க்கவும்.</p>
-<p><b>மொழிகள்.</b> தமிழ், ஆங்கிலம்.</p>
+<p><b>துல்லியம்.</b> 1900 முதல் 2060 வரை 400 ஜாதகங்களை Swiss Ephemeris (லஹிரி) உடன் ஒப்பிட்டுச் சோதித்தோம்: கிரகங்கள் பெரும்பாலும் 1–3 வினாடி-பாகைக்குள், லக்னம் அரை வினாடி-பாகைக்குள்; ஒரு ராசி, நட்சத்திரம், லக்னம் கூட மாறவில்லை. பொருத்த விதிகள் வெளியிடப்பட்ட தமிழ் மரபைப் பின்பற்றுகின்றன — <a href="/guide.html">வழிகாட்டியில்</a> விளக்கம் உள்ளது.</p>
+<p><b>தனியுரிமை.</b> கணிப்பு உங்கள் சாதனத்திலேயே நடக்கிறது. கணக்கு தேவையில்லை; பிறப்பு விவரங்கள் எங்கும் சேமிக்கப்படுவதில்லை. <a href="/privacy.html">தனியுரிமைக் கொள்கை</a> பார்க்கவும்.</p>
+<p><b>மொழிகள்.</b> தமிழ், ஆங்கிலம், மலையாளம், தெலுங்கு, கன்னடம், இந்தி — ஒவ்வொன்றும் அதன் மரபுப்படி. முழு விவரம்: <a href="/ta/how-we-calculate.html">கணிப்பு முறை</a>.</p>
 </div>
 <h2>தொடர்பு</h2>
 <p>ஆலோசனைகள், ஜோதிடர்களின் திருத்தங்கள், பிழை அறிக்கைகள் — திட்டப் பக்கத்தில் தெரிவிக்கலாம்: <a href="{REPO}/issues">{REPO}/issues</a>.</p>

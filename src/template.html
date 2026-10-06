@@ -41,7 +41,7 @@
 <meta name="apple-mobile-web-app-title" content="Suba Jathagam">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Tiro+Tamil&family=Tiro+Telugu&family=Tiro+Kannada&family=Tiro+Devanagari+Hindi&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Serif+Malayalam:wght@400;700;800&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Serif+Telugu:wght@400;700;800&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Serif+Kannada:wght@400;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Tiro+Tamil&family=Tiro+Telugu&family=Tiro+Kannada&family=Tiro+Devanagari+Hindi&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Serif+Malayalam:wght@400;700;800&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Serif+Telugu:wght@400;700;800&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Serif+Kannada:wght@400;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700;800&display=swap" rel="stylesheet" id="gf">
 <style>
 :root{
   --bg:#faf5ec; --paper:#fffdf8; --ink:#2b1d14; --muted:#7a6553; --line:#e6d8c3;
@@ -518,7 +518,7 @@ body.indic .seo h2{font-family:var(--display)}
 .fam .chip{display:inline-flex;align-items:center;border:1px solid var(--accent-2);background:var(--soft);border-radius:999px;overflow:hidden}
 .fam .chip button{border:0;background:none;color:var(--ink);padding:6px 4px 6px 12px;font-size:13px;font-weight:600;cursor:pointer;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fam .chip button.d{padding:6px 10px 6px 4px;color:var(--muted);font-weight:400}
-.fam .add{border:1px dashed var(--line);background:none;color:var(--accent);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.famsave{margin-top:10px}.famsave .add,.fam .add{border:1px dashed var(--line);background:none;color:var(--accent);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
 .recent{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:-4px 0 14px}
 .recent .rl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 body.indic .recent .rl{text-transform:none;letter-spacing:0}
@@ -1613,7 +1613,20 @@ function syncSettings() {
   document.getElementById('langSel').value = lang;
   if (typeof setLangUI === 'function') setLangUI();
 }
+// fonts per language: each page loads only its own script's fonts; switching language adds the new set
+const FONT_FAM = { en: 'Tiro+Tamil&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800',
+  ta: 'Tiro+Tamil&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700;800',
+  ml: 'Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Serif+Malayalam:wght@400;700;800',
+  te: 'Tiro+Telugu&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Serif+Telugu:wght@400;700;800',
+  kn: 'Tiro+Kannada&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Serif+Kannada:wght@400;700;800',
+  hi: 'Tiro+Devanagari+Hindi&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700;800' };
+const fontsDone = new Set([document.documentElement.lang || 'en']);
+function ensureFonts(l) {
+  if (fontsDone.has(l) || !FONT_FAM[l]) return; fontsDone.add(l);
+  const k = document.createElement('link'); k.rel = 'stylesheet'; k.href = 'https://fonts.googleapis.com/css2?family=' + FONT_FAM[l] + '&display=swap'; document.head.appendChild(k);
+}
 function applyLang() {
+  ensureFonts(lang); ensureFonts(trad);
   document.body.classList.toggle('indic', lang !== 'en');
   document.body.dataset.trad = trad;
   document.documentElement.lang = lang;
@@ -2205,8 +2218,11 @@ function renderFamily() {
     let el = host.querySelector('.fam');
     if (!el) { el = document.createElement('div'); el.className = 'fam'; const h4 = host.querySelector('h4'); h4 ? h4.after(el) : host.prepend(el); }
     const items = list.map((p, i) => [p, i]).filter(([p]) => !gender || p.g === gender);
-    el.innerHTML = (items.length ? `<span class="rl">👪 ${esc(t('famT'))}</span>` : '') + items.map(([p, i]) => `<span class="chip"><button type="button" data-fam-pick="${key}:${i}">${esc(p.n)}</button><button type="button" class="d" data-fam-del="${i}" aria-label="×">×</button></span>`).join('') +
-      `<button type="button" class="add" data-fam-save="${key}">＋ ${esc(t('famSave'))}</button>`;
+    el.classList.toggle('hidden', !items.length);
+    el.innerHTML = items.length ? `<span class="rl">👪 ${esc(t('famT'))}</span>` + items.map(([p, i]) => `<span class="chip"><button type="button" data-fam-pick="${key}:${i}">${esc(p.n)}</button><button type="button" class="d" data-fam-del="${i}" aria-label="×">×</button></span>`).join('') : '';
+    let sv = host.querySelector('.famsave');
+    if (!sv) { sv = document.createElement('div'); sv.className = 'famsave'; host.append(sv); }
+    sv.innerHTML = `<button type="button" class="add" data-fam-save="${key}">👪 ＋ ${esc(t('famSave'))}</button>`;
   });
 }
 document.addEventListener('click', async e => {

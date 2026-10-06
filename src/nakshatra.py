@@ -90,6 +90,15 @@ S = {
 FONTS = ('https://fonts.googleapis.com/css2?family=Marcellus&family=Tiro+Tamil&family=Tiro+Telugu&family=Tiro+Kannada&family=Tiro+Devanagari+Hindi'
          '&family=Inter:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Serif+Malayalam:wght@400'
          '&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap')
+FONT_L = {'en': 'Tiro+Tamil&family=Noto+Sans+Tamil:wght@400;600;700', 'ta': 'Tiro+Tamil&family=Noto+Sans+Tamil:wght@400;600;700',
+          'ml': 'Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Serif+Malayalam:wght@400', 'te': 'Tiro+Telugu&family=Noto+Sans+Telugu:wght@400;600;700',
+          'kn': 'Tiro+Kannada&family=Noto+Sans+Kannada:wght@400;600;700', 'hi': 'Tiro+Devanagari+Hindi&family=Noto+Sans+Devanagari:wght@400;600;700'}
+
+
+def fonts_for(l):
+    return 'https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;600;700&family=' + FONT_L[l] + '&display=swap'
+
+
 CSP = ("default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.google.com https://*.gstatic.com https://*.adtrafficquality.google; "
        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; "
        "connect-src 'self' https://*.goatcounter.com https://*.google.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google; "
@@ -157,7 +166,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="{FONTS}" rel="stylesheet">
+<link href="{fonts_for(l)}" rel="stylesheet">
 <link rel="stylesheet" href="/assets/kb.css">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <!--ADS-->
