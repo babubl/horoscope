@@ -145,6 +145,13 @@ ads_head = (f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n<scri
 kb_urls = nakshatra.generate(I, ads_head)
 print('nakshatra pages', len(kb_urls))
 
+# ---- live panchangam bundle for the city pages (cached by the browser and service worker)
+open('assets/panch.js', 'w').write(astro + '\n' + engine + '\n' + open('src/panch_widget.js').read())
+import kb  # noqa: E402
+_k = kb.generate(I, ads_head)
+print('calendar / panchangam / names / rasi pages', len(_k))
+kb_urls += _k
+
 # ---- sitemap with language alternates
 xl = ''.join(f'    <xhtml:link rel="alternate" hreflang="{x}" href="{SITE}{path(x)}"/>\n' for x in LANGS) + f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>\n'
 urls = ''.join(f'  <url><loc>{SITE}{path(l)}</loc><changefreq>weekly</changefreq><priority>{"1.0" if l == "en" else "0.9"}</priority>\n{xl}  </url>\n' for l in LANGS)
