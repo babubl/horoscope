@@ -80,7 +80,7 @@ def prerender(page, l):
     body = body.replace(f'<option value="{l}" lang="{l}">', f'<option value="{l}" lang="{l}" selected>')
     body = body.replace('<span id="langCur">English</span>', f'<span id="langCur">{NATIVE[l]}</span>', 1)
     body = body.replace(f'data-lang="{l}" lang="{l}" hreflang', f'class="on" data-lang="{l}" lang="{l}" hreflang', 1)
-    body = body.replace('<a href="/nakshatra/" id="naksLink"', f'<a href="{path(l)}nakshatra/" id="naksLink"', 1)
+    body = re.sub(r'<a href="/([^"]*)"( id="naksLink")? data-kb=', lambda m: f'<a href="{path(l)}{m.group(1)}"{m.group(2) or ""} data-kb=', body)
     open_tag = '<body class="indic">' if l != 'en' else '<body>'
     return head + open_tag + body + '<script>/* astronomy-engine' + tail
 

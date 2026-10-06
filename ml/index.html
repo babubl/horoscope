@@ -518,6 +518,12 @@ body.indic .seo h2{font-family:var(--display)}
 .jump a{font-size:13px;font-weight:600;text-decoration:none;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent-2) 35%,var(--line));padding:6px 12px;border-radius:999px}
 .jump a:hover{background:color-mix(in srgb,var(--accent-soft) 60%,var(--accent-2))}
 /* recent charts */
+.fam{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.fam .rl{font-size:12px;font-weight:700;color:var(--muted);margin-right:2px}
+.fam .chip{display:inline-flex;align-items:center;border:1px solid var(--accent-2);background:var(--soft);border-radius:999px;overflow:hidden}
+.fam .chip button{border:0;background:none;color:var(--ink);padding:6px 4px 6px 12px;font-size:13px;font-weight:600;cursor:pointer;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fam .chip button.d{padding:6px 10px 6px 4px;color:var(--muted);font-weight:400}
+.fam .add{border:1px dashed var(--line);background:none;color:var(--accent);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
 .recent{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:-4px 0 14px}
 .recent .rl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 body.indic .recent .rl{text-transform:none;letter-spacing:0}
@@ -718,7 +724,7 @@ body.noscroll{overflow:hidden}
   <div class="wrap">
     <span data-t="footer">ഗണനം: ലാഹിരി അയനാംശം, ശരാശരി രാഹു/കേതു, രാശി ഭാവ രീതി, വിംശോത്തരി ദശ. ജ്യോതിഷം ഒരു പാരമ്പര്യ വിശ്വാസമാണ്; വൈദ്യ, നിയമ, സാമ്പത്തിക തീരുമാനങ്ങൾക്ക് ഇതിനെ മാത്രം ആശ്രയിക്കരുത്.</span>
     <div class="visits hidden" id="visits"></div>
-    <nav class="flinks"><a href="#feedback" data-t="lFeedback">അഭിപ്രായം</a><a href="/ml/nakshatra/" id="naksLink" data-t="lNaks">27 നക്ഷത്രങ്ങൾ</a><a href="/guide.html" data-t="lGuide">വഴികാട്ടി</a><a href="/about.html" data-t="lAbout">ഞങ്ങളെക്കുറിച്ച്</a><a href="/privacy.html" data-t="lPrivacy">സ്വകാര്യത</a><a href="/terms.html" data-t="lTerms">നിബന്ധനകൾ</a></nav>
+    <nav class="flinks"><a href="#feedback" data-t="lFeedback">അഭിപ്രായം</a><a href="/ml/calendar/" data-kb="calendar/" data-t="lCal">ആഘോഷ കലണ്ടർ</a><a href="/ml/panchangam/" data-kb="panchangam/" data-t="lPanchCity">നഗരം തിരിച്ച് പഞ്ചാംഗം</a><a href="/ml/nakshatra/" id="naksLink" data-kb="nakshatra/" data-t="lNaks">27 നക്ഷത്രങ്ങൾ</a><a href="/ml/rasi/" data-kb="rasi/" data-t="lRasi">12 രാശികൾ</a><a href="/ml/baby-names.html" data-kb="baby-names.html" data-t="lBaby">കുഞ്ഞിന്റെ പേര്</a><a href="/ml/how-we-calculate.html" data-kb="how-we-calculate.html" data-t="lHow">കണക്കുകൂട്ടൽ രീതി</a><a href="/guide.html" data-t="lGuide">വഴികാട്ടി</a><a href="/about.html" data-t="lAbout">ഞങ്ങളെക്കുറിച്ച്</a><a href="/privacy.html" data-t="lPrivacy">സ്വകാര്യത</a><a href="/terms.html" data-t="lTerms">നിബന്ധനകൾ</a></nav>
   </div>
 </footer>
 
@@ -1713,7 +1719,19 @@ const I_EXTRA = {
 "clearT": "Clear",
 "aiReport": "Report this reading",
 "aiNote2": "Written by AI (Google Gemini). If anything is wrong or offensive:",
-"lNaks": "27 Nakshatras"
+"lNaks": "27 Nakshatras",
+"shareImg": "Chart image",
+"imgReady": "Image saved — share it on WhatsApp",
+"famT": "Family",
+"famSave": "Save to family",
+"famSaved": "Saved on this phone only",
+"famDel": "Remove {name} from family?",
+"famName": "Enter a name first",
+"lCal": "Festival calendar",
+"lBaby": "Baby names",
+"lRasi": "12 Rasis",
+"lPanchCity": "Panchangam by city",
+"lHow": "How we calculate"
 },
 "ta": {
 "tagline": "உங்கள் மொழியில் ஜாதகம், பொருத்தம், பஞ்சாங்கம்",
@@ -1844,7 +1862,19 @@ const I_EXTRA = {
 "clearT": "அழி",
 "aiReport": "இந்தப் பலனைப் புகாரளி",
 "aiNote2": "AI (Google Gemini) எழுதியது. ஏதேனும் தவறோ, புண்படுத்துவதோ இருந்தால்:",
-"lNaks": "27 நட்சத்திரங்கள்"
+"lNaks": "27 நட்சத்திரங்கள்",
+"shareImg": "கட்டம் படம்",
+"imgReady": "படம் சேமிக்கப்பட்டது — WhatsApp-இல் பகிருங்கள்",
+"famT": "குடும்பம்",
+"famSave": "குடும்பத்தில் சேமி",
+"famSaved": "இந்த போனில் மட்டும் சேமிக்கப்பட்டது",
+"famDel": "{name} — குடும்பத்திலிருந்து நீக்கவா?",
+"famName": "முதலில் பெயரை உள்ளிடுங்கள்",
+"lCal": "பண்டிகை நாட்காட்டி",
+"lBaby": "குழந்தை பெயர் எழுத்து",
+"lRasi": "12 ராசிகள்",
+"lPanchCity": "ஊர்வாரி பஞ்சாங்கம்",
+"lHow": "கணிப்பு முறை"
 },
 "hi": {
 "appName": "शुभ जातक",
@@ -2329,6 +2359,18 @@ const I_EXTRA = {
 "aiReport": "इस फलादेश की शिकायत करें",
 "aiNote2": "AI (Google Gemini) द्वारा लिखा गया। कुछ गलत या आपत्तिजनक हो तो:",
 "lNaks": "27 नक्षत्र",
+"shareImg": "कुंडली चित्र",
+"imgReady": "चित्र सहेजा गया — WhatsApp पर भेजें",
+"famT": "परिवार",
+"famSave": "परिवार में सहेजें",
+"famSaved": "केवल इस फ़ोन में सहेजा गया",
+"famDel": "{name} को परिवार से हटाएँ?",
+"famName": "पहले नाम लिखें",
+"lCal": "व्रत-त्योहार कैलेंडर",
+"lBaby": "बच्चों के नाम",
+"lRasi": "12 राशियाँ",
+"lPanchCity": "शहरवार पंचांग",
+"lHow": "गणना विधि",
 "years60": [
 "प्रभव",
 "विभव",
@@ -2960,6 +3002,18 @@ const I_EXTRA = {
 "aiReport": "ఈ ఫలితాన్ని నివేదించండి",
 "aiNote2": "AI (Google Gemini) రాసింది. ఏదైనా తప్పు లేదా అభ్యంతరకరంగా ఉంటే:",
 "lNaks": "27 నక్షత్రాలు",
+"shareImg": "చక్రం చిత్రం",
+"imgReady": "చిత్రం సేవ్ అయింది — WhatsApp లో పంచుకోండి",
+"famT": "కుటుంబం",
+"famSave": "కుటుంబంలో సేవ్ చేయండి",
+"famSaved": "ఈ ఫోన్‌లో మాత్రమే సేవ్ అయింది",
+"famDel": "{name} — కుటుంబం నుండి తీసివేయాలా?",
+"famName": "ముందుగా పేరు నమోదు చేయండి",
+"lCal": "పండుగల క్యాలెండర్",
+"lBaby": "పిల్లల పేర్లు",
+"lRasi": "12 రాశులు",
+"lPanchCity": "నగరాల పంచాంగం",
+"lHow": "లెక్కింపు విధానం",
 "years60": [
 "ప్రభవ",
 "విభవ",
@@ -3591,6 +3645,18 @@ const I_EXTRA = {
 "aiReport": "ಈ ಫಲಾಫಲವನ್ನು ವರದಿ ಮಾಡಿ",
 "aiNote2": "AI (Google Gemini) ಬರೆದದ್ದು. ಏನಾದರೂ ತಪ್ಪು ಅಥವಾ ಆಕ್ಷೇಪಾರ್ಹವಾಗಿದ್ದರೆ:",
 "lNaks": "27 ನಕ್ಷತ್ರಗಳು",
+"shareImg": "ಕುಂಡಲಿ ಚಿತ್ರ",
+"imgReady": "ಚಿತ್ರ ಉಳಿಸಲಾಗಿದೆ — WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ",
+"famT": "ಕುಟುಂಬ",
+"famSave": "ಕುಟುಂಬಕ್ಕೆ ಉಳಿಸಿ",
+"famSaved": "ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ",
+"famDel": "{name} — ಕುಟುಂಬದಿಂದ ತೆಗೆಯಬೇಕೆ?",
+"famName": "ಮೊದಲು ಹೆಸರು ನಮೂದಿಸಿ",
+"lCal": "ಹಬ್ಬಗಳ ಕ್ಯಾಲೆಂಡರ್",
+"lBaby": "ಮಗುವಿನ ಹೆಸರು",
+"lRasi": "12 ರಾಶಿಗಳು",
+"lPanchCity": "ನಗರವಾರು ಪಂಚಾಂಗ",
+"lHow": "ಲೆಕ್ಕಾಚಾರ ವಿಧಾನ",
 "years60": [
 "ಪ್ರಭವ",
 "ವಿಭವ",
@@ -4236,6 +4302,18 @@ const I_EXTRA = {
 "aiReport": "ഈ ഫലം റിപ്പോർട്ട് ചെയ്യുക",
 "aiNote2": "AI (Google Gemini) എഴുതിയത്. തെറ്റോ അനുചിതമോ ആയി എന്തെങ്കിലും ഉണ്ടെങ്കിൽ:",
 "lNaks": "27 നക്ഷത്രങ്ങൾ",
+"shareImg": "ചക്രം ചിത്രം",
+"imgReady": "ചിത്രം സേവ് ചെയ്തു — WhatsApp-ൽ പങ്കിടൂ",
+"famT": "കുടുംബം",
+"famSave": "കുടുംബത്തിൽ സേവ് ചെയ്യുക",
+"famSaved": "ഈ ഫോണിൽ മാത്രം സേവ് ചെയ്തു",
+"famDel": "{name} — കുടുംബത്തിൽ നിന്ന് നീക്കണോ?",
+"famName": "ആദ്യം പേര് നൽകുക",
+"lCal": "ആഘോഷ കലണ്ടർ",
+"lBaby": "കുഞ്ഞിന്റെ പേര്",
+"lRasi": "12 രാശികൾ",
+"lPanchCity": "നഗരം തിരിച്ച് പഞ്ചാംഗം",
+"lHow": "കണക്കുകൂട്ടൽ രീതി",
 "years60": [
 "പ്രഭവ",
 "വിഭവ",
@@ -5144,7 +5222,7 @@ function renderHoro() {
     <div class="card">
       <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
         <div style="margin-right:auto"><h2>${esc(pd.name) || t('rasiChart')}</h2><p class="sub" style="margin:0">${birthLine(pd, c)}</p></div>
-        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openJathagam">🪔 ${t('printPdf')}</button><button class="btn ghost" type="button" data-wa="horo">${WA_ICON} WhatsApp</button><button class="btn ghost" type="button" data-share="horo">${t('share')}</button></div>
+        <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="openJathagam">🪔 ${t('printPdf')}</button><button class="btn ghost" type="button" data-wa="horo">${WA_ICON} WhatsApp</button><button class="btn ghost" type="button" id="shareImg">🖼️ ${t('shareImg')}</button><button class="btn ghost" type="button" data-share="horo">${t('share')}</button></div>
       </div>
       <div style="margin-top:16px">${statsBlock(c)}</div>
       <p class="note">${t('weekdayNote')}${c.tamil.beforeSunrise ? ' ' + t('beforeSunriseNote') : ''}</p>
@@ -5162,6 +5240,7 @@ function renderHoro() {
     <div class="card no-print" id="hc-print" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><h3 style="margin:0">🪔 ${t('jathagamBtn')}</h3><p class="sub" style="margin:4px 0 0">${t('jathagamHint')}</p></div><button class="btn" type="button" data-open-sheet="horo">${t('printPdf')}</button></div>`;
   renderAi('horo');
   document.getElementById('openJathagam').onclick = () => openSheet('horo');
+  document.getElementById('shareImg').onclick = shareChartImage;
   if (document.getElementById('jv').classList.contains('open') && sheetMode === 'horo') renderSheets();
 }
 
@@ -5446,8 +5525,9 @@ function applyLang() {
     history.replaceState(null, '', LANG_PATH(lang) + location.search + location.hash);
   }
   document.getElementById('homeLink').href = LANG_PATH(lang);
-  document.getElementById('naksLink').href = LANG_PATH(lang) + 'nakshatra/';
+  document.querySelectorAll('[data-kb]').forEach(a => a.href = LANG_PATH(lang) + a.dataset.kb);
   if (typeof renderRecent === 'function') renderRecent();
+  if (typeof renderFamily === 'function') renderFamily();
   const canon = document.querySelector('link[rel=canonical]'); if (canon) canon.href = 'https://subajathagam.in' + LANG_PATH(lang);
   renderHoro(); renderMatch();
   if (typeof renderPanch === 'function') { renderPanch(); renderToday(); renderFeedbackControls(); renderWaSite(); }
@@ -5910,6 +5990,137 @@ document.addEventListener('click', e => {
   }
   if (e.target.closest('[data-recent-clear]')) { store.del('sj.recent'); renderRecent(); }
 });
+
+
+// ================= chart as an image (for WhatsApp / status) =================
+async function chartCanvas() {
+  const { pd, c } = horoState, Lx = L();
+  try { await document.fonts.ready; } catch {}
+  const W = 1080, H = 1500, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d');
+  const disp = getComputedStyle(document.documentElement).getPropertyValue('--display').trim() || 'serif';
+  const body = getComputedStyle(document.body).fontFamily;
+  const F = (w, px, fam = body) => `${w} ${px}px ${fam}`;
+  const fit = (txt, max, w, px, fam) => { let s = px; x.font = F(w, s, fam); while (x.measureText(txt).width > max && s > 14) { s -= 2; x.font = F(w, s, fam); } return s; };
+  x.fillStyle = '#f7efe0'; x.fillRect(0, 0, W, H);
+  // header band
+  const g = x.createLinearGradient(0, 0, 0, 150); g.addColorStop(0, '#7a171b'); g.addColorStop(1, '#4d0b0f');
+  x.fillStyle = g; x.fillRect(0, 0, W, 150); x.fillStyle = '#f0c35a'; x.fillRect(0, 150, W, 6);
+  const brand = t('appName'), tag = t('tagline');
+  x.fillStyle = '#ffe3a3'; x.textAlign = 'center'; x.textBaseline = 'middle'; fit(brand, W - 120, 400, 54, disp); x.fillText(brand, W / 2, 60);
+  x.fillStyle = '#f0d8a8'; fit(tag, W - 120, 400, 26); x.fillText(tag, W / 2, 114);
+  // name and birth line
+  const nm = pd.name || t('rasiChart');
+  x.fillStyle = '#6e1216'; fit(nm, W - 120, 400, 64, disp); x.fillText(nm, W / 2, 232);
+  x.fillStyle = '#7b5e48'; const bl = `${pd.place} · ${fmtDateInput(pd.date)} ${pd.time}`; fit(bl, W - 120, 400, 30); x.fillText(bl, W / 2, 292);
+  // lagna / rasi / star boxes
+  const boxes = [[t('lagna'), Lx.rasis[c.lagna.sign]], [t('rasi'), Lx.rasis[c.rasi]], [t('star'), `${Lx.naks[c.nakshatra]} ${c.pada}`]];
+  boxes.forEach(([k, v], i) => {
+    const bx = 90 + i * 306, by = 336, bw = 288, bh = 104;
+    x.fillStyle = '#fffaf1'; x.strokeStyle = '#e7d4b4'; x.lineWidth = 2; x.beginPath(); x.roundRect ? x.roundRect(bx, by, bw, bh, 18) : x.rect(bx, by, bw, bh); x.fill(); x.stroke();
+    x.fillStyle = '#7b5e48'; fit(k, bw - 30, 400, 24); x.fillText(k, bx + bw / 2, by + 32);
+    x.fillStyle = '#2a160c'; fit(v, bw - 30, 700, 34); x.fillText(v, bx + bw / 2, by + 72);
+  });
+  // chart
+  const X0 = 90, Y0 = 470, S = 900;
+  const lg = c.lagna.sign;
+  const item = p => ({ t: Lx.ab[p.name], r: p.retro && p.name !== 'Rahu' && p.name !== 'Ketu' ? Lx.rAb : '' });
+  const drawItems = (items, cx, cy, per, px) => {
+    const lines = []; for (let i = 0; i < items.length; i += per) lines.push(items.slice(i, i + per));
+    const lh = px * 1.25, y0 = cy - (lines.length - 1) * lh / 2;
+    lines.forEach((ln, li) => {
+      x.font = F(700, px); const sm = F(400, Math.round(px * .6));
+      const widths = ln.map(it => { x.font = F(700, px); let w = x.measureText(it.t).width; if (it.r) { x.font = sm; w += x.measureText(it.r).width + 2; } return w; });
+      const gap = px * .45, total = widths.reduce((a, b) => a + b, 0) + gap * (ln.length - 1);
+      let cur = cx - total / 2; x.textAlign = 'left';
+      ln.forEach((it, k) => {
+        x.fillStyle = it.asc ? '#8f1d1d' : '#2a160c'; x.font = F(700, px); x.fillText(it.t, cur, y0 + li * lh);
+        if (it.r) { const w0 = x.measureText(it.t).width; x.font = sm; x.fillStyle = '#8f1d1d'; x.fillText(it.r, cur + w0 + 2, y0 + li * lh - px * .35); }
+        cur += widths[k] + gap;
+      });
+      x.textAlign = 'center';
+    });
+  };
+  x.fillStyle = '#fffaf1'; x.fillRect(X0, Y0, S, S);
+  x.strokeStyle = '#8f1d1d'; x.lineWidth = 4;
+  if (chartStyle !== 'north') {
+    const cs = S / 4, cells = Array.from({ length: 12 }, () => []);
+    cells[lg].push({ t: Lx.ab.Asc, r: '', asc: true });
+    c.planets.forEach(p => cells[p.sign].push(item(p)));
+    for (let k = 0; k < 12; k++) {
+      const [r, col] = POS[k], cx0 = X0 + col * cs, cy0 = Y0 + r * cs;
+      if (k === lg) { x.fillStyle = '#f8e4c6'; x.fillRect(cx0, cy0, cs, cs); }
+      x.strokeRect(cx0, cy0, cs, cs);
+      x.fillStyle = '#9a7a5e'; fit(Lx.rasis[k], cs - 20, 400, 22); x.fillText(Lx.rasis[k], cx0 + cs / 2, cy0 + 24);
+      drawItems(cells[k], cx0 + cs / 2, cy0 + cs / 2 + 16, 3, cells[k].length > 6 ? 26 : 34);
+    }
+    x.strokeRect(X0 + cs, Y0 + cs, cs * 2, cs * 2);
+    x.fillStyle = '#6e1216'; fit(t('center'), cs * 2 - 40, 400, 44, disp); x.fillText(t('center'), X0 + S / 2, Y0 + S / 2 - 20);
+    x.fillStyle = '#7b5e48'; fit(nm, cs * 2 - 40, 400, 28); x.fillText(nm, X0 + S / 2, Y0 + S / 2 + 30);
+  } else {
+    const k = S / 100, P = (a, b) => [X0 + a * k, Y0 + b * k];
+    x.fillStyle = '#f8e4c6'; x.beginPath(); [[50, 0], [75, 25], [50, 50], [25, 25]].forEach(([a, b], i) => i ? x.lineTo(...P(a, b)) : x.moveTo(...P(a, b))); x.closePath(); x.fill();
+    x.strokeRect(X0, Y0, S, S);
+    x.beginPath(); x.moveTo(...P(0, 0)); x.lineTo(...P(100, 100)); x.moveTo(...P(100, 0)); x.lineTo(...P(0, 100));
+    x.moveTo(...P(50, 0)); x.lineTo(...P(100, 50)); x.lineTo(...P(50, 100)); x.lineTo(...P(0, 50)); x.closePath(); x.stroke();
+    const byHouse = Array.from({ length: 12 }, () => []);
+    c.planets.forEach(p => byHouse[(p.sign - lg + 12) % 12].push(item(p)));
+    for (let h = 0; h < 12; h++) {
+      const [[cx, cy], [nx, ny], per] = NI_H[h];
+      x.fillStyle = '#9a7a5e'; x.font = F(400, 24); x.fillText(String((lg + h) % 12 + 1), ...P(nx, ny));
+      drawItems(byHouse[h], ...P(cx, cy), per, byHouse[h].length > 4 ? 26 : 32);
+    }
+  }
+  // footer
+  x.fillStyle = '#6e1216'; x.fillRect(0, H - 90, W, 90); x.fillStyle = '#f0c35a'; x.fillRect(0, H - 90, W, 4);
+  x.fillStyle = '#ffe3a3'; x.font = F(700, 32); x.fillText('subajathagam.in', W / 2, H - 44);
+  return cv;
+}
+async function shareChartImage() {
+  if (!horoState) return;
+  try { window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path: 'share-image', event: true }); } catch {}
+  const cv = await chartCanvas();
+  const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+  const fname = `jathagam-${(horoState.pd.name || 'chart').replace(/[^\p{L}\p{M}\p{N}]+/gu, '-').slice(0, 30)}.png`;
+  const file = new File([blob], fname, { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file], text: waText('horo') }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fname; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast('✓ ' + t('imgReady'));
+}
+
+// ================= family profiles: kept only in this browser =================
+function famList() { try { return JSON.parse(store.get('sj.family') || '[]'); } catch { return []; } }
+function famSet(list) { store.set('sj.family', JSON.stringify(list)); renderFamily(); }
+const FAM_FORMS = { s: [() => single, 'p-single', null], b: [() => boyF, 'p-boy', 'male'], g: [() => girlF, 'p-girl', 'female'] };
+function renderFamily() {
+  const list = famList();
+  Object.entries(FAM_FORMS).forEach(([key, [, hostId, gender]]) => {
+    const host = document.getElementById(hostId); if (!host) return;
+    let el = host.querySelector('.fam');
+    if (!el) { el = document.createElement('div'); el.className = 'fam'; const h4 = host.querySelector('h4'); h4 ? h4.after(el) : host.prepend(el); }
+    const items = list.map((p, i) => [p, i]).filter(([p]) => !gender || p.g === gender);
+    el.innerHTML = (items.length ? `<span class="rl">👪 ${esc(t('famT'))}</span>` : '') + items.map(([p, i]) => `<span class="chip"><button type="button" data-fam-pick="${key}:${i}">${esc(p.n)}</button><button type="button" class="d" data-fam-del="${i}" aria-label="×">×</button></span>`).join('') +
+      `<button type="button" class="add" data-fam-save="${key}">＋ ${esc(t('famSave'))}</button>`;
+  });
+}
+document.addEventListener('click', async e => {
+  const pick = e.target.closest('[data-fam-pick]'), del = e.target.closest('[data-fam-del]'), save = e.target.closest('[data-fam-save]');
+  if (pick) { const [k, i] = pick.dataset.famPick.split(':'); const p = famList()[+i]; if (p) FAM_FORMS[k][0]().write(fat(p)); return; }
+  if (del) { const list = famList(), p = list[+del.dataset.famDel]; if (p && confirm(t('famDel', { name: p.n }))) { list.splice(+del.dataset.famDel, 1); famSet(list); } return; }
+  if (save) {
+    const k = save.dataset.famSave, err = document.getElementById(k === 's' ? 'horoErr' : 'matchErr'); err.textContent = '';
+    try {
+      const pd = await FAM_FORMS[k][0]().read();
+      if (!pd.name) throw new Error(t('famName'));
+      const sp = slim(pd), list = famList().filter(x => x.n !== sp.n); list.unshift(sp); famSet(list.slice(0, 20));
+      toast('✓ ' + t('famSaved'));
+    } catch (ex) { err.textContent = ex.message; }
+  }
+});
+renderFamily();
 
 
 // ================= language picker =================
