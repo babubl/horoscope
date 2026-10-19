@@ -127,7 +127,7 @@ h2.orn{display:flex;align-items:center;gap:10px}
 h2.orn::before{content:"";flex:0 0 28px;height:18px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2228%22%20height%3D%2218%22%20viewBox%3D%220%200%2028%2018%22%3E%3Cg%20fill%3D%22%23cf8a17%22%3E%3Cpath%20d%3D%22M14%201c3%204%203%209%200%2015-3-6-3-11%200-15z%22/%3E%3Cpath%20d%3D%22M14%2016C10%2013%206%2012%202%2013c3-4%208-4%2012%203z%22%20opacity%3D%22.75%22/%3E%3Cpath%20d%3D%22M14%2016c4-3%208-4%2012-3-3-4-8-4-12%203z%22%20opacity%3D%22.75%22/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain}
 h2.orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--accent-2),transparent);opacity:.5}
 .sthala{background:linear-gradient(180deg,color-mix(in srgb,var(--soft) 55%,var(--paper)),var(--paper));border:1px solid var(--line);border-left:4px solid var(--accent-2);border-radius:14px;padding:6px 18px;font-size:16.5px;line-height:1.85}
-.sthala p:first-child::first-letter{font:400 2.6em/0.9 'Marcellus','Tiro Tamil',serif;float:left;margin:6px 8px 0 0;color:var(--maroon)}
+body.en .sthala p:first-child::first-letter{font:400 2.6em/0.9 'Marcellus','Tiro Tamil',serif;float:left;margin:6px 8px 0 0;color:var(--maroon)}
 ul.dyk{list-style:none;padding:0;display:grid;gap:10px}
 ul.dyk li{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px 10px 44px}
 ul.dyk li::before{content:"🪷";position:absolute;left:12px;top:9px;font-size:20px}

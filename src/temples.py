@@ -9,6 +9,14 @@ import nakshatra as NK
 from parigaram_data import GRAHAS, SECTIONS
 from temples_data import TEMPLES
 import images_data as IMG
+from sthala_data import STHALA
+
+for _t in TEMPLES:  # merge the temple stories, facts and hymns
+    _s = STHALA.get(_t['slug'])
+    if _s:
+        _t['padigam'] = _s['padigam']
+        for _l in ('en', 'ta'):
+            _t[_l]['sthala'], _t[_l]['facts'] = _s[_l]['sthala'], _s[_l]['facts']
 
 LANGS = ['en', 'ta']
 BY = {t['slug']: t for t in TEMPLES}
