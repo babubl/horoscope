@@ -5,10 +5,10 @@
 (function () {
   var app = false;
   try { app = sessionStorage.getItem('jothidam.app') === '1' || /[?&]source=twa\b/.test(location.search); } catch (e) {}
-  var KEY = 'sj.sound';
+  var KEY = 'sj.music';
   var ctx = null, master = null, droneNodes = null, bellTimer = null, playing = false;
   var tamil = document.documentElement.lang === 'ta';
-  var T = tamil ? { on: 'கோயில் ஒலி நிறுத்த', off: 'கோயில் ஒலி கேட்க' } : { on: 'Stop temple sounds', off: 'Play temple sounds' };
+  var T = tamil ? { on: 'இசையை நிறுத்த', off: 'தெய்வீக இசை கேட்க' } : { on: 'Stop the music', off: 'Play soft divine music' };
 
   function ac() {
     if (!ctx) {
@@ -51,44 +51,63 @@
     n.connect(bp); bp.connect(ng); ng.connect(out); n.start(t0);
   }
 
-  // A soft "Om" drone: low tone with harmonics through a slowly moving vowel filter (aa → oo → mm), breathing in and out.
-  function startDrone() {
-    var c = ac(); if (!c || droneNodes) return;
-    var base = 136.1, now = c.currentTime, nodes = [];
-    var g = c.createGain(); g.gain.value = 0.0001; g.connect(master);
-    var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700; lp.Q.value = 6; lp.connect(g);
-    [[1, 'sawtooth', 0.16], [2, 'sine', 0.12], [1.5, 'sine', 0.05], [0.5, 'sine', 0.22]].forEach(function (h) {
-      var o = c.createOscillator(), og = c.createGain();
-      o.type = h[1]; o.frequency.value = base * h[0]; o.detune.value = (Math.random() - 0.5) * 4;
-      og.gain.value = h[2]; o.connect(og); og.connect(lp); o.start(now); nodes.push(o);
-    });
-    // vowel sweep (one "Om" about every 9 s) and a breathing swell
-    var lfo = c.createOscillator(), lg = c.createGain();
-    lfo.frequency.value = 1 / 9; lg.gain.value = 320; lfo.connect(lg); lg.connect(lp.frequency); lfo.start(now); nodes.push(lfo);
-    var br = c.createOscillator(), bg = c.createGain();
-    br.frequency.value = 1 / 9; bg.gain.value = 0.035; br.connect(bg); bg.connect(g.gain); br.start(now); nodes.push(br);
-    g.gain.setValueAtTime(0.0001, now);
-    g.gain.exponentialRampToValueAtTime(0.06, now + 3);
-    droneNodes = { nodes: nodes, gain: g };
+  // ---- Divine music: a tanpura drone (Pa–Sa–Sa–Sa) with a slow, flute-like melody in raga Mohanam,
+  // all synthesised here, with a soft hall reverb. Nothing is downloaded and nothing is copyrighted.
+  var SA = 138.6, reverb = null, timers = [];
+  function hall() {
+    if (reverb) return reverb;
+    var c = ctx, len = Math.floor(c.sampleRate * 3.2), buf = c.createBuffer(2, len, c.sampleRate);
+    for (var ch = 0; ch < 2; ch++) { var d = buf.getChannelData(ch); for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+    reverb = c.createConvolver(); reverb.buffer = buf;
+    var wet = c.createGain(); wet.gain.value = 0.55; reverb.connect(wet); wet.connect(master);
+    return reverb;
   }
-  function stopDrone() {
-    if (!droneNodes || !ctx) return;
-    var d = droneNodes, t = ctx.currentTime;
-    d.gain.gain.cancelScheduledValues(t);
-    d.gain.gain.setValueAtTime(Math.max(d.gain.gain.value, 0.0001), t);
-    d.gain.gain.exponentialRampToValueAtTime(0.0001, t + 1.5);
-    setTimeout(function () { d.nodes.forEach(function (o) { try { o.stop(); } catch (e) {} }); }, 1700);
-    droneNodes = null;
+  function voice(dest, dry) { var g = ctx.createGain(); g.connect(hall()); if (dry) { var d = ctx.createGain(); d.gain.value = dry; g.connect(d); d.connect(master); } return g; }
+  // one tanpura pluck: bright attack that mellows, long ringing decay
+  function pluck(f, t, vol) {
+    var o = ctx.createOscillator(), o2 = ctx.createOscillator(), lp = ctx.createBiquadFilter(), bp = ctx.createBiquadFilter(), g = ctx.createGain(), out = voice(null, 0.5);
+    o.type = 'sawtooth'; o.frequency.value = f; o2.type = 'sawtooth'; o2.frequency.value = f * 1.002;
+    lp.type = 'lowpass'; lp.frequency.setValueAtTime(3200, t); lp.frequency.exponentialRampToValueAtTime(700, t + 2.5);
+    bp.type = 'peaking'; bp.frequency.setValueAtTime(f * 9, t); bp.frequency.exponentialRampToValueAtTime(f * 4, t + 3); bp.Q.value = 3; bp.gain.value = 7; // the "jivari" shimmer
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 4.6);
+    o.connect(lp); o2.connect(lp); lp.connect(bp); bp.connect(g); g.connect(out);
+    o.start(t); o2.start(t); o.stop(t + 4.8); o2.stop(t + 4.8);
   }
-
-  function scheduleBells() {
-    clearTimeout(bellTimer);
-    bellTimer = setTimeout(function () {
-      if (!playing) return;
-      var pitches = [392, 440, 523.25, 587.33];
-      bell(pitches[Math.floor(Math.random() * pitches.length)], 0.22);
-      scheduleBells();
-    }, 9000 + Math.random() * 12000);
+  function tanpuraLoop() {
+    if (!playing) return;
+    var t = ctx.currentTime + 0.05, gap = 1.05;
+    [[SA * 0.75, 0.05], [SA, 0.045], [SA, 0.045], [SA / 2, 0.06]].forEach(function (s, i) { pluck(s[0], t + i * gap, s[1]); });
+    timers.push(setTimeout(tanpuraLoop, gap * 4 * 1000 + 300));
+  }
+  // a flute-like note: soft attack, gentle vibrato that grows, breath noise
+  function flute(f, t, dur, vol) {
+    var o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), out = voice(null, 0.35);
+    o.type = 'sine'; o.frequency.value = f; o2.type = 'triangle'; o2.frequency.value = f * 2; var g2 = ctx.createGain(); g2.gain.value = 0.08;
+    var vib = ctx.createOscillator(), vg = ctx.createGain(); vib.frequency.value = 5.2; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * 0.006, t + Math.min(dur, 1.2));
+    vib.connect(vg); vg.connect(o.frequency); vg.connect(o2.frequency);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.18); g.gain.setValueAtTime(vol, t + dur - 0.25); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.35);
+    o.connect(g); o2.connect(g2); g2.connect(g); g.connect(out);
+    var n = ctx.createBufferSource(), nb = ctx.createBuffer(1, Math.floor(ctx.sampleRate * (dur + 0.4)), ctx.sampleRate), nd = nb.getChannelData(0);
+    for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+    n.buffer = nb; var nf = ctx.createBiquadFilter(); nf.type = 'bandpass'; nf.frequency.value = f * 2; nf.Q.value = 1.5; var ng = ctx.createGain(); ng.gain.value = vol * 0.12;
+    n.connect(nf); nf.connect(ng); ng.connect(g);
+    [o, o2, vib, n].forEach(function (x) { x.start(t); x.stop(t + dur + 0.5); });
+  }
+  // Mohanam: Sa Ri2 Ga3 Pa Da2 — gentle phrases that wander a step at a time and rest on Sa, Ga or Pa
+  var SCALE = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3, 2, 9 / 4, 5 / 2];
+  var pos = 3;
+  function phrase() {
+    if (!playing) return;
+    var t = ctx.currentTime + 0.1, n = 4 + Math.floor(Math.random() * 5);
+    for (var i = 0; i < n; i++) {
+      var step = [-2, -1, -1, 1, 1, 2, 0][Math.floor(Math.random() * 7)];
+      pos = Math.max(0, Math.min(SCALE.length - 1, pos + step));
+      if (i === n - 1) pos = [0, 2, 3, 5][Math.floor(Math.random() * 4)];
+      var dur = i === n - 1 ? 2.6 + Math.random() * 1.6 : [0.6, 0.9, 1.2, 1.6][Math.floor(Math.random() * 4)];
+      flute(SA * 2 * SCALE[pos], t, dur, 0.055);
+      t += dur + 0.05;
+    }
+    timers.push(setTimeout(phrase, (t - ctx.currentTime) * 1000 + 3000 + Math.random() * 5000));
   }
 
   function start() {
@@ -96,13 +115,16 @@
     playing = true;
     master.gain.cancelScheduledValues(c.currentTime);
     master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), c.currentTime);
-    master.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 0.4);
-    bell(440, 0.34);
-    setTimeout(function () { if (playing) bell(523.25, 0.24); }, 1400);
-    startDrone(); scheduleBells(); sync();
+    master.gain.exponentialRampToValueAtTime(0.8, c.currentTime + 2.5);
+    tanpuraLoop();
+    timers.push(setTimeout(phrase, 4500));
+    sync();
   }
   function stop() {
-    playing = false; clearTimeout(bellTimer); stopDrone(); sync();
+    playing = false;
+    timers.forEach(clearTimeout); timers = [];
+    if (ctx && master) { var t = ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), t); master.gain.exponentialRampToValueAtTime(0.0001, t + 1.2); }
+    sync();
   }
   function save(v) { try { localStorage.setItem(KEY, v ? '1' : '0'); } catch (e) {} }
   function wanted() { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
@@ -113,7 +135,7 @@
     btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
     btn.setAttribute('aria-label', playing ? T.on : T.off);
     btn.title = playing ? T.on : T.off;
-    btn.textContent = playing ? '🔔' : '🔕';
+    btn.innerHTML = playing ? '<span class="eq"><i></i><i></i><i></i></span>' : '🎵';
   }
   if (btn && !app) {
     btn.hidden = false; sync();

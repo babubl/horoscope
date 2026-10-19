@@ -112,6 +112,24 @@ alts = ''.join(f'<link rel="alternate" hreflang="{l}" href="{SITE}{path(l)}">\n'
 sys.path.insert(0, 'src')
 import images_data as _IMG  # noqa: E402
 _bt, _nv = _IMG.TEMPLE.get('thanjavur-big-temple'), _IMG.DEITY.get('navagraha')
+import kb as _kb  # noqa: E402
+from kb_data import EVENT_NAMES as _EN  # noqa: E402
+from temples_data import TEMPLES as _TEMPLES  # noqa: E402
+
+
+def home_data(l):
+    city, lat, lon = _kb.HOME[l]
+    tr = _kb.TRAD[l]
+    evs = _kb.node_json(f"""global.Astronomy=require('./src/vendor/astronomy.browser.min.js');const F=require('./src/festivals.js');
+const reg={{}};F.EVENTS.forEach(e=>reg[e.id]=e.reg);const now=new Date();
+process.stdout.write(JSON.stringify(F.compute({{lat:{lat},lon:{lon},tz:'Asia/Kolkata'}},[now.getUTCFullYear(),now.getUTCMonth()+1,1],[2027,12,31]).filter(e=>reg[e.id]==='all'||reg[e.id].split(' ').includes('{tr}')).map(e=>({{d:e.date,id:e.id}}))));""")
+    ids = {e['id'] for e in evs}
+    by = {t['slug']: t for t in _TEMPLES}
+    wk = ['suryanar-kovil', 'thingalur', 'vaitheeswaran-koil', 'thiruvenkadu', 'alangudi', 'kanjanur', 'thirunallar']
+    temples = {i: dict(slug=sl, en=by[sl]['en']['name'], ta=by[sl]['ta']['name'], img=_IMG.url(_IMG.TEMPLE[sl]['file'], 640) if sl in _IMG.TEMPLE else '') for i, sl in enumerate(wk)}
+    return json.dumps(dict(events=evs, names={k: _EN[k] for k in ids}, temples=temples), ensure_ascii=False, separators=(',', ':'))
+
+
 EXPLORE_IMG = (_IMG.url(_bt['file'], 640) if _bt else '/icons/og-image.jpg', _IMG.url(_nv['file'], 640) if _nv else '/icons/og-image.jpg')
 for l in LANGS:
     d = SEO[l]
@@ -132,6 +150,7 @@ for l in LANGS:
     if ADS_CLIENT:
         p = p.replace('</head>', f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n</head>', 1)
     p = p.replace('</head>', f'<script>window.SJ_LANG={json.dumps(l)};window.SJ_TITLES={json.dumps(titles, ensure_ascii=False)};</script>\n</head>', 1)
+    p = p.replace('%%HOME_DATA%%', home_data(l).replace('</', '<\\/'))
     p = p.replace('%%IMG_TEMPLE%%', EXPLORE_IMG[0]).replace('%%IMG_NAVA%%', EXPLORE_IMG[1])
     p = p.replace('<!--SEO-->', seo_section(l), 1)
     p = prerender(p, l)
@@ -178,6 +197,10 @@ import temples  # noqa: E402
 _t = temples.generate(I, ads_head)
 print('temple / parigaram pages', len(_t))
 kb_urls += _t
+import tcal  # noqa: E402
+_c, CAL_DAYS, CAL_EVS = tcal.generate(I, ads_head)
+print('tamil calendar pages', len(_c))
+kb_urls += _c
 
 # ---- sitemap with language alternates
 xl = ''.join(f'    <xhtml:link rel="alternate" hreflang="{x}" href="{SITE}{path(x)}"/>\n' for x in LANGS) + f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>\n'

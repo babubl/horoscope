@@ -139,21 +139,40 @@ process.stdout.write(JSON.stringify(out));
     return json.loads(subprocess.run(['node', '-'], input=js, capture_output=True, text=True, check=True).stdout)
 
 
-MENU_EXTRA = {'en': ('Horoscope & matching', 'Temple guide', 'Parigaram', 'Menu'), 'ta': ('ஜாதகம் & பொருத்தம்', 'கோயில் வழிகாட்டி', 'பரிகாரம்', 'பட்டியல்'),
-              'ml': ('ജാതകം & പൊരുത്തം', 'Temple guide', 'Parigaram', 'മെനു'), 'te': ('జాతకం & పొంతన', 'Temple guide', 'Parigaram', 'మెనూ'),
-              'kn': ('ಜಾತಕ & ಹೊಂದಾಣಿಕೆ', 'Temple guide', 'Parigaram', 'ಮೆನು'), 'hi': ('कुंडली और मिलान', 'Temple guide', 'Parigaram', 'मेनू')}
+NAV = {
+    'en': ['Home', 'Jathagam', 'Porutham', 'Panchangam', 'Calendar', 'Temples', 'Parigaram', 'Festivals', 'Nakshatras', 'Rasis', 'Baby names'],
+    'ta': ['முகப்பு', 'ஜாதகம்', 'பொருத்தம்', 'பஞ்சாங்கம்', 'நாட்காட்டி', 'கோயில்கள்', 'பரிகாரம்', 'பண்டிகைகள்', 'நட்சத்திரங்கள்', 'ராசிகள்', 'குழந்தை பெயர்'],
+    'ml': ['ഹോം', 'ജാതകം', 'പൊരുത്തം', 'പഞ്ചാംഗം', 'കലണ്ടർ', 'ക്ഷേത്രങ്ങൾ', 'പരിഹാരം', 'ആഘോഷങ്ങൾ', 'നക്ഷത്രങ്ങൾ', 'രാശികൾ', 'പേരുകൾ'],
+    'te': ['హోమ్', 'జాతకం', 'పొంతన', 'పంచాంగం', 'క్యాలెండర్', 'ఆలయాలు', 'పరిహారం', 'పండుగలు', 'నక్షత్రాలు', 'రాశులు', 'పేర్లు'],
+    'kn': ['ಮುಖಪುಟ', 'ಜಾತಕ', 'ಹೊಂದಾಣಿಕೆ', 'ಪಂಚಾಂಗ', 'ಕ್ಯಾಲೆಂಡರ್', 'ದೇವಾಲಯಗಳು', 'ಪರಿಹಾರ', 'ಹಬ್ಬಗಳು', 'ನಕ್ಷತ್ರಗಳು', 'ರಾಶಿಗಳು', 'ಹೆಸರುಗಳು'],
+    'hi': ['होम', 'कुंडली', 'मिलान', 'पंचांग', 'कैलेंडर', 'मंदिर', 'उपाय', 'त्योहार', 'नक्षत्र', 'राशियाँ', 'नाम'],
+}
 
 
-def menu_html(l):
-    """Site menu shown in the header of every knowledge page (a native <details> drop-down, no script needed)."""
-    import kb  # loaded by build.py before any page is written
+def nav_items(l):
+    """The site menu, the same on every page: (key, label, href). Temples, parigaram and the Tamil calendar exist in English and Tamil."""
     b = '/' if l == 'en' else f'/{l}/'
     tb = '/ta/' if l == 'ta' else '/'
-    m, x = kb.T[l]['menu'], MENU_EXTRA[l]
-    items = [('🪔', x[0], b), ('🛕', x[1], tb + 'temples/'), ('🙏', x[2], tb + 'parigaram/'), ('📅', m[0], b + 'calendar/'), ('☀️', m[1], b + 'panchangam/'),
-             ('✨', m[2], b + 'nakshatra/'), ('♈', m[3], b + 'rasi/'), ('👶', m[4], b + 'baby-names.html'), ('🧮', m[5], b + 'how-we-calculate.html')]
-    links = ''.join(f'<a href="{h}"><span aria-hidden="true">{i}</span>{esc(t)}</a>' for i, t, h in items)
-    return f'<details class="menu"><summary aria-label="{esc(x[3])}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav>{links}</nav></details>'
+    n = NAV[l]
+    cal = (tb + 'tamil-calendar/') if l in ('en', 'ta') else b + 'calendar/'
+    fest = (tb + 'tamil-festivals/') if l in ('en', 'ta') else b + 'calendar/'
+    return [('home', n[0], b), ('horo', n[1], b + '#horo'), ('match', n[2], b + '#match'), ('panch', n[3], b + 'panchangam/'), ('cal', n[4], cal),
+            ('temples', n[5], tb + 'temples/'), ('pari', n[6], tb + 'parigaram/'), ('fest', n[7], fest), ('naks', n[8], b + 'nakshatra/'),
+            ('rasi', n[9], b + 'rasi/'), ('baby', n[10], b + 'baby-names.html')]
+
+
+def section_of(canon):
+    for k, frag in (('temples', 'temples/'), ('pari', 'parigaram/'), ('cal', 'tamil-calendar/'), ('fest', 'tamil-festivals/'), ('cal', 'pournami-amavasai/'), ('cal', 'calendar/'),
+                    ('panch', 'panchangam/'), ('naks', 'nakshatra/'), ('rasi', 'rasi/'), ('baby', 'baby-names')):
+        if frag in canon:
+            return k
+    return ''
+
+
+def menu_html(l, canon=''):
+    cur = section_of(canon)
+    return '<nav class="sitenav" aria-label="Menu"><div class="wrap">' + ''.join(
+        f'<a href="{h}"{" class=on aria-current=page" if k == cur else ""}>{esc(t)}</a>' for k, t, h in nav_items(l)) + '</div></nav>'
 
 
 def shell(l, title, desc, canon, alts, body, crumbs, app_href):
@@ -192,9 +211,8 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <header><div class="wrap bar">
   <a class="brand" href="{'/' if l == 'en' else '/' + l + '/'}"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>{BRAND[l]}</b></a>
   <a class="btn" href="{app_href}">{esc(D['ctaShort'])}</a>
-  <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🔔</button>
-  {menu_html(l)}
-</div></header>
+  <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🎵</button>
+</div>{menu_html(l, canon)}</header>
 <main class="wrap">
 <nav class="crumbs">{crumb_html}</nav>
 {body}
