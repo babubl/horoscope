@@ -163,6 +163,18 @@ tr.now td{background:var(--accent-soft)}
 .dosha{display:grid;gap:10px}
 .dosha .row{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 .dosha .row b{display:block}
+.explore{margin:28px 0 8px}.explore h2{margin:0 0 12px}
+.exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.excard{display:flex;gap:12px;align-items:center;padding:14px;border-radius:16px;background:var(--paper);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:transform .15s,box-shadow .15s}
+.excard:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(110,18,22,.14)}
+.excard i{font-style:normal;font-size:26px;width:46px;height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--soft)}
+.excard b{display:block;font-size:16px}.excard small{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:2px}
+.excard.big{grid-column:span 2;position:relative;overflow:hidden;padding:0;min-height:190px;align-items:flex-end;border:0;background:#4d0b0f}
+.excard.big img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.excard.big span{position:relative;padding:60px 16px 14px;width:100%;background:linear-gradient(180deg,transparent,rgba(30,6,4,.88))}
+.excard.big b{color:#ffe3a3;font-size:20px}.excard.big small{color:#f5e6cf}
+@media (max-width:560px){.excard.big{grid-column:span 1;min-height:170px}}
+.bnav a{color:inherit;text-decoration:none}
 .pari{margin:10px 0 0}.pari a{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px;font-size:14px}.pari a:hover{text-decoration:underline}
 .dosha .row p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
 .ai{border:1px dashed var(--accent-2);border-radius:12px;padding:16px;background:color-mix(in srgb,var(--accent-soft) 45%,var(--paper))}
@@ -558,10 +570,10 @@ body.noscroll{overflow:hidden}
   html{scroll-padding-top:72px}
   .card{scroll-margin-top:72px}
   header .tabs{display:none}
-  .bnav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:45;
+  .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:45;
     background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -6px 20px -10px rgba(60,20,5,.35);padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
-  .bnav button{border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;font-size:11.5px;font-weight:600;cursor:pointer;border-radius:12px;min-height:54px}
-  .bnav button svg{width:22px;height:22px}
+  .bnav button,.bnav a{border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;font-size:11.5px;font-weight:600;cursor:pointer;border-radius:12px;min-height:54px}
+  .bnav button svg,.bnav a svg{width:22px;height:22px}
   .bnav button.on{color:var(--accent);background:var(--accent-soft)}
   body{padding-bottom:76px}
   .fab{display:none}
@@ -615,6 +627,7 @@ body.noscroll{overflow:hidden}
         <option value="en" lang="en">English</option><option value="ta" lang="ta">தமிழ்</option><option value="ml" lang="ml">മലയാളം</option><option value="te" lang="te" selected>తెలుగు</option><option value="kn" lang="kn">ಕನ್ನಡ</option><option value="hi" lang="hi">हिन्दी</option>
       </select></span>
       </div>
+      <button class="iconbtn" type="button" id="sndBtn" aria-pressed="false" hidden style="font-size:17px">🔕</button>
       <button class="iconbtn" id="openSettings" title="Settings" aria-label="Settings">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         <span class="dot hidden" id="keyDot"></span>
@@ -685,6 +698,19 @@ body.noscroll{overflow:hidden}
     </div>
   </section>
 
+  <section class="explore" id="explore" aria-labelledby="exH">
+    <h2 id="exH" data-t="exH">శుభ జాతకంలో మరిన్ని</h2>
+    <div class="exgrid">
+      <a class="excard big" href="/temples/" data-kbt="temples/"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg?width=640" alt="" loading="lazy" width="640" height="400"><span><b data-t="lTemples">Temple guide (English)</b><small data-t="exTemples">Navagraha temples, Thanjavur, Rameswaram and more — timings, history, how to reach</small></span></a>
+      <a class="excard big" href="/parigaram/" data-kbt="parigaram/"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Navagraha.jpg?width=640" alt="" loading="lazy" width="640" height="400"><span><b data-t="lPari">పరిహారం (English)</b><small data-t="exPari">Traditional remedies for the nine grahas and every dosha</small></span></a>
+      <a class="excard" href="/panchangam/" data-kb="panchangam/"><i aria-hidden="true">☀️</i><span><b data-t="lPanchCity">నగరాల పంచాంగం</b><small data-t="exPanch">నేటి తిథి, నక్షత్రం, రాహుకాలం</small></span></a>
+      <a class="excard" href="/calendar/" data-kb="calendar/"><i aria-hidden="true">📅</i><span><b data-t="lCal">పండుగల క్యాలెండర్</b><small data-t="exCal">ఏకాదశి, ప్రదోషం, అమావాస్య, పండుగలు</small></span></a>
+      <a class="excard" href="/nakshatra/" data-kb="nakshatra/"><i aria-hidden="true">✨</i><span><b data-t="lNaks">27 నక్షత్రాలు</b><small data-t="exNaks">స్వభావం, సరిపోయే నక్షత్రాలు, పొంతన</small></span></a>
+      <a class="excard" href="/rasi/" data-kb="rasi/"><i aria-hidden="true">🪐</i><span><b data-t="lRasi">12 రాశులు</b><small data-t="exRasi">అధిపతి, నక్షత్రాలు, ఈ నెల గోచారం</small></span></a>
+      <a class="excard" href="/baby-names.html" data-kb="baby-names.html"><i aria-hidden="true">👶</i><span><b data-t="lBaby">పిల్లల పేర్లు</b><small data-t="exBaby">ప్రతి నక్షత్ర పాదానికి పేరు అక్షరం</small></span></a>
+      <a class="excard" href="/how-we-calculate.html" data-kb="how-we-calculate.html"><i aria-hidden="true">🧮</i><span><b data-t="lHow">లెక్కింపు విధానం</b><small data-t="exHow">విధానం, ఖచ్చితత్వం</small></span></a>
+    </div>
+  </section>
   <section class="card seo" id="about-site" lang="te">
     <h2>ఉచిత జాతకం, వివాహ పొంతన — తెలుగులో</h2>
     <p>పుట్టిన తేదీ, సమయం, ఊరు ఇస్తే పూర్తి జాతకం: రాశి, నవాంశ చక్రాలు, గ్రహ స్థితి, నక్షత్రం, పాదం, వింశోత్తరి మహాదశ-అంతర్దశలు, కుజ దోషం, రాహు-కేతు దోషం. వివాహ పొంతనలో 36 గుణాల అష్టకూట మేళనం, నాడీ, భకూట దోషాలు; దక్షిణాది 10 పొరుత్తాలు కూడా.</p>
@@ -716,6 +742,7 @@ body.noscroll{overflow:hidden}
   <button type="button" data-go="horo" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span data-t="tabHoro">జాతకం</span></button>
   <button type="button" data-go="match"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="14" r="5"/><circle cx="15" cy="14" r="5"/><path d="M10 5l2-2 2 2-2 2z"/></svg><span data-t="tabMatch">వివాహ పొంతన</span></button>
   <button type="button" data-go="panch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span data-t="tabPanch">పంచాంగం</span></button>
+  <a href="#explore" class="bn-ex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 21V10l8-6 8 6v11"/><path d="M9 21v-6h6v6"/><path d="M12 4V2"/></svg><span data-t="exShort">మరిన్ని</span></a>
   <button type="button" data-fb-open><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg><span data-t="lFeedback">అభిప్రాయం</span></button>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -728,6 +755,7 @@ body.noscroll{overflow:hidden}
     <nav class="flinks"><a href="#feedback" data-t="lFeedback">అభిప్రాయం</a><a href="/te/calendar/" data-kb="calendar/" data-t="lCal">పండుగల క్యాలెండర్</a><a href="/te/panchangam/" data-kb="panchangam/" data-t="lPanchCity">నగరాల పంచాంగం</a><a href="/te/nakshatra/" id="naksLink" data-kb="nakshatra/" data-t="lNaks">27 నక్షత్రాలు</a><a href="/te/rasi/" data-kb="rasi/" data-t="lRasi">12 రాశులు</a><a href="/te/baby-names.html" data-kb="baby-names.html" data-t="lBaby">పిల్లల పేర్లు</a><a href="/te/how-we-calculate.html" data-kb="how-we-calculate.html" data-t="lHow">లెక్కింపు విధానం</a><a href="/temples/" data-kbt="temples/" data-t="lTemples">Temple guide (English)</a><a href="/parigaram/" data-kbt="parigaram/" data-t="lPari">పరిహారం (English)</a><a href="/guide.html" data-t="lGuide">మార్గదర్శి</a><a href="/about.html" data-t="lAbout">మా గురించి</a><a href="/privacy.html" data-t="lPrivacy">గోప్యత</a><a href="/terms.html" data-t="lTerms">నిబంధనలు</a></nav>
   </div>
 </footer>
+<script src="/assets/divine.js" defer></script>
 
 
 <div class="jv" id="jv" role="dialog" aria-modal="true" aria-label="Jathagam">
@@ -765,7 +793,7 @@ body.noscroll{overflow:hidden}
   </form>
 </dialog>
 
-<script src="/assets/core.fc31c56c8d.js"></script>
+<script src="/assets/core.57ce22e9d7.js"></script>
 <script>
 (() => {
 'use strict';

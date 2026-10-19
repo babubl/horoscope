@@ -35,6 +35,8 @@
 <header><div class="wrap bar">
   <a class="brand" href="/ta/"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>சுப ஜாதகம்</b></a>
   <a class="btn" href="/ta/#match">பொருத்தம் பார்</a>
+  <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🔔</button>
+  <details class="menu"><summary aria-label="பட்டியல்"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav><a href="/ta/"><span aria-hidden="true">🪔</span>ஜாதகம் &amp; பொருத்தம்</a><a href="/ta/temples/"><span aria-hidden="true">🛕</span>கோயில் வழிகாட்டி</a><a href="/ta/parigaram/"><span aria-hidden="true">🙏</span>பரிகாரம்</a><a href="/ta/calendar/"><span aria-hidden="true">📅</span>பண்டிகை நாட்காட்டி</a><a href="/ta/panchangam/"><span aria-hidden="true">☀️</span>இன்றைய பஞ்சாங்கம்</a><a href="/ta/nakshatra/"><span aria-hidden="true">✨</span>27 நட்சத்திரங்கள்</a><a href="/ta/rasi/"><span aria-hidden="true">♈</span>12 ராசிகள்</a><a href="/ta/baby-names.html"><span aria-hidden="true">👶</span>குழந்தை பெயர் எழுத்து</a><a href="/ta/how-we-calculate.html"><span aria-hidden="true">🧮</span>கணிப்பு முறை</a></nav></details>
 </div></header>
 <main class="wrap">
 <nav class="crumbs"><a href="/ta/">முகப்பு</a> › <a href="/ta/panchangam/">இன்றைய பஞ்சாங்கம்</a> › புது தில்லி</nav>
@@ -65,6 +67,7 @@ document.getElementById('pdate').textContent=String(t[2]).padStart(2,'0')+'-'+St
 <nav class="langs" aria-label="Language"><a href="/panchangam/new-delhi.html" hreflang="en" lang="en">English</a><a href="/ta/panchangam/new-delhi.html" hreflang="ta" lang="ta" class=on>தமிழ்</a><a href="/ml/panchangam/new-delhi.html" hreflang="ml" lang="ml">മലയാളം</a><a href="/te/panchangam/new-delhi.html" hreflang="te" lang="te">తెలుగు</a><a href="/kn/panchangam/new-delhi.html" hreflang="kn" lang="kn">ಕನ್ನಡ</a><a href="/hi/panchangam/new-delhi.html" hreflang="hi" lang="hi">हिन्दी</a></nav>
 </main>
 <footer><div class="wrap"><a href="/ta/">சுப ஜாதகம்</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
+<script src="/assets/divine.js" defer></script>
 <script>
 (function(){var app=false;try{app=sessionStorage.getItem('jothidam.app')==='1';}catch(e){}
 if(!app&&/^https?:$/.test(location.protocol)&&location.hostname!=='localhost'){var s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';s.setAttribute('data-goatcounter','https://subajathagam.goatcounter.com/count');document.head.appendChild(s);}})();

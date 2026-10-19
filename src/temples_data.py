@@ -4,7 +4,7 @@ the pages ask visitors to confirm before travelling."""
 
 TEMPLES = [
     # ------------------------------------------------------------------------------------------- Navagraha
-    dict(slug='suryanar-kovil', graha='sun', km='15', lat=11.0297, lon=79.4778,
+    dict(slug='suryanar-kovil', hours=[[6, 0, 12, 30], [16, 0, 20, 0]], graha='sun', km='15', lat=11.0297, lon=79.4778,
          sources=['https://en.wikipedia.org/wiki/Suryanar_Kovil', 'https://tntemplesproject.in/suryan-suryanar-koil-thanjavur',
                   'https://temple.dinamalar.com/en/new_en.php?id=739', 'https://en.wikipedia.org/wiki/Navagraha_temples_in_Tamil_Nadu'],
          en=dict(name='Suryanar Kovil', place='Suryanar Kovil, near Aduthurai, Thanjavur district',
@@ -32,7 +32,7 @@ TEMPLES = [
                  tips=['மரபுப்படி முதலில் திருமங்கலக்குடி பிராணநாதேஸ்வரரை வணங்கிய பின், சூரியனார் கோயிலில் விநாயகர், விஸ்வநாதர்–விசாலாட்சி, சூரியன், குரு, பின் பிற கிரகங்கள் என்ற வரிசையில் வழிபடுவர்.',
                        'ஞாயிறு, ரத சப்தமி நாட்களில் கூட்டம் அதிகம்; அதிகாலையில் செல்லுங்கள்.'])),
 
-    dict(slug='thingalur', graha='moon', km='35', lat=10.8867, lon=79.1256,
+    dict(slug='thingalur', hours=[[6, 0, 11, 0], [16, 0, 20, 0]], graha='moon', km='35', lat=10.8867, lon=79.1256,
          sources=['https://en.wikipedia.org/wiki/Kailasanathar_Temple,_Thingalur', 'https://tntemplesproject.in/Kailasanathar-Thingalur-Thanjavur',
                   'https://temple.dinamalar.com/en/new_en.php?id=897'],
          en=dict(name='Thingalur Kailasanathar Temple', place='Thingalur, near Thiruvaiyaru, Thanjavur district',
@@ -58,7 +58,7 @@ TEMPLES = [
                  reach='திருவையாறு–கும்பகோணம் சாலையில் திருவையாறிலிருந்து சுமார் 4 கி.மீ.; கும்பகோணத்திலிருந்து சுமார் 35 கி.மீ., அருகிலுள்ள ரயில் சந்திப்பான தஞ்சாவூரிலிருந்து 18 கி.மீ. தஞ்சாவூர், திருவையாறு, கும்பகோணத்திலிருந்து பேருந்துகள் உண்டு.',
                  tips=['கிழக்குக் கோபுரம் வயல்களை நோக்கி உள்ளது; தெற்கு வாசல் வழியாக நுழையுங்கள்.', 'ஒன்பதில் மேற்கே உள்ள கோயில் இது; திருவையாறு அல்லது தஞ்சாவூருடன் சேர்த்துத் திட்டமிடுங்கள்.'])),
 
-    dict(slug='vaitheeswaran-koil', graha='mars', km='55', lat=11.195, lon=79.7142,
+    dict(slug='vaitheeswaran-koil', hours=[[6, 0, 11, 0], [16, 0, 20, 30]], graha='mars', km='55', lat=11.195, lon=79.7142,
          sources=['https://en.wikipedia.org/wiki/Vaitheeswaran_Koil', 'https://temple.dinamalar.com/en/new_en.php?id=584',
                   'https://tntemplesproject.in/Vaidyanathar-Vaitheeswaran-Koil-Nagapattinam'],
          en=dict(name='Vaitheeswaran Koil', place='Vaitheeswaran Koil, Mayiladuthurai district',
@@ -88,7 +88,7 @@ TEMPLES = [
                  tips=['செவ்வாய், கிருத்திகை நாட்களில் கூட்டம் மிக அதிகம்.', 'ஊரில் உள்ள நாடி ஜோதிட நிலையங்கள் தனியார் நிறுவனங்கள்; கோயிலுடன் தொடர்பில்லை.',
                        'திருவெண்காடு (புதன்) சுமார் 14 கி.மீ. தொலைவில்; இரண்டையும் ஒரே பயணத்தில் தரிசிக்கலாம்.'])),
 
-    dict(slug='thiruvenkadu', graha='mercury', km='62', lat=11.1753, lon=79.8094,
+    dict(slug='thiruvenkadu', hours=[[6, 0, 12, 0], [16, 0, 20, 30]], graha='mercury', km='62', lat=11.1753, lon=79.8094,
          sources=['https://en.wikipedia.org/wiki/Swetharanyeswarar_Temple', 'https://tntemplesproject.in/Swetaranyeswarar-Tiruvenkadu-Nagapattinam',
                   'https://www.oneindia.com/temples/swetharanyeswarar-temple-thiruvenkadu-t351/'],
          en=dict(name='Thiruvenkadu Swetharanyeswarar Temple', place='Thiruvenkadu, Sirkazhi taluk, Mayiladuthurai district',
@@ -114,7 +114,7 @@ TEMPLES = [
                  reach='சீர்காழி–பூம்புகார் சாலையில்: சீர்காழி ரயில் நிலையத்திலிருந்து சுமார் 12 கி.மீ., மயிலாடுதுறையிலிருந்து 27 கி.மீ., வைத்தீஸ்வரன் கோயிலிலிருந்து 14 கி.மீ., கும்பகோணத்திலிருந்து சுமார் 62 கி.மீ. சீர்காழி, மயிலாடுதுறையிலிருந்து அடிக்கடி பேருந்துகள்.',
                  tips=['மேற்கு வாசல் வழியாகச் சென்றால் புதன் சன்னதியை நேரடியாக அடையலாம்.', 'கீழப்பெரும்பள்ளம் (கேது) பூம்புகார் செல்லும் அதே சாலையில் உள்ளது; இரண்டையும் சேர்த்துத் தரிசியுங்கள்.'])),
 
-    dict(slug='alangudi', graha='jupiter', km='17', lat=10.83, lon=79.4103,
+    dict(slug='alangudi', hours=[[6, 0, 11, 0], [16, 0, 20, 30]], graha='jupiter', km='17', lat=10.83, lon=79.4103,
          sources=['https://en.wikipedia.org/wiki/Apatsahayesvarar_Temple,_Alangudi', 'https://temple.dinamalar.com/en/new_en.php?id=927',
                   'https://tntemplesproject.in/Abatsahayeswarar-Alangudi-Tiruvarur'],
          en=dict(name='Alangudi Apatsahayeswarar Temple', place='Alangudi, Valangaiman taluk, Tiruvarur district',
@@ -140,7 +140,7 @@ TEMPLES = [
                  reach='கும்பகோணத்திலிருந்து நீடாமங்கலம், மன்னார்குடி செல்லும் சாலையில் தெற்கே சுமார் 17 கி.மீ.; அருகிலுள்ள ரயில் நிலையம் நீடாமங்கலம் (சுமார் 7 கி.மீ.). கும்பகோணம், திருவாரூரிலிருந்து பேருந்துகள். அருகிலுள்ள விமான நிலையம்: திருச்சி.',
                  tips=['வியாழன், குரு பெயர்ச்சி நாட்களில் நீண்ட வரிசை — கோயில் திறக்கும் நேரத்தில் செல்லுங்கள்.', 'பெரும்பாலான தமிழ்நாட்டுக் கோயில்களைப் போல பாரம்பரிய உடை அணியுங்கள்.'])),
 
-    dict(slug='kanjanur', graha='venus', km='18', lat=11.0658, lon=79.4958,
+    dict(slug='kanjanur', hours=[[7, 0, 12, 30], [16, 0, 21, 0]], graha='venus', km='18', lat=11.0658, lon=79.4958,
          sources=['https://en.wikipedia.org/wiki/Agniswarar_Temple,_Kanjanur', 'https://tntemplesproject.in/Agneeswarar-Kanjanoor-Thanjavur',
                   'https://shivatemples.com/nofc/nc36.html'],
          en=dict(name='Kanjanur Agniswarar Temple', place='Kanjanur, near Aduthurai, Thanjavur district',
@@ -166,7 +166,7 @@ TEMPLES = [
                  reach='கும்பகோணம்–ஆடுதுறை சாலையில், கும்பகோணத்திலிருந்து சுமார் 18 கி.மீ.; சூரியனார் கோயிலிலிருந்து 2–3 கி.மீ. மட்டுமே. ஆடுதுறை சுமார் 5 கி.மீ.; மயிலாடுதுறை சந்திப்பு சுமார் 20 கி.மீ. கும்பகோணம், மயிலாடுதுறையிலிருந்து பேருந்துகள்.',
                  tips=['சூரியனார் கோயிலைத் தரிசித்த உடனே இங்கு செல்லுங்கள் — இரண்டும் அருகருகே.', 'வெள்ளிக்கிழமைகளில் கூட்டம் அதிகம்.'])),
 
-    dict(slug='thirunallar', graha='saturn', km='53', lat=10.9256, lon=79.7922,
+    dict(slug='thirunallar', hours=[[6, 0, 12, 30], [16, 0, 21, 0]], graha='saturn', km='53', lat=10.9256, lon=79.7922,
          sources=['https://en.wikipedia.org/wiki/Tirunallar_Dharbaranyeswarar_Temple', 'https://www.thirunallarutemple.org/',
                   'https://karaikal.gov.in/?p=49262', 'https://tntemplesproject.in/Darbaranyeswarar-Tirunallar-Karaikal'],
          en=dict(name='Thirunallar Saneeswaran Temple (Dharbaranyeswarar)', place='Thirunallar, Karaikal (Puducherry Union Territory)',
@@ -192,7 +192,7 @@ TEMPLES = [
                  reach='காரைக்கால் நகரம் மற்றும் ரயில் நிலையத்திலிருந்து மேற்கே சுமார் 5 கி.மீ., நாகப்பட்டினத்திலிருந்து 22 கி.மீ., மயிலாடுதுறையிலிருந்து 35 கி.மீ., கும்பகோணத்திலிருந்து சுமார் 53 கி.மீ. திருநள்ளாறு தமிழ்நாட்டில் அல்ல, புதுச்சேரி யூனியன் பிரதேசத்தில் உள்ளது.',
                  tips=['சனிக்கிழமை, சனி பெயர்ச்சி நாட்களில் கூட்டம் மிக மிக அதிகம்; வார நாள் காலை அமைதியானது.', 'வழிபாட்டு வரிசை: நள தீர்த்த நீராடல், வாசலில் சனீஸ்வரன், பின் தர்ப்பாரண்யேஸ்வரர், அம்பாள்.'])),
 
-    dict(slug='thirunageswaram', graha='rahu', km='6', lat=10.9643, lon=79.4293,
+    dict(slug='thirunageswaram', hours=[[6, 0, 12, 45], [16, 0, 20, 30]], graha='rahu', km='6', lat=10.9643, lon=79.4293,
          sources=['https://en.wikipedia.org/wiki/Tirunageswaram_Naganathar_Temple', 'https://temple.dinamalar.com/en/new_en.php?id=918',
                   'https://shivatemples.com/sofc/sc029.php'],
          en=dict(name='Thirunageswaram Naganathaswamy Temple', place='Thirunageswaram, near Kumbakonam, Thanjavur district',
@@ -218,7 +218,7 @@ TEMPLES = [
                  reach='கும்பகோணத்திலிருந்து காரைக்கால் செல்லும் சாலையில் கிழக்கே சுமார் 6 கி.மீ.; அடிக்கடி நகரப் பேருந்துகள். அருகிலுள்ள ரயில் நிலையம் கும்பகோணம். ஒப்பிலியப்பன் கோயில் சுமார் 2 கி.மீ. தொலைவில்.',
                  tips=['இங்கு பிரசாதம் உப்பில்லாமல் செய்யப்படுகிறது; உப்புள்ள உணவைக் கோயிலுக்குள் கொண்டுவர வேண்டாம்.', 'ஞாயிறன்று அபிஷேகச் சீட்டை முன்கூட்டியே வாங்குங்கள்; ஒப்பிலியப்பன் கோயிலுடன் சேர்த்துச் செல்லுங்கள்.'])),
 
-    dict(slug='keezhaperumpallam', graha='ketu', km='62', lat=11.135, lon=79.8353,
+    dict(slug='keezhaperumpallam', hours=[[6, 0, 12, 30], [16, 0, 20, 0]], graha='ketu', km='62', lat=11.135, lon=79.8353,
          sources=['https://en.wikipedia.org/wiki/Nagannathaswamy_Temple,_Keelaperumpallam', 'https://or-temple.dinamalar.com/en/new_en.php?id=212',
                   'https://tntemplesproject.in/Naganathar-Kilperumpallam-Nagapattinam'],
          en=dict(name='Keezhaperumpallam Naganathaswamy Temple', place='Keezhaperumpallam, near Poompuhar, Mayiladuthurai district',
@@ -245,7 +245,7 @@ TEMPLES = [
                  tips=['திருவெண்காடு (புதன்), பூம்புகாருடன் ஒரே நாளில் சேர்த்துச் செல்லுங்கள்.', 'சிறிய கிராமக் கோயில் — வசதிகள் எளிமையானவை.'])),
 
     # ------------------------------------------------------------------------------------------- other temples
-    dict(slug='thanjavur-big-temple', km='40', lat=10.7828, lon=79.1318, maps='Brihadeeswarar Temple Thanjavur',
+    dict(slug='thanjavur-big-temple', hours=[[6, 0, 12, 30], [16, 0, 20, 30]], km='40', lat=10.7828, lon=79.1318, maps='Brihadeeswarar Temple Thanjavur',
          sources=['https://en.wikipedia.org/wiki/Brihadisvara_Temple,_Thanjavur', 'https://whc.unesco.org/en/list/250', 'https://utsav.gov.in/view-event/raja-raja-cholan-sadhaya-vizha'],
          en=dict(name='Thanjavur Big Temple (Brihadeeswarar / Peruvudaiyar Kovil)', place='Thanjavur city', known='UNESCO World Heritage Chola masterpiece',
                  intro='The Big Temple of Thanjavur, built by Rajaraja Chola I and consecrated around 1010 CE, is one of the greatest temples in India and a UNESCO World Heritage Site. Its granite vimana rises about 60 metres over the sanctum of Lord Shiva as Peruvudaiyar.',
@@ -270,7 +270,7 @@ TEMPLES = [
                  reach='தஞ்சாவூர் நகரில், தஞ்சாவூர் சந்திப்பு ரயில் நிலையத்திலிருந்து சுமார் 2 கி.மீ., கும்பகோணத்திலிருந்து சுமார் 40 கி.மீ. அருகிலுள்ள விமான நிலையம்: திருச்சி, சுமார் 55 கி.மீ.',
                  tips=['கண்ணியமான உடை அணிந்து, காலணிகளைக் காப்பகத்தில் விடுங்கள்.', 'அதிகாலை, மாலை ஒளியில் விமானம் அழகு; கோடையில் கற்றளம் மிகச் சூடாகும் — தண்ணீர் எடுத்துச் செல்லுங்கள்.'])),
 
-    dict(slug='thirukadaiyur', km='50', lat=11.0775, lon=79.8183, maps='Thirukadaiyur Abirami Amirthaghateswarar Temple',
+    dict(slug='thirukadaiyur', hours=[[6, 0, 13, 0], [16, 0, 21, 0]], km='50', lat=11.0775, lon=79.8183, maps='Thirukadaiyur Abirami Amirthaghateswarar Temple',
          sources=['https://en.wikipedia.org/wiki/Amritaghateswarar-Abirami_Temple', 'https://karaikal.gov.in/?p=22783'],
          en=dict(name='Thirukadaiyur Abirami – Amirthaghateswarar Temple', place='Thirukadaiyur, Mayiladuthurai district', known='60th, 70th and 80th birthday ceremonies; long life',
                  intro='Thirukadaiyur is where, by tradition, Lord Shiva defeated Yama to save the young Markandeya. It is the most sought-after temple in Tamil Nadu for Shashtiabdapoorthi (60th birthday), Bheemaratha Shanti (70th) and Sathabhishekam (80th) ceremonies.',
@@ -295,7 +295,7 @@ TEMPLES = [
                  reach='மயிலாடுதுறையிலிருந்து கிழக்கே சுமார் 21 கி.மீ., காரைக்காலிலிருந்து வடக்கே 15 கி.மீ., கும்பகோணத்திலிருந்து சுமார் 50 கி.மீ. அருகிலுள்ள ரயில் நிலையம்: மயிலாடுதுறை சந்திப்பு (சுமார் 23 கி.மீ.).',
                  tips=['குறிப்பாக முகூர்த்த நாட்களுக்கு, கோயில் அலுவலகத்தில் முன்கூட்டியே ஹோமம் பதிவு செய்யுங்கள்.', 'கட்டணங்களை இடைத்தரகர்கள் மூலம் அல்ல, கோயிலிடமே நேரடியாக உறுதி செய்யுங்கள்.'])),
 
-    dict(slug='thirumanancheri', km='32', lat=11.05, lon=79.6, maps='Thirumanancheri Kalyanasundareswarar Temple',
+    dict(slug='thirumanancheri', hours=[[6, 0, 12, 0], [17, 0, 20, 0]], km='32', lat=11.05, lon=79.6, maps='Thirumanancheri Kalyanasundareswarar Temple',
          sources=['https://en.wikipedia.org/wiki/Tirumanancheri_Udhvaganathar_Temple', 'https://tntemplesproject.in/Udhvaganathar-Tirumanancheri-Nagapattinam',
                   'https://esamskriti.com/a/Tamil-Nadu/Marriage-Temple-Thirumanancheri.aspx'],
          en=dict(name='Thirumanancheri Kalyanasundareswarar Temple', place='Thirumanancheri, near Kuthalam, Mayiladuthurai district', known='Prayers for marriage',
@@ -321,7 +321,7 @@ TEMPLES = [
                  reach='குத்தாலத்திலிருந்து சுமார் 6 கி.மீ., மயிலாடுதுறையிலிருந்து 8 கி.மீ., கும்பகோணத்திலிருந்து 32 கி.மீ. அருகிலுள்ள ரயில் நிலையங்கள்: குத்தாலம், மயிலாடுதுறை சந்திப்பு.',
                  tips=['வார இறுதி, சுப நாட்களில் கூட்டம் மிக அதிகம் — சீக்கிரம் செல்லுங்கள்.', 'திருமணத்துக்குப் பின் திரும்பக் கொண்டுவர வேண்டியதால் மாலையைப் பத்திரமாக வையுங்கள்.'])),
 
-    dict(slug='thirukarukavur', km='20', lat=10.92, lon=79.24, maps='Thirukarukavur Garbharakshambigai Temple',
+    dict(slug='thirukarukavur', hours=[[5, 30, 12, 30], [16, 0, 20, 0]], km='20', lat=10.92, lon=79.24, maps='Thirukarukavur Garbharakshambigai Temple',
          sources=['https://tntemplesproject.in/Mullaivana-Nathar-Tirukarukavur-Thanjavur', 'https://shivatemples.com/sofc/sc018.php'],
          en=dict(name='Thirukarukavur Garbharakshambigai Temple', place='Thirukarukavur, near Papanasam, Thanjavur district', known='Prayers for children and a safe pregnancy',
                  intro='At Thirukarukavur the goddess is Garbharakshambigai — "she who protects the womb". Couples hoping for a child, and expectant mothers, come from across South India to pray here and receive the blessed ghee or castor-oil prasadam.',
@@ -346,7 +346,7 @@ TEMPLES = [
                  reach='தஞ்சாவூர்–கும்பகோணம் சாலையில் பாபநாசத்திலிருந்து சுமார் 8 கி.மீ.; கும்பகோணம், தஞ்சாவூர் இரண்டிலிருந்தும் சுமார் 20 கி.மீ. அருகிலுள்ள ரயில் நிலையங்கள்: பாபநாசம், கும்பகோணம்.',
                  tips=['நெய், எண்ணெய் பிரசாதம் கோயில் கவுன்டரில் கிடைக்கும்.', 'ஐந்து கோயில்களின் பஞ்ச ஆரண்ய யாத்திரை (சுமார் 36 கி.மீ.) மரபுப்படி இங்கு தொடங்கி ஒரே நாளில் நிறைவடையும்.'])),
 
-    dict(slug='rameswaram', km='260', lat=9.2881, lon=79.3174, maps='Ramanathaswamy Temple Rameswaram',
+    dict(slug='rameswaram', hours=[[5, 0, 13, 0], [15, 0, 21, 0]], km='260', lat=9.2881, lon=79.3174, maps='Ramanathaswamy Temple Rameswaram',
          sources=['https://en.wikipedia.org/wiki/Ramanathaswamy_Temple', 'https://tntemplesproject.in/Ramanathaswami-Rameswaram-Ramanathapuram',
                   'https://www.incredibleindia.gov.in/en/tamil-nadu/rameswaram/sri-ramanathaswamy-temple'],
          en=dict(name='Rameswaram Ramanathaswamy Temple', place='Rameswaram island, Ramanathapuram district', known='Pitru tarpanam (ancestral rites) and the 22 theerthams',
@@ -372,7 +372,7 @@ TEMPLES = [
                  reach='ராமேஸ்வரத்தில் ரயில் நிலையம் உண்டு; பாம்பன் பாலங்கள் தீவை நிலப்பரப்புடன் இணைக்கின்றன. ராமநாதபுரம் சுமார் 60 கி.மீ., மதுரை விமான நிலையம் சுமார் 175 கி.மீ.',
                  tips=['தீர்த்த நீராடலுக்குக் கட்டணச் சீட்டு உண்டு; அதிகாலையிலும் அமாவாசையிலும் கூட்டம் மிக அதிகம்.', 'உலர்ந்த ஆடையில் மட்டுமே தரிசனம் — மாற்று உடை கொண்டு செல்லுங்கள்.'])),
 
-    dict(slug='madurai-meenakshi', km='170', lat=9.9197, lon=78.1194, maps='Meenakshi Amman Temple Madurai',
+    dict(slug='madurai-meenakshi', hours=[[5, 0, 12, 30], [16, 0, 22, 0]], km='170', lat=9.9197, lon=78.1194, maps='Meenakshi Amman Temple Madurai',
          sources=['https://en.wikipedia.org/wiki/Meenakshi_Temple'],
          en=dict(name='Madurai Meenakshi Amman Temple', place='Madurai city', known='Goddess Meenakshi; the Chithirai divine wedding',
                  intro='The Meenakshi Amman temple is the heart of Madurai. Goddess Meenakshi, who by tradition ruled Madurai as a Pandya queen before marrying Lord Shiva as Sundareswarar, is worshipped first here, and her wedding is re-enacted every Chithirai before lakhs of devotees.',

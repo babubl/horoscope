@@ -31,11 +31,13 @@
 <header><div class="wrap bar">
   <a class="brand" href="/"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>Suba Jathagam</b></a>
   <a class="btn" href="/#match">Check match</a>
+  <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🔔</button>
+  <details class="menu"><summary aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav><a href="/"><span aria-hidden="true">🪔</span>Horoscope &amp; matching</a><a href="/temples/"><span aria-hidden="true">🛕</span>Temple guide</a><a href="/parigaram/"><span aria-hidden="true">🙏</span>Parigaram</a><a href="/calendar/"><span aria-hidden="true">📅</span>Festival calendar</a><a href="/panchangam/"><span aria-hidden="true">☀️</span>Panchangam today</a><a href="/nakshatra/"><span aria-hidden="true">✨</span>27 Nakshatras</a><a href="/rasi/"><span aria-hidden="true">♈</span>12 Rasis</a><a href="/baby-names.html"><span aria-hidden="true">👶</span>Baby names</a><a href="/how-we-calculate.html"><span aria-hidden="true">🧮</span>How we calculate</a></nav></details>
 </div></header>
 <main class="wrap">
 <nav class="crumbs"><a href="/">Home</a> › Parigaram</nav>
-<h1>Parigaram: traditional remedies</h1>
-<p class="lead">What Tamil tradition suggests for each of the nine planets and for Chevvai dosham, Rahu–Ketu dosham, Ezharai Sani, delays in marriage, children, long life and ancestral rites — with the temple for each.</p>
+<div class="thoranam" aria-hidden="true"></div><div class="introw"><figure class="deity"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Navagraha.jpg?width=480" alt="The nine grahas at a glance" loading="lazy" width="240" height="300"><figcaption>Painting: <a href="https://commons.wikimedia.org/wiki/File%3ANavagraha.jpg" target="_blank" rel="noopener">Anant Shivaji Desai, Ravi Varma Press, Public domain, via Wikimedia Commons</a></figcaption></figure><div><h1>Parigaram: traditional remedies</h1>
+<p class="lead">What Tamil tradition suggests for each of the nine planets and for Chevvai dosham, Rahu–Ketu dosham, Ezharai Sani, delays in marriage, children, long life and ancestral rites — with the temple for each.</p></div></div>
 <p class="warn">Parigaram is a matter of faith. It is not a substitute for medical, legal or financial help. Simple prayer, a lamp and charity are the heart of every remedy; be careful of anyone who demands large payments or frightens you with a dosha.</p>
 <p class="chips"><a href="#chevvai">Chevvai (Mars) dosham</a><a href="#rahu-ketu">Rahu–Ketu (Naga / Sarpa) dosham</a><a href="#kala-sarpa">Kala Sarpa yoga</a><a href="#sani">Ezharai Sani, Ashtama Sani and Kandaka Sani</a><a href="#guru">Guru (Jupiter) — transit and Guru balam</a><a href="#marriage">Delay in marriage</a><a href="#children">Prayers for children and a safe pregnancy</a><a href="#longevity">Long life — 60th, 70th and 80th birthdays</a><a href="#pitru">Pitru (ancestral) rites</a><a href="#dasa">During a difficult dasa or bhukti</a></p>
 <h2>The nine grahas at a glance</h2>
@@ -47,6 +49,7 @@
 <nav class="langs" aria-label="Language"><a href="/parigaram/" hreflang="en" lang="en" class=on>English</a><a href="/ta/parigaram/" hreflang="ta" lang="ta">தமிழ்</a></nav>
 </main>
 <footer><div class="wrap"><a href="/">Suba Jathagam</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
+<script src="/assets/divine.js" defer></script>
 <script>
 (function(){var app=false;try{app=sessionStorage.getItem('jothidam.app')==='1';}catch(e){}
 if(!app&&/^https?:$/.test(location.protocol)&&location.hostname!=='localhost'){var s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';s.setAttribute('data-goatcounter','https://subajathagam.goatcounter.com/count');document.head.appendChild(s);}})();

@@ -35,6 +35,8 @@
 <header><div class="wrap bar">
   <a class="brand" href="/"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>Suba Jathagam</b></a>
   <a class="btn" href="/#match">Check match</a>
+  <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🔔</button>
+  <details class="menu"><summary aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav><a href="/"><span aria-hidden="true">🪔</span>Horoscope &amp; matching</a><a href="/temples/"><span aria-hidden="true">🛕</span>Temple guide</a><a href="/parigaram/"><span aria-hidden="true">🙏</span>Parigaram</a><a href="/calendar/"><span aria-hidden="true">📅</span>Festival calendar</a><a href="/panchangam/"><span aria-hidden="true">☀️</span>Panchangam today</a><a href="/nakshatra/"><span aria-hidden="true">✨</span>27 Nakshatras</a><a href="/rasi/"><span aria-hidden="true">♈</span>12 Rasis</a><a href="/baby-names.html"><span aria-hidden="true">👶</span>Baby names</a><a href="/how-we-calculate.html"><span aria-hidden="true">🧮</span>How we calculate</a></nav></details>
 </div></header>
 <main class="wrap">
 <nav class="crumbs"><a href="/">Home</a> › 12 Rasis</nav>
@@ -42,6 +44,7 @@
 <nav class="langs" aria-label="Language"><a href="/rasi/" hreflang="en" lang="en" class=on>English</a><a href="/ta/rasi/" hreflang="ta" lang="ta">தமிழ்</a><a href="/ml/rasi/" hreflang="ml" lang="ml">മലയാളം</a><a href="/te/rasi/" hreflang="te" lang="te">తెలుగు</a><a href="/kn/rasi/" hreflang="kn" lang="kn">ಕನ್ನಡ</a><a href="/hi/rasi/" hreflang="hi" lang="hi">हिन्दी</a></nav>
 </main>
 <footer><div class="wrap"><a href="/">Suba Jathagam</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
+<script src="/assets/divine.js" defer></script>
 <script>
 (function(){var app=false;try{app=sessionStorage.getItem('jothidam.app')==='1';}catch(e){}
 if(!app&&/^https?:$/.test(location.protocol)&&location.hostname!=='localhost'){var s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';s.setAttribute('data-goatcounter','https://subajathagam.goatcounter.com/count');document.head.appendChild(s);}})();

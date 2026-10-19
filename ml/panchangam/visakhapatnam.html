@@ -35,6 +35,8 @@
 <header><div class="wrap bar">
   <a class="brand" href="/ml/"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>ശുഭ ജാതകം</b></a>
   <a class="btn" href="/ml/#match">പൊരുത്തം നോക്കുക</a>
+  <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🔔</button>
+  <details class="menu"><summary aria-label="മെനു"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav><a href="/ml/"><span aria-hidden="true">🪔</span>ജാതകം &amp; പൊരുത്തം</a><a href="/temples/"><span aria-hidden="true">🛕</span>Temple guide</a><a href="/parigaram/"><span aria-hidden="true">🙏</span>Parigaram</a><a href="/ml/calendar/"><span aria-hidden="true">📅</span>ആഘോഷ കലണ്ടർ</a><a href="/ml/panchangam/"><span aria-hidden="true">☀️</span>ഇന്നത്തെ പഞ്ചാംഗം</a><a href="/ml/nakshatra/"><span aria-hidden="true">✨</span>27 നക്ഷത്രങ്ങൾ</a><a href="/ml/rasi/"><span aria-hidden="true">♈</span>12 രാശികൾ</a><a href="/ml/baby-names.html"><span aria-hidden="true">👶</span>പേരക്ഷരം</a><a href="/ml/how-we-calculate.html"><span aria-hidden="true">🧮</span>കണക്കുകൂട്ടൽ രീതി</a></nav></details>
 </div></header>
 <main class="wrap">
 <nav class="crumbs"><a href="/ml/">ഹോം</a> › <a href="/ml/panchangam/">ഇന്നത്തെ പഞ്ചാംഗം</a> › വിശാഖപട്ടണം</nav>
@@ -65,6 +67,7 @@ document.getElementById('pdate').textContent=String(t[2]).padStart(2,'0')+'-'+St
 <nav class="langs" aria-label="Language"><a href="/panchangam/visakhapatnam.html" hreflang="en" lang="en">English</a><a href="/ta/panchangam/visakhapatnam.html" hreflang="ta" lang="ta">தமிழ்</a><a href="/ml/panchangam/visakhapatnam.html" hreflang="ml" lang="ml" class=on>മലയാളം</a><a href="/te/panchangam/visakhapatnam.html" hreflang="te" lang="te">తెలుగు</a><a href="/kn/panchangam/visakhapatnam.html" hreflang="kn" lang="kn">ಕನ್ನಡ</a><a href="/hi/panchangam/visakhapatnam.html" hreflang="hi" lang="hi">हिन्दी</a></nav>
 </main>
 <footer><div class="wrap"><a href="/ml/">ശുഭ ജാതകം</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
+<script src="/assets/divine.js" defer></script>
 <script>
 (function(){var app=false;try{app=sessionStorage.getItem('jothidam.app')==='1';}catch(e){}
 if(!app&&/^https?:$/.test(location.protocol)&&location.hostname!=='localhost'){var s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';s.setAttribute('data-goatcounter','https://subajathagam.goatcounter.com/count');document.head.appendChild(s);}})();

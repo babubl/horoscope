@@ -109,6 +109,10 @@ if ADS_CLIENT:
 titles = {l: SEO[l]['title'] for l in LANGS}
 alts = ''.join(f'<link rel="alternate" hreflang="{l}" href="{SITE}{path(l)}">\n' for l in LANGS) + f'<link rel="alternate" hreflang="x-default" href="{SITE}/">\n'
 
+sys.path.insert(0, 'src')
+import images_data as _IMG  # noqa: E402
+_bt, _nv = _IMG.TEMPLE.get('thanjavur-big-temple'), _IMG.DEITY.get('navagraha')
+EXPLORE_IMG = (_IMG.url(_bt['file'], 640) if _bt else '/icons/og-image.jpg', _IMG.url(_nv['file'], 640) if _nv else '/icons/og-image.jpg')
 for l in LANGS:
     d = SEO[l]
     p = base
@@ -128,6 +132,7 @@ for l in LANGS:
     if ADS_CLIENT:
         p = p.replace('</head>', f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n</head>', 1)
     p = p.replace('</head>', f'<script>window.SJ_LANG={json.dumps(l)};window.SJ_TITLES={json.dumps(titles, ensure_ascii=False)};</script>\n</head>', 1)
+    p = p.replace('%%IMG_TEMPLE%%', EXPLORE_IMG[0]).replace('%%IMG_NAVA%%', EXPLORE_IMG[1])
     p = p.replace('<!--SEO-->', seo_section(l), 1)
     p = prerender(p, l)
     out = 'index.html' if l == 'en' else f'{l}/index.html'

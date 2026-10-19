@@ -139,6 +139,23 @@ process.stdout.write(JSON.stringify(out));
     return json.loads(subprocess.run(['node', '-'], input=js, capture_output=True, text=True, check=True).stdout)
 
 
+MENU_EXTRA = {'en': ('Horoscope & matching', 'Temple guide', 'Parigaram', 'Menu'), 'ta': ('ஜாதகம் & பொருத்தம்', 'கோயில் வழிகாட்டி', 'பரிகாரம்', 'பட்டியல்'),
+              'ml': ('ജാതകം & പൊരുത്തം', 'Temple guide', 'Parigaram', 'മെനു'), 'te': ('జాతకం & పొంతన', 'Temple guide', 'Parigaram', 'మెనూ'),
+              'kn': ('ಜಾತಕ & ಹೊಂದಾಣಿಕೆ', 'Temple guide', 'Parigaram', 'ಮೆನು'), 'hi': ('कुंडली और मिलान', 'Temple guide', 'Parigaram', 'मेनू')}
+
+
+def menu_html(l):
+    """Site menu shown in the header of every knowledge page (a native <details> drop-down, no script needed)."""
+    import kb  # loaded by build.py before any page is written
+    b = '/' if l == 'en' else f'/{l}/'
+    tb = '/ta/' if l == 'ta' else '/'
+    m, x = kb.T[l]['menu'], MENU_EXTRA[l]
+    items = [('🪔', x[0], b), ('🛕', x[1], tb + 'temples/'), ('🙏', x[2], tb + 'parigaram/'), ('📅', m[0], b + 'calendar/'), ('☀️', m[1], b + 'panchangam/'),
+             ('✨', m[2], b + 'nakshatra/'), ('♈', m[3], b + 'rasi/'), ('👶', m[4], b + 'baby-names.html'), ('🧮', m[5], b + 'how-we-calculate.html')]
+    links = ''.join(f'<a href="{h}"><span aria-hidden="true">{i}</span>{esc(t)}</a>' for i, t, h in items)
+    return f'<details class="menu"><summary aria-label="{esc(x[3])}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav>{links}</nav></details>'
+
+
 def shell(l, title, desc, canon, alts, body, crumbs, app_href):
     D = S[l]
     langs = ''.join(f'<a href="{href}" hreflang="{x}" lang="{x}"{" class=on" if x == l else ""}>{NATIVE[x]}</a>' for x, href in alts)
@@ -175,6 +192,8 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <header><div class="wrap bar">
   <a class="brand" href="{'/' if l == 'en' else '/' + l + '/'}"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>{BRAND[l]}</b></a>
   <a class="btn" href="{app_href}">{esc(D['ctaShort'])}</a>
+  <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🔔</button>
+  {menu_html(l)}
 </div></header>
 <main class="wrap">
 <nav class="crumbs">{crumb_html}</nav>
@@ -182,6 +201,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <nav class="langs" aria-label="Language">{langs}</nav>
 </main>
 <footer><div class="wrap"><a href="{'/' if l == 'en' else '/' + l + '/'}">{BRAND[l]}</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
+<script src="/assets/divine.js" defer></script>
 <script>
 (function(){{var app=false;try{{app=sessionStorage.getItem('jothidam.app')==='1';}}catch(e){{}}
 if(!app&&/^https?:$/.test(location.protocol)&&location.hostname!=='localhost'){{var s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';s.setAttribute('data-goatcounter','https://subajathagam.goatcounter.com/count');document.head.appendChild(s);}}}})();
