@@ -229,6 +229,8 @@ def nav_html(l):
     m = T[l]['menu']
     b = base(l)
     links = [(m[0], f'{b}calendar/'), (m[1], f'{b}panchangam/'), (m[2], f'{b}nakshatra/'), (m[3], f'{b}rasi/'), (m[4], f'{b}baby-names.html'), (m[5], f'{b}how-we-calculate.html')]
+    if l in ('en', 'ta'):
+        links += [(('Temple guide', 'கோயில் வழிகாட்டி')[l == 'ta'], f'{b}temples/'), (('Parigaram', 'பரிகாரம்')[l == 'ta'], f'{b}parigaram/')]
     return '<nav class="kbnav">' + ''.join(f'<a href="{h}">{esc(t)}</a>' for t, h in links) + '</nav>'
 
 

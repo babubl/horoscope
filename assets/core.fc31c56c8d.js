@@ -963,7 +963,11 @@ const I_EXTRA = {
 "lBaby": "Baby names",
 "lRasi": "12 Rasis",
 "lPanchCity": "Panchangam by city",
-"lHow": "How we calculate"
+"lHow": "How we calculate",
+"lTemples": "Temple guide",
+"lPari": "Parigaram",
+"pariLink": "Traditional parigaram for this",
+"pariDasa": "Parigaram during {p} dasa"
 },
 "ta": {
 "tagline": "உங்கள் மொழியில் ஜாதகம், பொருத்தம், பஞ்சாங்கம்",
@@ -1106,7 +1110,11 @@ const I_EXTRA = {
 "lBaby": "குழந்தை பெயர் எழுத்து",
 "lRasi": "12 ராசிகள்",
 "lPanchCity": "ஊர்வாரி பஞ்சாங்கம்",
-"lHow": "கணிப்பு முறை"
+"lHow": "கணிப்பு முறை",
+"lTemples": "கோயில் வழிகாட்டி",
+"lPari": "பரிகாரம்",
+"pariLink": "இதற்கான மரபுப் பரிகாரங்கள்",
+"pariDasa": "{p} தசைக்கான பரிகாரம்"
 },
 "hi": {
 "appName": "शुभ जातक",
@@ -1603,6 +1611,10 @@ const I_EXTRA = {
 "lRasi": "12 राशियाँ",
 "lPanchCity": "शहरवार पंचांग",
 "lHow": "गणना विधि",
+"lTemples": "Temple guide (English)",
+"lPari": "उपाय (English)",
+"pariLink": "पारंपरिक उपाय (English)",
+"pariDasa": "{p} महादशा के उपाय (English)",
 "years60": [
 "प्रभव",
 "विभव",
@@ -2246,6 +2258,10 @@ const I_EXTRA = {
 "lRasi": "12 రాశులు",
 "lPanchCity": "నగరాల పంచాంగం",
 "lHow": "లెక్కింపు విధానం",
+"lTemples": "Temple guide (English)",
+"lPari": "పరిహారం (English)",
+"pariLink": "సంప్రదాయ పరిహారాలు (English)",
+"pariDasa": "{p} దశ పరిహారం (English)",
 "years60": [
 "ప్రభవ",
 "విభవ",
@@ -2889,6 +2905,10 @@ const I_EXTRA = {
 "lRasi": "12 ರಾಶಿಗಳು",
 "lPanchCity": "ನಗರವಾರು ಪಂಚಾಂಗ",
 "lHow": "ಲೆಕ್ಕಾಚಾರ ವಿಧಾನ",
+"lTemples": "Temple guide (English)",
+"lPari": "ಪರಿಹಾರ (English)",
+"pariLink": "ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಹಾರಗಳು (English)",
+"pariDasa": "{p} ದಶೆಯ ಪರಿಹಾರ (English)",
 "years60": [
 "ಪ್ರಭವ",
 "ವಿಭವ",
@@ -3546,6 +3566,10 @@ const I_EXTRA = {
 "lRasi": "12 രാശികൾ",
 "lPanchCity": "നഗരം തിരിച്ച് പഞ്ചാംഗം",
 "lHow": "കണക്കുകൂട്ടൽ രീതി",
+"lTemples": "Temple guide (English)",
+"lPari": "പരിഹാരം (English)",
+"pariLink": "പരമ്പരാഗത പരിഹാരങ്ങൾ (English)",
+"pariDasa": "{p} ദശയിലെ പരിഹാരം (English)",
 "years60": [
 "പ്രഭവ",
 "വിഭവ",

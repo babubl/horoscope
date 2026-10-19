@@ -1,6 +1,6 @@
 /* Jothidam service worker — offline app shell, cached fonts, live network for place search and AI */
-const VERSION = 'subajathagam-a29cf93f';
-const SHELL = ['/', '/ta/', '/ml/', '/te/', '/kn/', '/hi/', '/about.html', '/guide.html', '/privacy.html', '/terms.html', '/assets/site.css', '/assets/core.cb88925862.js', '/manifest.webmanifest',
+const VERSION = 'subajathagam-91c68a73';
+const SHELL = ['/', '/ta/', '/ml/', '/te/', '/kn/', '/hi/', '/about.html', '/guide.html', '/privacy.html', '/terms.html', '/assets/site.css', '/assets/core.fc31c56c8d.js', '/manifest.webmanifest',
   '/icons/icon-192.png', '/icons/icon-512.png', '/icons/icon-maskable-512.png', '/icons/apple-touch-icon.png', '/icons/favicon-32.png', '/data/places.json'];
 const FONT_CACHE = 'jothidam-fonts';
 

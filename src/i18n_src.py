@@ -572,6 +572,10 @@ MORE['lBaby'] = {'en': 'Baby names', 'ta': 'குழந்தை பெயர�
 MORE['lRasi'] = {'en': '12 Rasis', 'ta': '12 ராசிகள்', 'ml': '12 രാശികൾ', 'te': '12 రాశులు', 'kn': '12 ರಾಶಿಗಳು', 'hi': '12 राशियाँ'}
 MORE['lPanchCity'] = {'en': 'Panchangam by city', 'ta': 'ஊர்வாரி பஞ்சாங்கம்', 'ml': 'നഗരം തിരിച്ച് പഞ്ചാംഗം', 'te': 'నగరాల పంచాంగం', 'kn': 'ನಗರವಾರು ಪಂಚಾಂಗ', 'hi': 'शहरवार पंचांग'}
 MORE['lHow'] = {'en': 'How we calculate', 'ta': 'கணிப்பு முறை', 'ml': 'കണക്കുകൂട്ടൽ രീതി', 'te': 'లెక్కింపు విధానం', 'kn': 'ಲೆಕ್ಕಾಚಾರ ವಿಧಾನ', 'hi': 'गणना विधि'}
+MORE['lTemples'] = {'en': 'Temple guide', 'ta': 'கோயில் வழிகாட்டி', 'ml': 'Temple guide (English)', 'te': 'Temple guide (English)', 'kn': 'Temple guide (English)', 'hi': 'Temple guide (English)'}
+MORE['lPari'] = {'en': 'Parigaram', 'ta': 'பரிகாரம்', 'ml': 'പരിഹാരം (English)', 'te': 'పరిహారం (English)', 'kn': 'ಪರಿಹಾರ (English)', 'hi': 'उपाय (English)'}
+MORE['pariLink'] = {'en': 'Traditional parigaram for this', 'ta': 'இதற்கான மரபுப் பரிகாரங்கள்', 'ml': 'പരമ്പരാഗത പരിഹാരങ്ങൾ (English)', 'te': 'సంప్రదాయ పరిహారాలు (English)', 'kn': 'ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಹಾರಗಳು (English)', 'hi': 'पारंपरिक उपाय (English)'}
+MORE['pariDasa'] = {'en': 'Parigaram during {p} dasa', 'ta': '{p} தசைக்கான பரிகாரம்', 'ml': '{p} ദശയിലെ പരിഹാരം (English)', 'te': '{p} దశ పరిహారం (English)', 'kn': '{p} ದಶೆಯ ಪರಿಹಾರ (English)', 'hi': '{p} महादशा के उपाय (English)'}
 for k, v in MORE.items():
     for l, txt in v.items():
         out[l][k] = txt

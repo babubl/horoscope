@@ -163,6 +163,7 @@ tr.now td{background:var(--accent-soft)}
 .dosha{display:grid;gap:10px}
 .dosha .row{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 .dosha .row b{display:block}
+.pari{margin:10px 0 0}.pari a{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px;font-size:14px}.pari a:hover{text-decoration:underline}
 .dosha .row p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
 .ai{border:1px dashed var(--accent-2);border-radius:12px;padding:16px;background:color-mix(in srgb,var(--accent-soft) 45%,var(--paper))}
 .ai .md h2,.ai .md h3,.ai .md h4{font-family:var(--display);color:var(--accent);margin:18px 0 6px}
@@ -724,7 +725,7 @@ body.noscroll{overflow:hidden}
   <div class="wrap">
     <span data-t="footer">கணிப்பு: லஹிரி அயனாம்சம், சராசரி ராகு/கேது, ராசி வீட்டு முறை, விம்சோத்தரி தசை. ஜோதிடம் ஒரு பாரம்பரிய நம்பிக்கை; மருத்துவ, சட்ட, நிதி முடிவுகளுக்கு இதை மட்டும் சார்ந்திருக்க வேண்டாம்.</span>
     <div class="visits hidden" id="visits"></div>
-    <nav class="flinks"><a href="#feedback" data-t="lFeedback">கருத்து</a><a href="/ta/calendar/" data-kb="calendar/" data-t="lCal">பண்டிகை நாட்காட்டி</a><a href="/ta/panchangam/" data-kb="panchangam/" data-t="lPanchCity">ஊர்வாரி பஞ்சாங்கம்</a><a href="/ta/nakshatra/" id="naksLink" data-kb="nakshatra/" data-t="lNaks">27 நட்சத்திரங்கள்</a><a href="/ta/rasi/" data-kb="rasi/" data-t="lRasi">12 ராசிகள்</a><a href="/ta/baby-names.html" data-kb="baby-names.html" data-t="lBaby">குழந்தை பெயர் எழுத்து</a><a href="/ta/how-we-calculate.html" data-kb="how-we-calculate.html" data-t="lHow">கணிப்பு முறை</a><a href="/guide.html" data-t="lGuide">வழிகாட்டி</a><a href="/about.html" data-t="lAbout">எங்களைப் பற்றி</a><a href="/privacy.html" data-t="lPrivacy">தனியுரிமை</a><a href="/terms.html" data-t="lTerms">விதிமுறைகள்</a></nav>
+    <nav class="flinks"><a href="#feedback" data-t="lFeedback">கருத்து</a><a href="/ta/calendar/" data-kb="calendar/" data-t="lCal">பண்டிகை நாட்காட்டி</a><a href="/ta/panchangam/" data-kb="panchangam/" data-t="lPanchCity">ஊர்வாரி பஞ்சாங்கம்</a><a href="/ta/nakshatra/" id="naksLink" data-kb="nakshatra/" data-t="lNaks">27 நட்சத்திரங்கள்</a><a href="/ta/rasi/" data-kb="rasi/" data-t="lRasi">12 ராசிகள்</a><a href="/ta/baby-names.html" data-kb="baby-names.html" data-t="lBaby">குழந்தை பெயர் எழுத்து</a><a href="/ta/how-we-calculate.html" data-kb="how-we-calculate.html" data-t="lHow">கணிப்பு முறை</a><a href="/temples/" data-kbt="temples/" data-t="lTemples">கோயில் வழிகாட்டி</a><a href="/parigaram/" data-kbt="parigaram/" data-t="lPari">பரிகாரம்</a><a href="/guide.html" data-t="lGuide">வழிகாட்டி</a><a href="/about.html" data-t="lAbout">எங்களைப் பற்றி</a><a href="/privacy.html" data-t="lPrivacy">தனியுரிமை</a><a href="/terms.html" data-t="lTerms">விதிமுறைகள்</a></nav>
   </div>
 </footer>
 
@@ -764,7 +765,7 @@ body.noscroll{overflow:hidden}
   </form>
 </dialog>
 
-<script src="/assets/core.cb88925862.js"></script>
+<script src="/assets/core.fc31c56c8d.js"></script>
 <script>
 (() => {
 'use strict';
@@ -1254,7 +1255,7 @@ function doshaBlock(c) {
     ${row(t('chevvai'), chevState, chevLbl, chevText)}
     ${row(t('rahuKetu'), rk.present ? 'bad' : 'good', rk.present ? t('present') : t('absent'), t('rkDet', { r: rk.rahuHouse, k: rk.ketuHouse }) + ' ' + t('rkRule'))}
     ${row(t('kalaSarpa'), ks ? 'medium' : 'good', ks ? t('present') : t('absent'), ks ? t('ksDet') : t('ksNone'))}
-  </div>`;
+  </div>${ch.effective ? pariLink('chevvai') : rk.present ? pariLink('rahu-ketu') : ks ? pariLink('kala-sarpa') : ''}`;
 }
 function dasaBlock(c) {
   const now = Date.now();
@@ -1269,7 +1270,7 @@ function dasaBlock(c) {
       cur.md.bhuktis.map(b => `<tr class="${b === cur.bh ? 'now' : ''}"><td>${L().pl[cur.md.lord]} – ${L().pl[b.lord]}${b === cur.bh ? ` <span class="tag ex">${t('current')}</span>` : ''}</td><td>${fmtDate(b.start)}</td><td>${fmtDate(b.end)}</td></tr>`).join('') + '</tbody></table></div>';
   }
   return `<p class="sub">${t('dasaBal')}: <b>${L().pl[c.dasa.balance.lord]}</b> ${yrsFmt(c.dasa.balance.years)}</p>
-    <div class="tbl-wrap"><table><thead><tr><th>${t('mahadasa')}</th><th>${t('from')}</th><th>${t('to')}</th></tr></thead><tbody>${rows}</tbody></table></div>${bh}`;
+    <div class="tbl-wrap"><table><thead><tr><th>${t('mahadasa')}</th><th>${t('from')}</th><th>${t('to')}</th></tr></thead><tbody>${rows}</tbody></table></div>${bh}${cur ? pariLink('g-' + cur.md.lord.toLowerCase(), t('pariDasa', { p: L().pl[cur.md.lord] })) : ''}`;
 }
 const DASA_LORDS = ['Ketu', 'Venus', 'Sun', 'Moon', 'Mars', 'Rahu', 'Jupiter', 'Saturn', 'Mercury'];
 const fmtClock = (ms, off) => { const d = new Date(Math.round((ms + off * 60000) / 60000) * 60000); return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`; };
@@ -1304,7 +1305,7 @@ function transitBlock(c) {
     <div class="dosha" style="margin-top:12px">
       <div class="row"><div><b>${L().pl.Saturn}</b><p style="margin-top:6px">${satLine}</p></div></div>
       <div class="row"><span class="pill ${jupGood ? 'good' : 'medium'}">${L().pl.Jupiter}</span><div><p>${jupGood ? t('guruGood') : t('guruNeutral')}</p></div></div>
-    </div>`;
+    </div>${ph ? pariLink('sani') : !jupGood ? pariLink('guru') : ''}`;
 }
 function planetTable(c) {
   const lg = c.lagna;
@@ -1617,6 +1618,9 @@ refreshKeyDot();
 
 // ================= language, tradition & tabs =================
 const LANG_PATH = l => (l === 'en' ? '/' : '/' + l + '/');
+// temple guide and parigaram pages exist in English and Tamil
+const PARI_BASE = () => (lang === 'ta' ? '/ta/' : '/');
+const pariLink = (anchor, label) => `<p class="pari"><a href="${PARI_BASE()}parigaram/#${anchor}">${label || t('pariLink')} →</a></p>`;
 const DOC_TITLE = window.SJ_TITLES || {};
 function syncSettings() {
   document.getElementById('tradSel').value = trad;
@@ -1653,6 +1657,7 @@ function applyLang() {
   }
   document.getElementById('homeLink').href = LANG_PATH(lang);
   document.querySelectorAll('[data-kb]').forEach(a => a.href = LANG_PATH(lang) + a.dataset.kb);
+  document.querySelectorAll('[data-kbt]').forEach(a => a.href = PARI_BASE() + a.dataset.kbt);
   if (typeof renderRecent === 'function') renderRecent();
   if (typeof renderFamily === 'function') renderFamily();
   const canon = document.querySelector('link[rel=canonical]'); if (canon) canon.href = 'https://subajathagam.in' + LANG_PATH(lang);

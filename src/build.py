@@ -169,6 +169,10 @@ import kb  # noqa: E402
 _k = kb.generate(I, ads_head)
 print('calendar / panchangam / names / rasi pages', len(_k))
 kb_urls += _k
+import temples  # noqa: E402
+_t = temples.generate(I, ads_head)
+print('temple / parigaram pages', len(_t))
+kb_urls += _t
 
 # ---- sitemap with language alternates
 xl = ''.join(f'    <xhtml:link rel="alternate" hreflang="{x}" href="{SITE}{path(x)}"/>\n' for x in LANGS) + f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>\n'
