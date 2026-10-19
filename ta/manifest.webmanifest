@@ -65,7 +65,7 @@
     },
     {
       "name": "பஞ்சாங்கம்",
-      "url": "/ta/?source=pwa#panch",
+      "url": "/ta/?source=pwa",
       "icons": [
         {
           "src": "/icons/icon-192.png",

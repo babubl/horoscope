@@ -161,6 +161,26 @@ def nav_items(l):
             ('rasi', n[9], b + 'rasi/'), ('baby', n[10], b + 'baby-names.html')]
 
 
+# the Tamil story: each page ends with the next step
+STORY = [('panch', 'பஞ்சாங்கம்', '/ta/', 'இன்றைய திதி, நட்சத்திரம், ராகு காலம்'),
+         ('cal', 'நாட்காட்டி', '/ta/tamil-calendar/', 'தமிழ் மாதம், திதி, பௌர்ணமி, அமாவாசை, பண்டிகைகள்'),
+         ('horo', 'ஜாதகம்', '/ta/#horo', 'பிறந்த நேரத்திலிருந்து ராசி, நவாம்சம், தசை புக்தி'),
+         ('match', 'திருமணப் பொருத்தம்', '/ta/#match', 'மணமக்களுக்கு 10 பொருத்தம்'),
+         ('pari', 'பரிகாரம்', '/ta/parigaram/', 'நவகிரகங்களுக்கும் தோஷங்களுக்கும் பரிகாரம்'),
+         ('temples', 'கோயில்கள்', '/ta/temples/', 'நவகிரகக் கோயில்கள், தஞ்சை பெரிய கோயில் மற்றும் பல')]
+NEXT_OF = {'panch': 'cal', 'cal': 'horo', 'fest': 'horo', 'naks': 'match', 'rasi': 'horo', 'baby': 'horo', 'pari': 'temples', 'temples': 'panch'}
+
+
+def next_html(canon):
+    k = NEXT_OF.get(section_of(canon))
+    if not k:
+        return ''
+    i = [x[0] for x in STORY].index(k)
+    _, t, h, sub = STORY[i]
+    lbl = 'மீண்டும் தொடக்கத்திற்கு' if k == 'panch' else f'அடுத்து · படி {i + 1} / 6'
+    return f'<a class="nextstep" href="{h}"><small>{lbl}</small><b>{esc(t)}</b><span>{esc(sub)}</span><i aria-hidden="true">→</i></a>'
+
+
 def section_of(canon):
     for k, frag in (('temples', 'temples/'), ('pari', 'parigaram/'), ('cal', 'tamil-calendar/'), ('fest', 'tamil-festivals/'), ('cal', 'pournami-amavasai/'), ('cal', 'calendar/'),
                     ('panch', 'panchangam/'), ('naks', 'nakshatra/'), ('rasi', 'rasi/'), ('baby', 'baby-names')):
@@ -171,6 +191,11 @@ def section_of(canon):
 
 def menu_html(l, canon=''):
     cur = section_of(canon)
+    if l == 'ta':
+        extra = [x for x in nav_items('ta') if x[0] in ('fest', 'naks', 'rasi', 'baby')]
+        items = [(k, t, h) for k, t, h, _ in STORY] + extra
+        return '<nav class="sitenav" aria-label="Menu"><div class="wrap">' + ''.join(
+            f'<a href="{h}"{" class=on aria-current=page" if k == cur else ""}>{esc(t)}</a>' for k, t, h in items) + '</div></nav>'
     return '<nav class="sitenav" aria-label="Menu"><div class="wrap">' + ''.join(
         f'<a href="{h}"{" class=on aria-current=page" if k == cur else ""}>{esc(t)}</a>' for k, t, h in nav_items(l)) + '</div></nav>'
 
@@ -178,7 +203,7 @@ def menu_html(l, canon=''):
 def shell(l, title, desc, canon, alts, body, crumbs, app_href):
     D = S[l]
     langs = ''.join(f'<a href="{href}" hreflang="{x}" lang="{x}"{" class=on" if x == l else ""}>{NATIVE[x]}</a>' for x, href in alts)
-    alt_links = ''.join(f'<link rel="alternate" hreflang="{x}" href="{SITE}{href}">\n' for x, href in alts) + f'<link rel="alternate" hreflang="x-default" href="{SITE}{alts[0][1]}">\n'
+    alt_links = ''  # knowledge pages are Tamil only now; the other languages redirect here
     crumb_html = ' › '.join(f'<a href="{h}">{esc(t)}</a>' if h else esc(t) for t, h in crumbs)
     ld = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': i + 1, 'name': t, **({'item': SITE + h} if h else {})} for i, (t, h) in enumerate(crumbs)]}
@@ -216,7 +241,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <main class="wrap">
 <nav class="crumbs">{crumb_html}</nav>
 {body}
-<nav class="langs" aria-label="Language">{langs}</nav>
+{next_html(canon) if l == 'ta' else ''}
 </main>
 <footer><div class="wrap"><a href="{'/' if l == 'en' else '/' + l + '/'}">{BRAND[l]}</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
 <script src="/assets/divine.js" defer></script>

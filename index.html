@@ -591,15 +591,30 @@ body.noscroll{overflow:hidden}
 .toast{position:fixed;left:50%;bottom:26px;z-index:70;transform:translate(-50%,20px);opacity:0;pointer-events:none;
   background:#2a160c;color:#fff2d2;border:1px solid var(--zari);padding:11px 18px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:.2s;max-width:calc(100vw - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* the Tamil story: panchangam → calendar → jathagam → porutham → parigaram → temples; other languages keep only the two tools */
+body:not(.story) .taonly{display:none!important}
+body.story .nonta{display:none!important}
+.step{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--zari,#b8862b)}
+.nextstep{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:14px;width:100%;margin:22px 0 8px;padding:16px 20px;text-align:left;cursor:pointer;
+  border:1px solid var(--zari,#c99a3a);border-radius:16px;background:linear-gradient(135deg,#fff8e8,#fde9c2);color:#5a1a0c;text-decoration:none;font:inherit;box-shadow:0 8px 22px -14px rgba(110,18,22,.5)}
+.nextstep small{grid-column:1;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9a6a1c}
+.nextstep b{grid-column:1;font-size:20px;line-height:1.3;color:#6e1216}
+.nextstep span{grid-column:1;font-size:14px;color:#7a5a3a}
+.nextstep i{grid-column:2;grid-row:1/4;font-style:normal;font-size:26px;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#6e1216;color:#ffe3a3}
+.nextstep:hover i{transform:translateX(3px)}
+.sharerow{text-align:center;margin:6px 0 18px}
+#tab-home .upc{margin-top:16px}
+header .tabs a.x{opacity:.8}
 /* mobile: bottom navigation like an app */
 .bnav{display:none}
 @media (max-width:700px){
   html{scroll-padding-top:72px}
   .card{scroll-margin-top:72px}
-  header .tabs{display:flex;margin:0 -16px;padding:0 8px}header .tabs button[data-tab]{display:none}
-  .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:45;
+  header .tabs{display:none}
+  .bnav{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;position:fixed;left:0;right:0;bottom:0;z-index:45;
     background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -6px 20px -10px rgba(60,20,5,.35);padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
-  .bnav button,.bnav a{border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;font-size:11.5px;font-weight:600;cursor:pointer;border-radius:12px;min-height:54px}
+  .bnav button,.bnav a{border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 1px;font-size:10.5px;line-height:1.15;text-align:center;letter-spacing:-.1px;font-weight:600;cursor:pointer;border-radius:12px;min-height:54px}
   .bnav button svg,.bnav a svg{width:22px;height:22px}
   .bnav button.on{color:var(--accent);background:var(--accent-soft)}
   body{padding-bottom:76px}
@@ -638,6 +653,7 @@ body.noscroll{overflow:hidden}
 </style>
 <meta name="google-adsense-account" content="ca-pub-2701796789854475">
 <script>window.SJ_LANG="en";window.SJ_TITLES={"en": "Suba Jathagam — Free Horoscope, Kundli Matching & Panchangam in 6 Indian Languages", "ta": "சுப ஜாதகம் — இலவச ஜாதகம், திருமணப் பொருத்தம், பஞ்சாங்கம் தமிழில்", "ml": "ശുഭ ജാതകം — സൗജന്യ ജാതകം, വിവാഹ പൊരുത്തം, പഞ്ചാംഗം മലയാളത്തിൽ", "te": "శుభ జాతకం — ఉచిత జాతకం, వివాహ పొంతన (గుణ మేళనం), పంచాంగం తెలుగులో", "kn": "ಶುಭ ಜಾತಕ — ಉಚಿತ ಜಾತಕ, ಮದುವೆ ಹೊಂದಾಣಿಕೆ (ಗುಣ ಮಿಲನ), ಪಂಚಾಂಗ ಕನ್ನಡದಲ್ಲಿ", "hi": "शुभ जातक — मुफ़्त कुंडली, कुंडली मिलान (36 गुण) और आज का पंचांग हिंदी में"};</script>
+<script>(function(){try{if(!localStorage.getItem("jothidam.lang")&&!/bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent))location.replace("/ta/"+location.search+location.hash);}catch(e){}})();</script>
 </head>
 <body>
 <header>
@@ -661,56 +677,42 @@ body.noscroll{overflow:hidden}
       </button>
     </div>
     <nav class="tabs" aria-label="Menu">
-      <button class="on" data-tab="home" data-t="tabHome">Home</button>
+      <button class="on taonly" data-tab="home" data-t="tabPanch">Panchangam</button>
+      <a class="taonly" href="/ta/tamil-calendar/" data-t="navCal">Calendar</a>
       <button data-tab="horo" data-t="tabHoro">Horoscope</button>
       <button data-tab="match" data-t="tabMatch">Marriage Match</button>
-      <button data-tab="panch" data-t="tabPanch">Panchangam</button>
-      <a href="/tamil-calendar/" data-kbcal="1" data-t="navCal">Calendar</a>
-      <a href="/temples/" data-kbt="temples/" data-t="navTemples">Temples</a>
-      <a href="/parigaram/" data-kbt="parigaram/" data-t="lPari">Parigaram</a>
-      <a href="/tamil-festivals/" data-kbfest="1" data-t="navFest">Festivals</a>
-      <a href="/nakshatra/" data-kb="nakshatra/" data-t="navNaks">Nakshatras</a>
-      <a href="/rasi/" data-kb="rasi/" data-t="navRasi">Rasis</a>
-      <a href="/baby-names.html" data-kb="baby-names.html" data-t="navBaby">Baby names</a>
+      <a class="taonly" href="/ta/parigaram/" data-t="lPari">Parigaram</a>
+      <a class="taonly" href="/ta/temples/" data-t="navTemples">Temples</a>
+      <a class="taonly x" href="/ta/tamil-festivals/" data-t="navFest">Festivals</a>
+      <a class="taonly x" href="/ta/nakshatra/" data-t="navNaks">Nakshatras</a>
+      <a class="taonly x" href="/ta/rasi/" data-t="navRasi">Rasis</a>
+      <a class="nonta" href="/ta/" lang="ta">பஞ்சாங்கம் · கோயில்கள் (தமிழ்)</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
   <div class="appbar hidden" id="appbar"><span data-t="appPitch">Get the Android app — no ads, works offline, print the traditional jathagam.</span><a class="btn" id="appbarLink" href="#" target="_blank" rel="noopener" data-t="getApp">Get the app · ₹10</a></div>
-  <section id="tab-home">
-  <div class="hero">
-    <div><h2 data-t="heroTitle">Your horoscope, the traditional way</h2><p data-t="heroSub">Accurate jathagam / kundli, marriage matching and daily panchangam — free, in Tamil, Malayalam, Telugu, Kannada, Hindi and English.</p><nav class="langchips" aria-label="Language"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="/" class="on" data-lang="en" lang="en" hreflang="en">English</a><a href="/ta/" data-lang="ta" lang="ta" hreflang="ta">தமிழ்</a><a href="/ml/" data-lang="ml" lang="ml" hreflang="ml">മലയാളം</a><a href="/te/" data-lang="te" lang="te" hreflang="te">తెలుగు</a><a href="/kn/" data-lang="kn" lang="kn" hreflang="kn">ಕನ್ನಡ</a><a href="/hi/" data-lang="hi" lang="hi" hreflang="hi">हिन्दी</a></nav></div>
-    <button class="btn ghost" type="button" data-wa="site" id="waSite"></button>
-  </div>
-  <button type="button" class="today" id="todayStrip" aria-label="Today's panchangam"></button>
-  <div class="quick">
-    <button type="button" data-go="horo"><i aria-hidden="true">🪔</i><b data-t="qHoro">Make a jathagam</b><small data-t="qHoroS">Birth chart, dasa, doshas and the traditional print</small></button>
-    <button type="button" data-go="match"><i aria-hidden="true">💍</i><b data-t="qMatch">Marriage porutham</b><small data-t="qMatchS">10 porutham and 36 guna matching</small></button>
-    <button type="button" data-go="panch"><i aria-hidden="true">☀️</i><b data-t="qPanch">Today&#x27;s panchangam</b><small data-t="qPanchS">Rahu kalam, tithi and star for any town</small></button>
-  </div>
-  <div class="homegrid">
-    <div class="card upc"><h2 data-t="upcH">Coming sacred days</h2><div id="upcoming"></div><p class="sub"><a href="/tamil-calendar/" data-kbcal="1" data-t="upcMore">Full calendar →</a></p></div>
-    <div class="card tod" id="todayTemple"></div>
-  </div>
-  <section class="explore" id="explore" aria-labelledby="exH">
-    <h2 id="exH" data-t="exH">Explore Suba Jathagam</h2>
-    <div class="exgrid">
-      <a class="excard big" href="/temples/" data-kbt="temples/"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg?width=640" alt="" loading="lazy" width="640" height="400"><span><b data-t="lTemples">Temple guide</b><small data-t="exTemples">Navagraha temples, Thanjavur, Rameswaram and more — timings, history, how to reach</small></span></a>
-      <a class="excard big" href="/parigaram/" data-kbt="parigaram/"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Navagraha.jpg?width=640" alt="" loading="lazy" width="640" height="400"><span><b data-t="lPari">Parigaram</b><small data-t="exPari">Traditional remedies for the nine grahas and every dosha</small></span></a>
-      <a class="excard" href="/panchangam/" data-kb="panchangam/"><i aria-hidden="true">☀️</i><span><b data-t="lPanchCity">Panchangam by city</b><small data-t="exPanch">Today&#x27;s tithi, star and Rahu kalam</small></span></a>
-      <a class="excard" href="/calendar/" data-kb="calendar/"><i aria-hidden="true">📅</i><span><b data-t="lCal">Festival calendar</b><small data-t="exCal">Ekadashi, Pradosham, Amavasai and festivals</small></span></a>
-      <a class="excard" href="/nakshatra/" data-kb="nakshatra/"><i aria-hidden="true">✨</i><span><b data-t="lNaks">27 Nakshatras</b><small data-t="exNaks">Nature, matching stars and porutham</small></span></a>
-      <a class="excard" href="/rasi/" data-kb="rasi/"><i aria-hidden="true">🪐</i><span><b data-t="lRasi">12 Rasis</b><small data-t="exRasi">Lords, nakshatras and this month&#x27;s transits</small></span></a>
-      <a class="excard" href="/baby-names.html" data-kb="baby-names.html"><i aria-hidden="true">👶</i><span><b data-t="lBaby">Baby names</b><small data-t="exBaby">Starting letters for every star and pada</small></span></a>
-      <a class="excard" href="/how-we-calculate.html" data-kb="how-we-calculate.html"><i aria-hidden="true">🧮</i><span><b data-t="lHow">How we calculate</b><small data-t="exHow">Method and accuracy</small></span></a>
+  <section id="tab-home" class="taonly">
+    <div class="card">
+      <p class="step" data-t="step1">Step 1 of 6</p><h2 data-t="panchToday">Today&#x27;s panchangam</h2>
+      <p class="sub" data-t="panchSub">Tithi, nakshatra, yoga, karana and the day&#x27;s good and avoidable times, for your town.</p>
+      <div class="pbar">
+        <div class="field place"><label for="pp-place" data-t="panchPlace">Town</label>
+          <input id="pp-place" autocomplete="off" aria-autocomplete="list"><div class="suggest" id="pp-sug" role="listbox"></div><div class="geo" id="pp-geo"></div></div>
+        <div class="field" style="flex:0 1 180px;min-width:150px"><label for="pp-date" data-t="panchDate">Date</label><input id="pp-date" type="date"></div>
+        <div class="daynav"><button type="button" class="btn ghost" id="pp-prev" aria-label="Previous day">‹</button><button type="button" class="btn ghost" id="pp-today" data-t="today">Today</button><button type="button" class="btn ghost" id="pp-next" aria-label="Next day">›</button></div>
+      </div>
+      <div id="panchOut"></div>
     </div>
-  </section>
+    <div class="card upc"><h2 data-t="upcH">Coming sacred days</h2><div id="upcoming"></div></div>
+    <a class="nextstep" href="/ta/tamil-calendar/"><small data-t="nextL">Next</small><b data-t="navCal">Calendar</b><span data-t="nextCalS">Tamil months, tithis, Pournami and Amavasai</span><i aria-hidden="true">→</i></a>
+    <p class="sharerow"><button class="btn ghost" type="button" data-wa="site" id="waSite"></button></p>
   </section>
   <!-- HOROSCOPE -->
   <section id="tab-horo" class="hidden">
     <form class="card" id="horoForm" autocomplete="off">
-      <h2 data-t="horoTitle">Birth chart</h2>
+      <p class="step taonly" data-t="step3">Step 3 of 6</p><h2 data-t="horoTitle">Birth chart</h2>
       <p class="sub" data-t="horoSub">Enter birth details. Uses Lahiri ayanamsa; the chart style and calendar follow your tradition.</p>
       <div class="recent hidden" id="recentHoro"></div>
       <div class="person" id="p-single"></div>
@@ -721,12 +723,13 @@ body.noscroll{overflow:hidden}
       </div>
     </form>
     <div id="horoOut"></div>
+    <button type="button" class="nextstep" data-go="match"><small data-t="nextL">Next</small><b data-t="tabMatch">Marriage Match</b><span data-t="nextMatchS">Check the 10 porutham for a couple</span><i aria-hidden="true">→</i></button>
   </section>
 
   <!-- MATCHING -->
   <section id="tab-match" class="hidden">
     <form class="card" id="matchForm" autocomplete="off">
-      <h2 data-t="matchTitle">Marriage matching</h2>
+      <p class="step taonly" data-t="step4">Step 4 of 6</p><h2 data-t="matchTitle">Marriage matching</h2>
       <p class="sub" data-t="matchSub">Enter both birth details. See the 10 Porutham check and the 36-guna (Ashtakoota) score; your tradition decides which is shown first.</p>
       <div class="recent hidden" id="recentMatch"></div>
       <div class="grid g2">
@@ -740,28 +743,15 @@ body.noscroll{overflow:hidden}
       </div>
     </form>
     <div id="matchOut"></div>
-  </section>
-
-  <!-- PANCHANGAM -->
-  <section id="tab-panch" class="hidden">
-    <div class="card">
-      <h2 data-t="panchTitle">Daily panchangam</h2>
-      <p class="sub" data-t="panchSub">Tithi, nakshatra, yoga, karana and the day&#x27;s good and avoidable times, for your town.</p>
-      <div class="pbar">
-        <div class="field place"><label for="pp-place" data-t="panchPlace">Town</label>
-          <input id="pp-place" autocomplete="off" aria-autocomplete="list"><div class="suggest" id="pp-sug" role="listbox"></div><div class="geo" id="pp-geo"></div></div>
-        <div class="field" style="flex:0 1 180px;min-width:150px"><label for="pp-date" data-t="panchDate">Date</label><input id="pp-date" type="date"></div>
-        <div class="daynav"><button type="button" class="btn ghost" id="pp-prev" aria-label="Previous day">‹</button><button type="button" class="btn ghost" id="pp-today" data-t="today">Today</button><button type="button" class="btn ghost" id="pp-next" aria-label="Next day">›</button></div>
-      </div>
-      <div id="panchOut"></div>
-    </div>
+    <a class="nextstep taonly" href="/ta/parigaram/"><small data-t="nextL">Next</small><b data-t="lPari">Parigaram</b><span data-t="nextPariS">Remedies for the grahas and doshas</span><i aria-hidden="true">→</i></a>
+    <a class="nextstep nonta" href="/ta/" lang="ta"><small>தமிழில்</small><b>இன்றைய பஞ்சாங்கம் · கோயில்கள்</b><span>நாட்காட்டி, பரிகாரம், கோயில் வழிகாட்டி</span><i aria-hidden="true">→</i></a>
   </section>
 
   <section class="card seo" id="about-site" lang="en">
     <h2>Free horoscope and marriage matching, in your language</h2>
     <p>Suba Jathagam makes a complete birth chart from the date, time and place of birth — Rasi and Navamsa charts in South or North Indian style, planet positions, nakshatra and pada, Vimshottari dasa and bhukti, and Mars, Rahu–Ketu and Kala Sarpa dosha checks. Marriage matching shows both the South Indian 10 porutham and the North Indian 36-guna Ashtakoota score.</p>
     <h3>Is Suba Jathagam really free?</h3><p>Yes. Charts, matching, panchangam and the printable horoscope are free, with no sign-up.</p><h3>Which matching method should I use?</h3><p>Tamil and Kerala families usually follow the 10 porutham (with Rajju and Vedhai); Telugu, Kannada and North Indian families usually follow the 36-guna Ashtakoota (Guna Milan). Suba Jathagam shows both, and your tradition decides which comes first.</p><h3>How accurate are the calculations?</h3><p>Planet positions come from a modern astronomical engine with the Lahiri ayanamsa. Tithi, nakshatra, Rahu kalam and the Tamil, Malayalam and lunar calendar dates are worked out from the actual sunrise at the birth place.</p><h3>Can I print a traditional horoscope?</h3><p>Yes — a two-page horoscope in your culture’s style: manjal-kungumam for Tamil, kasavu gold for Kerala, a mango-leaf thoranam for Telugu, kumkum and green for Kannada, and saffron with swastik and kalash for North India. Print it or save it as a PDF.</p><h3>Is my birth data stored?</h3><p>No. Everything is calculated inside your browser; nothing is sent to our server.</p>
-    <nav class="langs" aria-label="Languages"><a href="/calendar/">📅 Festival calendar</a><a href="/panchangam/">☀ Panchangam by city</a><a href="/nakshatra/">★ 27 Nakshatras</a><a href="/rasi/">♈ 12 Rasis</a><a href="/baby-names.html">👶 Baby names</a><a href="/ta/" hreflang="ta" lang="ta">தமிழ்</a><a href="/ml/" hreflang="ml" lang="ml">മലയാളം</a><a href="/te/" hreflang="te" lang="te">తెలుగు</a><a href="/kn/" hreflang="kn" lang="kn">ಕನ್ನಡ</a><a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a></nav>
+    <nav class="langs" aria-label="Languages"><a href="/ta/calendar/" lang="ta">📅 பண்டிகை நாட்காட்டி</a><a href="/ta/panchangam/" lang="ta">☀ ஊர்வாரி பஞ்சாங்கம்</a><a href="/ta/nakshatra/" lang="ta">★ 27 நட்சத்திரங்கள்</a><a href="/ta/rasi/" lang="ta">♈ 12 ராசிகள்</a><a href="/ta/baby-names.html" lang="ta">👶 குழந்தை பெயர் எழுத்து</a><a href="/ta/" hreflang="ta" lang="ta">தமிழ்</a><a href="/ml/" hreflang="ml" lang="ml">മലയാളം</a><a href="/te/" hreflang="te" lang="te">తెలుగు</a><a href="/kn/" hreflang="kn" lang="kn">ಕನ್ನಡ</a><a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a></nav>
   </section>
   <!-- FEEDBACK -->
 </main>
@@ -785,11 +775,13 @@ body.noscroll{overflow:hidden}
 </aside>
 <button class="fab" type="button" data-fb-open><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg><span data-t="lFeedback">Feedback</span></button>
 <nav class="bnav" aria-label="Sections">
-  <button type="button" data-go="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><span data-t="tabHome">Home</span></button>
-  <button type="button" data-go="horo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span data-t="tabHoro">Horoscope</span></button>
+  <button type="button" data-go="home" class="on taonly"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span data-t="bnPanch">Panchangam</span></button>
+  <a class="taonly" href="/ta/tamil-calendar/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span data-t="bnCal">Calendar</span></a>
+  <button type="button" data-go="horo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span data-t="bnHoro">Horoscope</span></button>
   <button type="button" data-go="match"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="14" r="5"/><circle cx="15" cy="14" r="5"/><path d="M10 5l2-2 2 2-2 2z"/></svg><span data-t="navMatch">Match</span></button>
-  <button type="button" data-go="panch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span data-t="tabPanch">Panchangam</span></button>
-  <a href="/temples/" data-kbt="temples/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l2 3h-4z"/><path d="M8 8h8l1 3H7z"/><path d="M6 11h12v10H6z"/><path d="M10 21v-5h4v5"/></svg><span data-t="navTemples">Temples</span></a>
+  <a class="taonly" href="/ta/parigaram/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 14c2 4 14 4 16 0z"/><path d="M12 4c2 3 2 5 0 7-2-2-2-4 0-7z"/><path d="M9 20h6"/></svg><span data-t="bnPari">Parigaram</span></a>
+  <a class="taonly" href="/ta/temples/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l2 3h-4z"/><path d="M8 8h8l1 3H7z"/><path d="M6 11h12v10H6z"/><path d="M10 21v-5h4v5"/></svg><span data-t="bnTemples">Temples</span></a>
+  <a class="nonta" href="/ta/" lang="ta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span>தமிழ் பஞ்சாங்கம்</span></a>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -798,10 +790,10 @@ body.noscroll{overflow:hidden}
   <div class="wrap">
     <span data-t="footer">Calculations: Lahiri ayanamsa, mean Rahu/Ketu, whole-sign houses, Vimshottari dasa. Astrology is a traditional belief system; use it for reflection, not for medical, legal or financial decisions.</span>
     <div class="visits hidden" id="visits"></div>
-    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a href="/calendar/" data-kb="calendar/" data-t="lCal">Festival calendar</a><a href="/panchangam/" data-kb="panchangam/" data-t="lPanchCity">Panchangam by city</a><a href="/nakshatra/" id="naksLink" data-kb="nakshatra/" data-t="lNaks">27 Nakshatras</a><a href="/rasi/" data-kb="rasi/" data-t="lRasi">12 Rasis</a><a href="/baby-names.html" data-kb="baby-names.html" data-t="lBaby">Baby names</a><a href="/how-we-calculate.html" data-kb="how-we-calculate.html" data-t="lHow">How we calculate</a><a href="/temples/" data-kbt="temples/" data-t="lTemples">Temple guide</a><a href="/parigaram/" data-kbt="parigaram/" data-t="lPari">Parigaram</a><a href="/guide.html" data-t="lGuide">Guide</a><a href="/about.html" data-t="lAbout">About</a><a href="/privacy.html" data-t="lPrivacy">Privacy</a><a href="/terms.html" data-t="lTerms">Terms</a></nav>
+    <nav class="flinks"><a href="#feedback" data-t="lFeedback">Feedback</a><a class="taonly" href="/ta/tamil-calendar/" data-t="navCal">Calendar</a><a class="taonly" href="/ta/panchangam/" data-kb="panchangam/" data-t="lPanchCity">Panchangam by city</a><a class="taonly" href="/ta/nakshatra/" id="naksLink" data-kb="nakshatra/" data-t="lNaks">27 Nakshatras</a><a class="taonly" href="/ta/rasi/" data-kb="rasi/" data-t="lRasi">12 Rasis</a><a class="taonly" href="/ta/baby-names.html" data-kb="baby-names.html" data-t="lBaby">Baby names</a><a href="/ta/how-we-calculate.html" data-kb="how-we-calculate.html" data-t="lHow">How we calculate</a><a class="taonly" href="/ta/temples/" data-t="lTemples">Temple guide</a><a class="taonly" href="/ta/parigaram/" data-t="lPari">Parigaram</a><a class="nonta" href="/ta/" lang="ta">தமிழ் பஞ்சாங்கம் · கோயில்கள்</a><a href="/guide.html" data-t="lGuide">Guide</a><a href="/about.html" data-t="lAbout">About</a><a href="/privacy.html" data-t="lPrivacy">Privacy</a><a href="/terms.html" data-t="lTerms">Terms</a></nav>
   </div>
 </footer>
-<script>window.SJ_HOME={"events":[{"d":"2026-10-01","id":"kiruthigai"},{"d":"2026-10-06","id":"ekadashi_k"},{"d":"2026-10-08","id":"pradosham_k"},{"d":"2026-10-08","id":"shivaratri_m"},{"d":"2026-10-10","id":"amavasya"},{"d":"2026-10-10","id":"mahalaya"},{"d":"2026-10-11","id":"navaratri"},{"d":"2026-10-14","id":"chaturthi"},{"d":"2026-10-16","id":"shashti"},{"d":"2026-10-19","id":"saraswati"},{"d":"2026-10-20","id":"dasara"},{"d":"2026-10-22","id":"ekadashi_s"},{"d":"2026-10-23","id":"pradosham_s"},{"d":"2026-10-26","id":"pournami"},{"d":"2026-10-28","id":"kiruthigai"},{"d":"2026-10-29","id":"sankashti"},{"d":"2026-11-05","id":"ekadashi_k"},{"d":"2026-11-06","id":"pradosham_k"},{"d":"2026-11-07","id":"shivaratri_m"},{"d":"2026-11-08","id":"deepavali_s"},{"d":"2026-11-08","id":"diwali"},{"d":"2026-11-09","id":"amavasya"},{"d":"2026-11-13","id":"chaturthi"},{"d":"2026-11-15","id":"shashti"},{"d":"2026-11-15","id":"skanda"},{"d":"2026-11-21","id":"ekadashi_s"},{"d":"2026-11-22","id":"pradosham_s"},{"d":"2026-11-24","id":"karthigaideepam"},{"d":"2026-11-24","id":"kiruthigai"},{"d":"2026-11-24","id":"pournami"},{"d":"2026-11-27","id":"sankashti"},{"d":"2026-12-04","id":"ekadashi_k"},{"d":"2026-12-06","id":"pradosham_k"},{"d":"2026-12-07","id":"shivaratri_m"},{"d":"2026-12-08","id":"amavasya"},{"d":"2026-12-13","id":"chaturthi"},{"d":"2026-12-15","id":"shashti"},{"d":"2026-12-20","id":"ekadashi_s"},{"d":"2026-12-20","id":"vaikunta"},{"d":"2026-12-21","id":"pradosham_s"},{"d":"2026-12-22","id":"kiruthigai"},{"d":"2026-12-24","id":"arudra"},{"d":"2026-12-24","id":"pournami"},{"d":"2026-12-26","id":"sankashti"},{"d":"2027-01-03","id":"ekadashi_k"},{"d":"2027-01-05","id":"pradosham_k"},{"d":"2027-01-05","id":"shivaratri_m"},{"d":"2027-01-07","id":"amavasya"},{"d":"2027-01-11","id":"chaturthi"},{"d":"2027-01-14","id":"shashti"},{"d":"2027-01-15","id":"pongal"},{"d":"2027-01-18","id":"kiruthigai"},{"d":"2027-01-19","id":"ekadashi_s"},{"d":"2027-01-20","id":"pradosham_s"},{"d":"2027-01-22","id":"pournami"},{"d":"2027-01-23","id":"thaipusam"},{"d":"2027-01-25","id":"sankashti"},{"d":"2027-02-02","id":"ekadashi_k"},{"d":"2027-02-03","id":"pradosham_k"},{"d":"2027-02-04","id":"shivaratri_m"},{"d":"2027-02-06","id":"amavasya"},{"d":"2027-02-10","id":"chaturthi"},{"d":"2027-02-12","id":"shashti"},{"d":"2027-02-13","id":"rathasaptami"},{"d":"2027-02-14","id":"kiruthigai"},{"d":"2027-02-17","id":"ekadashi_s"},{"d":"2027-02-18","id":"pradosham_s"},{"d":"2027-02-20","id":"pournami"},{"d":"2027-03-03","id":"ekadashi_k"},{"d":"2027-03-05","id":"pradosham_k"},{"d":"2027-03-06","id":"mahashivaratri"},{"d":"2027-03-06","id":"shivaratri_m"},{"d":"2027-03-08","id":"amavasya"},{"d":"2027-03-12","id":"chaturthi"},{"d":"2027-03-14","id":"kiruthigai"},{"d":"2027-03-14","id":"shashti"},{"d":"2027-03-18","id":"ekadashi_s"},{"d":"2027-03-20","id":"pradosham_s"},{"d":"2027-03-22","id":"panguniuthiram"},{"d":"2027-03-22","id":"pournami"},{"d":"2027-03-25","id":"sankashti"},{"d":"2027-04-02","id":"ekadashi_k"},{"d":"2027-04-04","id":"pradosham_k"},{"d":"2027-04-05","id":"shivaratri_m"},{"d":"2027-04-06","id":"amavasya"},{"d":"2027-04-10","id":"chaturthi"},{"d":"2027-04-10","id":"kiruthigai"},{"d":"2027-04-12","id":"shashti"},{"d":"2027-04-14","id":"puthandu"},{"d":"2027-04-15","id":"ramnavami"},{"d":"2027-04-17","id":"ekadashi_s"},{"d":"2027-04-18","id":"pradosham_s"},{"d":"2027-04-20","id":"chithrapournami"},{"d":"2027-04-20","id":"pournami"},{"d":"2027-04-24","id":"sankashti"},{"d":"2027-05-02","id":"ekadashi_k"},{"d":"2027-05-04","id":"pradosham_k"},{"d":"2027-05-04","id":"shivaratri_m"},{"d":"2027-05-06","id":"amavasya"},{"d":"2027-05-07","id":"kiruthigai"},{"d":"2027-05-09","id":"akshaya"},{"d":"2027-05-09","id":"chaturthi"},{"d":"2027-05-11","id":"shashti"},{"d":"2027-05-16","id":"ekadashi_s"},{"d":"2027-05-17","id":"pradosham_s"},{"d":"2027-05-20","id":"pournami"},{"d":"2027-05-20","id":"vaikasivisakam"},{"d":"2027-05-23","id":"sankashti"},{"d":"2027-06-01","id":"ekadashi_k"},{"d":"2027-06-02","id":"pradosham_k"},{"d":"2027-06-03","id":"shivaratri_m"},{"d":"2027-06-04","id":"amavasya"},{"d":"2027-06-04","id":"kiruthigai"},{"d":"2027-06-08","id":"chaturthi"},{"d":"2027-06-10","id":"shashti"},{"d":"2027-06-14","id":"ekadashi_s"},{"d":"2027-06-16","id":"pradosham_s"},{"d":"2027-06-18","id":"pournami"},{"d":"2027-06-22","id":"sankashti"},{"d":"2027-06-30","id":"ekadashi_k"},{"d":"2027-07-01","id":"kiruthigai"},{"d":"2027-07-01","id":"pradosham_k"},{"d":"2027-07-02","id":"shivaratri_m"},{"d":"2027-07-04","id":"amavasya"},{"d":"2027-07-07","id":"chaturthi"},{"d":"2027-07-09","id":"shashti"},{"d":"2027-07-14","id":"ekadashi_s"},{"d":"2027-07-15","id":"pradosham_s"},{"d":"2027-07-18","id":"gurupurnima"},{"d":"2027-07-18","id":"pournami"},{"d":"2027-07-22","id":"sankashti"},{"d":"2027-07-28","id":"kiruthigai"},{"d":"2027-07-29","id":"ekadashi_k"},{"d":"2027-07-31","id":"pradosham_k"},{"d":"2027-07-31","id":"shivaratri_m"},{"d":"2027-08-02","id":"aadiamavasai"},{"d":"2027-08-02","id":"amavasya"},{"d":"2027-08-03","id":"aadiperukku"},{"d":"2027-08-05","id":"chaturthi"},{"d":"2027-08-07","id":"shashti"},{"d":"2027-08-12","id":"ekadashi_s"},{"d":"2027-08-13","id":"varalakshmi"},{"d":"2027-08-14","id":"pradosham_s"},{"d":"2027-08-17","id":"pournami"},{"d":"2027-08-17","id":"rakhi"},{"d":"2027-08-20","id":"sankashti"},{"d":"2027-08-24","id":"janmashtami"},{"d":"2027-08-25","id":"kiruthigai"},{"d":"2027-08-28","id":"ekadashi_k"},{"d":"2027-08-29","id":"pradosham_k"},{"d":"2027-08-30","id":"shivaratri_m"},{"d":"2027-08-31","id":"amavasya"},{"d":"2027-09-04","id":"chaturthi"},{"d":"2027-09-04","id":"ganesh"},{"d":"2027-09-06","id":"shashti"},{"d":"2027-09-11","id":"ekadashi_s"},{"d":"2027-09-13","id":"pradosham_s"},{"d":"2027-09-15","id":"pournami"},{"d":"2027-09-19","id":"sankashti"},{"d":"2027-09-21","id":"kiruthigai"},{"d":"2027-09-26","id":"ekadashi_k"},{"d":"2027-09-27","id":"pradosham_k"},{"d":"2027-09-28","id":"shivaratri_m"},{"d":"2027-09-30","id":"amavasya"},{"d":"2027-09-30","id":"mahalaya"},{"d":"2027-09-30","id":"navaratri"},{"d":"2027-10-03","id":"chaturthi"},{"d":"2027-10-05","id":"shashti"},{"d":"2027-10-08","id":"saraswati"},{"d":"2027-10-09","id":"dasara"},{"d":"2027-10-11","id":"ekadashi_s"},{"d":"2027-10-12","id":"pradosham_s"},{"d":"2027-10-15","id":"pournami"},{"d":"2027-10-18","id":"kiruthigai"},{"d":"2027-10-18","id":"sankashti"},{"d":"2027-10-25","id":"ekadashi_k"},{"d":"2027-10-27","id":"pradosham_k"},{"d":"2027-10-27","id":"shivaratri_m"},{"d":"2027-10-28","id":"deepavali_s"},{"d":"2027-10-29","id":"amavasya"},{"d":"2027-10-29","id":"diwali"},{"d":"2027-11-02","id":"chaturthi"},{"d":"2027-11-04","id":"shashti"},{"d":"2027-11-04","id":"skanda"},{"d":"2027-11-10","id":"ekadashi_s"},{"d":"2027-11-11","id":"pradosham_s"},{"d":"2027-11-14","id":"pournami"},{"d":"2027-11-15","id":"kiruthigai"},{"d":"2027-11-17","id":"sankashti"},{"d":"2027-11-24","id":"ekadashi_k"},{"d":"2027-11-25","id":"pradosham_k"},{"d":"2027-11-26","id":"shivaratri_m"},{"d":"2027-11-28","id":"amavasya"},{"d":"2027-12-01","id":"chaturthi"},{"d":"2027-12-04","id":"shashti"},{"d":"2027-12-09","id":"ekadashi_s"},{"d":"2027-12-11","id":"karthigaideepam"},{"d":"2027-12-11","id":"pradosham_s"},{"d":"2027-12-12","id":"kiruthigai"},{"d":"2027-12-13","id":"pournami"},{"d":"2027-12-16","id":"sankashti"},{"d":"2027-12-23","id":"ekadashi_k"},{"d":"2027-12-25","id":"pradosham_k"},{"d":"2027-12-25","id":"shivaratri_m"},{"d":"2027-12-27","id":"amavasya"},{"d":"2027-12-31","id":"chaturthi"}],"names":{"skanda":{"en":"Skanda Shashti (Soorasamharam)","ta":"கந்த சஷ்டி (சூரசம்ஹாரம்)","ml":"സ്കന്ദഷഷ്ഠി","te":"స్కంద షష్ఠి","kn":"ಸ್ಕಂದ ಷಷ್ಠಿ","hi":"स्कंद षष्ठी"},"saraswati":{"en":"Saraswati / Ayudha Puja","ta":"சரஸ்வதி பூஜை / ஆயுத பூஜை","ml":"മഹാനവമി / പൂജവെപ്പ്","te":"మహార్నవమి / ఆయుధ పూజ","kn":"ಆಯುಧ ಪೂಜೆ / ಮಹಾನವಮಿ","hi":"महानवमी"},"janmashtami":{"en":"Krishna Janmashtami","ta":"கோகுலாஷ்டமி","ml":"ശ്രീകൃഷ്ണ ജയന്തി","te":"శ్రీకృష్ణ జన్మాష్టమి","kn":"ಶ್ರೀಕೃಷ್ಣ ಜನ್ಮಾಷ್ಟಮಿ","hi":"जन्माष्टमी"},"karthigaideepam":{"en":"Karthigai Deepam","ta":"திருக்கார்த்திகை தீபம்","ml":"തൃക്കാർത്തിക","te":"కార్తీక దీపం","kn":"ಕಾರ್ತಿಕ ದೀಪ","hi":"कार्तिगै दीपम"},"vaikunta":{"en":"Vaikunta Ekadashi","ta":"வைகுண்ட ஏகாதசி","ml":"വൈകുണ്ഠ ഏകാദശി","te":"వైకుంఠ ఏకాదశి","kn":"ವೈಕುಂಠ ಏಕಾದಶಿ","hi":"वैकुंठ एकादशी"},"ekadashi_s":{"en":"Ekadashi (Shukla)","ta":"ஏகாதசி (வளர்பிறை)","ml":"ഏകാദശി (വെളുത്തപക്ഷം)","te":"ఏకాదశి (శుక్ల)","kn":"ಏಕಾದಶಿ (ಶುಕ್ಲ)","hi":"एकादशी (शुक्ल)"},"mahalaya":{"en":"Mahalaya Amavasya","ta":"மகாளய அமாவாசை","ml":"മഹാലയ അമാവാസി","te":"మహాలయ అమావాస్య","kn":"ಮಹಾಲಯ ಅಮಾವಾಸ್ಯೆ","hi":"सर्वपितृ अमावस्या"},"pongal":{"en":"Pongal / Makar Sankranti","ta":"தைப்பொங்கல்","ml":"മകരസംക്രാന്തി","te":"మకర సంక్రాంతి","kn":"ಮಕರ ಸಂಕ್ರಾಂತಿ","hi":"मकर संक्रांति"},"rathasaptami":{"en":"Ratha Saptami","ta":"ரத சப்தமி","ml":"രഥസപ്തമി","te":"రథసప్తమి","kn":"ರಥಸಪ್ತಮಿ","hi":"रथ सप्तमी"},"ramnavami":{"en":"Sri Rama Navami","ta":"ஸ்ரீ ராம நவமி","ml":"ശ്രീരാമ നവമി","te":"శ్రీరామ నవమి","kn":"ಶ್ರೀರಾಮ ನವಮಿ","hi":"राम नवमी"},"deepavali_s":{"en":"Deepavali (Naraka Chaturdashi)","ta":"தீபாவளி","ml":"ദീപാവലി","te":"నరక చతుర్దశి","kn":"ನರಕ ಚತುರ್ದಶಿ","hi":"नरक चतुर्दशी"},"arudra":{"en":"Arudra Darisanam","ta":"ஆருத்ரா தரிசனம்","ml":"തിരുവാതിര","te":"ఆరుద్ర దర్శనం","kn":"ಆರುದ್ರಾ ದರ್ಶನ","hi":"आर्द्रा दर्शन"},"panguniuthiram":{"en":"Panguni Uthiram","ta":"பங்குனி உத்திரம்","ml":"പൈങ്കുനി ഉത്രം","te":"పంగుని ఉత్తరం","kn":"ಪಂಗುನಿ ಉತ್ತರ","hi":"पंगुनी उत्तिरम"},"varalakshmi":{"en":"Varalakshmi Vratam","ta":"வரலட்சுமி விரதம்","ml":"വരലക്ഷ്മി വ്രതം","te":"వరలక్ష్మీ వ్రతం","kn":"ವರಮಹಾಲಕ್ಷ್ಮಿ ವ್ರತ","hi":"वरलक्ष्मी व्रत"},"mahashivaratri":{"en":"Maha Shivaratri","ta":"மகா சிவராத்திரி","ml":"മഹാശിവരാത്രി","te":"మహాశివరాత్రి","kn":"ಮಹಾಶಿವರಾತ್ರಿ","hi":"महाशिवरात्रि"},"diwali":{"en":"Diwali – Lakshmi Puja","ta":"லட்சுமி பூஜை (தீபாவளி அமாவாசை)","ml":"ലക്ഷ്മി പൂജ","te":"దీపావళి – లక్ష్మీ పూజ","kn":"ದೀಪಾವಳಿ – ಲಕ್ಷ್ಮೀ ಪೂಜೆ","hi":"दीवाली – लक्ष्मी पूजन"},"puthandu":{"en":"Tamil New Year (Puthandu)","ta":"தமிழ்ப் புத்தாண்டு","ml":"തമിഴ് പുതുവർഷം","te":"తమిళ ఉగాది","kn":"ತಮಿಳು ಹೊಸ ವರ್ಷ","hi":"तमिल नववर्ष"},"kiruthigai":{"en":"Kiruthigai","ta":"கிருத்திகை","ml":"കാർത്തിക","te":"కృత్తిక","kn":"ಕೃತ್ತಿಕಾ","hi":"कृत्तिका"},"vaikasivisakam":{"en":"Vaikasi Visakam","ta":"வைகாசி விசாகம்","ml":"വൈകാശി വിശാഖം","te":"వైకాసి విశాఖం","kn":"ವೈಕಾಸಿ ವಿಶಾಖ","hi":"वैकासी विशाखम"},"ganesh":{"en":"Ganesh Chaturthi","ta":"விநாயகர் சதுர்த்தி","ml":"വിനായക ചതുർത്ഥി","te":"వినాయక చవితి","kn":"ಗಣೇಶ ಚತುರ್ಥಿ","hi":"गणेश चतुर्थी"},"aadiamavasai":{"en":"Aadi Amavasai","ta":"ஆடி அமாவாசை","ml":"കർക്കടക വാവ്","te":"ఆడి అమావాస్య","kn":"ಆಡಿ ಅಮಾವಾಸ್ಯೆ","hi":"आडि अमावस्या"},"aadiperukku":{"en":"Aadi Perukku","ta":"ஆடிப்பெருக்கு","ml":"ആടിപ്പെരുക്ക്","te":"ఆడి పెరుక్కు","kn":"ಆಡಿ ಪೆರುಕ್ಕು","hi":"आडि पेरुक्कु"},"pournami":{"en":"Pournami (Full moon)","ta":"பௌர்ணமி","ml":"പൗർണ്ണമി (വെളുത്തവാവ്)","te":"పౌర్ణమి","kn":"ಹುಣ್ಣಿಮೆ","hi":"पूर्णिमा"},"navaratri":{"en":"Navaratri begins","ta":"நவராத்திரி ஆரம்பம்","ml":"നവരാത്രി ആരംഭം","te":"దేవీ నవరాత్రులు ప్రారంభం","kn":"ನವರಾತ್ರಿ ಆರಂಭ","hi":"शारदीय नवरात्रि आरंभ"},"shivaratri_m":{"en":"Masik Shivaratri","ta":"மாத சிவராத்திரி","ml":"മാസ ശിവരാത്രി","te":"మాస శివరాత్రి","kn":"ಮಾಸ ಶಿವರಾತ್ರಿ","hi":"मासिक शिवरात्रि"},"pradosham_k":{"en":"Pradosham (Krishna)","ta":"பிரதோஷம் (தேய்பிறை)","ml":"പ്രദോഷം (കറുത്തപക്ഷം)","te":"ప్రదోషం (కృష్ణ)","kn":"ಪ್ರದೋಷ (ಕೃಷ್ಣ)","hi":"प्रदोष व्रत (कृष्ण)"},"dasara":{"en":"Vijayadashami / Dussehra","ta":"விஜயதசமி","ml":"വിജയദശമി (വിദ്യാരംഭം)","te":"విజయదశమి (దసరా)","kn":"ವಿಜಯದಶಮಿ (ದಸರಾ)","hi":"दशहरा (विजयादशमी)"},"gurupurnima":{"en":"Guru Purnima","ta":"குரு பௌர்ணமி","ml":"ഗുരു പൂർണ്ണിമ","te":"గురు పౌర్ణమి","kn":"ಗುರು ಪೂರ್ಣಿಮೆ","hi":"गुरु पूर्णिमा"},"thaipusam":{"en":"Thaipusam","ta":"தைப்பூசம்","ml":"തൈപ്പൂയം","te":"తైపూసం","kn":"ತೈಪೂಸಂ","hi":"थाईपूसम"},"rakhi":{"en":"Raksha Bandhan / Avani Avittam","ta":"ஆவணி அவிட்டம்","ml":"ആവണി അവിട്ടം","te":"రాఖీ పౌర్ణమి / జంధ్యాల పౌర్ణమి","kn":"ರಕ್ಷಾ ಬಂಧನ / ಉಪಾಕರ್ಮ","hi":"रक्षा बंधन"},"shashti":{"en":"Shashti Vratham","ta":"சஷ்டி விரதம்","ml":"ഷഷ്ഠി വ്രതം","te":"షష్ఠి వ్రతం","kn":"ಷಷ್ಠಿ ವ್ರತ","hi":"षष्ठी व्रत"},"pradosham_s":{"en":"Pradosham (Shukla)","ta":"பிரதோஷம் (வளர்பிறை)","ml":"പ്രദോഷം (വെളുത്തപക്ഷം)","te":"ప్రదోషం (శుక్ల)","kn":"ಪ್ರದೋಷ (ಶುಕ್ಲ)","hi":"प्रदोष व्रत (शुक्ल)"},"chithrapournami":{"en":"Chithra Pournami","ta":"சித்ரா பௌர்ணமி","ml":"ചിത്രാ പൗർണ്ണമി","te":"చిత్రా పౌర్ణమి","kn":"ಚಿತ್ರಾ ಪೂರ್ಣಿಮೆ","hi":"चित्रा पूर्णिमा"},"sankashti":{"en":"Sankashti Chaturthi","ta":"சங்கடஹர சதுர்த்தி","ml":"സങ്കഷ്ടി ചതുർത്ഥി","te":"సంకష్టహర చతుర్థి","kn":"ಸಂಕಷ್ಟಹರ ಚತುರ್ಥಿ","hi":"संकष्टी चतुर्थी"},"ekadashi_k":{"en":"Ekadashi (Krishna)","ta":"ஏகாதசி (தேய்பிறை)","ml":"ഏകാദശി (കറുത്തപക്ഷം)","te":"ఏకాదశి (కృష్ణ)","kn":"ಏಕಾದಶಿ (ಕೃಷ್ಣ)","hi":"एकादशी (कृष्ण)"},"chaturthi":{"en":"Vinayaka Chaturthi (monthly)","ta":"சதுர்த்தி (மாத)","ml":"വിനായക ചതുർത്ഥി (മാസ)","te":"వినాయక చతుర్థి (మాస)","kn":"ವಿನಾಯಕ ಚತುರ್ಥಿ (ಮಾಸ)","hi":"विनायक चतुर्थी (मासिक)"},"amavasya":{"en":"Amavasya (New moon)","ta":"அமாவாசை","ml":"അമാവാസി (കറുത്തവാവ്)","te":"అమావాస్య","kn":"ಅಮಾವಾಸ್ಯೆ","hi":"अमावस्या"},"akshaya":{"en":"Akshaya Tritiya","ta":"அட்சய திருதியை","ml":"അക്ഷയ തൃതീയ","te":"అక్షయ తృతీయ","kn":"ಅಕ್ಷಯ ತೃತೀಯ","hi":"अक्षय तृतीया"}},"temples":{"0":{"slug":"suryanar-kovil","en":"Suryanar Kovil","ta":"சூரியனார் கோயில்","img":"https://commons.wikimedia.org/wiki/Special:FilePath/Suryanar_Koil_in_Tamil_Nadu_JEG6875.jpg?width=640"},"1":{"slug":"thingalur","en":"Thingalur Kailasanathar Temple","ta":"திங்களூர் கைலாசநாதர் கோயில்","img":"https://commons.wikimedia.org/wiki/Special:FilePath/Kailasanathar_Temple%2C_Thingalur_%285%29.jpg?width=640"},"2":{"slug":"vaitheeswaran-koil","en":"Vaitheeswaran Koil","ta":"வைத்தீஸ்வரன் கோயில்","img":"https://commons.wikimedia.org/wiki/Special:FilePath/Vaitheeswarankovil5.JPG?width=640"},"3":{"slug":"thiruvenkadu","en":"Thiruvenkadu Swetharanyeswarar Temple","ta":"திருவெண்காடு சுவேதாரண்யேஸ்வரர் கோயில்","img":"https://commons.wikimedia.org/wiki/Special:FilePath/Thiruvenkadu_%285%29.jpg?width=640"},"4":{"slug":"alangudi","en":"Alangudi Apatsahayeswarar Temple","ta":"ஆலங்குடி ஆபத்சகாயேஸ்வரர் கோயில்","img":"https://commons.wikimedia.org/wiki/Special:FilePath/Aalangudi_Temple.jpg?width=640"},"5":{"slug":"kanjanur","en":"Kanjanur Agniswarar Temple","ta":"கஞ்சனூர் அக்னீஸ்வரர் கோயில்","img":"https://commons.wikimedia.org/wiki/Special:FilePath/Kanjanur_Sukkiran_Temple.jpg?width=640"},"6":{"slug":"thirunallar","en":"Thirunallar Saneeswaran Temple (Dharbaranyeswarar)","ta":"திருநள்ளாறு சனீஸ்வரன் கோயில் (தர்ப்பாரண்யேஸ்வரர்)","img":"https://commons.wikimedia.org/wiki/Special:FilePath/Thirunallar_Dharbaranyeeswarar_Temple_and_Tank.jpg?width=640"}}};</script>
+<script>window.SJ_HOME={"events":[{"d":"2026-10-01","id":"kiruthigai"},{"d":"2026-10-06","id":"ekadashi_k"},{"d":"2026-10-08","id":"pradosham_k"},{"d":"2026-10-08","id":"shivaratri_m"},{"d":"2026-10-10","id":"amavasya"},{"d":"2026-10-10","id":"mahalaya"},{"d":"2026-10-11","id":"navaratri"},{"d":"2026-10-14","id":"chaturthi"},{"d":"2026-10-16","id":"shashti"},{"d":"2026-10-19","id":"saraswati"},{"d":"2026-10-20","id":"dasara"},{"d":"2026-10-22","id":"ekadashi_s"},{"d":"2026-10-23","id":"pradosham_s"},{"d":"2026-10-26","id":"pournami"},{"d":"2026-10-28","id":"kiruthigai"},{"d":"2026-10-29","id":"sankashti"},{"d":"2026-11-05","id":"ekadashi_k"},{"d":"2026-11-06","id":"pradosham_k"},{"d":"2026-11-07","id":"shivaratri_m"},{"d":"2026-11-08","id":"deepavali_s"},{"d":"2026-11-08","id":"diwali"},{"d":"2026-11-09","id":"amavasya"},{"d":"2026-11-13","id":"chaturthi"},{"d":"2026-11-15","id":"shashti"},{"d":"2026-11-15","id":"skanda"},{"d":"2026-11-21","id":"ekadashi_s"},{"d":"2026-11-22","id":"pradosham_s"},{"d":"2026-11-24","id":"karthigaideepam"},{"d":"2026-11-24","id":"kiruthigai"},{"d":"2026-11-24","id":"pournami"},{"d":"2026-11-27","id":"sankashti"},{"d":"2026-12-04","id":"ekadashi_k"},{"d":"2026-12-06","id":"pradosham_k"},{"d":"2026-12-07","id":"shivaratri_m"},{"d":"2026-12-08","id":"amavasya"},{"d":"2026-12-13","id":"chaturthi"},{"d":"2026-12-15","id":"shashti"},{"d":"2026-12-20","id":"ekadashi_s"},{"d":"2026-12-20","id":"vaikunta"},{"d":"2026-12-21","id":"pradosham_s"},{"d":"2026-12-22","id":"kiruthigai"},{"d":"2026-12-24","id":"arudra"},{"d":"2026-12-24","id":"pournami"},{"d":"2026-12-26","id":"sankashti"},{"d":"2027-01-03","id":"ekadashi_k"},{"d":"2027-01-05","id":"pradosham_k"},{"d":"2027-01-05","id":"shivaratri_m"},{"d":"2027-01-07","id":"amavasya"},{"d":"2027-01-11","id":"chaturthi"},{"d":"2027-01-14","id":"shashti"},{"d":"2027-01-15","id":"pongal"},{"d":"2027-01-18","id":"kiruthigai"},{"d":"2027-01-19","id":"ekadashi_s"},{"d":"2027-01-20","id":"pradosham_s"},{"d":"2027-01-22","id":"pournami"},{"d":"2027-01-23","id":"thaipusam"},{"d":"2027-01-25","id":"sankashti"},{"d":"2027-02-02","id":"ekadashi_k"},{"d":"2027-02-03","id":"pradosham_k"},{"d":"2027-02-04","id":"shivaratri_m"},{"d":"2027-02-06","id":"amavasya"},{"d":"2027-02-10","id":"chaturthi"},{"d":"2027-02-12","id":"shashti"},{"d":"2027-02-13","id":"rathasaptami"},{"d":"2027-02-14","id":"kiruthigai"},{"d":"2027-02-17","id":"ekadashi_s"},{"d":"2027-02-18","id":"pradosham_s"},{"d":"2027-02-20","id":"pournami"},{"d":"2027-03-03","id":"ekadashi_k"},{"d":"2027-03-05","id":"pradosham_k"},{"d":"2027-03-06","id":"mahashivaratri"},{"d":"2027-03-06","id":"shivaratri_m"},{"d":"2027-03-08","id":"amavasya"},{"d":"2027-03-12","id":"chaturthi"},{"d":"2027-03-14","id":"kiruthigai"},{"d":"2027-03-14","id":"shashti"},{"d":"2027-03-18","id":"ekadashi_s"},{"d":"2027-03-20","id":"pradosham_s"},{"d":"2027-03-22","id":"panguniuthiram"},{"d":"2027-03-22","id":"pournami"},{"d":"2027-03-25","id":"sankashti"},{"d":"2027-04-02","id":"ekadashi_k"},{"d":"2027-04-04","id":"pradosham_k"},{"d":"2027-04-05","id":"shivaratri_m"},{"d":"2027-04-06","id":"amavasya"},{"d":"2027-04-10","id":"chaturthi"},{"d":"2027-04-10","id":"kiruthigai"},{"d":"2027-04-12","id":"shashti"},{"d":"2027-04-14","id":"puthandu"},{"d":"2027-04-15","id":"ramnavami"},{"d":"2027-04-17","id":"ekadashi_s"},{"d":"2027-04-18","id":"pradosham_s"},{"d":"2027-04-20","id":"chithrapournami"},{"d":"2027-04-20","id":"pournami"},{"d":"2027-04-24","id":"sankashti"},{"d":"2027-05-02","id":"ekadashi_k"},{"d":"2027-05-04","id":"pradosham_k"},{"d":"2027-05-04","id":"shivaratri_m"},{"d":"2027-05-06","id":"amavasya"},{"d":"2027-05-07","id":"kiruthigai"},{"d":"2027-05-09","id":"akshaya"},{"d":"2027-05-09","id":"chaturthi"},{"d":"2027-05-11","id":"shashti"},{"d":"2027-05-16","id":"ekadashi_s"},{"d":"2027-05-17","id":"pradosham_s"},{"d":"2027-05-20","id":"pournami"},{"d":"2027-05-20","id":"vaikasivisakam"},{"d":"2027-05-23","id":"sankashti"},{"d":"2027-06-01","id":"ekadashi_k"},{"d":"2027-06-02","id":"pradosham_k"},{"d":"2027-06-03","id":"shivaratri_m"},{"d":"2027-06-04","id":"amavasya"},{"d":"2027-06-04","id":"kiruthigai"},{"d":"2027-06-08","id":"chaturthi"},{"d":"2027-06-10","id":"shashti"},{"d":"2027-06-14","id":"ekadashi_s"},{"d":"2027-06-16","id":"pradosham_s"},{"d":"2027-06-18","id":"pournami"},{"d":"2027-06-22","id":"sankashti"},{"d":"2027-06-30","id":"ekadashi_k"},{"d":"2027-07-01","id":"kiruthigai"},{"d":"2027-07-01","id":"pradosham_k"},{"d":"2027-07-02","id":"shivaratri_m"},{"d":"2027-07-04","id":"amavasya"},{"d":"2027-07-07","id":"chaturthi"},{"d":"2027-07-09","id":"shashti"},{"d":"2027-07-14","id":"ekadashi_s"},{"d":"2027-07-15","id":"pradosham_s"},{"d":"2027-07-18","id":"gurupurnima"},{"d":"2027-07-18","id":"pournami"},{"d":"2027-07-22","id":"sankashti"},{"d":"2027-07-28","id":"kiruthigai"},{"d":"2027-07-29","id":"ekadashi_k"},{"d":"2027-07-31","id":"pradosham_k"},{"d":"2027-07-31","id":"shivaratri_m"},{"d":"2027-08-02","id":"aadiamavasai"},{"d":"2027-08-02","id":"amavasya"},{"d":"2027-08-03","id":"aadiperukku"},{"d":"2027-08-05","id":"chaturthi"},{"d":"2027-08-07","id":"shashti"},{"d":"2027-08-12","id":"ekadashi_s"},{"d":"2027-08-13","id":"varalakshmi"},{"d":"2027-08-14","id":"pradosham_s"},{"d":"2027-08-17","id":"pournami"},{"d":"2027-08-17","id":"rakhi"},{"d":"2027-08-20","id":"sankashti"},{"d":"2027-08-24","id":"janmashtami"},{"d":"2027-08-25","id":"kiruthigai"},{"d":"2027-08-28","id":"ekadashi_k"},{"d":"2027-08-29","id":"pradosham_k"},{"d":"2027-08-30","id":"shivaratri_m"},{"d":"2027-08-31","id":"amavasya"},{"d":"2027-09-04","id":"chaturthi"},{"d":"2027-09-04","id":"ganesh"},{"d":"2027-09-06","id":"shashti"},{"d":"2027-09-11","id":"ekadashi_s"},{"d":"2027-09-13","id":"pradosham_s"},{"d":"2027-09-15","id":"pournami"},{"d":"2027-09-19","id":"sankashti"},{"d":"2027-09-21","id":"kiruthigai"},{"d":"2027-09-26","id":"ekadashi_k"},{"d":"2027-09-27","id":"pradosham_k"},{"d":"2027-09-28","id":"shivaratri_m"},{"d":"2027-09-30","id":"amavasya"},{"d":"2027-09-30","id":"mahalaya"},{"d":"2027-09-30","id":"navaratri"},{"d":"2027-10-03","id":"chaturthi"},{"d":"2027-10-05","id":"shashti"},{"d":"2027-10-08","id":"saraswati"},{"d":"2027-10-09","id":"dasara"},{"d":"2027-10-11","id":"ekadashi_s"},{"d":"2027-10-12","id":"pradosham_s"},{"d":"2027-10-15","id":"pournami"},{"d":"2027-10-18","id":"kiruthigai"},{"d":"2027-10-18","id":"sankashti"},{"d":"2027-10-25","id":"ekadashi_k"},{"d":"2027-10-27","id":"pradosham_k"},{"d":"2027-10-27","id":"shivaratri_m"},{"d":"2027-10-28","id":"deepavali_s"},{"d":"2027-10-29","id":"amavasya"},{"d":"2027-10-29","id":"diwali"},{"d":"2027-11-02","id":"chaturthi"},{"d":"2027-11-04","id":"shashti"},{"d":"2027-11-04","id":"skanda"},{"d":"2027-11-10","id":"ekadashi_s"},{"d":"2027-11-11","id":"pradosham_s"},{"d":"2027-11-14","id":"pournami"},{"d":"2027-11-15","id":"kiruthigai"},{"d":"2027-11-17","id":"sankashti"},{"d":"2027-11-24","id":"ekadashi_k"},{"d":"2027-11-25","id":"pradosham_k"},{"d":"2027-11-26","id":"shivaratri_m"},{"d":"2027-11-28","id":"amavasya"},{"d":"2027-12-01","id":"chaturthi"},{"d":"2027-12-04","id":"shashti"},{"d":"2027-12-09","id":"ekadashi_s"},{"d":"2027-12-11","id":"karthigaideepam"},{"d":"2027-12-11","id":"pradosham_s"},{"d":"2027-12-12","id":"kiruthigai"},{"d":"2027-12-13","id":"pournami"},{"d":"2027-12-16","id":"sankashti"},{"d":"2027-12-23","id":"ekadashi_k"},{"d":"2027-12-25","id":"pradosham_k"},{"d":"2027-12-25","id":"shivaratri_m"},{"d":"2027-12-27","id":"amavasya"},{"d":"2027-12-31","id":"chaturthi"}],"names":{"chaturthi":{"en":"Vinayaka Chaturthi (monthly)","ta":"சதுர்த்தி (மாத)","ml":"വിനായക ചതുർത്ഥി (മാസ)","te":"వినాయక చతుర్థి (మాస)","kn":"ವಿನಾಯಕ ಚತುರ್ಥಿ (ಮಾಸ)","hi":"विनायक चतुर्थी (मासिक)"},"chithrapournami":{"en":"Chithra Pournami","ta":"சித்ரா பௌர்ணமி","ml":"ചിത്രാ പൗർണ്ണമി","te":"చిత్రా పౌర్ణమి","kn":"ಚಿತ್ರಾ ಪೂರ್ಣಿಮೆ","hi":"चित्रा पूर्णिमा"},"skanda":{"en":"Skanda Shashti (Soorasamharam)","ta":"கந்த சஷ்டி (சூரசம்ஹாரம்)","ml":"സ്കന്ദഷഷ്ഠി","te":"స్కంద షష్ఠి","kn":"ಸ್ಕಂದ ಷಷ್ಠಿ","hi":"स्कंद षष्ठी"},"deepavali_s":{"en":"Deepavali (Naraka Chaturdashi)","ta":"தீபாவளி","ml":"ദീപാവലി","te":"నరక చతుర్దశి","kn":"ನರಕ ಚತುರ್ದಶಿ","hi":"नरक चतुर्दशी"},"pradosham_s":{"en":"Pradosham (Shukla)","ta":"பிரதோஷம் (வளர்பிறை)","ml":"പ്രദോഷം (വെളുത്തപക്ഷം)","te":"ప్రదోషం (శుక్ల)","kn":"ಪ್ರದೋಷ (ಶುಕ್ಲ)","hi":"प्रदोष व्रत (शुक्ल)"},"mahashivaratri":{"en":"Maha Shivaratri","ta":"மகா சிவராத்திரி","ml":"മഹാശിവരാത്രി","te":"మహాశివరాత్రి","kn":"ಮಹಾಶಿವರಾತ್ರಿ","hi":"महाशिवरात्रि"},"ekadashi_k":{"en":"Ekadashi (Krishna)","ta":"ஏகாதசி (தேய்பிறை)","ml":"ഏകാദശി (കറുത്തപക്ഷം)","te":"ఏకాదశి (కృష్ణ)","kn":"ಏಕಾದಶಿ (ಕೃಷ್ಣ)","hi":"एकादशी (कृष्ण)"},"ramnavami":{"en":"Sri Rama Navami","ta":"ஸ்ரீ ராம நவமி","ml":"ശ്രീരാമ നവമി","te":"శ్రీరామ నవమి","kn":"ಶ್ರೀರಾಮ ನವಮಿ","hi":"राम नवमी"},"varalakshmi":{"en":"Varalakshmi Vratam","ta":"வரலட்சுமி விரதம்","ml":"വരലക്ഷ്മി വ്രതം","te":"వరలక్ష్మీ వ్రతం","kn":"ವರಮಹಾಲಕ್ಷ್ಮಿ ವ್ರತ","hi":"वरलक्ष्मी व्रत"},"diwali":{"en":"Diwali – Lakshmi Puja","ta":"லட்சுமி பூஜை (தீபாவளி அமாவாசை)","ml":"ലക്ഷ്മി പൂജ","te":"దీపావళి – లక్ష్మీ పూజ","kn":"ದೀಪಾವಳಿ – ಲಕ್ಷ್ಮೀ ಪೂಜೆ","hi":"दीवाली – लक्ष्मी पूजन"},"pradosham_k":{"en":"Pradosham (Krishna)","ta":"பிரதோஷம் (தேய்பிறை)","ml":"പ്രദോഷം (കറുത്തപക്ഷം)","te":"ప్రదోషం (కృష్ణ)","kn":"ಪ್ರದೋಷ (ಕೃಷ್ಣ)","hi":"प्रदोष व्रत (कृष्ण)"},"karthigaideepam":{"en":"Karthigai Deepam","ta":"திருக்கார்த்திகை தீபம்","ml":"തൃക്കാർത്തിക","te":"కార్తీక దీపం","kn":"ಕಾರ್ತಿಕ ದೀಪ","hi":"कार्तिगै दीपम"},"aadiperukku":{"en":"Aadi Perukku","ta":"ஆடிப்பெருக்கு","ml":"ആടിപ്പെരുക്ക്","te":"ఆడి పెరుక్కు","kn":"ಆಡಿ ಪೆರುಕ್ಕು","hi":"आडि पेरुक्कु"},"rakhi":{"en":"Raksha Bandhan / Avani Avittam","ta":"ஆவணி அவிட்டம்","ml":"ആവണി അവിട്ടം","te":"రాఖీ పౌర్ణమి / జంధ్యాల పౌర్ణమి","kn":"ರಕ್ಷಾ ಬಂಧನ / ಉಪಾಕರ್ಮ","hi":"रक्षा बंधन"},"ekadashi_s":{"en":"Ekadashi (Shukla)","ta":"ஏகாதசி (வளர்பிறை)","ml":"ഏകാദശി (വെളുത്തപക്ഷം)","te":"ఏకాదశి (శుక్ల)","kn":"ಏಕಾದಶಿ (ಶುಕ್ಲ)","hi":"एकादशी (शुक्ल)"},"shashti":{"en":"Shashti Vratham","ta":"சஷ்டி விரதம்","ml":"ഷഷ്ഠി വ്രതം","te":"షష్ఠి వ్రతం","kn":"ಷಷ್ಠಿ ವ್ರತ","hi":"षष्ठी व्रत"},"shivaratri_m":{"en":"Masik Shivaratri","ta":"மாத சிவராத்திரி","ml":"മാസ ശിവരാത്രി","te":"మాస శివరాత్రి","kn":"ಮಾಸ ಶಿವರಾತ್ರಿ","hi":"मासिक शिवरात्रि"},"rathasaptami":{"en":"Ratha Saptami","ta":"ரத சப்தமி","ml":"രഥസപ്തമി","te":"రథసప్తమి","kn":"ರಥಸಪ್ತಮಿ","hi":"रथ सप्तमी"},"mahalaya":{"en":"Mahalaya Amavasya","ta":"மகாளய அமாவாசை","ml":"മഹാലയ അമാവാസി","te":"మహాలయ అమావాస్య","kn":"ಮಹಾಲಯ ಅಮಾವಾಸ್ಯೆ","hi":"सर्वपितृ अमावस्या"},"navaratri":{"en":"Navaratri begins","ta":"நவராத்திரி ஆரம்பம்","ml":"നവരാത്രി ആരംഭം","te":"దేవీ నవరాత్రులు ప్రారంభం","kn":"ನವರಾತ್ರಿ ಆರಂಭ","hi":"शारदीय नवरात्रि आरंभ"},"vaikasivisakam":{"en":"Vaikasi Visakam","ta":"வைகாசி விசாகம்","ml":"വൈകാശി വിശാഖം","te":"వైకాసి విశాఖం","kn":"ವೈಕಾಸಿ ವಿಶಾಖ","hi":"वैकासी विशाखम"},"ganesh":{"en":"Ganesh Chaturthi","ta":"விநாயகர் சதுர்த்தி","ml":"വിനായക ചതുർത്ഥി","te":"వినాయక చవితి","kn":"ಗಣೇಶ ಚತುರ್ಥಿ","hi":"गणेश चतुर्थी"},"saraswati":{"en":"Saraswati / Ayudha Puja","ta":"சரஸ்வதி பூஜை / ஆயுத பூஜை","ml":"മഹാനവമി / പൂജവെപ്പ്","te":"మహార్నవమి / ఆయుధ పూజ","kn":"ಆಯುಧ ಪೂಜೆ / ಮಹಾನವಮಿ","hi":"महानवमी"},"vaikunta":{"en":"Vaikunta Ekadashi","ta":"வைகுண்ட ஏகாதசி","ml":"വൈകുണ്ഠ ഏകാദശി","te":"వైకుంఠ ఏకాదశి","kn":"ವೈಕುಂಠ ಏಕಾದಶಿ","hi":"वैकुंठ एकादशी"},"gurupurnima":{"en":"Guru Purnima","ta":"குரு பௌர்ணமி","ml":"ഗുരു പൂർണ്ണിമ","te":"గురు పౌర్ణమి","kn":"ಗುರು ಪೂರ್ಣಿಮೆ","hi":"गुरु पूर्णिमा"},"pongal":{"en":"Pongal / Makar Sankranti","ta":"தைப்பொங்கல்","ml":"മകരസംക്രാന്തി","te":"మకర సంక్రాంతి","kn":"ಮಕರ ಸಂಕ್ರಾಂತಿ","hi":"मकर संक्रांति"},"akshaya":{"en":"Akshaya Tritiya","ta":"அட்சய திருதியை","ml":"അക്ഷയ തൃതീയ","te":"అక్షయ తృతీయ","kn":"ಅಕ್ಷಯ ತೃತೀಯ","hi":"अक्षय तृतीया"},"panguniuthiram":{"en":"Panguni Uthiram","ta":"பங்குனி உத்திரம்","ml":"പൈങ്കുനി ഉത്രം","te":"పంగుని ఉత్తరం","kn":"ಪಂಗುನಿ ಉತ್ತರ","hi":"पंगुनी उत्तिरम"},"janmashtami":{"en":"Krishna Janmashtami","ta":"கோகுலாஷ்டமி","ml":"ശ്രീകൃഷ്ണ ജയന്തി","te":"శ్రీకృష్ణ జన్మాష్టమి","kn":"ಶ್ರೀಕೃಷ್ಣ ಜನ್ಮಾಷ್ಟಮಿ","hi":"जन्माष्टमी"},"aadiamavasai":{"en":"Aadi Amavasai","ta":"ஆடி அமாவாசை","ml":"കർക്കടക വാവ്","te":"ఆడి అమావాస్య","kn":"ಆಡಿ ಅಮಾವಾಸ್ಯೆ","hi":"आडि अमावस्या"},"amavasya":{"en":"Amavasya (New moon)","ta":"அமாவாசை","ml":"അമാവാസി (കറുത്തവാവ്)","te":"అమావాస్య","kn":"ಅಮಾವಾಸ್ಯೆ","hi":"अमावस्या"},"thaipusam":{"en":"Thaipusam","ta":"தைப்பூசம்","ml":"തൈപ്പൂയം","te":"తైపూసం","kn":"ತೈಪೂಸಂ","hi":"थाईपूसम"},"pournami":{"en":"Pournami (Full moon)","ta":"பௌர்ணமி","ml":"പൗർണ്ണമി (വെളുത്തവാവ്)","te":"పౌర్ణమి","kn":"ಹುಣ್ಣಿಮೆ","hi":"पूर्णिमा"},"sankashti":{"en":"Sankashti Chaturthi","ta":"சங்கடஹர சதுர்த்தி","ml":"സങ്കഷ്ടി ചതുർത്ഥി","te":"సంకష్టహర చతుర్థి","kn":"ಸಂಕಷ್ಟಹರ ಚತುರ್ಥಿ","hi":"संकष्टी चतुर्थी"},"arudra":{"en":"Arudra Darisanam","ta":"ஆருத்ரா தரிசனம்","ml":"തിരുവാതിര","te":"ఆరుద్ర దర్శనం","kn":"ಆರುದ್ರಾ ದರ್ಶನ","hi":"आर्द्रा दर्शन"},"kiruthigai":{"en":"Kiruthigai","ta":"கிருத்திகை","ml":"കാർത്തിക","te":"కృత్తిక","kn":"ಕೃತ್ತಿಕಾ","hi":"कृत्तिका"},"puthandu":{"en":"Tamil New Year (Puthandu)","ta":"தமிழ்ப் புத்தாண்டு","ml":"തമിഴ് പുതുവർഷം","te":"తమిళ ఉగాది","kn":"ತಮಿಳು ಹೊಸ ವರ್ಷ","hi":"तमिल नववर्ष"},"dasara":{"en":"Vijayadashami / Dussehra","ta":"விஜயதசமி","ml":"വിജയദശമി (വിദ്യാരംഭം)","te":"విజయదశమి (దసరా)","kn":"ವಿಜಯದಶಮಿ (ದಸರಾ)","hi":"दशहरा (विजयादशमी)"}}};</script>
 <script src="/assets/divine.js" defer></script>
 
 
@@ -840,7 +832,7 @@ body.noscroll{overflow:hidden}
   </form>
 </dialog>
 
-<script src="/assets/core.cb80afd8dd.js"></script>
+<script src="/assets/core.1c1d2933cd.js"></script>
 <script>
 (() => {
 'use strict';
@@ -1700,24 +1692,15 @@ function renderHome() {
   const today = new Date(Date.now() + 330 * 60000).toISOString().slice(0, 10);
   const dayN = s => Math.round((Date.parse(s) - Date.parse(today)) / 86400000);
   const up = H.events.filter(e => e.d >= today).slice(0, 8);
-  const mon = (window.Intl ? null : null);
   box.innerHTML = '<ul class="upl">' + up.map(e => {
     const n = dayN(e.d), dt = new Date(e.d + 'T00:00:00Z');
     const when = n === 0 ? t('upcToday') : n === 1 ? t('upcTom') : t('upcIn', { n });
     const nm = (H.names[e.id] || {})[lang] || (H.names[e.id] || {}).en || e.id;
     return `<li class="${HOME_MARK[e.id] ? '' : 'fest'}"><i aria-hidden="true">${HOME_MARK[e.id] || '✨'}</i><span><b>${nm}</b><small>${dt.getUTCDate()} ${L().gmonths ? L().gmonths[dt.getUTCMonth()] : dt.toLocaleDateString(lang + '-IN', { month: 'short', timeZone: 'UTC' })} · ${L().days[dt.getUTCDay()]}</small></span><em>${when}</em></li>`;
   }).join('') + '</ul>';
-  const tt = document.getElementById('todayTemple');
-  const wd = new Date(Date.now() + 330 * 60000).getUTCDay();
-  const T = H.temples[wd];
-  if (tt && T) {
-    const pl = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn'][wd];
-    const tl = lang === 'ta' ? 'ta' : 'en';
-    tt.innerHTML = `<a class="todlink" href="${tl === 'ta' ? '/ta/' : '/'}temples/${T.slug}.html">${T.img ? `<img src="${T.img}" alt="" loading="lazy">` : ''}<span><small>${t('todT')}</small><b>${T[tl]}</b><em>${t('todS', { day: L().days[wd], graha: L().pl[pl] })}</em></span></a>`;
-  }
 }
 // temple guide and parigaram pages exist in English and Tamil
-const PARI_BASE = () => (lang === 'ta' ? '/ta/' : '/');
+const PARI_BASE = () => '/ta/';
 const pariLink = (anchor, label) => `<p class="pari"><a href="${PARI_BASE()}parigaram/#${anchor}">${label || t('pariLink')} →</a></p>`;
 const DOC_TITLE = window.SJ_TITLES || {};
 function syncSettings() {
@@ -1741,6 +1724,8 @@ function ensureFonts(l) {
 function applyLang() {
   ensureFonts(lang); ensureFonts(trad);
   document.body.classList.toggle('indic', lang !== 'en');
+  document.body.classList.toggle('story', lang === 'ta');
+  if (lang !== 'ta' && !document.getElementById('tab-home').classList.contains('hidden')) document.querySelector('.tabs button[data-tab="horo"]').click();
   document.body.dataset.trad = trad;
   document.documentElement.lang = lang;
   syncSettings();
@@ -1754,12 +1739,11 @@ function applyLang() {
     history.replaceState(null, '', LANG_PATH(lang) + location.search + location.hash);
   }
   document.getElementById('homeLink').href = LANG_PATH(lang);
-  document.querySelectorAll('[data-kb]').forEach(a => a.href = LANG_PATH(lang) + a.dataset.kb);
-  document.querySelectorAll('[data-kbt]').forEach(a => a.href = PARI_BASE() + a.dataset.kbt);
+  // everything apart from the jathagam and porutham tools is written in Tamil only
+  document.querySelectorAll('[data-kb]').forEach(a => a.href = '/ta/' + a.dataset.kb);
+  document.querySelectorAll('[data-kbt]').forEach(a => a.href = '/ta/' + a.dataset.kbt);
   if (typeof renderRecent === 'function') renderRecent();
   if (typeof renderFamily === 'function') renderFamily();
-  document.querySelectorAll('[data-kbcal]').forEach(a => a.href = (lang === 'ta' ? '/ta/' : lang === 'en' ? '/' : LANG_PATH(lang)) + (lang === 'en' || lang === 'ta' ? 'tamil-calendar/' : 'calendar/'));
-  document.querySelectorAll('[data-kbfest]').forEach(a => a.href = (lang === 'ta' ? '/ta/' : lang === 'en' ? '/' : LANG_PATH(lang)) + (lang === 'en' || lang === 'ta' ? 'tamil-festivals/' : 'calendar/'));
   renderHome();
   const canon = document.querySelector('link[rel=canonical]'); if (canon) canon.href = 'https://subajathagam.in' + LANG_PATH(lang);
   renderHoro(); renderMatch();
@@ -1785,8 +1769,8 @@ document.getElementById('chartSel').addEventListener('change', e => { chartStyle
 document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('.bnav [data-go]').forEach(x => x.classList.toggle('on', x.dataset.go === b.dataset.tab));
-  ['home', 'horo', 'match', 'panch'].forEach(k => document.getElementById('tab-' + k).classList.toggle('hidden', b.dataset.tab !== k));
-  if (b.dataset.tab === 'panch') renderPanch();
+  ['home', 'horo', 'match'].forEach(k => document.getElementById('tab-' + k).classList.toggle('hidden', b.dataset.tab !== k));
+  if (b.dataset.tab === 'home') renderPanch();
   if (b.dataset.tab === 'home') { if (location.hash) history.replaceState(null, '', location.pathname + location.search); }
   else if (!location.hash.startsWith('#' + b.dataset.tab)) history.replaceState(null, '', '#' + b.dataset.tab);
 });
@@ -2038,7 +2022,7 @@ function angaList(list, nameFn, p) {
 }
 function placeTitle(pl) { const l = placeLabel(pl); return pl.remote ? [pl.name, pl.adm, pl.countryName].filter(Boolean).join(', ') : l.full; }
 function renderPanch() {
-  if (document.getElementById('tab-panch').classList.contains('hidden')) return;
+  if (document.getElementById('tab-home').classList.contains('hidden')) return;
   if (document.activeElement !== ppInput) {
     ppInput.value = placeTitle(panchPlace);
     ppGeo.className = 'geo'; ppGeo.textContent = `${(+panchPlace.lat).toFixed(2)}°, ${(+panchPlace.lon).toFixed(2)}° · ${panchPlace.tz}`;
@@ -2067,7 +2051,7 @@ function renderPanch() {
     <p class="note">${t('weekdayNote')}</p>`;
 }
 function renderToday() {
-  const el = document.getElementById('todayStrip');
+  const el = document.getElementById('todayStrip'); if (!el) return;
   try {
     const p = computeDay(localYMD(panchPlace.tz), panchPlace), Lx = L(), tm = p.tamil;
     const now = Date.now();
@@ -2080,7 +2064,6 @@ function renderToday() {
       <span class="go">${t('seeFull')}</span>`;
   } catch { el.classList.add('hidden'); }
 }
-document.getElementById('todayStrip').onclick = () => { document.querySelector('.tabs button[data-tab="panch"]').click(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
 const shiftDay = n => { const [y, m, d] = panchDate.split('-').map(Number); const x = new Date(Date.UTC(y, m - 1, d + n)); panchDate = x.toISOString().slice(0, 10); renderPanch(); };
 document.getElementById('pp-prev').onclick = () => shiftDay(-1);
 document.getElementById('pp-next').onclick = () => shiftDay(1);
@@ -2151,7 +2134,7 @@ document.getElementById('homeLink').addEventListener('click', e => {
   if (e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
   e.preventDefault();
   closeJathagam(); closeFb();
-  document.querySelector('.tabs button[data-tab="horo"]').click();
+  document.querySelector(`.tabs button[data-tab="${lang === 'ta' ? 'home' : 'horo'}"]`).click();
   history.replaceState(null, '', LANG_PATH(lang));
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
@@ -2468,7 +2451,6 @@ chartStyle = store.get('sj.chart') === 'north' || store.get('sj.chart') === 'sou
 matchView = TR().match;
 if (!loadFromHash()) {
   if (location.hash.startsWith('#match')) document.querySelector('.tabs button[data-tab="match"]').click();
-  else if (location.hash.startsWith('#panch')) document.querySelector('.tabs button[data-tab="panch"]').click();
   else if (location.hash.startsWith('#horo')) document.querySelector('.tabs button[data-tab="horo"]').click();
 }
 applyLang();

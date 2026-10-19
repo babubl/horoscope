@@ -62,16 +62,6 @@
           "sizes": "192x192"
         }
       ]
-    },
-    {
-      "name": "പഞ്ചാംഗം",
-      "url": "/ml/?source=pwa#panch",
-      "icons": [
-        {
-          "src": "/icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
     }
   ]
 }

@@ -59,7 +59,7 @@ def seo_section(l):
     faq = ''.join(f'<h3>{esc(q)}</h3><p>{esc(a)}</p>' for q, a in d['faq'])
     links = ''.join(f'<a href="{path(x)}" hreflang="{x}" lang="{x}">{NATIVE[x]}</a>' for x in LANGS if x != l)
     kb = [('calendar/', '📅', 'lCal'), ('panchangam/', '☀', 'lPanchCity'), ('nakshatra/', '★', 'lNaks'), ('rasi/', '♈', 'lRasi'), ('baby-names.html', '👶', 'lBaby')]
-    links = ''.join(f'<a href="{path(l)}{h}">{ic} {I[l][k]}</a>' for h, ic, k in kb) + links
+    links = ''.join(f'<a href="/ta/{h}" lang="ta">{ic} {I["ta"][k]}</a>' for h, ic, k in kb) + links
     return f'''<section class="card seo" id="about-site" lang="{l}">
     <h2>{esc(d['h2'])}</h2>
     <p>{esc(d['intro'])}</p>
@@ -97,8 +97,7 @@ def prerender(page, l):
     body = body.replace(f'<option value="{l}" lang="{l}">', f'<option value="{l}" lang="{l}" selected>')
     body = body.replace('<span id="langCur">English</span>', f'<span id="langCur">{NATIVE[l]}</span>', 1)
     body = body.replace(f'data-lang="{l}" lang="{l}" hreflang', f'class="on" data-lang="{l}" lang="{l}" hreflang', 1)
-    body = re.sub(r'<a href="/([^"]*)"( id="naksLink")? data-kb=', lambda m: f'<a href="{path(l)}{m.group(1)}"{m.group(2) or ""} data-kb=', body)
-    open_tag = '<body class="indic">' if l != 'en' else '<body>'
+    open_tag = '<body class="indic story">' if l == 'ta' else '<body class="indic">' if l != 'en' else '<body>'
     return head + open_tag + body + CORE_TAG + tail
 
 
@@ -126,8 +125,7 @@ process.stdout.write(JSON.stringify(F.compute({{lat:{lat},lon:{lon},tz:'Asia/Kol
     ids = {e['id'] for e in evs}
     by = {t['slug']: t for t in _TEMPLES}
     wk = ['suryanar-kovil', 'thingalur', 'vaitheeswaran-koil', 'thiruvenkadu', 'alangudi', 'kanjanur', 'thirunallar']
-    temples = {i: dict(slug=sl, en=by[sl]['en']['name'], ta=by[sl]['ta']['name'], img=_IMG.url(_IMG.TEMPLE[sl]['file'], 640) if sl in _IMG.TEMPLE else '') for i, sl in enumerate(wk)}
-    return json.dumps(dict(events=evs, names={k: _EN[k] for k in ids}, temples=temples), ensure_ascii=False, separators=(',', ':'))
+    return json.dumps(dict(events=evs, names={k: _EN[k] for k in ids}), ensure_ascii=False, separators=(',', ':'))
 
 
 EXPLORE_IMG = (_IMG.url(_bt['file'], 640) if _bt else '/icons/og-image.jpg', _IMG.url(_nv['file'], 640) if _nv else '/icons/og-image.jpg')
@@ -151,7 +149,9 @@ for l in LANGS:
         p = p.replace('</head>', f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n</head>', 1)
     p = p.replace('</head>', f'<script>window.SJ_LANG={json.dumps(l)};window.SJ_TITLES={json.dumps(titles, ensure_ascii=False)};</script>\n</head>', 1)
     p = p.replace('%%HOME_DATA%%', home_data(l).replace('</', '<\\/'))
-    p = p.replace('%%IMG_TEMPLE%%', EXPLORE_IMG[0]).replace('%%IMG_NAVA%%', EXPLORE_IMG[1])
+    if l == 'en':
+        # Tamil is the default: a first visit to the root opens /ta/ (a visitor who picked English stays here; crawlers are left alone)
+        p = p.replace('</head>', '<script>(function(){try{if(!localStorage.getItem("jothidam.lang")&&!/bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent))location.replace("/ta/"+location.search+location.hash);}catch(e){}})();</script>\n</head>', 1)
     p = p.replace('<!--SEO-->', seo_section(l), 1)
     p = prerender(p, l)
     out = 'index.html' if l == 'en' else f'{l}/index.html'
@@ -174,7 +174,7 @@ for l in LANGS:
                   {'src': '/icons/icon-maskable-512.png', 'sizes': '512x512', 'type': 'image/png', 'purpose': 'maskable'}],
         'shortcuts': [{'name': I[l]['tabHoro'], 'url': path(l) + '?source=pwa#horo', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]},
                       {'name': I[l]['tabMatch'], 'url': path(l) + '?source=pwa#match', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]},
-                      {'name': I[l]['tabPanch'], 'url': path(l) + '?source=pwa#panch', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]}],
+                      ] + ([{'name': I[l]['tabPanch'], 'url': path(l) + '?source=pwa', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]}] if l == 'ta' else []),
     }
     out = 'manifest.webmanifest' if l == 'en' else f'{l}/manifest.webmanifest'
     open(out, 'w').write(json.dumps(m, ensure_ascii=False, indent=2) + '\n')
@@ -202,12 +202,30 @@ _c, CAL_DAYS, CAL_EVS = tcal.generate(I, ads_head)
 print('tamil calendar pages', len(_c))
 kb_urls += _c
 
+# ---- only the jathagam and porutham tools are in every language; every other page is Tamil only.
+# The old English / Malayalam / Telugu / Kannada / Hindi pages become permanent redirects to their Tamil page.
+def stub(to):
+    u = SITE + to
+    return (f'<!doctype html>\n<html lang="ta"><head><meta charset="utf-8"><title>சுப ஜாதகம்</title><meta name="robots" content="noindex,follow">'
+            f'<link rel="canonical" href="{u}"><meta http-equiv="refresh" content="0;url={to}"><script>location.replace({json.dumps(to)}+location.hash)</script></head>'
+            f'<body><p><a href="{to}">{u}</a></p></body></html>\n')
+
+
+_ta_urls = []
+for loc, alts_ in kb_urls:
+    if loc.startswith('/ta/'):
+        _ta_urls.append(loc)
+        continue
+    to = dict(alts_).get('ta')
+    if to:
+        open(loc.lstrip('/') + ('index.html' if loc.endswith('/') else ''), 'w').write(stub(to))
+print('Tamil pages', len(_ta_urls), 'redirect stubs', len(kb_urls) - len(_ta_urls))
+
 # ---- sitemap with language alternates
 xl = ''.join(f'    <xhtml:link rel="alternate" hreflang="{x}" href="{SITE}{path(x)}"/>\n' for x in LANGS) + f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>\n'
 urls = ''.join(f'  <url><loc>{SITE}{path(l)}</loc><changefreq>weekly</changefreq><priority>{"1.0" if l == "en" else "0.9"}</priority>\n{xl}  </url>\n' for l in LANGS)
-for loc, alts_ in kb_urls:
-    xl2 = ''.join(f'    <xhtml:link rel="alternate" hreflang="{x}" href="{SITE}{h}"/>\n' for x, h in alts_) + f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{alts_[0][1]}"/>\n'
-    urls += f'  <url><loc>{SITE}{loc}</loc><changefreq>monthly</changefreq><priority>{"0.8" if loc.endswith("/") else "0.7"}</priority>\n{xl2}  </url>\n'
+for loc in _ta_urls:
+    urls += f'  <url><loc>{SITE}{loc}</loc><changefreq>monthly</changefreq><priority>{"0.8" if loc.endswith("/") else "0.7"}</priority></url>\n'
 for pg, fq, pr in [('guide.html', 'monthly', '0.7'), ('about.html', 'yearly', '0.4'), ('privacy.html', 'yearly', '0.3'), ('terms.html', 'yearly', '0.3')]:
     urls += f'  <url><loc>{SITE}/{pg}</loc><changefreq>{fq}</changefreq><priority>{pr}</priority></url>\n'
 open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + urls + '</urlset>\n')
