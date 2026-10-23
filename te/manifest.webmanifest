@@ -62,6 +62,16 @@
           "sizes": "192x192"
         }
       ]
+    },
+    {
+      "name": "పంచాంగం",
+      "url": "/te/?source=pwa",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

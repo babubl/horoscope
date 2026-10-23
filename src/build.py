@@ -59,7 +59,8 @@ def seo_section(l):
     faq = ''.join(f'<h3>{esc(q)}</h3><p>{esc(a)}</p>' for q, a in d['faq'])
     links = ''.join(f'<a href="{path(x)}" hreflang="{x}" lang="{x}">{NATIVE[x]}</a>' for x in LANGS if x != l)
     kb = [('calendar/', '📅', 'lCal'), ('panchangam/', '☀', 'lPanchCity'), ('nakshatra/', '★', 'lNaks'), ('rasi/', '♈', 'lRasi'), ('baby-names.html', '👶', 'lBaby')]
-    links = ''.join(f'<a href="/ta/{h}" lang="ta">{ic} {I["ta"][k]}</a>' for h, ic, k in kb) + links
+    kl = l if l in ('ta', 'te') else 'ta'
+    links = ''.join(f'<a href="/{kl}/{h}" lang="{kl}">{ic} {I[kl][k]}</a>' for h, ic, k in kb) + links
     return f'''<section class="card seo" id="about-site" lang="{l}">
     <h2>{esc(d['h2'])}</h2>
     <p>{esc(d['intro'])}</p>
@@ -97,7 +98,7 @@ def prerender(page, l):
     body = body.replace(f'<option value="{l}" lang="{l}">', f'<option value="{l}" lang="{l}" selected>')
     body = body.replace('<span id="langCur">English</span>', f'<span id="langCur">{NATIVE[l]}</span>', 1)
     body = body.replace(f'data-lang="{l}" lang="{l}" hreflang', f'class="on" data-lang="{l}" lang="{l}" hreflang', 1)
-    open_tag = '<body class="indic story">' if l == 'ta' else '<body class="indic">' if l != 'en' else '<body>'
+    open_tag = '<body class="indic story tamil">' if l == 'ta' else '<body class="indic story telugu">' if l == 'te' else '<body class="indic">' if l != 'en' else '<body>'
     return head + open_tag + body + CORE_TAG + tail
 
 
@@ -149,9 +150,8 @@ for l in LANGS:
         p = p.replace('</head>', f'<meta name="google-adsense-account" content="{ADS_CLIENT}">\n</head>', 1)
     p = p.replace('</head>', f'<script>window.SJ_LANG={json.dumps(l)};window.SJ_TITLES={json.dumps(titles, ensure_ascii=False)};</script>\n</head>', 1)
     p = p.replace('%%HOME_DATA%%', home_data(l).replace('</', '<\\/'))
-    if l == 'en':
-        # Tamil is the default: a first visit to the root opens /ta/ (a visitor who picked English stays here; crawlers are left alone)
-        p = p.replace('</head>', '<script>(function(){try{if(!localStorage.getItem("jothidam.lang")&&!/bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent))location.replace("/ta/"+location.search+location.hash);}catch(e){}})();</script>\n</head>', 1)
+    # the app opens in the language the visitor chose (kept until they change it); with no choice yet, the root opens Tamil
+    p = p.replace('</head>', '<script>(function(){try{if(/bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent))return;var s=localStorage.getItem("sj.langPick"),h="' + l + '";var w=s||(h==="en"?"ta":null);if(w&&w!==h&&/^(en|ta|ml|te|kn|hi)$/.test(w))location.replace((w==="en"?"/":"/"+w+"/")+location.search+location.hash);}catch(e){}})();</script>\n</head>', 1)
     p = p.replace('<!--SEO-->', seo_section(l), 1)
     p = prerender(p, l)
     out = 'index.html' if l == 'en' else f'{l}/index.html'
@@ -174,7 +174,7 @@ for l in LANGS:
                   {'src': '/icons/icon-maskable-512.png', 'sizes': '512x512', 'type': 'image/png', 'purpose': 'maskable'}],
         'shortcuts': [{'name': I[l]['tabHoro'], 'url': path(l) + '?source=pwa#horo', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]},
                       {'name': I[l]['tabMatch'], 'url': path(l) + '?source=pwa#match', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]},
-                      ] + ([{'name': I[l]['tabPanch'], 'url': path(l) + '?source=pwa', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]}] if l == 'ta' else []),
+                      ] + ([{'name': I[l]['tabPanch'], 'url': path(l) + '?source=pwa', 'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192'}]}] if l in ('ta', 'te') else []),
     }
     out = 'manifest.webmanifest' if l == 'en' else f'{l}/manifest.webmanifest'
     open(out, 'w').write(json.dumps(m, ensure_ascii=False, indent=2) + '\n')
@@ -213,7 +213,7 @@ def stub(to):
 
 _ta_urls = []
 for loc, alts_ in kb_urls:
-    if loc.startswith('/ta/'):
+    if loc.startswith(('/ta/', '/te/')):
         _ta_urls.append(loc)
         continue
     to = dict(alts_).get('ta')

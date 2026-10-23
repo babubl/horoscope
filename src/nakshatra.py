@@ -168,16 +168,27 @@ STORY = [('panch', 'பஞ்சாங்கம்', '/ta/', 'இன்றைய
          ('match', 'திருமணப் பொருத்தம்', '/ta/#match', 'மணமக்களுக்கு 10 பொருத்தம்'),
          ('pari', 'பரிகாரம்', '/ta/parigaram/', 'நவகிரகங்களுக்கும் தோஷங்களுக்கும் பரிகாரம்'),
          ('temples', 'கோயில்கள்', '/ta/temples/', 'நவகிரகக் கோயில்கள், தஞ்சை பெரிய கோயில் மற்றும் பல')]
+STORY_TE = [('panch', 'పంచాంగం', '/te/', 'నేటి తిథి, నక్షత్రం, రాహుకాలం'),
+            ('cal', 'క్యాలెండర్', '/te/calendar/', 'ఏకాదశి, పౌర్ణమి, అమావాస్య, పండుగలు'),
+            ('horo', 'జాతకం', '/te/#horo', 'పుట్టిన సమయం నుండి రాశి, నవాంశ, దశ'),
+            ('match', 'వివాహ పొంతన', '/te/#match', 'వధూవరుల గుణ మిలనం')]
+STORIES = {'ta': STORY, 'te': STORY_TE}
 NEXT_OF = {'panch': 'cal', 'cal': 'horo', 'fest': 'horo', 'naks': 'match', 'rasi': 'horo', 'baby': 'horo', 'pari': 'temples', 'temples': 'panch'}
 
 
-def next_html(canon):
+def next_html(canon, l='ta'):
+    st = STORIES.get(l)
     k = NEXT_OF.get(section_of(canon))
-    if not k:
+    if not st or not k:
         return ''
-    i = [x[0] for x in STORY].index(k)
-    _, t, h, sub = STORY[i]
-    lbl = 'மீண்டும் தொடக்கத்திற்கு' if k == 'panch' else f'அடுத்து · படி {i + 1} / 6'
+    if k not in [x[0] for x in st]:
+        k = 'panch'
+    i = [x[0] for x in st].index(k)
+    _, t, h, sub = st[i]
+    if l == 'te':
+        lbl = 'మళ్ళీ మొదటికి' if k == 'panch' else f'తరువాత · దశ {i + 1} / {len(st)}'
+    else:
+        lbl = 'மீண்டும் தொடக்கத்திற்கு' if k == 'panch' else f'அடுத்து · படி {i + 1} / 6'
     return f'<a class="nextstep" href="{h}"><small>{lbl}</small><b>{esc(t)}</b><span>{esc(sub)}</span><i aria-hidden="true">→</i></a>'
 
 
@@ -191,9 +202,9 @@ def section_of(canon):
 
 def menu_html(l, canon=''):
     cur = section_of(canon)
-    if l == 'ta':
-        extra = [x for x in nav_items('ta') if x[0] in ('fest', 'naks', 'rasi', 'baby')]
-        items = [(k, t, h) for k, t, h, _ in STORY] + extra
+    if l in STORIES:
+        extra = [x for x in nav_items(l) if x[0] in (('fest', 'naks', 'rasi', 'baby') if l == 'ta' else ('naks', 'rasi', 'baby'))]
+        items = [(k, t, h) for k, t, h, _ in STORIES[l]] + extra
         return '<nav class="sitenav" aria-label="Menu"><div class="wrap">' + ''.join(
             f'<a href="{h}"{" class=on aria-current=page" if k == cur else ""}>{esc(t)}</a>' for k, t, h in items) + '</div></nav>'
     return '<nav class="sitenav" aria-label="Menu"><div class="wrap">' + ''.join(
@@ -241,7 +252,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <main class="wrap">
 <nav class="crumbs">{crumb_html}</nav>
 {body}
-{next_html(canon) if l == 'ta' else ''}
+{next_html(canon, l)}
 </main>
 <footer><div class="wrap"><a href="{'/' if l == 'en' else '/' + l + '/'}">{BRAND[l]}</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
 <script src="/assets/divine.js" defer></script>
