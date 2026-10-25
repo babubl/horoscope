@@ -241,6 +241,14 @@
   <url><loc>https://subajathagam.in/ta/tamil-calendar/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://subajathagam.in/ta/pournami-amavasai/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://subajathagam.in/ta/tamil-festivals/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/rooms.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/east-facing-house.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/north-facing-house.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/west-facing-house.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/south-facing-house.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/vastu-naal.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://subajathagam.in/ta/vastu/check.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://subajathagam.in/guide.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://subajathagam.in/about.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://subajathagam.in/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>

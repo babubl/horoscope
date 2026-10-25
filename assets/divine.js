@@ -194,6 +194,22 @@
   });
   window.SJBell = bell;
 
+  // ------------------------------------------------------------- phone menu: the "more" sheet
+  var sheet = document.getElementById('msheet'), sheetFrom = null;
+  function sheetOpen(o) {
+    if (!sheet) return;
+    if (o) { sheetFrom = document.activeElement; sheet.hidden = false; requestAnimationFrame(function () { sheet.classList.add('open'); }); document.body.classList.add('noscroll'); var c = sheet.querySelector('.mclose'); if (c) setTimeout(function () { c.focus(); }, 200); }
+    else { sheet.classList.remove('open'); document.body.classList.remove('noscroll'); setTimeout(function () { if (!sheet.classList.contains('open')) sheet.hidden = true; }, 260); if (sheetFrom && sheetFrom.focus) sheetFrom.focus(); }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-pick]');
+    if (a) { try { localStorage.setItem('sj.langPick', a.getAttribute('data-pick')); localStorage.setItem('jothidam.lang', a.getAttribute('data-pick')); } catch (x) {} }
+    if (!sheet) return;
+    if (e.target.closest('[data-sheet]')) { sheetOpen(true); return; }
+    if (sheet.classList.contains('open') && (e.target === sheet || e.target.closest('[data-sheet-close], .msheet a, .msheet [data-go]'))) sheetOpen(false);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sheet && sheet.classList.contains('open')) sheetOpen(false); });
+
   // ------------------------------------------------------------- light a lamp
   var lamp = document.getElementById('lamp');
   if (lamp) {

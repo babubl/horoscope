@@ -167,13 +167,14 @@ STORY = [('panch', 'பஞ்சாங்கம்', '/ta/', 'இன்றைய
          ('horo', 'ஜாதகம்', '/ta/#horo', 'பிறந்த நேரத்திலிருந்து ராசி, நவாம்சம், தசை புக்தி'),
          ('match', 'திருமணப் பொருத்தம்', '/ta/#match', 'மணமக்களுக்கு 10 பொருத்தம்'),
          ('pari', 'பரிகாரம்', '/ta/parigaram/', 'நவகிரகங்களுக்கும் தோஷங்களுக்கும் பரிகாரம்'),
-         ('temples', 'கோயில்கள்', '/ta/temples/', 'நவகிரகக் கோயில்கள், தஞ்சை பெரிய கோயில் மற்றும் பல')]
+         ('temples', 'கோயில்கள்', '/ta/temples/', 'நவகிரகக் கோயில்கள், தஞ்சை பெரிய கோயில் மற்றும் பல'),
+         ('vastu', 'வாஸ்து', '/ta/vastu/', 'எட்டுத் திசைகள், அறைகள், வாஸ்து நாள், உங்கள் வீட்டைச் சரிபாருங்கள்')]
 STORY_TE = [('panch', 'పంచాంగం', '/te/', 'నేటి తిథి, నక్షత్రం, రాహుకాలం'),
             ('cal', 'క్యాలెండర్', '/te/calendar/', 'ఏకాదశి, పౌర్ణమి, అమావాస్య, పండుగలు'),
             ('horo', 'జాతకం', '/te/#horo', 'పుట్టిన సమయం నుండి రాశి, నవాంశ, దశ'),
             ('match', 'వివాహ పొంతన', '/te/#match', 'వధూవరుల గుణ మిలనం')]
 STORIES = {'ta': STORY, 'te': STORY_TE}
-NEXT_OF = {'panch': 'cal', 'cal': 'horo', 'fest': 'horo', 'naks': 'match', 'rasi': 'horo', 'baby': 'horo', 'pari': 'temples', 'temples': 'panch'}
+NEXT_OF = {'panch': 'cal', 'cal': 'horo', 'fest': 'horo', 'naks': 'match', 'rasi': 'horo', 'baby': 'horo', 'pari': 'temples', 'temples': 'vastu', 'vastu': 'panch'}
 
 
 def next_html(canon, l='ta'):
@@ -188,16 +189,73 @@ def next_html(canon, l='ta'):
     if l == 'te':
         lbl = 'మళ్ళీ మొదటికి' if k == 'panch' else f'తరువాత · దశ {i + 1} / {len(st)}'
     else:
-        lbl = 'மீண்டும் தொடக்கத்திற்கு' if k == 'panch' else f'அடுத்து · படி {i + 1} / 6'
+        lbl = 'மீண்டும் தொடக்கத்திற்கு' if k == 'panch' else f'அடுத்து · படி {i + 1} / {len(st)}'
     return f'<a class="nextstep" href="{h}"><small>{lbl}</small><b>{esc(t)}</b><span>{esc(sub)}</span><i aria-hidden="true">→</i></a>'
 
 
 def section_of(canon):
-    for k, frag in (('temples', 'temples/'), ('pari', 'parigaram/'), ('cal', 'tamil-calendar/'), ('fest', 'tamil-festivals/'), ('cal', 'pournami-amavasai/'), ('cal', 'calendar/'),
+    for k, frag in (('vastu', 'vastu/'), ('temples', 'temples/'), ('pari', 'parigaram/'), ('cal', 'tamil-calendar/'), ('fest', 'tamil-festivals/'), ('cal', 'pournami-amavasai/'), ('cal', 'calendar/'),
                     ('panch', 'panchangam/'), ('naks', 'nakshatra/'), ('rasi', 'rasi/'), ('baby', 'baby-names')):
         if frag in canon:
             return k
     return ''
+
+
+# ---- the mobile menu: a bottom bar with the first four steps and "more", which opens a sheet with every section
+_SV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{}</svg>'
+ICONS = {
+    'panch': '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    'cal': '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="2"/>',
+    'horo': '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+    'match': '<circle cx="9" cy="14" r="5"/><circle cx="15" cy="14" r="5"/><path d="M10 5l2-2 2 2-2 2z"/>',
+    'pari': '<path d="M4 14c2 4 14 4 16 0z"/><path d="M12 4c2 3 2 5 0 7-2-2-2-4 0-7z"/><path d="M9 20h6"/>',
+    'temples': '<path d="M12 2l2 3h-4z"/><path d="M8 8h8l1 3H7z"/><path d="M6 11h12v10H6z"/><path d="M10 21v-5h4v5"/>',
+    'vastu': '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v4M10 15h4"/>',
+    'more': '<circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/>',
+}
+SHEET_T = {'ta': dict(more='மேலும்', title='எல்லாப் பகுதிகளும்', sub='பஞ்சாங்கத்திலிருந்து வாஸ்து வரை, வரிசையாக', extra='இன்னும் பார்க்க', lang='மொழி', fb='கருத்து சொல்ல', close='மூடு', step='படி'),
+           'te': dict(more='మరిన్ని', title='అన్ని విభాగాలు', sub='పంచాంగం నుండి వివాహ పొంతన వరకు, క్రమంగా', extra='ఇంకా చూడండి', lang='భాష', fb='అభిప్రాయం చెప్పండి', close='మూసివేయి', step='దశ', tamil='తమిళంలో మాత్రమే')}
+SHEET_X = {'ta': [('பண்டிகைகள்', '/ta/tamil-festivals/'), ('பௌர்ணமி · அமாவாசை', '/ta/pournami-amavasai/'), ('ஊர் வாரியான பஞ்சாங்கம்', '/ta/panchangam/'),
+                  ('வாஸ்து நாள்', '/ta/vastu/vastu-naal.html'), ('உங்கள் வீட்டு வாஸ்து', '/ta/vastu/check.html'), ('27 நட்சத்திரங்கள்', '/ta/nakshatra/'), ('12 ராசிகள்', '/ta/rasi/'), ('குழந்தை பெயர்கள்', '/ta/baby-names.html')],
+           'te': [('నగరాల వారీ పంచాంగం', '/te/panchangam/'), ('27 నక్షత్రాలు', '/te/nakshatra/'), ('12 రాశులు', '/te/rasi/'), ('శిశువు పేర్లు', '/te/baby-names.html')]}
+LANG_LINKS = [('ta', 'தமிழ்', '/ta/'), ('te', 'తెలుగు', '/te/'), ('en', 'English', '/'), ('ml', 'മലയാളം', '/ml/'), ('kn', 'ಕನ್ನಡ', '/kn/'), ('hi', 'हिन्दी', '/hi/')]
+
+
+def _go(k, l, app, h):
+    """In the app, the panchangam, jathagam and porutham are tabs on the same page."""
+    if app and k in ('panch', 'horo', 'match'):
+        return f'button type="button" data-go="{"home" if k == "panch" else k}"', 'button'
+    return f'a href="{h}"', 'a'
+
+
+def mobile_nav(l, cur='', app=False):
+    """Bottom bar and its sheet for the story languages (Tamil, Telugu)."""
+    if l not in STORIES:
+        return ''
+    st, M = STORIES[l], SHEET_T[l]
+    bar = ''
+    for k, t, h, _ in st[:4]:
+        tag, close = _go(k, l, app, h)
+        short = {'match': 'பொருத்தம்' if l == 'ta' else 'పొంతన'}.get(k, t)
+        bar += f'<{tag} class="{"on" if k == cur else ""}">{_SV.format(ICONS[k])}<span>{esc(short)}</span></{close}>'
+    bar += f'<button type="button" data-sheet aria-haspopup="dialog" aria-controls="msheet">{_SV.format(ICONS["more"])}<span>{esc(M["more"])}</span></button>'
+    tiles = ''
+    for i, (k, t, h, sub) in enumerate(st):
+        tag, close = _go(k, l, app, h)
+        tiles += f'<{tag} class="mtile{" on" if k == cur else ""}"><i>{_SV.format(ICONS[k])}</i><em>{M["step"]} {i + 1}</em><b>{esc(t)}</b><small>{esc(sub)}</small></{close}>'
+    extra = ''.join(f'<a href="{h}">{esc(t)}</a>' for t, h in SHEET_X[l])
+    tam = ''
+    if l == 'te':
+        tam = f'<h3>{esc(M["tamil"])}</h3><div class="mchips">' + ''.join(f'<a href="{h}" lang="ta">{esc(t)}</a>' for _, t, h, _ in STORY[4:]) + '</div>'
+    langs = ''.join(f'<a href="{h}" data-pick="{x}" lang="{x}"{" class=on" if x == l else ""}>{n}</a>' for x, n, h in LANG_LINKS)
+    fb = '#feedback' if app else f'/{l}/#feedback'
+    sheet = (f'<div class="msheet" id="msheet" role="dialog" aria-modal="true" aria-label="{esc(M["title"])}" hidden><div class="msheet-p">'
+             f'<div class="msheet-h"><span class="grab" aria-hidden="true"></span><div><b>{esc(M["title"])}</b><small>{esc(M["sub"])}</small></div>'
+             f'<button type="button" class="mclose" data-sheet-close aria-label="{esc(M["close"])}">✕</button></div>'
+             f'<div class="mtiles">{tiles}</div><h3>{esc(M["extra"])}</h3><div class="mchips">{extra}</div>{tam}'
+             f'<h3>{esc(M["lang"])}</h3><div class="mchips mlangs">{langs}</div>'
+             f'<p class="mfb"><a href="{fb}">💬 {esc(M["fb"])}</a></p></div></div>')
+    return f'<nav class="bnav mbar" aria-label="Menu">{bar}</nav>{sheet}'
 
 
 def menu_html(l, canon=''):
@@ -243,7 +301,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <!--ADS-->
 </head>
-<body class="{'indic' if l != 'en' else 'en'}">
+<body class="{'indic' if l != 'en' else 'en'}{' hasbar' if l in STORIES else ''}">
 <header><div class="wrap bar">
   <a class="brand" href="{'/' if l == 'en' else '/' + l + '/'}"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>{BRAND[l]}</b></a>
   <a class="btn" href="{app_href}">{esc(D['ctaShort'])}</a>
@@ -254,6 +312,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 {body}
 {next_html(canon, l)}
 </main>
+{mobile_nav(l, section_of(canon))}
 <footer><div class="wrap"><a href="{'/' if l == 'en' else '/' + l + '/'}">{BRAND[l]}</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
 <script src="/assets/divine.js" defer></script>
 <script>

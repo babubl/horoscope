@@ -113,6 +113,8 @@ sys.path.insert(0, 'src')
 import images_data as _IMG  # noqa: E402
 _bt, _nv = _IMG.TEMPLE.get('thanjavur-big-temple'), _IMG.DEITY.get('navagraha')
 import kb as _kb  # noqa: E402
+import nakshatra as _NK  # noqa: E402
+NK_STORIES = _NK.STORIES
 from kb_data import EVENT_NAMES as _EN  # noqa: E402
 from temples_data import TEMPLES as _TEMPLES  # noqa: E402
 
@@ -153,6 +155,9 @@ for l in LANGS:
     # the app opens in the language the visitor chose (kept until they change it); with no choice yet, the root opens Tamil
     p = p.replace('</head>', '<script>(function(){try{if(/bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent))return;var s=localStorage.getItem("sj.langPick"),h="' + l + '";var w=s||(h==="en"?"ta":null);if(w&&w!==h&&/^(en|ta|ml|te|kn|hi)$/.test(w))location.replace((w==="en"?"/":"/"+w+"/")+location.search+location.hash);}catch(e){}})();</script>\n</head>', 1)
     p = p.replace('<!--SEO-->', seo_section(l), 1)
+    if l in NK_STORIES:
+        # the phone menu: first four steps in the bar, every section in the "more" sheet
+        p = re.sub(r'<nav class="bnav" aria-label="Sections">.*?</nav>', lambda m: _NK.mobile_nav(l, 'panch', app=True), p, count=1, flags=re.S)
     p = prerender(p, l)
     out = 'index.html' if l == 'en' else f'{l}/index.html'
     os.makedirs(os.path.dirname(out) or '.', exist_ok=True)
@@ -201,6 +206,10 @@ import tcal  # noqa: E402
 _c, CAL_DAYS, CAL_EVS = tcal.generate(I, ads_head)
 print('tamil calendar pages', len(_c))
 kb_urls += _c
+import vastu  # noqa: E402
+_v = vastu.generate(I, ads_head, CAL_DAYS)
+print('vastu pages', len(_v))
+kb_urls += _v
 
 # ---- only the jathagam and porutham tools are in every language; every other page is Tamil only.
 # The old English / Malayalam / Telugu / Kannada / Hindi pages become permanent redirects to their Tamil page.
