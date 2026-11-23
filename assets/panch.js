@@ -593,8 +593,12 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
     const lunar = lunarCalendar(sunrise + 60000);
     const muhurta = (sunset - sunrise) / 15;
     const abhijit = { start: sunrise + 7 * muhurta, end: sunrise + 8 * muhurta };
+    // moonrise and moonset within the local calendar day (the Moon skips one of them about once a month)
+    const dayEnd = localToUtc(y, m, d + 1, 0, 0, zone).utc;
+    const moonEv = dir => { const r = A.SearchRiseSet(A.Body.Moon, obs, dir, new Date(mid), 1); const ms = r ? r.date.getTime() : null; return ms && ms < dayEnd ? ms : null; };
+    const moonrise = moonEv(+1), moonset = moonEv(-1);
     return {
-      offset, sunrise, sunset, nextRise, weekday, tamil, malayalam, lunar, karana,
+      offset, sunrise, sunset, nextRise, weekday, tamil, malayalam, lunar, karana, moonrise, moonset,
       moonSign: Math.floor(x.moon / 30), sunSign: Math.floor(x.sun / 30),
       tithi: list('tithi'), nakshatra: list('nakshatra'), yoga: list('yoga'),
       rahu: seg(RAHU[weekday]), yama: seg(YAMA[weekday]), gulika: seg(GULI[weekday]), abhijit
@@ -833,8 +837,9 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
     const seg = (k, s, cls, note) => `<div class="pc ${cls}"><span>${k}</span><b>${ck(s.start)} – ${ck(s.end)}</b><small>${note}</small></div>`;
     const cell = (k, v) => `<div class="pc"><span>${k}</span>${v}</div>`;
     return `<div class="pgrid">
-      ${cell(D['cal_' + trad], `<b>${cal}</b><small>${D.days[p.weekday]}</small>`)}
-      ${cell(D.sunrise + ' / ' + D.sunset, `<b>${clock(p.sunrise, off)} · ${clock(p.sunset, off)}</b>`)}
+      ${cell(D['cal_' + trad], `<b>${cal}</b><small>${D.days[p.weekday]}</small>`).replace('class="pc"', 'class="pc pwide"')}
+      ${cell('☀ ' + D.sunRS, `<b>${clock(p.sunrise, off)} · ${clock(p.sunset, off)}</b>`)}
+      ${cell('☾ ' + D.moonRS, `<b>${p.moonrise ? clock(p.moonrise, off) : '—'} · ${p.moonset ? clock(p.moonset, off) : '—'}</b>${!p.moonrise || !p.moonset ? `<small>— ${D.noMoonEv}</small>` : ''}`)}
       ${cell(D.tithi, anga(p.tithi, tithiTxt))}
       ${cell(D.star, anga(p.nakshatra, i => D.naks[i]))}
       ${cell(D.yoga, anga(p.yoga, i => D.yogas[i]))}

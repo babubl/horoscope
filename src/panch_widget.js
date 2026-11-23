@@ -20,8 +20,9 @@
     const seg = (k, s, cls, note) => `<div class="pc ${cls}"><span>${k}</span><b>${ck(s.start)} – ${ck(s.end)}</b><small>${note}</small></div>`;
     const cell = (k, v) => `<div class="pc"><span>${k}</span>${v}</div>`;
     return `<div class="pgrid">
-      ${cell(D['cal_' + trad], `<b>${cal}</b><small>${D.days[p.weekday]}</small>`)}
-      ${cell(D.sunrise + ' / ' + D.sunset, `<b>${clock(p.sunrise, off)} · ${clock(p.sunset, off)}</b>`)}
+      ${cell(D['cal_' + trad], `<b>${cal}</b><small>${D.days[p.weekday]}</small>`).replace('class="pc"', 'class="pc pwide"')}
+      ${cell('☀ ' + D.sunRS, `<b>${clock(p.sunrise, off)} · ${clock(p.sunset, off)}</b>`)}
+      ${cell('☾ ' + D.moonRS, `<b>${p.moonrise ? clock(p.moonrise, off) : '—'} · ${p.moonset ? clock(p.moonset, off) : '—'}</b>${!p.moonrise || !p.moonset ? `<small>— ${D.noMoonEv}</small>` : ''}`)}
       ${cell(D.tithi, anga(p.tithi, tithiTxt))}
       ${cell(D.star, anga(p.nakshatra, i => D.naks[i]))}
       ${cell(D.yoga, anga(p.yoga, i => D.yogas[i]))}

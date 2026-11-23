@@ -324,7 +324,7 @@ process.stdout.write(JSON.stringify(F.compute({{lat:{lat},lon:{lon},tz:'Asia/Kol
         tr = TRAD[l]
         keys = ['tithis', 'pournami', 'amavasai', 'naks', 'yogas', 'karanas', 'days', 'months', 'malMonths', 'lunarMonths', 'years60', 'pakShort', 'nextDay', 'till', 'then',
                 'kollamFmt', 'samvFmt', 'shakaFmt', 'vikramFmt', 'adhika', 'varusham', 'cal_ta', 'cal_ml', 'cal_te', 'cal_kn', 'cal_hi', 'sunrise', 'sunset', 'tithi', 'star', 'yoga',
-                'karana', 'rahuKalam', 'yamagandam', 'kuligai', 'abhijit', 'avoid', 'goodTime', 'weekday']
+                'karana', 'rahuKalam', 'yamagandam', 'kuligai', 'abhijit', 'avoid', 'goodTime', 'weekday', 'sunRS', 'moonRS', 'noMoonEv']
         DD = {k: Lx[k] for k in keys}
         for c in cities:
             p = places[c]
@@ -339,6 +339,7 @@ process.stdout.write(JSON.stringify({{a:W.render(J,D,c,t,{json.dumps(tr)}),b:W.w
 <p class="lead">{esc(D['pLead'].format(city=cn))}</p>
 <p class="today-date" id="pdate">{pre['t'][2]:02d}-{pre['t'][1]:02d}-{pre['t'][0]}</p>
 <div id="pcard">{pre['a']}</div>
+<a class="wxlink" href="https://www.google.com/search?q={esc('weather ' + p['name'])}" target="_blank" rel="noopener">🌦 {esc(Lx['weatherL'].format(p=cn))}</a>
 <!--AD-->
 <h2>{esc(D['pWeek'])}</h2>
 <div id="pweek">{pre['b']}</div>

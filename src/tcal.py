@@ -71,7 +71,8 @@ T = {
                fTitle='Tamil Festivals {ys} — Pongal, Thaipusam, Deepavali & All Pandigai Dates | Suba Jathagam', fH1='Tamil festivals (pandigai)',
                fLead='Dates of every major Tamil festival in {ys}, calculated for Chennai, with what each festival is about.',
                ruleNote='Calculated for Chennai with our own panchangam: the tithi and star shown are those at sunrise. Temple calendars can differ by a day.',
-               more='Also see', lists=['Pournami & Amavasai', 'Tamil festivals', 'Festival & vrat calendar']),
+               more='Also see', lists=['Pournami & Amavasai', 'Tamil festivals', 'Festival & vrat calendar'],
+               todayL='Today', prevDay='Previous day', nextDayL='Next day', dateL='Date', fullMonth='Full month with every day'),
     'ta': dict(menu='தமிழ் நாட்காட்டி', mTitle='தமிழ் நாட்காட்டி {mon} {y} — தமிழ்த் தேதி, திதி, நட்சத்திரம், பௌர்ணமி, அமாவாசை | சுப ஜாதகம்',
                mH1='தமிழ் நாட்காட்டி — {mon} {y}', mLead='{mon} {y}-ன் ஒவ்வொரு நாளுக்கும் தமிழ்த் தேதி, சென்னை சூரிய உதயத்தில் உள்ள திதி, நட்சத்திரம் — பௌர்ணமி, அமாவாசை, ஏகாதசி, பிரதோஷம், பண்டிகைகள் குறிக்கப்பட்டுள்ளன.',
                idxTitle='தமிழ் நாட்காட்டி 2026, 2027 — மாதவாரியாகத் தமிழ்த் தேதி, திதி, பண்டிகைகள் | சுப ஜாதகம்', idxH1='தமிழ் நாட்காட்டி 2026, 2027',
@@ -83,7 +84,8 @@ T = {
                fTitle='தமிழ்ப் பண்டிகைகள் {ys} — பொங்கல், தைப்பூசம், தீபாவளி உள்ளிட்ட அனைத்துப் பண்டிகை நாட்கள் | சுப ஜாதகம்', fH1='தமிழ்ப் பண்டிகைகள்',
                fLead='{ys}-ல் வரும் முக்கியத் தமிழ்ப் பண்டிகைகளின் தேதிகள் (சென்னைக்குக் கணிக்கப்பட்டவை), ஒவ்வொன்றின் சிறப்புடன்.',
                ruleNote='சென்னைக்கு எங்கள் சொந்தப் பஞ்சாங்கக் கணிதம்: காட்டப்படும் திதியும் நட்சத்திரமும் சூரிய உதயத்தில் உள்ளவை. கோயில் பஞ்சாங்கங்களில் ஒரு நாள் வேறுபடலாம்.',
-               more='மேலும் பார்க்க', lists=['பௌர்ணமி, அமாவாசை', 'தமிழ்ப் பண்டிகைகள்', 'பண்டிகை, விரத நாட்காட்டி']),
+               more='மேலும் பார்க்க', lists=['பௌர்ணமி, அமாவாசை', 'தமிழ்ப் பண்டிகைகள்', 'பண்டிகை, விரத நாட்காட்டி'],
+               todayL='இன்று', prevDay='முந்தைய நாள்', nextDayL='அடுத்த நாள்', dateL='தேதி', fullMonth='மாதம் முழுவதும், நாள்தோறும்'),
 }
 
 MARK = {'pournami': '🌕', 'amavasya': '🌑', 'ekadashi_s': '🪔', 'ekadashi_k': '🪔', 'pradosham_s': '🔱', 'pradosham_k': '🔱', 'sankashti': '🐘', 'chaturthi': '🐘',
@@ -125,6 +127,22 @@ def fmt_ms(ms):
     return f'{d.day:02d}/{d.month:02d} {d.hour:02d}:{d.minute:02d}'
 
 
+SHEET_KEYS = ['tithis', 'pournami', 'amavasai', 'naks', 'yogas', 'karanas', 'days', 'months', 'years60', 'pakShort', 'nextDay', 'till', 'then', 'varusham',
+              'sunrise', 'tithi', 'star', 'yoga', 'karana', 'rahuKalam', 'yamagandam', 'kuligai', 'abhijit', 'avoid', 'goodTime', 'sunRS', 'moonRS', 'noMoonEv', 'weatherL']
+
+
+def sheet_js(l, Lx, D, by_date, month=None, days=None):
+    """The day sheet's settings and scripts (see assets/daysheet.js)."""
+    DD = {k: Lx[k] for k in SHEET_KEYS}
+    DD.update({k: D[k] for k in ('todayL', 'prevDay', 'nextDayL', 'dateL', 'fullMonth')})
+    cfg = dict(lang=l, D=DD, gmonths=GMONTHS[l], home=dict(name='Chennai', ta='சென்னை', **CITY), month=month, monthUrl=f'{base(l)}tamil-calendar/',
+               ev={d: [EVENT_NAMES[e['id']][l] for e in evs] for d, evs in by_date.items() if (not month or d.startswith(month))})
+    if days is not None:
+        cfg['days'] = days
+    return (f'<script>window.SJ_CAL={json.dumps(cfg, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")};</script>'
+            '<script src="/assets/panch.js" defer></script><script src="/assets/daysheet.js" defer></script>')
+
+
 def generate(I, ads):
     days, evs = data()
     by_date = {}
@@ -163,6 +181,7 @@ def generate(I, ads):
             body = f'''<h1>{esc(D['mH1'].format(**v))}</h1>
 <p class="lead">{esc(D['mLead'].format(**v))}</p>
 <p class="mnav">{nav}</p>
+<div id="daysheet" class="daysheet"></div>
 <div class="calgrid">{cells}</div>
 <p class="legend-c">🌕 {esc(Lx['pournami'])} · 🌑 {esc(Lx['amavasai'])} · 🪔 {esc(EVENT_NAMES['ekadashi_s'][l].split(' (')[0])} · 🔱 {esc(EVENT_NAMES['pradosham_s'][l].split(' (')[0])} · 🐘 {esc(EVENT_NAMES['sankashti'][l])} · 🦚 {esc(EVENT_NAMES['kiruthigai'][l])} / {esc(EVENT_NAMES['shashti'][l])} · ✨ {esc(D['lists'][1])}</p>
 <!--AD-->
@@ -170,14 +189,22 @@ def generate(I, ads):
 <p class="note">{esc(D['ruleNote'])}</p>
 <p class="mnav">{nav}</p>
 <h2>{esc(D['more'])}</h2>{links}
-<script>(function(){{var t=new Date(Date.now()+330*60000).toISOString().slice(0,10);document.querySelectorAll('[data-d="'+t+'"]').forEach(function(e){{e.classList.add('today')}});}})();</script>'''
+<script>(function(){{var t=new Date(Date.now()+330*60000).toISOString().slice(0,10);document.querySelectorAll('[data-d="'+t+'"]').forEach(function(e){{e.classList.add('today')}});}})();</script>
+{sheet_js(l, Lx, D, by_date, month=ym)}'''
             urls.append(kb.page(l, D['mTitle'].format(mon=v['mon'], y=v['y']), D['mLead'].format(**v)[:300], f'{base(l)}tamil-calendar/{ym}.html', alts(f'tamil-calendar/{ym}.html'),
                                 body, [home, (D['menu'], f'{base(l)}tamil-calendar/'), (mname(ym), None)], ads))
         # ---------------------------------------------------------------- index
         yrs = ''
         for y in YEARS:
             yrs += f'<h2>{y}</h2><p class="chips big">' + ''.join(f'<a href="{base(l)}tamil-calendar/{ym}.html"{" class=on" if ym == today else ""}>{esc(GMONTHS[l][int(ym[5:]) - 1])}</a>' for ym in months if ym.startswith(str(y))) + '</p>'
-        body = f'''<h1>{esc(D['idxH1'])}</h1><p class="lead">{esc(D['idxLead'])}</p>
+        mini = [dict(d=d['d'], w=d['w'], tm=d['tm'], td=d['td'], ti=d['ti'], m=''.join(MARK.get(e['id'], '') for e in by_date.get(d['d'], [])) or None,
+                     f=1 if any(e['id'] not in MONTHLY for e in by_date.get(d['d'], [])) else None) for d in days]
+        mini = [{k: v for k, v in x.items() if v is not None} for x in mini]
+        body = f'''<h1>{esc(D['idxH1'])}</h1>
+<div id="daysheet" class="daysheet"></div>
+<div id="mgrid"></div>
+{sheet_js(l, Lx, D, by_date, days=mini)}
+<p class="lead">{esc(D['idxLead'])}</p>
 <p><a class="btn big" id="thisMonth" href="{base(l)}tamil-calendar/{today if today in months else months[0]}.html">📅 {esc(D['thisMonth'])}</a></p>
 {yrs}{links}
 <script>(function(){{var m=new Date(Date.now()+330*60000).toISOString().slice(0,7),a=document.getElementById('thisMonth');if(a&&{json.dumps(months)}.indexOf(m)>=0)a.href='{base(l)}tamil-calendar/'+m+'.html';}})();</script>'''

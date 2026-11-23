@@ -32,7 +32,8 @@
   "featureList":["Rasi and Navamsa charts","Vimshottari dasa and bhukti","10 porutham marriage matching","Daily panchangam and Rahu kalam","Traditional printable jathagam","Tamil and English"]}
 ]}
 </script>
-<meta name="theme-color" content="#6e1216">
+<script>(function(){var d=document.documentElement;try{var m=localStorage.getItem('sj.mode')||'auto',p=localStorage.getItem('sj.pal')||'mayil';d.setAttribute('data-pal',p);d.setAttribute('data-theme',m==='auto'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):m);}catch(e){d.setAttribute('data-pal','mayil');}})();</script>
+<meta name="theme-color" content="#0d4b58">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
 <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
@@ -262,6 +263,7 @@ body.indic .hero h2{font-family:'Noto Serif Tamil','Noto Serif Malayalam','Noto 
 .pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 @media (max-width:760px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:420px){.pgrid{grid-template-columns:1fr}}
+.pgrid .pwide{grid-column:1/-1}
 .pgrid .stat small{display:block;color:var(--muted);font-size:12px;margin-top:2px;font-weight:500}
 .kaalam{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
 @media (max-width:760px){.kaalam{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -673,6 +675,7 @@ body.noscroll{overflow:hidden}
 @media (max-width:370px){#langBtn > svg:first-child{display:none}.brand svg{width:28px;height:28px}}
 @media (max-width:480px){.bar{gap:8px}.brand h1{font-size:20px!important}.brand{gap:7px;min-width:0}#langBtn{padding:7px 10px;font-size:13.5px;gap:5px}.langchips a{font-size:13.5px;padding:6px 11px}}
 </style>
+<link rel="stylesheet" href="/assets/theme.css">
 </head>
 <body>
 <header>
@@ -696,8 +699,8 @@ body.noscroll{overflow:hidden}
       </button>
     </div>
     <nav class="tabs" aria-label="Menu">
-      <button class="on taonly" data-tab="home" data-t="tabPanch">Panchangam</button>
       <a class="taonly" href="/ta/tamil-calendar/" data-cal="1" data-t="navCal">Calendar</a>
+      <button class="on taonly" data-tab="home" data-t="tabPanch">Panchangam</button>
       <button data-tab="horo" data-t="tabHoro">Horoscope</button>
       <button data-tab="match" data-t="tabMatch">Marriage Match</button>
       <a class="tonly" href="/ta/parigaram/" data-t="lPari">Parigaram</a>
@@ -716,7 +719,7 @@ body.noscroll{overflow:hidden}
   <div class="appbar hidden" id="appbar"><span data-t="appPitch">Get the Android app — no ads, works offline, print the traditional jathagam.</span><a class="btn" id="appbarLink" href="#" target="_blank" rel="noopener" data-t="getApp">Get the app · ₹10</a></div>
   <section id="tab-home" class="taonly">
     <div class="card">
-      <p class="step" data-t="step1">Step 1 of 6</p><h2 data-t="panchToday">Today’s panchangam</h2>
+      <p class="step" data-t="step1">Step 2 of 7</p><h2 data-t="panchToday">Today’s panchangam</h2>
       <p class="sub" data-t="panchSub">Tithi, nakshatra, yoga, karana and the day's good and avoidable times, for your town.</p>
       <div class="pbar">
         <div class="field place"><label for="pp-place" data-t="panchPlace">Town</label>
@@ -727,7 +730,7 @@ body.noscroll{overflow:hidden}
       <div id="panchOut"></div>
     </div>
     <div class="card upc"><h2 data-t="upcH">Coming sacred days</h2><div id="upcoming"></div></div>
-    <a class="nextstep" href="/ta/tamil-calendar/" data-cal="1"><small data-t="nextL">Next</small><b data-t="navCal">Calendar</b><span data-t="nextCalS">Tamil months, tithis, Pournami and Amavasai</span><i aria-hidden="true">→</i></a>
+    <button type="button" class="nextstep" data-go="horo"><small data-t="nextL">Next</small><b data-t="tabHoro">Horoscope</b><span data-t="nextHoroS">Rasi, Navamsa and dasa from the birth time</span><i aria-hidden="true">→</i></button>
     <p class="sharerow"><button class="btn ghost" type="button" data-wa="site" id="waSite"></button></p>
   </section>
   <!-- HOROSCOPE -->
@@ -813,6 +816,7 @@ body.noscroll{overflow:hidden}
   </div>
 </footer>
 <script>window.SJ_HOME=%%HOME_DATA%%;</script>
+<script src="/assets/sj.js" defer></script>
 <script src="/assets/divine.js" defer></script>
 
 
@@ -836,6 +840,8 @@ body.noscroll{overflow:hidden}
         <option value="south" data-t="southStyle">South Indian</option><option value="north" data-t="northStyle">North Indian</option></select></div>
     </div>
     <p class="trad-hint" data-t="tradHint"></p>
+    <h3 style="margin-top:18px;font-size:16px" data-t="lookT">Appearance</h3>
+    <div data-look></div>
     <h3 style="margin-top:18px;font-size:16px" data-t="aiAbout">AI reading (optional)</h3>
     <p class="sub" data-t="aiSettingsSub">Readings are written by Google Gemini using your own API key. The key is sent only to Google from your browser.</p>
     <div class="field"><label for="apiKey" data-t="apiKey">Gemini API key</label><input id="apiKey" type="password" placeholder="AIza…" autocomplete="off"></div>
@@ -1794,13 +1800,28 @@ document.getElementById('langSel').addEventListener('change', e => {
 document.addEventListener('click', e => { const a = e.target.closest('a[data-pick]'); if (a) pickLang(a.dataset.pick); }, true);
 document.getElementById('tradSel').addEventListener('change', e => { setTrad(e.target.value, true); applyLang(); });
 document.getElementById('chartSel').addEventListener('change', e => { chartStyle = e.target.value === 'north' ? 'north' : 'south'; store.set('sj.chart', chartStyle); renderHoro(); renderMatch(); });
+// Back button: on the home page, opening the jathagam or porutham from the panchangam is one step,
+// so Back returns to the panchangam (and Back there leaves the app). Moving between the two tools adds no step.
+let tabFromPop = false;
 document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.onclick = () => {
+  const fromHome = !document.getElementById('tab-home').classList.contains('hidden') && STORY_LANGS.includes(lang);
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('.bnav [data-go]').forEach(x => x.classList.toggle('on', x.dataset.go === b.dataset.tab));
   ['home', 'horo', 'match'].forEach(k => document.getElementById('tab-' + k).classList.toggle('hidden', b.dataset.tab !== k));
   if (b.dataset.tab === 'home') renderPanch();
   if (b.dataset.tab === 'home') { if (location.hash) history.replaceState(null, '', location.pathname + location.search); }
-  else if (!location.hash.startsWith('#' + b.dataset.tab)) history.replaceState(null, '', '#' + b.dataset.tab);
+  else if (!location.hash.startsWith('#' + b.dataset.tab)) {
+    if (fromHome && !tabFromPop) history.pushState({ sjTab: b.dataset.tab }, '', '#' + b.dataset.tab);
+    else history.replaceState(history.state, '', '#' + b.dataset.tab);
+  }
+});
+window.addEventListener('popstate', () => {
+  const h = location.hash, tab = h.startsWith('#horo') ? 'horo' : h.startsWith('#match') ? 'match' : STORY_LANGS.includes(lang) ? 'home' : null;
+  const b = tab && document.querySelector(`.tabs button[data-tab="${tab}"]`);
+  if (!b || b.classList.contains('on')) return;
+  tabFromPop = true; try { b.click(); } finally { tabFromPop = false; }
+  if (h.includes('=') && typeof loadFromHash === 'function' && loadFromHash()) { renderHoro(); renderMatch(); }
+  window.scrollTo(0, 0);
 });
 
 // ================= wire forms =================
@@ -2063,8 +2084,9 @@ function renderPanch() {
   const kt = (k, seg, cls, note) => `<div class="stat ${cls}"><span>${k}</span><b>${clock(seg.start, p)} – ${clock(seg.end, p)}</b><small class="muted" style="display:block;font-size:12px">${note}</small></div>`;
   document.getElementById('panchOut').innerHTML = `
     <div class="pgrid">
-      ${cell(t('cal_' + trad), `<b>${calText(p)}</b><small>${Lx.days[p.weekday]}</small>`)}
-      ${cell(t('sunrise') + ' / ' + t('sunset'), `<b>${fmtClock(p.sunrise, p.offset)} · ${fmtClock(p.sunset, p.offset)}</b><small>${t('sunSignToday')} ${Lx.rasis[p.sunSign]} · ${t('moonSignToday')} ${Lx.rasis[p.moonSign]}</small>`)}
+      ${cell(t('cal_' + trad), `<b>${calText(p)}</b><small>${Lx.days[p.weekday]}</small>`).replace('class="stat"', 'class="stat pwide"')}
+      ${cell('☀ ' + t('sunRS'), `<b>${fmtClock(p.sunrise, p.offset)} · ${fmtClock(p.sunset, p.offset)}</b><small>${t('sunSignToday')} ${Lx.rasis[p.sunSign]}</small>`)}
+      ${cell('☾ ' + t('moonRS'), `<b>${p.moonrise ? fmtClock(p.moonrise, p.offset) : '—'} · ${p.moonset ? fmtClock(p.moonset, p.offset) : '—'}</b><small>${t('moonSignToday')} ${Lx.rasis[p.moonSign]}${!p.moonrise || !p.moonset ? ' · — ' + t('noMoonEv') : ''}</small>`)}
       ${cell(t('tithi'), angaList(p.tithi, tithiText, p))}
       ${cell(t('star'), angaList(p.nakshatra, i => Lx.naks[i], p))}
       ${cell(t('yoga'), angaList(p.yoga, i => Lx.yogas[i], p))}
@@ -2076,6 +2098,7 @@ function renderPanch() {
       ${kt(t('kuligai'), p.gulika, 'avoid', t('avoid'))}
       ${kt(t('abhijit'), p.abhijit, 'goodt', t('goodTime'))}
     </div>
+    <a class="wxlink" href="https://www.google.com/search?q=${encodeURIComponent('weather ' + (panchPlace.name || ''))}" target="_blank" rel="noopener">🌦 ${t('weatherL', { p: esc(natName(panchPlace) || panchPlace.name || '') })}</a>
     <p class="note">${t('weekdayNote')}</p>`;
 }
 function renderToday() {

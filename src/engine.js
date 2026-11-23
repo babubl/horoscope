@@ -334,8 +334,12 @@
     const lunar = lunarCalendar(sunrise + 60000);
     const muhurta = (sunset - sunrise) / 15;
     const abhijit = { start: sunrise + 7 * muhurta, end: sunrise + 8 * muhurta };
+    // moonrise and moonset within the local calendar day (the Moon skips one of them about once a month)
+    const dayEnd = localToUtc(y, m, d + 1, 0, 0, zone).utc;
+    const moonEv = dir => { const r = A.SearchRiseSet(A.Body.Moon, obs, dir, new Date(mid), 1); const ms = r ? r.date.getTime() : null; return ms && ms < dayEnd ? ms : null; };
+    const moonrise = moonEv(+1), moonset = moonEv(-1);
     return {
-      offset, sunrise, sunset, nextRise, weekday, tamil, malayalam, lunar, karana,
+      offset, sunrise, sunset, nextRise, weekday, tamil, malayalam, lunar, karana, moonrise, moonset,
       moonSign: Math.floor(x.moon / 30), sunSign: Math.floor(x.sun / 30),
       tithi: list('tithi'), nakshatra: list('nakshatra'), yoga: list('yoga'),
       rahu: seg(RAHU[weekday]), yama: seg(YAMA[weekday]), gulika: seg(GULI[weekday]), abhijit

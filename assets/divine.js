@@ -1,4 +1,5 @@
-/* Suba Jathagam — temple ambience (soft drone, veena and far-off bells, synthesised in the browser, no audio files),
+/* Suba Jathagam — temple ambience (a tanpura drone with nadaswaram, flute, veena, violin, mandolin or Om chanting
+   in real Carnatic ragas, synthesised in the browser, no audio files),
    the "light a lamp" diya and the "open now" badge on temple pages.
    Sound never starts by itself: the visitor taps the bell. The choice is remembered on this device,
    and resumes on the next tap anywhere if they left it on. Not shown inside the Android app. */
@@ -6,7 +7,7 @@
   var app = false;
   try { app = sessionStorage.getItem('jothidam.app') === '1' || /[?&]source=twa\b/.test(location.search); } catch (e) {}
   var KEY = 'sj.music';
-  var ctx = null, master = null, droneNodes = null, bellTimer = null, playing = false;
+  var ctx = null, master = null, outNode = null, playing = false;
   var tamil = document.documentElement.lang === 'ta';
   var T = tamil ? { on: 'இசையை நிறுத்த', off: 'தெய்வீக இசை கேட்க' } : { on: 'Stop the music', off: 'Play soft divine music' };
 
@@ -18,7 +19,7 @@
       master = ctx.createGain();
       master.gain.value = 0.0001;
       var comp = ctx.createDynamicsCompressor();
-      master.connect(comp); comp.connect(ctx.destination);
+      master.connect(comp); comp.connect(ctx.destination); outNode = comp;
     }
     if (ctx.state === 'suspended') ctx.resume();
     return ctx;
@@ -29,7 +30,7 @@
     var c = ac(); if (!c) return;
     var t0 = c.currentTime + 0.02;
     pitch = pitch || 440; vol = vol || 0.32;
-    var out = c.createGain(); out.gain.value = vol; out.connect(master || c.destination);
+    var out = c.createGain(); out.gain.value = vol; out.connect(outNode || c.destination);
     var P = [[0.5, 0.55, 6], [1, 1, 4.5], [1.183, 0.5, 3.4], [1.506, 0.42, 2.6], [2, 0.38, 2.1], [2.514, 0.25, 1.6], [2.662, 0.2, 1.4], [3.011, 0.14, 1.1], [4.166, 0.09, 0.7], [5.433, 0.05, 0.45]];
     P.forEach(function (p) {
       var o = c.createOscillator(), g = c.createGain();
@@ -51,71 +52,230 @@
     n.connect(bp); bp.connect(ng); ng.connect(out); n.start(t0);
   }
 
-  // ---- Divine music: a soft, slowly breathing drone, a veena playing slow phrases in raga Mohanam and,
-  // now and then, a small temple bell far away. All synthesised here with a warm hall reverb: nothing is
-  // downloaded and nothing is copyrighted. Kept quiet on purpose — it should be felt more than heard.
-  var SA = 138.6, reverb = null, timers = [], pad = [], ks = {};
+  // ---- Divine music: a tanpura drone under one Carnatic instrument playing slow alapana-style phrases in a real raga,
+  // with the gamakas (slides and shakes) that make it sound South Indian. Everything is synthesised here — nothing is
+  // downloaded and nothing is copyrighted. The visitor picks the instrument; the choice is remembered.
+  var SA = 138.6, reverb = null, timers = [], live = [], ks = {}, track = null;
+  var TRACKS = [
+    { id: 'nadaswaram', icon: '🎺', ta: 'மங்கல இசை (நாதஸ்வரம்)', te: 'మంగళ వాద్యం (నాదస్వరం)', en: 'Mangala isai (nadaswaram)' },
+    { id: 'flute', icon: '🪈', ta: 'புல்லாங்குழல்', te: 'వేణువు', en: 'Flute' },
+    { id: 'veena', icon: '🪕', ta: 'வீணை', te: 'వీణ', en: 'Veena' },
+    { id: 'violin', icon: '🎻', ta: 'வயலின்', te: 'వయొలిన్', en: 'Violin' },
+    { id: 'mandolin', icon: '🎸', ta: 'மாண்டலின்', te: 'మాండొలిన్', en: 'Mandolin' },
+    { id: 'om', icon: 'ॐ', ta: 'ஓம் ஜபம்', te: 'ఓం జపం', en: 'Om chanting' },
+    { id: 'tanpura', icon: '🕉', ta: 'தம்புரா நாதம்', te: 'తంబురా నాదం', en: 'Tanpura drone' }
+  ];
+  var lng = (document.documentElement.lang || 'en').slice(0, 2);
+  // ragas as just-intonation ratios of Sa; G = notes that carry a kampitam (shake)
+  var S = 1, R1 = 16 / 15, R2 = 9 / 8, G2 = 6 / 5, G3 = 5 / 4, M1 = 4 / 3, M2 = 45 / 32, P = 3 / 2, D1 = 8 / 5, D2 = 5 / 3, N2 = 9 / 5, N3 = 15 / 8;
+  var RAGA = {
+    kalyani: { sw: [S, R2, G3, M2, P, D2, N3], shake: [G3, N3, M2], rest: [S, G3, P] },            // mangala isai
+    mayamalavagowla: { sw: [S, R1, G3, M1, P, D1, N3], shake: [R1, D1, G3], rest: [S, P, G3] },     // morning raga
+    kharaharapriya: { sw: [S, R2, G2, M1, P, D2, N2], shake: [G2, N2, R2], rest: [S, P, R2] },
+    shanmukhapriya: { sw: [S, R2, G2, M2, P, D1, N2], shake: [G2, N2, D1], rest: [S, P, M2] },
+    keeravani: { sw: [S, R2, G2, M1, P, D1, N3], shake: [G2, D1], rest: [S, P, G2] }
+  };
   function hall() {
     if (reverb) return reverb;
-    var c = ctx, len = Math.floor(c.sampleRate * 4.5), buf = c.createBuffer(2, len, c.sampleRate);
+    var c = ctx, len = Math.floor(c.sampleRate * 4), buf = c.createBuffer(2, len, c.sampleRate);
     for (var ch = 0; ch < 2; ch++) {
       var d = buf.getChannelData(ch), lp = 0;
-      for (var i = 0; i < len; i++) { lp += 0.35 * ((Math.random() * 2 - 1) - lp); d[i] = lp * Math.pow(1 - i / len, 3); } // darker, softer tail
+      for (var i = 0; i < len; i++) { lp += 0.4 * ((Math.random() * 2 - 1) - lp); d[i] = lp * Math.pow(1 - i / len, 3.2); }
     }
     reverb = c.createConvolver(); reverb.buffer = buf;
-    var wet = c.createGain(); wet.gain.value = 0.7; reverb.connect(wet); wet.connect(master);
+    var wet = c.createGain(); wet.gain.value = 0.55; reverb.connect(wet); wet.connect(master);
     return reverb;
   }
-  function voice(dry) { var g = ctx.createGain(); g.connect(hall()); var d = ctx.createGain(); d.gain.value = dry; g.connect(d); d.connect(master); return g; }
+  function voice(dry, wet) { var g = ctx.createGain(), w = ctx.createGain(), d = ctx.createGain(); w.gain.value = wet == null ? 1 : wet; d.gain.value = dry; g.connect(w); w.connect(hall()); g.connect(d); d.connect(master); return g; }
+  function later(fn, ms) { timers.push(setTimeout(function () { if (playing) fn(); }, ms)); }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 
-  // the drone: pure sine tones on Sa, Pa and upper Sa that swell and fade very slowly, like breath
-  function padStart() {
-    var t = ctx.currentTime, lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.connect(voice(0.6));
-    [[SA, 0.05, 0.07], [SA * 1.5, 0.025, 0.05], [SA * 2, 0.03, 0.09], [SA * 2.003, 0.02, 0.11]].forEach(function (v) {
-      var o = ctx.createOscillator(), g = ctx.createGain(), lfo = ctx.createOscillator(), lg = ctx.createGain();
-      o.type = 'sine'; o.frequency.value = v[0];
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v[1], t + 6);
-      lfo.frequency.value = v[2]; lg.gain.value = v[1] * 0.45; lfo.connect(lg); lg.connect(g.gain);
-      o.connect(g); g.connect(lp); o.start(t); lfo.start(t);
-      pad.push(o, lfo);
-    });
-  }
-  function padStop() { var t = ctx.currentTime + 1.5; pad.forEach(function (o) { try { o.stop(t); } catch (e) {} }); pad = []; }
-
-  // a veena string (Karplus–Strong): a soft pluck that rings and mellows, played back at the note's pitch
-  function veenaBuf(f) {
-    if (ks[f]) return ks[f];
-    var sr = ctx.sampleRate, N = Math.max(2, Math.round(sr / f)), len = Math.floor(sr * 4.2), buf = ctx.createBuffer(1, len, sr), d = buf.getChannelData(0);
-    var ring = new Float32Array(N), i, k = 0, mx = 0;
+  // ---- plucked strings (Karplus–Strong). bright: a pick (mandolin) or a finger (veena); jawari: the tanpura's buzz
+  function pluckBuf(f, opt) {
+    var key = f + '|' + (opt.bright ? 1 : 0) + (opt.jawari ? 1 : 0); if (ks[key]) return ks[key];
+    var sr = ctx.sampleRate, N = Math.max(2, Math.round(sr / f)), len = Math.floor(sr * (opt.len || 4)), buf = ctx.createBuffer(1, len, sr), d = buf.getChannelData(0);
+    var ring = new Float32Array(N), i, k = 0, mx = 0, loss = opt.loss || 0.4992;
     for (i = 0; i < N; i++) ring[i] = Math.random() * 2 - 1;
-    for (var pass = 0; pass < 3; pass++) for (i = 1; i < N; i++) ring[i] = 0.5 * (ring[i] + ring[i - 1]); // a finger, not a pick: soft attack
+    for (var pass = 0; pass < (opt.bright ? 0 : 3); pass++) for (i = 1; i < N; i++) ring[i] = 0.5 * (ring[i] + ring[i - 1]);
     for (i = 0; i < len; i++) {
       var a = ring[k], b = ring[(k + 1) % N];
-      d[i] = a; ring[k] = 0.4992 * (a + b);
-      k = (k + 1) % N;
-      if (Math.abs(a) > mx) mx = Math.abs(a);
+      d[i] = opt.jawari ? Math.tanh(a * 2.2) + 0.25 * a : a;
+      ring[k] = loss * (a + b); k = (k + 1) % N;
+      if (Math.abs(d[i]) > mx) mx = Math.abs(d[i]);
     }
-    var fade = Math.floor(sr * 0.6);
+    var fade = Math.floor(sr * 0.5);
     for (i = 0; i < len; i++) { d[i] /= mx || 1; if (i > len - fade) d[i] *= (len - i) / fade; }
-    return (ks[f] = buf);
+    return (ks[key] = buf);
   }
-  var body = null;
-  function veena(ratio, t, vol, gamaka) {
-    if (!body) {
-      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400; lp.Q.value = 0.4;
-      var pk = ctx.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = 280; pk.gain.value = 4; pk.Q.value = 0.8;
-      lp.connect(pk); pk.connect(voice(0.55)); body = lp;
+  // rate automation for a gamaka on a playback-rate or frequency AudioParam
+  function gamaka(p, base, ratio, t, dur, kind, from) {
+    var f = base * ratio;
+    if (kind === 'slide') { p.setValueAtTime(base * (from || ratio * 0.94), t); p.linearRampToValueAtTime(f, t + Math.min(0.25, dur * 0.4)); }
+    else if (kind === 'shake') {
+      p.setValueAtTime(f, t); var q = t + Math.min(0.2, dur * 0.25), w = 0.17;
+      while (q + w * 2 < t + dur - 0.1) { p.linearRampToValueAtTime(f * 1.045, q + w); p.linearRampToValueAtTime(f, q + w * 2); q += w * 2; }
+    } else p.setValueAtTime(f, t);
+  }
+
+  // ---- the tanpura: Pa, Sa, Sa, low Sa, round and round
+  var tanBus = null;
+  function tanpura(vol) {
+    if (!tanBus) {
+      var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 50;
+      var pk = ctx.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = 2200; pk.Q.value = 1.2; pk.gain.value = 5;
+      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200;
+      tanBus = ctx.createGain(); tanBus.connect(hp); hp.connect(pk); pk.connect(lp); lp.connect(voice(0.7, 0.8));
     }
-    var src = ctx.createBufferSource(), g = ctx.createGain();
-    src.buffer = veenaBuf(SA * 2); // one tuned string, stopped at each note by changing the playback rate
-    var r = src.playbackRate;
-    if (gamaka === 'slide') { r.setValueAtTime(ratio * 0.944, t); r.linearRampToValueAtTime(ratio, t + 0.22); }       // glide up into the note
-    else if (gamaka === 'shake') { r.setValueAtTime(ratio, t); for (var q = 0; q < 3; q++) { r.linearRampToValueAtTime(ratio * 1.03, t + 0.25 + q * 0.36); r.linearRampToValueAtTime(ratio, t + 0.43 + q * 0.36); } } // a gentle kampitam
-    else r.setValueAtTime(ratio, t);
-    g.gain.value = vol;
-    src.connect(g); g.connect(body); src.start(t); src.stop(t + 4.2);
+    tanBus.gain.value = vol;
+    var strings = [SA * 0.75, SA, SA, SA * 0.5], i = 0;
+    (function cycle() {
+      var t = ctx.currentTime + 0.05;
+      var src = ctx.createBufferSource(), g = ctx.createGain();
+      src.buffer = pluckBuf(strings[i % 4], { jawari: true, bright: true, loss: 0.49985, len: 6 });
+      g.gain.setValueAtTime(i % 4 === 3 ? 0.9 : 0.65, t);
+      src.connect(g); g.connect(tanBus); src.start(t); src.stop(t + 6);
+      i++; later(cycle, i % 4 === 0 ? 1500 : 1050);
+    })();
   }
-  // a small, far-off temple bell: only the pure partials, no strike, deep in the reverb
+
+  // ---- sustained instruments (nadaswaram, flute, violin): one oscillator voice that glides from note to note
+  function sustained(kind) {
+    var base = kind === 'flute' ? SA * 4 : SA * 2, t0 = ctx.currentTime;
+    var o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), amp = ctx.createGain(), lfo = ctx.createOscillator(), lg = ctx.createGain(), out = ctx.createGain();
+    o1.type = kind === 'flute' ? 'sine' : 'sawtooth';
+    o2.type = kind === 'nadaswaram' ? 'square' : kind === 'flute' ? 'triangle' : 'sawtooth';
+    o2.detune.value = kind === 'flute' ? 1200 : 6;
+    var g2 = ctx.createGain(); g2.gain.value = kind === 'flute' ? 0.08 : kind === 'nadaswaram' ? 0.45 : 0.6;
+    amp.gain.value = 0.0001;
+    lfo.frequency.value = kind === 'violin' ? 5.8 : 5.2; lg.gain.value = 0;
+    lfo.connect(lg); lg.connect(o1.frequency); lg.connect(o2.frequency);
+    var chain;
+    if (kind === 'nadaswaram') {
+      var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 280;
+      var f1 = ctx.createBiquadFilter(); f1.type = 'peaking'; f1.frequency.value = 1150; f1.Q.value = 1.6; f1.gain.value = 9;
+      var f2 = ctx.createBiquadFilter(); f2.type = 'peaking'; f2.frequency.value = 2700; f2.Q.value = 2; f2.gain.value = 5;
+      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 4800;
+      hp.connect(f1); f1.connect(f2); f2.connect(lp); chain = [hp, lp]; out.gain.value = 0.11;
+    } else if (kind === 'violin') {
+      var lpv = ctx.createBiquadFilter(); lpv.type = 'lowpass'; lpv.frequency.value = 3400;
+      var b1 = ctx.createBiquadFilter(); b1.type = 'peaking'; b1.frequency.value = 290; b1.Q.value = 1.4; b1.gain.value = 5;
+      var b2 = ctx.createBiquadFilter(); b2.type = 'peaking'; b2.frequency.value = 2900; b2.Q.value = 1.2; b2.gain.value = 4;
+      lpv.connect(b1); b1.connect(b2); chain = [lpv, b2]; out.gain.value = 0.12;
+    } else {
+      var lpf = ctx.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 2600; chain = [lpf, lpf]; out.gain.value = 0.2;
+      // breath: soft filtered noise that follows the note's loudness
+      var nb = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), nd = nb.getChannelData(0);
+      for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      var ns = ctx.createBufferSource(); ns.buffer = nb; ns.loop = true;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1900; bp.Q.value = 0.9;
+      var ng = ctx.createGain(); ng.gain.value = 0.05; ns.connect(bp); bp.connect(ng); ng.connect(amp); ns.start(t0); live.push(ns);
+    }
+    o1.connect(amp); o2.connect(g2); g2.connect(amp); amp.connect(chain[0]); chain[1].connect(out); out.connect(voice(0.6, 0.9));
+    o1.start(t0); o2.start(t0); lfo.start(t0); live.push(o1, o2, lfo);
+    var att = kind === 'violin' ? 0.14 : kind === 'flute' ? 0.09 : 0.05;
+    return {
+      note: function (ratio, t, dur, gm, from) {
+        gamaka(o1.frequency, base, ratio, t, dur, gm, from && base * from); gamaka(o2.frequency, base, ratio, t, dur, gm, from && base * from);
+        var a = amp.gain; a.setTargetAtTime(kind === 'flute' ? 0.9 : 0.75, t, att);
+        // vibrato blooms on long notes (not on shaken ones)
+        lg.gain.setValueAtTime(0, t); if (dur > 1 && gm !== 'shake') lg.gain.linearRampToValueAtTime(base * ratio * (kind === 'violin' ? 0.007 : 0.004), t + dur * 0.8);
+      },
+      rest: function (t) { amp.gain.setTargetAtTime(0.0001, t, 0.18); lg.gain.setValueAtTime(0, t); }
+    };
+  }
+  // ---- plucked melody instruments
+  function plucker(kind) {
+    var base = kind === 'mandolin' ? SA * 4 : SA * 2, bus = ctx.createGain();
+    var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = kind === 'mandolin' ? 5200 : 2400;
+    var pk = ctx.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = kind === 'mandolin' ? 1800 : 280; pk.gain.value = 4; pk.Q.value = 0.8;
+    bus.gain.value = kind === 'mandolin' ? 0.16 : 0.2; bus.connect(lp); lp.connect(pk); pk.connect(voice(0.55, 0.85));
+    function one(ratio, t, dur, gm, from, vol, det) {
+      var src = ctx.createBufferSource(), g = ctx.createGain();
+      src.buffer = pluckBuf(base, { bright: kind === 'mandolin', len: 4 });
+      gamaka(src.playbackRate, 1, ratio * (det || 1), t, dur, gm, from);
+      g.gain.value = vol; src.connect(g); g.connect(bus); src.start(t); src.stop(t + Math.min(4, dur + 2.5));
+    }
+    return {
+      note: function (ratio, t, dur, gm, from) {
+        if (kind === 'mandolin') {
+          one(ratio, t, dur, gm, from, 0.8, 1); one(ratio, t + 0.004, dur, gm, from, 0.6, 1.003);      // two strings per course
+          if (dur > 1.2) for (var q = t + 0.11; q < t + dur - 0.15; q += 0.105) one(ratio, q, 0.3, '', 0, 0.32, 1); // tremolo on long notes
+        } else one(ratio, t, dur, gm, from, 0.85, 1);
+      },
+      rest: function () {}
+    };
+  }
+  // ---- alapana: slow phrases that climb or fall through the raga and rest on its resting notes
+  function alapana(inst, raga, pace) {
+    var R = RAGA[raga], sc = [], i;
+    for (i = 4; i < 7; i++) sc.push(R.sw[i] / 2);                 // lower Pa Da Ni
+    for (i = 0; i < 7; i++) sc.push(R.sw[i]);
+    sc.push(2); sc.push(R.sw[1] * 2); sc.push(R.sw[2] * 2);          // upper Sa Ri Ga
+    var pos = 3, last = null;
+    function isRest(r) { return R.rest.some(function (x) { return Math.abs(x - r) < 1e-6 || Math.abs(x * 2 - r) < 1e-6 || Math.abs(x / 2 - r) < 1e-6; }); }
+    function isShake(r) { return R.shake.some(function (x) { return Math.abs(x - r) < 1e-6 || Math.abs(x * 2 - r) < 1e-6 || Math.abs(x / 2 - r) < 1e-6; }); }
+    (function phrase() {
+      var t = ctx.currentTime + 0.1, n = 4 + Math.floor(Math.random() * 5), dir = pos < 5 ? 1 : pos > 9 ? -1 : pick([1, -1]);
+      for (var k = 0; k < n; k++) {
+        var step = Math.random() < 0.75 ? dir : (Math.random() < 0.5 ? -dir : 2 * dir);
+        pos = Math.max(0, Math.min(sc.length - 1, pos + step));
+        if (k === n - 1) { while (!isRest(sc[pos]) && pos > 0) pos--; }
+        var r = sc[pos], dur = (k === n - 1 ? pick([2.2, 2.8, 3.4]) : pick([0.45, 0.6, 0.6, 0.9, 1.2])) * pace;
+        var gm = isShake(r) && dur > 0.55 ? 'shake' : last && Math.random() < 0.35 ? 'slide' : '';
+        inst.note(r, t, dur, gm, last);
+        last = r; t += dur;
+      }
+      inst.rest(t);
+      later(phrase, (t - ctx.currentTime) * 1000 + 2200 + Math.random() * 3500);
+    })();
+  }
+  // ---- thavil: the soft beat under mangala isai (adi talam, eight beats)
+  function thavil() {
+    var beat = 60 / 76, pat = [1, 0, 2, 2, 1, 0, 2, 0], i = 0, bus = voice(0.6, 0.3); var bg = ctx.createGain(); bg.gain.value = 0.22; bg.connect(bus);
+    (function hit() {
+      var t = ctx.currentTime + 0.05, k = pat[i % 8];
+      if (k === 1) { var o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(58, t + 0.25); g.gain.setValueAtTime(0.9, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35); o.connect(g); g.connect(bg); o.start(t); o.stop(t + 0.4); }
+      if (k === 2) { var n = ctx.createBufferSource(), b = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.08), ctx.sampleRate), dd = b.getChannelData(0); for (var j = 0; j < dd.length; j++) dd[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / dd.length, 4); n.buffer = b; var f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 1500; f.Q.value = 1.5; var ng = ctx.createGain(); ng.gain.value = 0.7; n.connect(f); f.connect(ng); ng.connect(bg); n.start(t); }
+      i++; later(hit, beat * 1000);
+    })();
+  }
+  // ---- Om: a chorus of low voices, "O–o–mmm", breath and again
+  function om() {
+    var shapes = { a: [700, 1150, 2700], o: [450, 800, 2830], u: [330, 700, 2500] };
+    (function chant() {
+      var t = ctx.currentTime + 0.1, L = 7.5;
+      [[SA, 0, 0.55, -0.4], [SA * 1.0025, 0.04, 0.45, 0.4], [SA / 2, 0.08, 0.5, 0]].forEach(function (v) {
+        var o = ctx.createOscillator(), g = ctx.createGain(), pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+        o.type = 'sawtooth'; o.frequency.setValueAtTime(v[0] * 0.97, t + v[1]); o.frequency.linearRampToValueAtTime(v[0], t + v[1] + 0.4);
+        var sum = ctx.createGain(); sum.gain.value = 1;
+        var fs = [0, 1, 2].map(function (k) {
+          var f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = [6, 8, 10][k];
+          var fg = ctx.createGain(); fg.gain.value = [1, 0.5, 0.18][k];
+          f.frequency.setValueAtTime(shapes.a[k], t); f.frequency.linearRampToValueAtTime(shapes.o[k], t + 0.9); f.frequency.setValueAtTime(shapes.o[k], t + 3.2); f.frequency.linearRampToValueAtTime(shapes.u[k], t + 4.2);
+          o.connect(f); f.connect(fg); fg.connect(sum); return fg;
+        });
+        // "mmm": the mouth closes — the formants fade and a low hum remains
+        var hum = ctx.createBiquadFilter(); hum.type = 'lowpass'; hum.frequency.value = 320; var hg = ctx.createGain(); hg.gain.setValueAtTime(0, t); hg.gain.setValueAtTime(0, t + 4); hg.gain.linearRampToValueAtTime(1.4, t + 4.6);
+        o.connect(hum); hum.connect(hg); hg.connect(g);
+        fs.forEach(function (fg, k) { fg.gain.setValueAtTime(fg.gain.value, t + 4); fg.gain.linearRampToValueAtTime(0.0001, t + 4.8); });
+        sum.connect(g);
+        g.gain.setValueAtTime(0.0001, t + v[1]); g.gain.linearRampToValueAtTime(v[2] * 0.25, t + v[1] + 0.35); g.gain.setValueAtTime(v[2] * 0.25, t + L - 1.6); g.gain.linearRampToValueAtTime(0.0001, t + L);
+        if (pan) { pan.pan.value = v[3]; g.connect(pan); pan.connect(voice(0.55, 1)); } else g.connect(voice(0.55, 1));
+        o.start(t + v[1]); o.stop(t + L + 0.1);
+      });
+      later(chant, (L + 1.6) * 1000);
+    })();
+  }
+  var PLAN = {
+    nadaswaram: function () { tanpura(0.35); var v = sustained('nadaswaram'); later(function () { alapana(v, 'kalyani', 1); }, 1500); later(thavil, 9000); },
+    flute: function () { tanpura(0.45); var v = sustained('flute'); later(function () { alapana(v, 'mayamalavagowla', 1.15); }, 2500); },
+    veena: function () { tanpura(0.4); var v = plucker('veena'); later(function () { alapana(v, 'kharaharapriya', 1.1); }, 2500); },
+    violin: function () { tanpura(0.4); var v = sustained('violin'); later(function () { alapana(v, 'shanmukhapriya', 1.2); }, 2500); },
+    mandolin: function () { tanpura(0.4); var v = plucker('mandolin'); later(function () { alapana(v, 'keeravani', 0.9); }, 2000); },
+    om: function () { tanpura(0.5); later(om, 1200); },
+    tanpura: function () { tanpura(0.8); later(function () { softBell(SA * 8, 0.05); }, 600); }
+  };
+  // a small, far-off temple bell: only the pure partials, deep in the reverb
   function softBell(pitch, vol) {
     var t0 = ctx.currentTime + 0.05, out = voice(0.25); var og = ctx.createGain(); og.gain.value = vol; og.connect(out);
     [[1, 1, 5], [2.01, 0.35, 3.5], [2.76, 0.18, 2.4], [5.4, 0.06, 1.2]].forEach(function (p) {
@@ -124,45 +284,32 @@
       o.connect(g); g.connect(og); o.start(t0); o.stop(t0 + p[2] + 0.1);
     });
   }
-  function bells() {
-    if (!playing) return;
-    softBell(SA * 8, 0.05); if (Math.random() < 0.5) timers.push(setTimeout(function () { if (playing) softBell(SA * 12, 0.03); }, 1400));
-    timers.push(setTimeout(bells, 22000 + Math.random() * 20000));
-  }
-  // Mohanam: Sa Ri2 Ga3 Pa Da2 — slow phrases that move a step at a time and rest on Sa, Ga or Pa
-  var SCALE = [0.75, 5 / 6, 1, 9 / 8, 5 / 4, 3 / 2, 5 / 3, 2];
-  var pos = 2;
-  function phrase() {
-    if (!playing) return;
-    var t = ctx.currentTime + 0.1, n = 3 + Math.floor(Math.random() * 4);
-    for (var i = 0; i < n; i++) {
-      var step = [-1, -1, 1, 1, 2, -2, 0][Math.floor(Math.random() * 7)];
-      pos = Math.max(0, Math.min(SCALE.length - 1, pos + step));
-      if (i === n - 1) pos = [2, 4, 5, 7][Math.floor(Math.random() * 4)];
-      var gm = SCALE[pos] === 5 / 4 || SCALE[pos] === 5 / 3 ? (Math.random() < 0.6 ? 'shake' : 'slide') : Math.random() < 0.25 ? 'slide' : '';
-      veena(SCALE[pos], t, i === n - 1 ? 0.2 : 0.16, gm);
-      t += i === n - 1 ? 0 : [0.9, 1.2, 1.5, 1.8][Math.floor(Math.random() * 4)];
-    }
-    timers.push(setTimeout(phrase, (t - ctx.currentTime) * 1000 + 5000 + Math.random() * 6000));
-  }
 
-  function start() {
+  var TKEY = 'sj.track';
+  function current() { var v; try { v = localStorage.getItem(TKEY); } catch (e) {} return PLAN[v] ? v : 'flute'; }
+  function start(id) {
     var c = ac(); if (!c) return;
+    if (playing) stop(true);
+    track = PLAN[id] ? id : current();
+    try { localStorage.setItem(TKEY, track); } catch (e) {}
     playing = true;
-    master.gain.cancelScheduledValues(c.currentTime);
-    master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), c.currentTime);
-    master.gain.exponentialRampToValueAtTime(0.55, c.currentTime + 4);
-    padStart();
-    timers.push(setTimeout(function () { if (playing) softBell(SA * 8, 0.06); }, 600));
-    timers.push(setTimeout(phrase, 5000));
-    timers.push(setTimeout(bells, 30000));
+    // a fresh output for every start, so the tail of the last instrument fades on its own
+    master = c.createGain(); master.gain.setValueAtTime(0.0001, c.currentTime); master.connect(outNode || c.destination);
+    reverb = null; tanBus = null;
+    master.gain.exponentialRampToValueAtTime(0.6, c.currentTime + 3);
+    PLAN[track]();
     sync();
+    if (window.SJLook) window.SJLook.render();
   }
-  function stop() {
+  function stop(quiet) {
     playing = false;
     timers.forEach(clearTimeout); timers = [];
-    if (ctx && master) { var t = ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), t); master.gain.exponentialRampToValueAtTime(0.0001, t + 1.2); padStop(); }
-    sync();
+    if (ctx && master) {
+      var t = ctx.currentTime, m = master, l = live; live = [];
+      m.gain.cancelScheduledValues(t); m.gain.setValueAtTime(Math.max(m.gain.value, 0.0001), t); m.gain.exponentialRampToValueAtTime(0.0001, t + 1.2);
+      setTimeout(function () { l.forEach(function (o) { try { o.stop(); } catch (e) {} }); try { m.disconnect(); } catch (e) {} }, 1500);
+    }
+    if (!quiet) { sync(); if (window.SJLook) window.SJLook.render(); }
   }
   function save(v) { try { localStorage.setItem(KEY, v ? '1' : '0'); } catch (e) {} }
   function wanted() { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
@@ -175,19 +322,28 @@
     btn.title = playing ? T.on : T.off;
     btn.innerHTML = playing ? '<span class="eq"><i></i><i></i><i></i></span>' : '🎵';
   }
+  if (!app) {
+    window.SJMusic = {
+      tracks: function () { return TRACKS.map(function (x) { return { id: x.id, icon: x.icon, name: x[lng] || x.en }; }); },
+      current: current, playing: function () { return playing; },
+      play: function (id) { start(id); save(true); }, stop: function () { stop(); save(false); }
+    };
+  }
   if (btn && !app) {
     btn.hidden = false; sync();
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
+    // the 🎵 button starts the last chosen music and opens the list of instruments; tap again to choose or stop
+    btn.setAttribute('data-look-open', 'music');
+    btn.addEventListener('click', function () {
       btn.classList.remove('ring'); void btn.offsetWidth; btn.classList.add('ring');
-      if (playing) { stop(); save(false); } else { start(); save(true); }
+      if (!playing) { start(); save(true); }
     });
     // they left the sound on last time: resume on their first tap anywhere (browsers need a tap before sound)
     if (wanted()) {
-      var resume = function () { document.removeEventListener('pointerdown', resume, true); if (!playing && wanted()) start(); };
+      var resume = function (e) { document.removeEventListener('pointerdown', resume, true); if (!playing && wanted() && !(e.target.closest && e.target.closest('#sndBtn, [data-track]'))) start(); };
       document.addEventListener('pointerdown', resume, true);
     }
   }
+  if (window.SJLook) window.SJLook.render();
   document.addEventListener('visibilitychange', function () {
     if (!ctx) return;
     if (document.hidden) ctx.suspend(); else if (playing) ctx.resume();
@@ -222,7 +378,7 @@
     lamp.addEventListener('click', function () {
       var now = Date.now();
       lamp.classList.remove('lit'); void lamp.offsetWidth; lit(now);
-      if (!app) { ac(); if (master && !playing) { master.gain.setValueAtTime(0.9, ctx.currentTime); } bell(523.25, 0.3); setTimeout(function () { bell(659.25, 0.2); }, 700); if (!playing) setTimeout(function () { if (!playing && master) master.gain.setValueAtTime(0.0001, ctx.currentTime); }, 6000); }
+      if (!app) { ac(); bell(523.25, 0.3); setTimeout(function () { bell(659.25, 0.2); }, 700); }
       try { localStorage.setItem(lkey, String(now)); } catch (e) {}
     });
   }

@@ -162,19 +162,19 @@ def nav_items(l):
 
 
 # the Tamil story: each page ends with the next step
-STORY = [('panch', 'பஞ்சாங்கம்', '/ta/', 'இன்றைய திதி, நட்சத்திரம், ராகு காலம்'),
-         ('cal', 'நாட்காட்டி', '/ta/tamil-calendar/', 'தமிழ் மாதம், திதி, பௌர்ணமி, அமாவாசை, பண்டிகைகள்'),
+STORY = [('cal', 'நாட்காட்டி', '/ta/tamil-calendar/', 'இன்றைய நாள், தமிழ் மாதம், பௌர்ணமி, அமாவாசை, பண்டிகைகள்'),
+         ('panch', 'பஞ்சாங்கம்', '/ta/', 'இன்றைய திதி, நட்சத்திரம், ராகு காலம்'),
          ('horo', 'ஜாதகம்', '/ta/#horo', 'பிறந்த நேரத்திலிருந்து ராசி, நவாம்சம், தசை புக்தி'),
          ('match', 'திருமணப் பொருத்தம்', '/ta/#match', 'மணமக்களுக்கு 10 பொருத்தம்'),
          ('pari', 'பரிகாரம்', '/ta/parigaram/', 'நவகிரகங்களுக்கும் தோஷங்களுக்கும் பரிகாரம்'),
          ('temples', 'கோயில்கள்', '/ta/temples/', 'நவகிரகக் கோயில்கள், தஞ்சை பெரிய கோயில் மற்றும் பல'),
          ('vastu', 'வாஸ்து', '/ta/vastu/', 'எட்டுத் திசைகள், அறைகள், வாஸ்து நாள், உங்கள் வீட்டைச் சரிபாருங்கள்')]
-STORY_TE = [('panch', 'పంచాంగం', '/te/', 'నేటి తిథి, నక్షత్రం, రాహుకాలం'),
-            ('cal', 'క్యాలెండర్', '/te/calendar/', 'ఏకాదశి, పౌర్ణమి, అమావాస్య, పండుగలు'),
+STORY_TE = [('cal', 'క్యాలెండర్', '/te/calendar/', 'ఏకాదశి, పౌర్ణమి, అమావాస్య, పండుగలు'),
+            ('panch', 'పంచాంగం', '/te/', 'నేటి తిథి, నక్షత్రం, రాహుకాలం'),
             ('horo', 'జాతకం', '/te/#horo', 'పుట్టిన సమయం నుండి రాశి, నవాంశ, దశ'),
             ('match', 'వివాహ పొంతన', '/te/#match', 'వధూవరుల గుణ మిలనం')]
 STORIES = {'ta': STORY, 'te': STORY_TE}
-NEXT_OF = {'panch': 'cal', 'cal': 'horo', 'fest': 'horo', 'naks': 'match', 'rasi': 'horo', 'baby': 'horo', 'pari': 'temples', 'temples': 'vastu', 'vastu': 'panch'}
+NEXT_OF = {'cal': 'panch', 'panch': 'horo', 'fest': 'horo', 'naks': 'match', 'rasi': 'horo', 'baby': 'horo', 'pari': 'temples', 'temples': 'vastu', 'vastu': 'cal'}
 
 
 def next_html(canon, l='ta'):
@@ -183,13 +183,13 @@ def next_html(canon, l='ta'):
     if not st or not k:
         return ''
     if k not in [x[0] for x in st]:
-        k = 'panch'
+        k = st[0][0]
     i = [x[0] for x in st].index(k)
     _, t, h, sub = st[i]
     if l == 'te':
-        lbl = 'మళ్ళీ మొదటికి' if k == 'panch' else f'తరువాత · దశ {i + 1} / {len(st)}'
+        lbl = 'మళ్ళీ మొదటికి' if i == 0 else f'తరువాత · దశ {i + 1} / {len(st)}'
     else:
-        lbl = 'மீண்டும் தொடக்கத்திற்கு' if k == 'panch' else f'அடுத்து · படி {i + 1} / {len(st)}'
+        lbl = 'மீண்டும் தொடக்கத்திற்கு' if i == 0 else f'அடுத்து · படி {i + 1} / {len(st)}'
     return f'<a class="nextstep" href="{h}"><small>{lbl}</small><b>{esc(t)}</b><span>{esc(sub)}</span><i aria-hidden="true">→</i></a>'
 
 
@@ -213,8 +213,8 @@ ICONS = {
     'vastu': '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v4M10 15h4"/>',
     'more': '<circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/>',
 }
-SHEET_T = {'ta': dict(more='மேலும்', title='எல்லாப் பகுதிகளும்', sub='பஞ்சாங்கத்திலிருந்து வாஸ்து வரை, வரிசையாக', extra='இன்னும் பார்க்க', lang='மொழி', fb='கருத்து சொல்ல', close='மூடு', step='படி'),
-           'te': dict(more='మరిన్ని', title='అన్ని విభాగాలు', sub='పంచాంగం నుండి వివాహ పొంతన వరకు, క్రమంగా', extra='ఇంకా చూడండి', lang='భాష', fb='అభిప్రాయం చెప్పండి', close='మూసివేయి', step='దశ', tamil='తమిళంలో మాత్రమే')}
+SHEET_T = {'ta': dict(more='மேலும்', title='எல்லாப் பகுதிகளும்', sub='நாட்காட்டியிலிருந்து வாஸ்து வரை, வரிசையாக', look='தோற்றம், இசை', extra='இன்னும் பார்க்க', lang='மொழி', fb='கருத்து சொல்ல', close='மூடு', step='படி'),
+           'te': dict(more='మరిన్ని', title='అన్ని విభాగాలు', sub='క్యాలెండర్ నుండి వివాహ పొంతన వరకు, క్రమంగా', look='రూపం, సంగీతం', extra='ఇంకా చూడండి', lang='భాష', fb='అభిప్రాయం చెప్పండి', close='మూసివేయి', step='దశ', tamil='తమిళంలో మాత్రమే')}
 SHEET_X = {'ta': [('பண்டிகைகள்', '/ta/tamil-festivals/'), ('பௌர்ணமி · அமாவாசை', '/ta/pournami-amavasai/'), ('ஊர் வாரியான பஞ்சாங்கம்', '/ta/panchangam/'),
                   ('வாஸ்து நாள்', '/ta/vastu/vastu-naal.html'), ('உங்கள் வீட்டு வாஸ்து', '/ta/vastu/check.html'), ('27 நட்சத்திரங்கள்', '/ta/nakshatra/'), ('12 ராசிகள்', '/ta/rasi/'), ('குழந்தை பெயர்கள்', '/ta/baby-names.html')],
            'te': [('నగరాల వారీ పంచాంగం', '/te/panchangam/'), ('27 నక్షత్రాలు', '/te/nakshatra/'), ('12 రాశులు', '/te/rasi/'), ('శిశువు పేర్లు', '/te/baby-names.html')]}
@@ -253,6 +253,7 @@ def mobile_nav(l, cur='', app=False):
              f'<div class="msheet-h"><span class="grab" aria-hidden="true"></span><div><b>{esc(M["title"])}</b><small>{esc(M["sub"])}</small></div>'
              f'<button type="button" class="mclose" data-sheet-close aria-label="{esc(M["close"])}">✕</button></div>'
              f'<div class="mtiles">{tiles}</div><h3>{esc(M["extra"])}</h3><div class="mchips">{extra}</div>{tam}'
+             f'<h3>{esc(M["look"])}</h3><div data-look></div>'
              f'<h3>{esc(M["lang"])}</h3><div class="mchips mlangs">{langs}</div>'
              f'<p class="mfb"><a href="{fb}">💬 {esc(M["fb"])}</a></p></div></div>')
     return f'<nav class="bnav mbar" aria-label="Menu">{bar}</nav>{sheet}'
@@ -283,7 +284,8 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
-<meta name="theme-color" content="#6e1216">
+<script>(function(){{var d=document.documentElement;try{{var m=localStorage.getItem('sj.mode')||'auto',p=localStorage.getItem('sj.pal')||'mayil';d.setAttribute('data-pal',p);d.setAttribute('data-theme',m==='auto'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):m);}}catch(e){{d.setAttribute('data-pal','mayil');}}}})();</script>
+<meta name="theme-color" content="#0d4b58">
 <meta http-equiv="Content-Security-Policy" content="{CSP}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="{SITE}{canon}">
@@ -298,6 +300,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{fonts_for(l)}" rel="stylesheet">
 <link rel="stylesheet" href="/assets/kb.css">
+<link rel="stylesheet" href="/assets/theme.css">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <!--ADS-->
 </head>
@@ -306,6 +309,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
   <a class="brand" href="{'/' if l == 'en' else '/' + l + '/'}"><img src="/icons/icon-192.png" alt="" width="34" height="34"><b>{BRAND[l]}</b></a>
   <a class="btn" href="{app_href}">{esc(D['ctaShort'])}</a>
   <button type="button" class="snd" id="sndBtn" aria-pressed="false" hidden>🎵</button>
+  <button type="button" class="lookbtn" data-look-open aria-label="{'தோற்றம்' if l == 'ta' else 'రూపం' if l == 'te' else 'Appearance'}" title="{'தோற்றம்' if l == 'ta' else 'రూపం' if l == 'te' else 'Appearance'}">🎨</button>
 </div>{menu_html(l, canon)}</header>
 <main class="wrap">
 <nav class="crumbs">{crumb_html}</nav>
@@ -314,6 +318,7 @@ def shell(l, title, desc, canon, alts, body, crumbs, app_href):
 </main>
 {mobile_nav(l, section_of(canon))}
 <footer><div class="wrap"><a href="{'/' if l == 'en' else '/' + l + '/'}">{BRAND[l]}</a> · <a href="/guide.html">Guide</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></div></footer>
+<script src="/assets/sj.js" defer></script>
 <script src="/assets/divine.js" defer></script>
 <script>
 (function(){{var app=false;try{{app=sessionStorage.getItem('jothidam.app')==='1';}}catch(e){{}}
