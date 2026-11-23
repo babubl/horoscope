@@ -1,4 +1,4 @@
-/* Suba Jathagam — temple ambience (a tanpura drone with nadaswaram, flute, veena, violin, mandolin or Om chanting
+/* Suba Jathagam — temple ambience (a soft drone with nadaswaram, flute, veena, violin, mandolin or Om chanting
    in real Carnatic ragas, synthesised in the browser, no audio files),
    the "light a lamp" diya and the "open now" badge on temple pages.
    Sound never starts by itself: the visitor taps the bell. The choice is remembered on this device,
@@ -52,7 +52,7 @@
     n.connect(bp); bp.connect(ng); ng.connect(out); n.start(t0);
   }
 
-  // ---- Divine music: a tanpura drone under one Carnatic instrument playing slow alapana-style phrases in a real raga,
+  // ---- Divine music: a soft drone under one Carnatic instrument playing slow alapana-style phrases in a real raga,
   // with the gamakas (slides and shakes) that make it sound South Indian. Everything is synthesised here — nothing is
   // downloaded and nothing is copyrighted. The visitor picks the instrument; the choice is remembered.
   var SA = 138.6, reverb = null, timers = [], live = [], ks = {}, track = null;
@@ -62,8 +62,7 @@
     { id: 'veena', icon: '🪕', ta: 'வீணை', te: 'వీణ', en: 'Veena' },
     { id: 'violin', icon: '🎻', ta: 'வயலின்', te: 'వయొలిన్', en: 'Violin' },
     { id: 'mandolin', icon: '🎸', ta: 'மாண்டலின்', te: 'మాండొలిన్', en: 'Mandolin' },
-    { id: 'om', icon: 'ॐ', ta: 'ஓம் ஜபம்', te: 'ఓం జపం', en: 'Om chanting' },
-    { id: 'tanpura', icon: '🕉', ta: 'தம்புரா நாதம்', te: 'తంబురా నాదం', en: 'Tanpura drone' }
+    { id: 'om', icon: 'ॐ', ta: 'ஓம் ஜபம்', te: 'ఓం జపం', en: 'Om chanting' }
   ];
   var lng = (document.documentElement.lang || 'en').slice(0, 2);
   // ragas as just-intonation ratios of Sa; G = notes that carry a kampitam (shake)
@@ -117,27 +116,17 @@
     } else p.setValueAtTime(f, t);
   }
 
-  // ---- the tanpura: Pa, Sa, Sa, low Sa, round and round
-  var tanBus = null;
-  function tanpura(vol) {
-    if (!tanBus) {
-      var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 50;
-      var pk = ctx.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = 2200; pk.Q.value = 1.2; pk.gain.value = 5;
-      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200;
-      tanBus = ctx.createGain(); tanBus.connect(hp); hp.connect(pk); pk.connect(lp); lp.connect(voice(0.7, 0.8));
-    }
-    tanBus.gain.value = vol;
-    var strings = [SA * 0.75, SA, SA, SA * 0.5], i = 0;
-    (function cycle() {
-      var t = ctx.currentTime + 0.05;
-      var src = ctx.createBufferSource(), g = ctx.createGain();
-      src.buffer = pluckBuf(strings[i % 4], { jawari: true, bright: true, loss: 0.49985, len: 6 });
-      g.gain.setValueAtTime(i % 4 === 3 ? 0.9 : 0.65, t);
-      src.connect(g); g.connect(tanBus); src.start(t); src.stop(t + 6);
-      i++; later(cycle, i % 4 === 0 ? 1500 : 1050);
-    })();
+  // ---- the drone: soft pure tones on Sa, Pa and upper Sa that swell and fade slowly, like breath (no strings)
+  function hum(vol) {
+    var t = ctx.currentTime, lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.connect(voice(0.6, 0.8));
+    [[SA, 0.05, 0.07], [SA * 1.5, 0.025, 0.05], [SA * 2, 0.03, 0.09], [SA * 2.003, 0.02, 0.11]].forEach(function (v) {
+      var o = ctx.createOscillator(), g = ctx.createGain(), lfo = ctx.createOscillator(), lg = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = v[0];
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v[1] * vol * 2, t + 5);
+      lfo.frequency.value = v[2]; lg.gain.value = v[1] * vol * 0.9; lfo.connect(lg); lg.connect(g.gain);
+      o.connect(g); g.connect(lp); o.start(t); lfo.start(t); live.push(o, lfo);
+    });
   }
-
   // ---- sustained instruments (nadaswaram, flute, violin): one oscillator voice that glides from note to note
   function sustained(kind) {
     var base = kind === 'flute' ? SA * 4 : SA * 2, t0 = ctx.currentTime;
@@ -188,7 +177,7 @@
     var base = kind === 'mandolin' ? SA * 4 : SA * 2, bus = ctx.createGain();
     var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = kind === 'mandolin' ? 5200 : 2400;
     var pk = ctx.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = kind === 'mandolin' ? 1800 : 280; pk.gain.value = 4; pk.Q.value = 0.8;
-    bus.gain.value = kind === 'mandolin' ? 0.16 : 0.2; bus.connect(lp); lp.connect(pk); pk.connect(voice(0.55, 0.85));
+    bus.gain.value = kind === 'mandolin' ? 0.3 : 0.36; bus.connect(lp); lp.connect(pk); pk.connect(voice(0.55, 0.85));
     function one(ratio, t, dur, gm, from, vol, det) {
       var src = ctx.createBufferSource(), g = ctx.createGain();
       src.buffer = pluckBuf(base, { bright: kind === 'mandolin', len: 4 });
@@ -267,13 +256,12 @@
     })();
   }
   var PLAN = {
-    nadaswaram: function () { tanpura(0.35); var v = sustained('nadaswaram'); later(function () { alapana(v, 'kalyani', 1); }, 1500); later(thavil, 9000); },
-    flute: function () { tanpura(0.45); var v = sustained('flute'); later(function () { alapana(v, 'mayamalavagowla', 1.15); }, 2500); },
-    veena: function () { tanpura(0.4); var v = plucker('veena'); later(function () { alapana(v, 'kharaharapriya', 1.1); }, 2500); },
-    violin: function () { tanpura(0.4); var v = sustained('violin'); later(function () { alapana(v, 'shanmukhapriya', 1.2); }, 2500); },
-    mandolin: function () { tanpura(0.4); var v = plucker('mandolin'); later(function () { alapana(v, 'keeravani', 0.9); }, 2000); },
-    om: function () { tanpura(0.5); later(om, 1200); },
-    tanpura: function () { tanpura(0.8); later(function () { softBell(SA * 8, 0.05); }, 600); }
+    nadaswaram: function () { hum(0.35); var v = sustained('nadaswaram'); later(function () { alapana(v, 'kalyani', 1); }, 1500); later(thavil, 9000); },
+    flute: function () { hum(0.45); var v = sustained('flute'); later(function () { alapana(v, 'mayamalavagowla', 1.15); }, 2500); },
+    veena: function () { hum(0.4); var v = plucker('veena'); later(function () { alapana(v, 'kharaharapriya', 1.1); }, 2500); },
+    violin: function () { hum(0.4); var v = sustained('violin'); later(function () { alapana(v, 'shanmukhapriya', 1.2); }, 2500); },
+    mandolin: function () { hum(0.4); var v = plucker('mandolin'); later(function () { alapana(v, 'keeravani', 0.9); }, 2000); },
+    om: function () { hum(0.5); later(om, 1200); }
   };
   // a small, far-off temple bell: only the pure partials, deep in the reverb
   function softBell(pitch, vol) {
@@ -295,8 +283,8 @@
     playing = true;
     // a fresh output for every start, so the tail of the last instrument fades on its own
     master = c.createGain(); master.gain.setValueAtTime(0.0001, c.currentTime); master.connect(outNode || c.destination);
-    reverb = null; tanBus = null;
-    master.gain.exponentialRampToValueAtTime(0.6, c.currentTime + 3);
+    reverb = null;
+    master.gain.exponentialRampToValueAtTime(1, c.currentTime + 3);
     PLAN[track]();
     sync();
     if (window.SJLook) window.SJLook.render();
